@@ -1,98 +1,57 @@
 import { motion, AnimatePresence } from "framer-motion";
 import dino from "/src/Assets/Images/dino.png";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../../Store/useTheme";
 import StarData from "../../../Assets/Data/stars";
+import { IoIosArrowDown } from "react-icons/io";
 import Stars from "./Stars";
 import TextArea from "./TextArea";
 
-const Landing = ({ aboutUsRef }: { aboutUsRef: React.RefObject<HTMLDivElement> }) => {
-  const [showArrow, setShowArrow] = useState(true);
+const Landing = ({ nextSectionRef }: { nextSectionRef: React.RefObject<HTMLDivElement> }) => {
   const { isDark } = useTheme();
+  const [opacity, setOpacity] = useState(1);
+  const starState = useRef(Math.round(Math.random() * 4));
 
-  // Animation variants for the dinosaur
-  const dinoVariants = {
-    initial: {
-      x: 0,
-      y: 0,
-      rotate: 15,
-      scaleX: 1,
-    },
-    hover: {
-      x: [0, -80, -80, -80, 60, 60, 60, 0], // Move further left and right
-      y: [0, -30, 0, 0, -30, 0, 0, 0], // Jump up and down with movement
-      rotate: [15, 15, 15, 15, -10, -10, -10, 15], // Reduced rotation angle when facing right
-      scaleX: [1, 1, 1, -1, -1, -1, 1, 1], // Direction changes
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-        times: [0, 0.15, 0.25, 0.35, 0.65, 0.75, 0.85, 1],
-      },
-    },
+  const scrollDown = () => {
+    nextSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleScroll = () => {
-    if (aboutUsRef.current) {
-      aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  // Show/hide arrow based on scroll position
   useEffect(() => {
+    const scrollContainer = document.querySelector(".simplebar-content-wrapper");
+
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      // Hide arrow after scrolling beyond 50px (adjust as needed)
-      if (scrollY > 50) {
-        setShowArrow(false);
-      } else {
-        setShowArrow(true);
-      }
+      setOpacity(Math.max(0, 1 - (scrollContainer?.scrollTop || 0) / 500));
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    scrollContainer?.addEventListener("scroll", handleScroll);
+    return () => scrollContainer?.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <div className="flex flex-col lg:w-[80vw] w-[95vw] min-h-[90vh] mx-auto">
-      <Stars StarsArray={StarData.positions[Math.round(Math.random() * 4)]} />
+    <div className="flex flex-col lg:flex-row justify-between  items-start w-[95vw] min-h-[90vh] mx-auto">
+      <Stars StarsArray={StarData.positions[starState.current]} />
       <TextArea />
-
-      {/* Dino Image */}
-      <div className="absolute bottom-[35vh] md:bottom-[0vh] right-[0.5vw] w-[400px] md:w-[500px] lg:w-[800px] 2xl:w-[1050px] h-1/2">
-        <motion.img
-          src={dino}
-          alt=""
-          className="absolute w-[70%] md:w-1/2 right-10 bottom-10 cursor-pointer"
-          variants={dinoVariants}
-          initial="initial"
-          whileHover="hover"
-          style={{ transformOrigin: "center" }}
-        />
-      </div>
+      <img
+        src={dino}
+        className="w-[clamp(20rem,40vw,30rem)] lg:w-[clamp(18rem,28vw,40rem)] h-fit mt-auto mx-auto lg:mx-0 rotate-15"
+      />
 
       {/* Scroll Indicator Arrow */}
       <AnimatePresence>
-        {showArrow && (
+        {opacity && (
           <motion.div
             className="absolute bottom-5 left-1/2 transform -translate-x-1/2 cursor-pointer"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity, y: 10 }}
+            animate={{ opacity: 1, y: [0, -10, 0] }}
             exit={{ opacity: 0, y: 10 }}
-            transition={{ duration: 0.5 }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "easeIn",
+            }}
           >
-            <svg
-              onClick={handleScroll}
-              xmlns="http://www.w3.org/2000/svg"
-              className={`h-8 w-8 ${isDark ? "text-white" : "text-black"} animate-bounce`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
+            <IoIosArrowDown size={40} color={isDark ? "white" : "black"} onClick={scrollDown} />
           </motion.div>
         )}
       </AnimatePresence>

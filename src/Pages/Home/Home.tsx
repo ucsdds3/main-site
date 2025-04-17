@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <Page>
-      <Landing aboutUsRef={AboutUsRef}/>
+      <Landing nextSectionRef={AboutUsRef}/>
     </Page>
   )
 }
