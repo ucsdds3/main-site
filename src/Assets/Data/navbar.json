@@ -1,0 +1,16 @@
+{
+  "Events": {
+    "Upcoming": "/events/upcoming",
+    "Datahacks": "/events/datahacks",
+    "Workshops": "/events/workshops",
+    "Social": "/events/social",
+    "Professional": "/events/professional"
+  },
+  "Our Team": {
+    "Board": "/our-team/board",
+    "Alumni": "/our-team/alumni"
+  },
+  "Projects": "/projects",
+  "Consulting": "/consulting",
+  "Partners": "/partners"
+}

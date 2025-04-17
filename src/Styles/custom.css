@@ -1,0 +1,6 @@
+.hero-text-shadow {
+  text-shadow:
+    0 5px 20px #19b5ca66,
+    0 -5px 15px #19b5ca33,
+    0 0 30px #19b5ca55;
+}
