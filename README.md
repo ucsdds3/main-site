@@ -19,7 +19,7 @@ To make contributions to the DS3 Main Site, please follow these guidelines:
 
 ## Project Structure
 
-Stick to the project structure shown below to keep things organized. The project is structured as follows:
+Stick to the project structure shown below to keep things organized:
 
 ```
 main-site/  
