@@ -1,25 +1,25 @@
 [
   {
     "title": "DataHacks",
-    "imageSrc": "src/Assets/Images/datahacks_2.jpeg",
+    "imageSrc": "./GetInvolved/datahacks_2.jpeg",
     "description": "Do projects and make your resume look better. I love projects so much omg! Do projects and make your resume look better. I love projects so much omg!",
     "link": "www.ds3ucsd.com/our-team/datahacks"
   },
   {
     "title": "Projects & Consulting",
-    "imageSrc": "src/Assets/Images/projects-img.jpeg",
+    "imageSrc": "./GetInvolved/projects-img.jpeg",
     "description": "Do projects and make your resume look better. I love projects so much omg!",
     "link": "www.ds3ucsd.com/our-team/projects"
   },
   {
     "title": "Workshops",
-    "imageSrc": "src/Assets/Images/workshop-img.png",
+    "imageSrc": "./GetInvolved/workshop-img.png",
     "description": "Do projects and make your resume look better. I love projects so much omg!",
     "link": "www.ds3ucsd.com/our-team/workshops"
   },
   {
     "title": "Professional Events",
-    "imageSrc": "src/Assets/Images/pf-events-img.png",
+    "imageSrc": "./GetInvolved/pf-events-img.png",
     "description": "Do projects and make your resume look better. I love projects so much omg!",  
     "link": "www.ds3ucsd.com/our-team/professional"
   }
