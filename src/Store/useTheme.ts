@@ -1,13 +1,19 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
 interface ThemeState {
-  isDark: boolean
-  toggleTheme: () => void
-  setIsDark: (isDark: boolean) => void
+  isDark: boolean;
+  toggleTheme: () => void;
+  setIsDark: (val: boolean) => void;
 }
 
-export const useTheme = create<ThemeState>((set) => ({
-  isDark: false,
-  setIsDark: (isDark: boolean) => set({ isDark }),
-  toggleTheme: () => set((state) => ({ isDark: !state.isDark }))
-}))
+export const useTheme = create<ThemeState>((set) => {
+  const storedTheme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const defaultDark = storedTheme ? storedTheme === "dark" : prefersDark;
+
+  return {
+    isDark: defaultDark,
+    setIsDark: (val) => set({ isDark: val }),
+    toggleTheme: () => set((state) => ({ isDark: !state.isDark })),
+  };
+});
