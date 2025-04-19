@@ -1,30 +1,10 @@
 import React from "react";
-import whoWeAre from "/src/Assets/Images/who-we-are-img.png";
-import whatWeDo from "/src/Assets/Images/green_chair.png";
+import Section from "../../Components/Section";
+import data from "../../Assets/Data/aboutUs.json";
 
 const AboutUs = ({ aboutUsRef }: { aboutUsRef: React.RefObject<HTMLDivElement> }) => {
-  const data = [
-    {
-      section: "WHO WE ARE",
-      title: "We are passionate about data, technology, and problem solving.",
-      content: "We are here to expand the horizons of data science as a community together.",
-      button: "OUR TEAM",
-      image: whoWeAre,
-    },
-    {
-      section: "WHAT WE DO",
-      title: "Build technical skills, network, and gain experience.",
-      content: "We are here to expand the horizons of data science as a community together.",
-      button: "EVENTS",
-      image: whatWeDo,
-    },
-  ];
-
   return (
-    <div
-      className="flex flex-col items-center py-[clamp(5rem,5vh,10rem)] w-[90vw] sm:w-[80vw] font-albert-sans gap-16"
-      ref={aboutUsRef}
-    >
+    <Section title="About Us" ref={aboutUsRef} className="gap-10">
       {data.map((section, index) => (
         <div
           className={`flex flex-col gap-6 lg:gap-[7vw] w-full ${index % 2 === 0 ? "lg:flex-row-reverse" : "lg:flex-row"}`}
@@ -54,7 +34,7 @@ const AboutUs = ({ aboutUsRef }: { aboutUsRef: React.RefObject<HTMLDivElement> }
           </div>
         </div>
       ))}
-    </div>
+    </Section>
   );
 };
 

@@ -19,10 +19,10 @@ export default function Carousel() {
 
   return (
     <div className="embla overflow-hidden w-full md:w-[80%] mt-5" ref={emblaRef}>
-      <div className="embla__container flex gap-6 ml-6">
+      <div className="embla__container flex gap-6 mx-6">
         {companyLogos.map((logoSrc, index) => (
           <div
-            className="embla__slide max-w-[clamp(200px,15vw,500px)] h-[clamp(100px,5vw,200px)] flex-shrink-0 p-4 rounded-lg flex justify-center items-center"
+            className="embla__slide max-w-[clamp(200px,15vw,500px)] h-[clamp(100px,5vw,200px)] flex-shrink-0 p-4 flex justify-center items-center"
             key={index}
           >
             <img src={logoSrc} alt="logo" className="object-contain w-full h-full" />

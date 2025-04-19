@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { StarType } from "../../../Utils/types";
-import StarData from "../../../Assets/Data/stars.ts";
+import StarData from "../../../Assets/Data/stars.tsx";
 import starImg from "../../../Assets/Images/Star.svg";
 import { useTheme } from "../../../Store/useTheme.ts";
 
