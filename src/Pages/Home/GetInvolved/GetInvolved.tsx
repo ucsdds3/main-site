@@ -8,7 +8,7 @@ import Stats from "./Stats";
 
 const GetInvolved = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-20 py-16 w-[90vw] py-[clamp(5rem,5vh,10rem)] lg:w-[80vw]">
+    <div className="flex flex-col items-center justify-center gap-20 py-[clamp(3rem,5vh,10rem)] w-[90vw] lg:w-[80vw]">
       <motion.h2
         initial={{ y: -50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}

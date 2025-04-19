@@ -1,0 +1,36 @@
+{
+  "light": [
+    "./Companies/amazon.png",
+    "./Companies/amex.png",
+    "./Companies/atnt.png",
+    "./Companies/aurora.png",
+    "./Companies/aws.png",
+    "./Companies/blackrock.png",
+    "./Companies/cisco.png",
+    "./Companies/citi.png",
+    "./Companies/deloitte.png",
+    "./Companies/facebook.png",
+    "./Companies/fedex-freight.png",
+    "./Companies/FICO_logo.png",
+    "./Companies/goldman-sachs.png",
+    "./Companies/google.png",
+    "./Companies/intel.png"
+  ],
+  "dark": [
+    "./Companies/amazon_darkmode.png",
+    "./Companies/amex.png",
+    "./Companies/atnt_darkmode.png",
+    "./Companies/aurora_darkmode.png",
+    "./Companies/aws_darkmode.png",
+    "./Companies/blackrock_darkmode.png",
+    "./Companies/cisco.png",
+    "./Companies/citi.png",
+    "./Companies/deloitte_darkmode.png",
+    "./Companies/facebook.png",
+    "./Companies/fedex-freight.png",
+    "./Companies/FICO_logo.png",
+    "./Companies/goldman-sachs.png",
+    "./Companies/google.png",
+    "./Companies/intel.png"
+  ]
+}

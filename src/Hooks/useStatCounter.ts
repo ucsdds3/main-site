@@ -10,7 +10,7 @@ export const useStatCounter = (values: number[]) => {
     const startCounting = (index: number) => {
       return setInterval(() => {
         setStatValues((prev) =>
-          setIndex(prev, index, Math.min(prev[index] + values[index] / 15, values[index]))
+          setIndex(prev, index, Math.min(prev[index] + values[index] / 20, values[index]))
         );
       }, 100);
     };
