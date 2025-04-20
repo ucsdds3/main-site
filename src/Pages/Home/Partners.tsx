@@ -1,6 +1,6 @@
 import partners from "../../Assets/Data/partners.json";
 import Section from "../../Components/Section";
-import { useTheme } from "../../Store/useTheme";
+import { useTheme } from "../../Hooks/useTheme";
 
 const Partners = () => {
   const { isDark } = useTheme();

@@ -1,4 +1,5 @@
-export const newArray = <T>(length: number, value: T): T[] => Array.from({ length }, () => value);
+export const newArray = <T>(length: number, value?: T): T[] =>
+  Array.from({ length }, () => (value !== undefined ? value : (null as T)));
 
 export const setIndex = <T>(arr: T[], idx: number, value: T) => [
   ...arr.slice(0, idx),

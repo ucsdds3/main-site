@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useTheme } from "../Store/useTheme";
+import { useTheme } from "../Hooks/useTheme";
 
 const buttonVariants = {
   initial: { y: 0 },

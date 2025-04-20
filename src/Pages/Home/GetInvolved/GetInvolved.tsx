@@ -1,4 +1,4 @@
-import BrowserCard from "./BrowserCard";
+import BrowserCard from "../../../Components/BrowserCard";
 import cardData from "../../../Assets/Data/browserCards.json";
 import Section from "../../../Components/Section";
 import Stats from "./Stats";

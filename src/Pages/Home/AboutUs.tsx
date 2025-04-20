@@ -18,7 +18,7 @@ const AboutUs = ({ aboutUsRef }: { aboutUsRef: React.RefObject<HTMLDivElement> }
                 {section.content}
               </p>
             </div>
-            <button className="btn w-1/2 sm:min-w-1/3 rounded-full bg-base-300 border-2 border-(--color-primary) py-[clamp(1.5rem,2vw,2.5rem)] text-[clamp(1.2rem,1.2vw,2rem)]">
+            <button className="btn w-1/2 sm:min-w-1/3 rounded-full bg-base-300 border-2 border-(--color) hover:border-(--color-primary) py-[clamp(1.5rem,2vw,2.5rem)] text-[clamp(1.2rem,1.2vw,2rem)]">
               {section.button}
             </button>
           </div>
