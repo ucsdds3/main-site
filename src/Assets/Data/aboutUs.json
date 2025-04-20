@@ -4,13 +4,13 @@
     "title": "We are passionate about data, technology, and problem solving.",
     "content": "We are here to expand the horizons of data science as a community together.",
     "button": "OUR TEAM",
-    "image": "./AboutUs/who-we-are.png"
+    "image": "/AboutUs/who-we-are.png"
   },
   {
     "section": "WHAT WE DO",
     "title": "Build technical skills, network, and gain experience.",
     "content": "We are here to expand the horizons of data science as a community together.",
     "button": "EVENTS",
-    "image": "./AboutUs/what-we-do.png"
+    "image": "/AboutUs/what-we-do.png"
   }
 ]

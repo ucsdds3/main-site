@@ -12,3 +12,14 @@ export type EventType = {
   location?: string;
   description: string;
 };
+
+export type TeamType = {
+  title: string;
+  subtitle: string;
+  name?: string;
+  image?: string;
+  points?: {
+    title: string;
+    description: string;
+  }[];
+};

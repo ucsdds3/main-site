@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import starData from "../../../Assets/Data/stars.tsx";
+import starData from "../../../Assets/Data/stars.json";
 import starImg from "../../../Assets/Images/Star.svg";
 import { useTheme } from "../../../Hooks/useTheme.ts";
 
