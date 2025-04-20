@@ -89,6 +89,7 @@ export function useCalendarEvents() {
       } catch (err: any) {
         setError(err.message);
       } finally {
+        // TODO: Remove artificial delay
         setTimeout(() => setLoading(false), 5000);
       }
     };

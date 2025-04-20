@@ -21,7 +21,7 @@ const Page = ({ children }: PageProps) => {
             <img
               src={bear}
               alt="Under Construction"
-              className="bear mt-[clamp(5rem,5vw,10rem)] w-[clamp(20rem,60vw,80rem)]"
+              className="bear mt-[clamp(5rem,5vw,10rem)] w-[clamp(20rem,60vw,65rem)]"
             />
           </>
         )}

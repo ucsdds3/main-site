@@ -1,7 +1,6 @@
 {
   "Events": {
     "Upcoming": "/events/upcoming",
-    "Datahacks": "/events/datahacks",
     "Workshops": "/events/workshops",
     "Social": "/events/social",
     "Professional": "/events/professional"
@@ -11,6 +10,7 @@
     "Alumni": "/our-team/alumni"
   },
   "Projects": "/projects",
-  "Consulting": "/consulting",
-  "Partners": "/partners"
+  "DataHacks": "/datahacks",
+  "Partners": "/partners",
+  "Consulting": "/consulting"
 }
