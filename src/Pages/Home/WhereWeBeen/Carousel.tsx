@@ -1,6 +1,6 @@
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useTheme } from "../../../Store/useTheme";
+import { useTheme } from "../../../Hooks/useTheme";
 import companies from "../../../Assets/Data/companyLogos.json";
 
 export default function Carousel() {

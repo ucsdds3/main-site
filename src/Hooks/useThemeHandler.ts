@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useTheme } from "../Store/useTheme";
+import { useTheme } from "./useTheme";
 
 export const useThemeHandler = () => {
   const { isDark, setIsDark } = useTheme();

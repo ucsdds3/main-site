@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
 interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string;
+  title?: string;
   className?: string;
   children?: React.ReactNode;
 }
@@ -18,7 +18,9 @@ const Section = forwardRef<HTMLDivElement, SectionProps>(
         )}
         {...props}
       >
-        <h2 className="font-bold text-[clamp(2.7rem,10vw,4rem)] text-center px-4">{title}</h2>
+        {title && (
+          <h2 className="font-bold text-[clamp(2.7rem,10vw,4rem)] text-center px-4">{title}</h2>
+        )}
         {children}
       </section>
     );

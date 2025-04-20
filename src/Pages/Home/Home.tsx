@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <Page>
-      <Landing nextSectionRef={AboutUsRef}/>
+      <Landing nextRef={AboutUsRef}/>
       <AboutUs aboutUsRef={AboutUsRef} />
       <GetInvolved />
       <WhereWeBeen />

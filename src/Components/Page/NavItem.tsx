@@ -23,13 +23,15 @@ const NavItem = ({ label, data }: NavItemProps) => {
         className="flex justify-center items-center gap-2 cursor-pointer hover:text-(--color-primary) focus:text-(--color-primary) duration-300"
       >
         <span>{label}</span>
-        <IoIosArrowUp className="transition-transform duration-300 group-focus-within:rotate-180 group-hover:rotate-180" />
+        <IoIosArrowUp className="transition-transform duration-300 group-focus-within:rotate-180" />
       </div>
 
-      <ul className="hidden group-focus-within:flex group-hover:flex flex-col gap-3 dropdown-content md:menu bg-base-100 md:w-52 z-10 p-2 shadow-sm group-focus-within:border-t border-(--color-primary) md:border md:border-white mt-2 md:rounded-lg text-center">
+      <ul className="hidden group-focus-within:flex group-hover:flex flex-col gap-3 md:gap-0 dropdown-content md:menu bg-base-100 md:w-52 z-10 p-2 shadow-sm group-focus-within:border-t border-(--color-primary) md:border md:border-white mt-2 md:rounded-lg text-center">
         {Object.entries(data as object).map(([label, path]) => (
           <li key={label}>
-            <Link to={path}>{label}</Link>
+            <Link to={path} className="hover:text-(--color-primary) text-base">
+              {label}
+            </Link>
           </li>
         ))}
       </ul>

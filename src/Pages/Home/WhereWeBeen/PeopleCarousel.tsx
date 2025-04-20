@@ -35,7 +35,7 @@ const PeopleCarousel = () => {
           <h4 className="text-[clamp(1.2rem,4vw,2rem)] md:text-[clamp(1rem,2vw,2rem)] font-semibold mb-2">
             {card.title}
           </h4>
-          <p className="text-[clamp(1rem,2.5vw,2rem)] md:text-[clamp(0.8rem,1.5vw,1.2rem)] mb-4 leading-relaxed text-gray-400">
+          <p className="text-[clamp(1rem,2.5vw,2rem)] md:text-[clamp(0.8rem,1.5vw,1.2rem)] mb-4 leading-relaxed opacity-75">
             {card.description}
           </p>
           <p className="text-[clamp(1rem,2.5vw,2rem)] md:text-[clamp(0.8rem,1.5vw,1.2rem)] font-light">

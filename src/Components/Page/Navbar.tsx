@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import NavItem from "./NavItem";
 import { useState } from "react";
 import logo from "/src/Assets/Images/ds3_logo.png";
-import { useTheme } from "../../Store/useTheme";
+import { useTheme } from "../../Hooks/useTheme";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";

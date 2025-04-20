@@ -1,29 +1,29 @@
 import { motion } from "framer-motion";
-import { StarType } from "../../../Utils/types";
-import StarData from "../../../Assets/Data/stars.tsx";
+import starData from "../../../Assets/Data/stars.tsx";
 import starImg from "../../../Assets/Images/Star.svg";
-import { useTheme } from "../../../Store/useTheme.ts";
+import { useTheme } from "../../../Hooks/useTheme.ts";
 
-const Stars = ({ StarsArray }: { StarsArray: StarType[] }) => {
+const Stars = () => {
   const { isDark } = useTheme();
+  const stars = starData.positions[Math.round(Math.random() * 4)];
 
   return (
     <motion.div
-      variants={StarData.appearingVariants}
+      variants={starData.appearingVariants}
       initial="initial"
       animate="animate"
       className="z-[-10]"
     >
-      {StarsArray.map((star, index) => (
+      {stars.map((star, index) => (
         <motion.div
           key={index}
-          variants={StarData.appearingVariants}
+          variants={starData.appearingVariants}
           className="m-4 absolute"
           style={{ top: `${star.y}%`, left: `${star.x}%` }}
         >
           <motion.img
             src={starImg}
-            variants={StarData.starVariants}
+            variants={starData.starVariants}
             initial="initial"
             animate="animate"
             transition={{

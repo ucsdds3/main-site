@@ -1,6 +1,6 @@
 import { unbreakable } from "../../../Utils/functions";
 import { useStatCounter } from "../../../Hooks/useStatCounter";
-import { useTheme } from "../../../Store/useTheme";
+import { useTheme } from "../../../Hooks/useTheme";
 import { motion } from "framer-motion";
 
 const Stats = () => {
