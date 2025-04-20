@@ -1,28 +1,28 @@
 {
   "light": {
-    "Intel": "/Partners/intel.png",
-    "ASML": "/Partners/asml.png",
-    "HP": "/Partners/hp.png",
-    "Blizzard": "/Partners/blizzard.png",
-    "Rockstar": "/Partners/rockstar.png",
-    "Marimo": "/Partners/marimo.png",
-    "SDX": "/Partners/SDX-logo.png",
-    "Palantir": "/Partners/palantir_dark.png",
-    "HDSI": "/Partners/hdsi-logo.svg",
-    "CSE": "/Partners/cse-logo.svg",
-    "IBM": "/Partners/ibm.svg"
+    "Intel": "/main-site/Partners/intel.png",
+    "ASML": "/main-site/Partners/asml.png",
+    "HP": "/main-site/Partners/hp.png",
+    "Blizzard": "/main-site/Partners/blizzard.png",
+    "Rockstar": "/main-site/Partners/rockstar.png",
+    "Marimo": "/main-site/Partners/marimo.png",
+    "SDX": "/main-site/Partners/SDX-logo.png",
+    "Palantir": "/main-site/Partners/palantir_dark.png",
+    "HDSI": "/main-site/Partners/hdsi-logo.svg",
+    "CSE": "/main-site/Partners/cse-logo.svg",
+    "IBM": "/main-site/Partners/ibm.svg"
   },
   "dark": {
-    "Intel": "/Partners/intel.png",
-    "ASML": "/Partners/asml.png",
-    "HP": "/Partners/hp.png",
-    "Blizzard": "/Partners/blizzard.png",
-    "Rockstar": "/Partners/rockstar.png",
-    "Marimo": "/Partners/marimo.png",
-    "SDX": "/Partners/SDX-logo.png",
-    "Palantir": "/Partners/palantir_dark.png",
-    "HDSI": "/Partners/hdsi-logo-light.png",
-    "CSE": "/Partners/cse-logo.svg",
-    "IBM": "/Partners/ibm.svg"
+    "Intel": "/main-site/Partners/intel.png",
+    "ASML": "/main-site/Partners/asml.png",
+    "HP": "/main-site/Partners/hp.png",
+    "Blizzard": "/main-site/Partners/blizzard.png",
+    "Rockstar": "/main-site/Partners/rockstar.png",
+    "Marimo": "/main-site/Partners/marimo.png",
+    "SDX": "/main-site/Partners/SDX-logo.png",
+    "Palantir": "/main-site/Partners/palantir_dark.png",
+    "HDSI": "/main-site/Partners/hdsi-logo-light.png",
+    "CSE": "/main-site/Partners/cse-logo.svg",
+    "IBM": "/main-site/Partners/ibm.svg"
   }  
 }
