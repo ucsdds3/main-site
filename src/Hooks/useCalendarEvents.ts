@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { calendarID, calendarAPIKey } from "../Utils/config.ts";
 import { useEffect, useState } from "react";
 import { EventType } from "../Utils/types";
 
@@ -6,14 +7,12 @@ export function useCalendarEvents() {
   const [events, setEvents] = useState<EventType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const calendarId = import.meta.env.VITE_CALENDAR_ID;
-  const apiKey = import.meta.env.VITE_CALENDAR_API_KEY;
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const res = await fetch(
-          `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`
+          `https://www.googleapis.com/calendar/v3/calendars/${calendarID}/events?key=${calendarAPIKey}`
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
@@ -95,7 +94,7 @@ export function useCalendarEvents() {
     };
 
     fetchEvents();
-  }, [calendarId, apiKey]);
+  }, []);
 
   return { events, loading, error };
 }
