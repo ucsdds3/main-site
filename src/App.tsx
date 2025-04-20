@@ -2,12 +2,10 @@ import { Route, Routes } from "react-router";
 import { useThemeHandler } from "./Hooks/useThemeHandler";
 import Home from "./Pages/Home/Home";
 import EventPage from "./Pages/Events/EventPage";
-import upcoming from "./Assets/Data/upcoming.json";
-import workshops from "./Assets/Data/workshops.json";
-import social from "./Assets/Data/social.json";
-import professional from "./Assets/Data/professional.json";
+import events from "./Assets/Data/events.json";
 
 const App = () => {
+  const { upcoming, workshops, social, professional } = events;
   useThemeHandler();
 
   return (

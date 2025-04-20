@@ -11,10 +11,10 @@ const AboutTeam = forwardRef<HTMLDivElement, TeamType>(({ name, image, points },
   if (!name || !image || !points) return null;
 
   return (
-    <Section className="w-[80vw] max-w-[1204px] border-2 hover:border-(--color-primary) duration-300 rounded-xl p-10 group" ref={ref}>
+    <Section className="w-[80vw] max-w-[1204px] border-2 hover:border-(--color-primary) duration-300 rounded-xl p-[clamp(1.5rem,2vw,2.5rem)] group" ref={ref}>
       <h2 className="text-[clamp(2rem,2vw,2.5rem)] font-bold uppercase w-full">{`About ${name}`}</h2>
 
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="w-full flex flex-col lg:flex-row gap-8">
         <div className="aspect-video skeleton flex-[6] rounded-md overflow-hidden">
           <img src={image} alt={name} className="w-full h-full object-cover rounded-md group-hover:scale-105 duration-300" />
         </div>
