@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { EventType } from "../Utils/types";
 import { newArray } from "../Utils/functions";
+import SafeLink from "./SafeLink";
 
 const BrowserCard = ({ title, date, link, location, image, description }: EventType) => {
   const navigate = useNavigate();
@@ -61,14 +62,12 @@ const BrowserCard = ({ title, date, link, location, image, description }: EventT
 
       {!notEvent &&
         (link ? (
-          <a
+          <SafeLink
             href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-lg text-center font-semibold p-2 rounded-md bg-(--color-primary) w-[50%] self-start hover:brightness-110 transition-colors duration-300 mt-4"
+            className="text-lg text-center font-semibold rounded-md bg-(--color-primary) w-[50%] self-start hover:brightness-110 mt-4 p-2"
           >
             Add to Calendar
-          </a>
+          </SafeLink>
         ) : (
           <div className="h-10 m-1 mt-4 rounded-md w-[50%] skeleton" />
         ))}

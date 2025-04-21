@@ -5,7 +5,7 @@ import { useCalendarEvents } from "../../Hooks/useCalendarEvents";
 import BrowserCard from "../../Components/BrowserCard";
 import AboutTeam from "../../Components/AboutTeam";
 import Section from "../../Components/Section";
-import Page from "../../Components/Page/Page";
+import Page from "../Page/Page";
 import Error from "../../Components/Error";
 import Landing from "./Landing";
 
