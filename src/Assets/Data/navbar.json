@@ -5,10 +5,7 @@
     "Social": "/events/social",
     "Professional": "/events/professional"
   },
-  "Our Team": {
-    "Board": "/our-team/board",
-    "Alumni": "/our-team/alumni"
-  },
+  "Board": "/board",
   "Projects": "/projects",
   "DataHacks": "/datahacks",
   "Partners": "/partners",

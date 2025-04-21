@@ -1,4 +1,5 @@
 import partners from "../../Assets/Data/partners.json";
+import SafeLink from "../../Components/SafeLink";
 import Section from "../../Components/Section";
 import { useTheme } from "../../Hooks/useTheme";
 
@@ -10,15 +11,14 @@ const Partners = () => {
     <Section title="Our Partners" className="gap-4">
       <p className="text-lg max-w-xl font-albert-sans text-center">
         {"Interested in hearing how we can help you? Contact us at "}
-        <a href="mailto:ds3@ucsd.edu" className="underline">
+        <SafeLink href="mailto:ds3@ucsd.edu" className="underline">
           ds3@ucsd.edu
-        </a>
+        </SafeLink>
         {" or view our sponsor package "}
-
         {/* TODO: add link to sponsor package */}
-        <a href="/path/to/sponsor-package.pdf" className="underline" target="_blank">
+        <SafeLink href="" className="underline">
           here
-        </a>
+        </SafeLink>
         .
       </p>
 

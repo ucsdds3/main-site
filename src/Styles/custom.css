@@ -4,3 +4,14 @@
     0 -5px 15px #19b5ca33,
     0 0 30px #19b5ca55;
 }
+
+.text-glow {
+  text-shadow:
+    0 5px 20px var(--color-primary),
+    0 -5px 15px var(--color-primary),
+    0 0 30px var(--color-primary);
+}
+
+.glow {
+  box-shadow: 0 0 8px var(--color-primary), 0 0 12px var(--color-primary);
+}

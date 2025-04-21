@@ -3,6 +3,7 @@ import { useThemeHandler } from "./Hooks/useThemeHandler";
 import Home from "./Pages/Home/Home";
 import EventPage from "./Pages/Events/EventPage";
 import events from "./Assets/Data/events.json";
+import Board from "./Pages/Board/Board";
 
 const App = () => {
   const { upcoming, workshops, social, professional } = events;
@@ -11,6 +12,7 @@ const App = () => {
   return (
     <Routes>
       <Route index element={<Home />} />
+      <Route path="/board" element={<Board />} />
       <Route path="/events">
         <Route path="upcoming" element={<EventPage events={upcoming} />} />
         <Route path="workshops" element={<EventPage events={workshops} />} />

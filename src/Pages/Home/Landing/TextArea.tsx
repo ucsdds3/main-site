@@ -23,7 +23,7 @@ export default function Text() {
         We are here to expand the horizons of data
         science&nbsp;as&nbsp;a&nbsp;community&nbsp;together.
       </p>
-      <Button contents="JOIN US" onClick={() => {}} />
+      <Button onClick={() => {}}>JOIN US</Button>
     </div>
   );
 }
