@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className="bg-[#0E1111] sticky w-full z-50 border-b border-(--color-primary) flex flex-col md:flex-row items-center justify-between px-6 py-4"
+      className="bg-[#0E1111] sticky top-0 w-full z-50 border-b border-(--color-primary) flex flex-col md:flex-row items-center justify-between px-6 py-4"
       data-theme="dark"
     >
       {/* Top bar with logo and mobile menu button */}
@@ -47,7 +47,7 @@ const Navbar = () => {
 
       {/* Navigation links */}
       <div
-        className={`w-full md:w-auto items-center flex-col md:flex md:flex-row gap-4 ${
+        className={`w-full md:w-auto items-center flex-col md:flex md:flex-row gap-6 text-lg ${
           menuOpen ? "flex" : "hidden"
         } ${typographyClasses}`}
       >

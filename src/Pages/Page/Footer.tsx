@@ -1,5 +1,6 @@
 import logo from "/src/Assets/Images/ds3_logo.png";
 import socialMedia from "../../Assets/Data/socialMedia.tsx";
+import SafeLink from "../../Components/SafeLink.tsx";
 
 const Footer = () => {
   return (
@@ -19,16 +20,14 @@ const Footer = () => {
 
       <div className="flex flex-wrap justify-center items-center px-6 gap-4">
         {socialMedia.map((media, index) => (
-          <a
+          <SafeLink
             key={index}
             title={media.title}
             href={media.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-(--color-primary) transition-all duration-300 btn rounded-full text-white text-xl w-14 h-14 p-0 border-none bg-[#202020] hover:bg-[#282828]"
+            className="hover:text-(--color-primary) transition-all duration-300 btn rounded-full text-xl w-14 h-14 bg-base-100 hover:brightness-125"
           >
             {media.icon}
-          </a>
+          </SafeLink>
         ))}
       </div>
     </footer>
