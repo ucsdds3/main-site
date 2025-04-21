@@ -18,11 +18,7 @@ const Landing = ({ nextRef }: { nextRef: React.RefObject<HTMLDivElement> }) => {
         className="z-[-10]"
       >
         {stars.map((star, index) => (
-          <Star
-            key={index}
-            size={star.w}
-            className={`absolute top-[${star.y}%] left-[${star.x}%]`}
-          />
+          <Star key={index} size={star.w} className="absolute" style={{ top: `${star.y}%`, left: `${star.x}%` }} />
         ))}
       </motion.div>
 
