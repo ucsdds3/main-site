@@ -1,8 +1,6 @@
-export type StarType = {
-  x: number;
-  y: number;
-  w: number;
-};
+import committees from "../Assets/Data/committees.json";
+
+export type Committee = keyof typeof committees;
 
 export type EventType = {
   title: string;
@@ -22,4 +20,16 @@ export type TeamType = {
     title: string;
     description: string;
   }[];
+};
+
+export type MemberType = {
+  name: string;
+  title?: string;
+  committees?: Committee[];
+  image?: string;
+  github?: string;
+  linkedIn?: string;
+  email?: string;
+  website?: string;
+  bio?: string;
 };

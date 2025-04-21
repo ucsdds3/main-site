@@ -1,0 +1,66 @@
+import { Committee } from "../../Utils/types";
+import { unbreakable } from "../../Utils/functions";
+import committees from "../../Assets/Data/committees.json";
+import Button from "../../Components/Button";
+import Star from "../../Components/Star";
+
+interface SelectCommitteeProps {
+  committee: Committee;
+  setCommittee: (committee: Committee) => void;
+}
+
+const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
+  return (
+    <>
+      {/* Desktop */}
+      <div className="hidden lg:flex flex-col lg:sticky top-48 gap-6 h-fit">
+        <div className="flex flex-col gap-2 w-fit">
+          <h2 className="text-2xl font-medium w-fit mx-2">Committees:</h2>
+          <div className="h-[1px] bg-(--color-primary) glow" />
+        </div>
+
+        <ul className="flex flex-col gap-3">
+          {Object.keys(committees).map((committee, index) => (
+            <li key={index} className="flex items-center gap-3">
+              <input
+                type="radio"
+                id={`committee-${index}`}
+                name="committeeSelector"
+                className="radio radio-primary"
+                defaultChecked={index === 0}
+                onClick={() => setCommittee(committee as Committee)}
+              />
+              <label htmlFor={`committee-${index}`} className="cursor-pointer text-lg">
+                {unbreakable(committee)}
+              </label>
+            </li>
+          ))}
+        </ul>
+
+        <Button onClick={() => {}}>JOIN US</Button>
+
+        <div className="relative h-[40px]">
+          <Star size={1.4} className="absolute top-0 left-3/8" />
+          <Star size={1.2} className="absolute bottom-0 right-1/4" />
+        </div>
+      </div>
+
+      {/* Mobile */}
+      <fieldset className="lg:hidden fieldset w-[clamp(20rem,40vw,30rem)] flex flex-col items-center">
+        <span className="fieldset-legend text-lg">Committee</span>
+        <select
+          value={committee}
+          defaultValue={Object.keys(committees)[0]}
+          className="select select-primary select-lg"
+          onChange={(e) => setCommittee(e.target.value as Committee)}
+        >
+          {Object.keys(committees as object).map((committee, index) => (
+            <option key={index}>{committee}</option>
+          ))}
+        </select>
+      </fieldset>
+    </>
+  );
+};
+
+export default SelectCommittee;
