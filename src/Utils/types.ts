@@ -12,14 +12,11 @@ export type EventType = {
 };
 
 export type TeamType = {
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
   name?: string;
   image?: string;
-  points?: {
-    title: string;
-    description: string;
-  }[];
+  points?: Record<string, string>;
 };
 
 export type MemberType = {
@@ -27,9 +24,6 @@ export type MemberType = {
   title?: string;
   committees?: Committee[];
   image?: string;
-  github?: string;
-  linkedIn?: string;
-  email?: string;
-  website?: string;
+  links?: Record<string, React.ReactNode>;
   bio?: string;
 };

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Page from "../Page/Page";
-import Landing from "./Landing/Landing";
+import Landing from "./Landing";
 import AboutUs from "./AboutUs";
 import GetInvolved from "./GetInvolved/GetInvolved";
 import WhereWeBeen from "./WhereWeBeen/WhereWeBeen";

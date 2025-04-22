@@ -11,7 +11,7 @@ const WorkWithUs = () => {
           Taste Some Sweet, Sweet Child Labor And Hit Up Our Consulting Site
         </p>
       </div>
-      <Button onClick={() => {}}>FIND US ON DISCORD</Button>
+      <Button onClick={() => {}}>LEARN MORE</Button>
     </Section>
   );
 };

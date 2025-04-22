@@ -8,6 +8,11 @@ import Events from "./Events";
 const EventPage = ({ events: team }: { events: TeamType }) => {
   const scrollRef = useRef<HTMLDivElement>(null!);
 
+  if (!team.title || !team.subtitle) {
+    console.error("Missing team title or subtitle");
+    return null;
+  }
+
   return (
     <Page scrollRef={scrollRef}>
       <Landing title={team.title.toUpperCase()} subtitle={team.subtitle} />
