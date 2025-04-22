@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 const buttonVariants = {
   initial: { y: 0 },
-  hover: { y: "0.5vw" },
+  hover: { y: "clamp(0.3rem,1.2vw,0.6rem)" },
 };
 
 interface ButtonProps {
@@ -16,7 +16,7 @@ const Button = ({ onClick, children, className }: ButtonProps) => {
   return (
     <div className={twMerge("relative size-fit my-3", className)} onClick={onClick}>
       <motion.button
-        className="border-2 rounded-full py-2 px-6 md:py-3 md:px-8 whitespace-nowrap cursor-pointer text-[clamp(1rem,1.2vw,2rem)] min-w-[clamp(8rem,10vw,15rem)] bg-(--color) border-(--color-primary)"
+        className="border-2 rounded-full py-3 px-10 whitespace-nowrap cursor-pointer text-[clamp(1rem,1.2vw,2rem)] min-w-[clamp(8rem,10vw,15rem)] bg-(--color) border-(--color-primary)"
         variants={buttonVariants}
         initial="initial"
         animate="initial"
@@ -25,7 +25,7 @@ const Button = ({ onClick, children, className }: ButtonProps) => {
         {children}
       </motion.button>
 
-      <div className="absolute top-0 translate-y-[clamp(0.3rem,1.2vw,0.56rem)] border-2 size-full rounded-full -z-1 bg-(--color-primary) border-(--color-primary)" />
+      <div className="absolute top-0 translate-y-[clamp(0.3rem,1.2vw,0.6rem)] border-2 size-full rounded-full -z-1 bg-(--color-primary) border-(--color-primary)" />
     </div>
   );
 };
