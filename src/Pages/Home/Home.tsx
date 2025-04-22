@@ -4,7 +4,7 @@ import Landing from "./Landing/Landing";
 import AboutUs from "./AboutUs";
 import GetInvolved from "./GetInvolved/GetInvolved";
 import WhereWeBeen from "./WhereWeBeen/WhereWeBeen";
-import Partners from "./Partners";
+import OurPartners from "../../Components/OurPartners";
 
 const Home = () => {
   const AboutUsRef = useRef<HTMLDivElement>(null!);
@@ -15,7 +15,7 @@ const Home = () => {
       <AboutUs aboutUsRef={AboutUsRef} />
       <GetInvolved />
       <WhereWeBeen />
-      <Partners />
+      <OurPartners />
     </Page>
   )
 }

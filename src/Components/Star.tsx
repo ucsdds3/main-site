@@ -9,7 +9,7 @@ interface StarProps {
   style?: React.CSSProperties;
 }
 
-const Star= ({ size, className, style } : StarProps) => {
+const Star = ({ size = 1, className, style }: StarProps) => {
   const { isDark } = useTheme();
 
   return (
@@ -25,7 +25,7 @@ const Star= ({ size, className, style } : StarProps) => {
         repeat: Infinity,
       }}
       style={{
-        width: `calc(${size}*clamp(1rem,1vw,2rem))`,
+        width: `clamp(1rem,${size}vw,10rem)`,
         opacity: isDark ? 1 : 0.8,
         filter: isDark
           ? "brightness(1) drop-shadow(0px 0px 8px white)"
