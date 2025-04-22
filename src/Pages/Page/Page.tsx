@@ -3,16 +3,19 @@ import SimpleBar from "simplebar-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import bear from "/src/Assets/Images/Sleepy_Bear.png";
+import ScrollArrow from "./ScrollArrow";
 
 interface PageProps {
   children?: React.ReactNode;
+  scrollRef?: React.RefObject<HTMLDivElement>;
 }
 
-const Page = ({ children }: PageProps) => {
+const Page = ({ children, scrollRef }: PageProps) => {
   return (
     <SimpleBar className="absolute left-0 top-0 w-screen h-screen overflow-x-hidden">
       <Navbar />
-      <div className="flex flex-col items-center py-[2vh] min-h-[80vh]">
+      <div className="flex flex-col items-center min-h-[80vh]">
+        {scrollRef && <ScrollArrow ref={scrollRef} />}
         {children || (
           <>
             <h2 className="text-center hero-text-shadow my-10 text-[clamp(2rem,10vw,4rem)]">

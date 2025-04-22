@@ -1,0 +1,19 @@
+{
+  "partners": {
+    "Partners Lorem ipsum dolor sit amet, consectetur adipi?": "Lorem ipsum dolor sit amet, consectetur adipi!",
+    "Lorem ipsum dolor sit, consectetur adipi?": "!Lorem ipsum dolor sit amet, consectetur adipi",
+    "Lorem ipsum dolor sit amet, consectetur adipi?": "Lorem ipsum dolor sit amet, consectetur adipi!",
+    "Lorem ipsum dolor sit amet, consectetur?": "Lorem ipsum dolor sit amet, consectetur adipi!",
+    "Lorem ipsum dolor sit amet, consectetur adipi what?": "Lorem ipsum dolor sit amet, consectetur adipi!",
+    "Lorem ipsum dolor sit amet?": "Yeah"
+  },
+  "joinUs": {
+    "How do I join DS3?": "There is no application needed to join DS3! Attend any of our events and join our discord to become a member!",
+    "Do I have to be a data science major to join DS3?": "You do not have to be a data science major in order to join DS3! DS3 is open to all that are interested in data science!",
+    "Is any experience required to join?": "No experience is required to join DS3! Feel free to attend our workshop events to gain more experience within data science.",
+    "How can I become more involved with DS3?": "The best way to become more involved with DS3 is to become a board member. Board member applications usually open during the fall and spring quarters. Stay up to date on application announcements by joining our discord and following our social media platforms.",
+    "Can graduate students join DS3?": "Unfortunately, graduate students cannot become board members or come to certain events since we are an undergraduate organization. If you have a specific question, we recommend reaching out through email.",
+    "How do I stay up to date with DS3?": "Follow us on Instagram (@ds3.ucsd) as we will be posting events and reminders there often.",
+    "Where do I go if I have more questions?": "The best way to contact us is through email (ds3@ucsd.edu) or through Instagram DMs (@ds3.ucsd)."
+  }
+}
