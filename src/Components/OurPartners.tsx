@@ -1,15 +1,15 @@
-import partners from "../../Assets/Data/partners.json";
-import SafeLink from "../../Components/SafeLink";
-import Section from "../../Components/Section";
-import { useTheme } from "../../Hooks/useTheme";
+import partners from "../Assets/Data/partners.json";
+import SafeLink from "../Components/SafeLink";
+import Section from "../Components/Section";
+import { useTheme } from "../Hooks/useTheme";
 
-const Partners = () => {
+const OurPartners = () => {
   const { isDark } = useTheme();
   const logos = isDark ? partners.dark : partners.light;
 
   return (
-    <Section title="Our Partners" className="gap-4">
-      <p className="text-lg max-w-xl font-albert-sans text-center">
+    <Section title="Our Partners" className="gap-0">
+      <p className="text-lg font-light max-w-xl text-center px-10">
         {"Interested in hearing how we can help you? Contact us at "}
         <SafeLink href="mailto:ds3@ucsd.edu" className="underline">
           ds3@ucsd.edu
@@ -22,7 +22,7 @@ const Partners = () => {
         .
       </p>
 
-      <div className="flex flex-wrap justify-center mt-20 gap-[clamp(1rem,5vw,5rem)] sm:w-[80%]">
+      <div className="flex flex-wrap justify-center mt-16 gap-[clamp(1rem,5vw,5rem)] sm:w-[80%]">
         {Object.entries(logos).map(([name, path], index) => (
           <div
             key={index}
@@ -36,4 +36,4 @@ const Partners = () => {
   );
 };
 
-export default Partners;
+export default OurPartners;

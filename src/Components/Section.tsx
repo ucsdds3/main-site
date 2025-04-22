@@ -19,7 +19,7 @@ const Section = forwardRef<HTMLDivElement, SectionProps>(
         {...props}
       >
         {title && (
-          <h2 className="font-bold text-[clamp(2.7rem,10vw,4rem)] text-center px-4">{title}</h2>
+          <h2 className="font-semibold text-[clamp(2.7rem,7vw,4rem)] text-center uppercase px-4">{title}</h2>
         )}
         {children}
       </section>
