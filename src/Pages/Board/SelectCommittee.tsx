@@ -3,6 +3,7 @@ import { unbreakable } from "../../Utils/functions";
 import committees from "../../Assets/Data/committees.json";
 import Button from "../../Components/Button";
 import Star from "../../Components/Star";
+import { useNavigate } from "react-router";
 
 interface SelectCommitteeProps {
   committee: Committee;
@@ -10,10 +11,12 @@ interface SelectCommitteeProps {
 }
 
 const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
+  const navigate = useNavigate();
+
   return (
     <>
       {/* Desktop */}
-      <div className="hidden lg:flex flex-col lg:sticky top-48 gap-6 h-fit">
+      <div className="hidden lg:flex flex-col lg:sticky top-40 gap-6 h-fit mb-10">
         <div className="flex flex-col gap-2 w-fit">
           <h2 className="text-2xl font-medium w-fit mx-2">Committees:</h2>
           <div className="h-[1px] bg-(--color-primary) glow" />
@@ -37,7 +40,7 @@ const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
           ))}
         </ul>
 
-        <Button onClick={() => {}}>JOIN US</Button>
+        <Button onClick={() => {navigate('/join-us')}}>JOIN US</Button>
 
         <div className="relative h-[40px]">
           <Star size={1.4} className="absolute top-0 left-3/8" />
