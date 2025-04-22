@@ -1,722 +1,514 @@
 [
   {
-    "name": "Name Placeholder",
+    "name": "Advaith Ravishankar",
     "committees": ["Executive"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
+    "role": "President",
+    "email": "aravishankar@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Advaith-Ravishankar.jpeg",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1zdM78iLGaMf5jhRTN6xDzhvIonF2jP_d/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/advaith-ravishankar-232b601b8/"
   },
   {
-    "name": "Name Placeholder",
+    "name": "Trey Scheid",
     "committees": ["Executive"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
+    "role": "VP Internal",
+    "email": "tscheid@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Trey-Scheid.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1dj36nMJSk6cBbvSKW6uQ1K7K4EZ6gMEY/view",
+    "linkedIn": "https://www.linkedin.com/in/treyscheid/"
   },
   {
-    "name": "Name Placeholder",
+    "name": "Kai Chester Ni",
     "committees": ["Executive"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
+    "role": "VP External",
+    "email": "c5ni@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Kai-ChesterNi.png",
+    "website": "https://ckai.io/",
+    "resume": "",
+    "linkedIn": "https://www.linkedin.com/in/ckai-io/"
   },
   {
-    "name": "Name Placeholder",
+    "name": "Jared Simpauco",
     "committees": ["Executive"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
+    "role": "VP Finance",
+    "email": "jsimpauco@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Jared-Simpauco.jpg",
+    "website": "",
+    "resume": "https://www.linkedin.com/in/jared-simpauco-6a0731223/",
+    "linkedIn": "https://www.linkedin.com/in/jared-simpauco-6a0731223/"
   },
   {
-    "name": "Name Placeholder",
+    "name": "Ansh Bhatnagar",
+    "committees": ["Executive", "Infrastructure"],
+    "role": "Infrastructure Director",
+    "email": "abhatnagar@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Ansh-Bhatnagar.png",
+    "website": "https://anshu-b.github.io/ansh/",
+    "resume": "https://docs.google.com/document/d/11ZPtdhCpwdMsf9HBRh65btXKlkbkT533/edit?usp=sharing&ouid=113914661221302710293&rtpof=true&sd=true",
+    "linkedIn": "https://www.linkedin.com/in/ansh-bhatnagar-721286234/"
+  },
+  {
+    "name": "Kaii Bijlani",
+    "committees": ["Executive", "Projects"],
+    "role": "Projects Director",
+    "email": "bijlanikaii@gmail.com",
+    "image": "/main-site/src/Assets/Images/Board/Kaii-Bijlani.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1PjfXjrJrrCZ4hSB-Wutib37VSbeoV4mV/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/kaii-bijlani/"
+  },
+  {
+    "name": "So Hirota",
+    "committees": ["Executive", "DataHacks"],
+    "role": "DataHacks Co-Director",
+    "email": "hirotaso92602@gmail.com",
+    "image": "/main-site/src/Assets/Images/Board/So-Hirota.jpeg",
+    "website": "https://soh09.github.io/",
+    "resume": "https://soh09.github.io/assets/so_hirota_resume.pdf",
+    "linkedIn": "https://www.linkedin.com/in/so-hirota/"
+  },
+  {
+    "name": "Kylee Kim",
+    "committees": ["Executive", "Design"],
+    "role": "Design Co-Director",
+    "email": "kak012@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Kylee-Kim.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1kGWICQpxtfyJ2Mp42oR8dM_roeJHY2ub/view?usp=drive_link",
+    "linkedIn": "https://www.linkedin.com/in/kylee-kim-919a85260/"
+  },
+  {
+    "name": "Jennifer Chang",
+    "committees": ["Executive", "Design"],
+    "role": "Design Co-Director",
+    "email": "jtc006@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Jennifer-Chang.JPG",
+    "website": "",
+    "resume": "https://docs.google.com/document/d/1Mh8GlXlRiroMFS1xqhCmxI1KXcv2neciDp0z5EnpCA8/edit?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/jennifer-chang-769ba71b3/"
+  },
+  {
+    "name": "Jiahe Qin",
+    "committees": ["Executive", "Social Events"],
+    "role": "Social Director",
+    "email": "jiq004@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Jiahe-Qin.png",
+    "website": "https://jassyq.github.io/portfolio/index.html",
+    "resume": "https://drive.google.com/file/d/1yujD8bqv7CqimMwx0eofFYfeIZ1nViV7/view?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/jiahe-qin-j17q"
+  },
+  {
+    "name": "Vrisan Dubey",
+    "committees": ["Executive", "Online Content"],
+    "role": "Online Content Director",
+    "email": "vdubey@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Vrisan-Dubey.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1E8QFrKHd-cLxdJF99PVvq_RfAE7GG2De/view",
+    "linkedIn": "https://www.linkedin.com/in/vrisan-dubey-889421235?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+  },
+  {
+    "name": "Heidi Tam",
+    "committees": ["Executive", "Marketing"],
+    "role": "Marketing Director",
+    "email": "hetam@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Heidi-Tam.jpg",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1lDiImjNe28tr4Jk78HylMMfz3s7xPGOs/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/heiditam/"
+  },
+  {
+    "name": "Shamita Goyal",
+    "committees": ["Infrastructure"],
+    "role": "UI Designer & Software Developer",
+    "email": "goyal.shamita4@gmail.com",
+    "image": "/main-site/src/Assets/Images/Board/Shamita-Goyal.png",
+    "website": "https://shamita-portfolio.vercel.app/",
+    "resume": "https://shamita-portfolio.vercel.app/assets/swe-24-C3-pUp3L.pdf",
+    "linkedIn": "https://www.linkedin.com/in/shamita-goyal-46323b250/"
+  },
+  {
+    "name": "Palina Volskaya",
+    "committees": ["Infrastructure"],
+    "role": "UI Designer & Software Developer",
+    "email": "pvolskaya@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Palina-Volskaya.jpg",
+    "website": "https://palkina.framer.website/",
+    "resume": "https://docs.google.com/document/d/1BrK54BfVXGfIXSPUjGkl5NZB4TS9Wppd2SrnyAFwklQ/edit?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/palinavolskaya"
+  },
+  {
+    "name": "Anagha Kamath",
+    "committees": ["Infrastructure"],
+    "role": "UI Designer & Software Developer",
+    "email": "ankamath@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Anagha-Kamath.jpeg",
+    "website": "https://anagha166.github.io/PersonalWebsite/",
+    "resume": "https://drive.google.com/file/d/1QHOUvLNwAW4csYLMs1CEKMIfp9Hi4EZB/view?usp=drivesdk",
+    "linkedIn": "https://www.linkedin.com/in/anagha-k-b00117266"
+  },
+  {
+    "name": "Issac Roy",
+    "committees": ["Infrastructure"],
+    "role": "Software Developer",
+    "email": "issacroy05@gmail.com",
+    "image": "/main-site/src/Assets/Images/Board/Issac-Roy.png",
+    "website": "https://www.issacroy.com/",
+    "resume": "https://drive.google.com/file/d/1FkvdyGzJHi-MHh5v0CJpzZgfwSx8yrbc/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/issacroy/"
+  },
+  {
+    "name": "Anirudh Annabathula",
+    "committees": ["Infrastructure", "Projects"],
+    "role": "Software Developer",
+    "email": "vannabathula@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Anirudh-Annabathula.png",
+    "website": "https://anirudhannabathula.com/",
+    "resume": "https://drive.google.com/file/d/1RtempyMgEcMIrgh04Sujv-QnMA3att8M/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/anirudha9/"
+  },
+  {
+    "name": "Krish Kankure",
+    "committees": ["Infrastructure"],
+    "role": "Software Developer",
+    "email": "krishkankure6@gmail.com",
+    "image": "/main-site/src/Assets/Images/Board/Krish-Kankure.jpg",
+    "website": "https://www.krishkankure.com/",
+    "resume": "https://drive.google.com/file/d/1-ppkqcQvorP7m6NMpEIA0DCK8oYk4GEr/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/krishkankure/"
+  },
+  {
+    "name": "Ishayu Ghosh",
+    "committees": ["Infrastructure"],
+    "role": "Software Developer",
+    "email": "ighosh@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Ishayu-Ghosh.png",
+    "website": "https://ishayu1.github.io/portfolio_website/",
+    "resume": "https://drive.google.com/file/d/1xZ7tO7iYJRYOvQMDGwLcs_y4Be4xmhdg/view?usp=share_link",
+    "linkedIn": "www.linkedin.com/in/ishayughosh"
+  },
+  {
+    "name": "Jeronimo Adames-Baena",
+    "committees": ["Infrastructure"],
+    "role": "Software Developer",
+    "email": "jadamesbaena@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Jeronimo-AdamesBaena.png",
+    "website": "https://jeronimo-adames.github.io/portfolio/",
+    "resume": "",
+    "linkedIn": "https://www.linkedin.com/in/jeronimo-adames-baena-8b76812b9/"
+  },
+  {
+    "name": "Nguyen Viet Minh Hieu",
+    "committees": ["Infrastructure"],
+    "role": "Software Developer",
+    "email": "vin028@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Hieu-Nguyen.png",
+    "website": "nguyenvietminhhieu.work",
+    "resume": "https://drive.google.com/file/d/1j6M3Wpq5BGn9nL79Dm7Yumo3pnugbMfT/view",
+    "linkedIn": "https://www.linkedin.com/in/vietminhhieunguyen/"
+  },
+  {
+    "name": "April Huang",
+    "committees": ["Infrastructure"],
+    "role": "Software Developer",
+    "email": "aphuang@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/April-Huang.JPG",
+    "website": "aprilrhuang.netlify.app/",
+    "resume": "https://docs.google.com/document/d/1pXW007M0dxccoeBevx-QCfH7SFwx3c8eCcd6FnSgZSk/edit?usp=drivesdk",
+    "linkedIn": "https://www.linkedin.com/in/april\u2014huang"
+  },
+  {
+    "name": "Charles Rivera",
+    "committees": ["Workshops"],
+    "role": "Workshops",
+    "email": "c9rivera@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1-d9wkL7YQOpECOH3bR9aOR99P7zyqOrU/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/charlesfrivera/"
+  },
+  {
+    "name": "Vivian Zhu",
+    "committees": ["External"],
+    "role": "External Team Member & Procurement Chair",
+    "email": "v1zhu@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "https://github.com/v1zhu",
+    "resume": "https://drive.google.com/file/d/1kIuGaqBpXsoP1GaWCfFuL6YUhiYg3x53/view?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/v-zhu"
+  },
+  {
+    "name": "Elizaveta Beltyukova ",
+    "committees": ["External"],
+    "role": "Startup Outreach Lead",
+    "email": "elizabeltyukova@gmail.com",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://docs.google.com/document/d/1M4m-TVGtF7AEtXi6DZZqwEkz30_84HlA5nd5lY_ke6o/edit?usp=drivesdk",
+    "linkedIn": "https://www.linkedin.com/in/elizaveta-beltyukova-2a011b236?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+  },
+  {
+    "name": "Viki Shi",
+    "committees": ["Design"],
+    "role": "Designer",
+    "email": "vikichenshi@gmail.com",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://docs.google.com/document/d/1-guJZ1p3TDEie5N6xPQjc57nlDRHrc9VPaFOGNkwOcc/edit?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/viki-shi"
+  },
+
+  {
+    "name": "Nao Song",
+    "committees": ["Design"],
+    "role": "Designer",
+    "email": "natalie.g.song@gmail.com",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "Design Portfolio Website: https://sites.google.com/view/nao-song-design-portfolio/home",
+    "resume": "",
+    "linkedIn": "https://www.linkedin.com/in/natalie-song-6243a5238/"
+  },
+  {
+    "name": "Adrian Kong",
+    "committees": ["DataHacks"],
+    "role": "Event Crew",
+    "email": "ahkong@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1tCw-goZbTlbCaJQZHzMXcgZbGCgfb1g3/view?usp=sharing",
+    "linkedIn": ""
+  },
+  {
+    "name": "Srinivas Sriram",
+    "committees": ["Online Content"],
+    "role": "Writer",
+    "email": "srsriram@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "https://github.com/srinisriram",
+    "resume": "https://drive.google.com/file/d/141swVvzGP_VFlQPlgKbzo9p8iooCGWc7/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/srinivas-profile/"
+  },
+  {
+    "name": "Dhruv Sehgal",
+    "committees": ["DataHacks"],
+    "role": "Event Crew",
+    "email": "dsehgal@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1ZT2_fXxgvc6z93viIXMOL6xps-t2Sv2W/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/dhruv-sehgal-955222238?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+  },
+  {
+    "name": "Coleman Clougherty",
+    "committees": ["Professional Events"],
+    "role": "Professional Events Chair",
+    "email": "cclougherty@ucsd.edi",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://docs.google.com/document/d/1DVgc6fgLKhfgWGFJe0jbzALBYVMX8BuXGbdQQEwESYw/edit?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/coleman-clougherty-41710a336/"
+  },
+  {
+    "name": "Rakshan Patnaik",
+    "committees": ["Professional Events"],
+    "role": "Professional Events Chair",
+    "email": "rapatnaik@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://www.linkedin.com/in/rakshanpatnaik/",
+    "linkedIn": "https://www.linkedin.com/in/rakshanpatnaik/"
+  },
+  {
+    "name": "Julia Ma",
+    "committees": ["External"],
+    "role": "External Chair",
+    "email": "juliama1213@gmail.com",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1jNyutzSkH45UApDdnYl06cH9kfvqrS4L/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/ma-julia/"
+  },
+  {
+    "name": "Sunny Sun",
+    "committees": ["Design"],
+    "role": "Designer",
+    "email": "sunnychingsun@gmail.com",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1QsYihGcAxnFMoko6WpCF0iVZGxItKgI0/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/sunnychingsun/"
+  },
+  {
+    "name": "Yohan Kwon",
+    "committees": ["External"],
+    "role": "Procurement Chair",
+    "email": "y8kwon@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://docs.google.com/document/d/1_uNhwxDTfrJlnxkz779zvos9awymQhqMUngYUtbMUpY/edit?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/yohannkkwon"
+  },
+  {
+    "name": "Aarshia Gupta",
+    "committees": ["DataHacks", "Workshops"],
+    "role": "Event Crew",
+    "email": "aag022@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/16ayPzFZ7Aif2HTTaGUv8thSh9xZgG4II/view?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/aarshiagupta"
+  },
+  {
+    "name": "Joy Liu",
+    "committees": ["Professional Events", "External"],
+    "role": "Professional Events Board Member, Team External Board Member",
+    "email": "jol127@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://ucsdcloud-my.sharepoint.com/:w:/g/personal/jol127_ucsd_edu/EWh7qPkfXRRErHJYmgY2GbcBOJ8d_moxaj5NN5gB7TzaEw?e=ZOiDSj",
+    "linkedIn": "www.linkedin.com/in/joy-liu-ucsd"
+  },
+  {
+    "name": "Katelyn Abille",
+    "committees": ["Marketing"],
+    "role": "Historian",
+    "email": "kate.abille@gmail.com",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://docs.google.com/document/d/13OZTwHA91d5cpepjAiaqcsWL80vtJ3yslwFsKfRhssE/edit?usp=drivesdk",
+    "linkedIn": "www.linkedin.com/in/katelynmaea"
+  },
+  {
+    "name": "Kate Hong",
+    "committees": ["Design"],
+    "role": "Designer",
+    "email": "kateh816@gmail.com",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "www.katehongdesign.com",
+    "resume": "https://drive.google.com/file/d/1Nsq08kd6CUpavujqQBpDhZs4T6kWYyx9/view?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/katehhong"
+  },
+  {
+    "name": "Anika Thatavarthy",
+    "committees": ["Executive", "Alumni"],
+    "role": "Advisor",
+    "email": "athatavarthy@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Anika-Thatavarthy.jpeg",
+    "website": "",
+    "resume": "https://docs.google.com/document/d/1Mx59JBfTKTUnnei-ltQlXvBPSH023dZhpN6hqj4XufU/edit?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/anika-thatavarthy/"
+  },
+  {
+    "name": "Praveen Sharma",
     "committees": ["Executive"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
+    "role": "Sponsorship Chair",
+    "email": "p4sharma@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Praveen-Sharma.jpeg",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1WMkCHHXrimzi4tXqW-VeCKt0LAIRZtgC/view?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/praveendesharma"
   },
   {
-    "name": "Name Placeholder",
+    "name": "Kavya Shah",
+    "committees": ["DataHacks"],
+    "role": "Event Crew",
+    "email": "kashah@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "https://sites.google.com/view/kavya-shah/home",
+    "resume": "https://drive.google.com/drive/folders/1OQiAbp7slxo0zITXtm8PkO95zacDgED3",
+    "linkedIn": "https://www.linkedin.com/in/kavyashah3008?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+  },
+  {
+    "name": "Anisha Kalgi",
+    "committees": ["Online Content"],
+    "role": "Writer, Technical Team. Member on the consulting team.",
+    "email": "akalgi@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://docs.google.com/document/d/1GVttgNYM21hFrOdCVfbvhy0locEfVDVCvSWIzONwGQo/edit?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/anisha-k-7b910723b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+  },
+  {
+    "name": "Essie Cheng",
+    "committees": ["Marketing"],
+    "role": "Marketing committee",
+    "email": "e3cheng@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://docs.google.com/document/d/1SaIsI-1Mc_oUZ_3geOA0D-u2Oin-NEgj/edit?usp=drivesdk&ouid=118430945526487138373&rtpof=true&sd=true",
+    "linkedIn": "https://www.linkedin.com/in/essiecheng"
+  },
+
+  {
+    "name": "Annabelle Guiditta",
+    "committees": ["Professional Events"],
+    "role": "Professional Events Chair",
+    "email": "aguiditta@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1yMF8V_7OHQWz_laLmei--DuUkxvM0qf7/view?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/aguiditta"
+  },
+  {
+    "name": "Gahn Wuwong",
+    "committees": ["Datahacks"],
+    "role": "Event Crew",
+    "email": "gwuwong@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": "https://gahnxd.github.io/",
+    "resume": "https://drive.google.com/file/d/1JuqmBQUoQwACatTx47lpD1yZ6ndR0WZL/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/gahn-wuwong/"
+  },
+  {
+    "name": "Huize Mao",
+    "committees": ["External Team"],
+    "role": "External Team",
+    "email": "h2mao@ucsd.edu",
+    "image": "/src/Assets/Images/placeholder.png",
+    "website": ".",
+    "resume": ".",
+    "linkedIn": "https://www.linkedin.com/in/huize-m"
+  },
+  {
+    "name": "Mehul Verma",
+    "committees": ["Social Events"],
+    "role": "Social Board",
+    "email": "meverma@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Mehul-Verma.jpg",
+    "website": "",
+    "resume": "https://www.overleaf.com/read/yfdpdbkrmmkc#cdd086",
+    "linkedIn": "https://www.linkedin.com/in/mehul-verma-328500237/"
+  },
+  {
+    "name": "Vaidehi Karve",
     "committees": ["Executive"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
+    "role": "Events Coordinator",
+    "email": "vkarve@ucsd.edu",
+    "image": "/main-site/src/Assets/Images/Board/Vaidehi-Karve.jpeg",
+    "website": "",
+    "resume": "https://www.linkedin.com/in/vaidehi-karve/",
+    "linkedIn": "https://www.linkedin.com/in/vaidehi-karve/"
   },
   {
-    "name": "Name Placeholder",
-    "committees": ["Executive"],
+    "name": "Ishita Takkar",
+    "committees": ["DataHacks"],
+    "role": "Event Crew",
+    "email": "itakkar@ucsd.edu",
     "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
+    "website": "",
+    "resume": "https://drive.google.com/file/d/1EvCFBwY2NY_xJC4XphkLUQXU_PxCZNMB/view?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/ishita-takkar"
   },
   {
-    "name": "Name Placeholder",
-    "committees": ["Executive"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Executive"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Marketing"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Marketing"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Marketing"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Marketing"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Marketing"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Marketing"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Marketing"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Marketing"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Marketing"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Design"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Design"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Design"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Design"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Design"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Design"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Design"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Design"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Design"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Workshops"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Workshops"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Workshops"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Workshops"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Workshops"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Workshops"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Workshops"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Workshops"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Workshops"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Professional Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Professional Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Professional Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Professional Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Professional Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Professional Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Professional Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Professional Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Professional Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
+    "name": "Minyoung Kim",
     "committees": ["Social Events"],
+    "role": "Social Team Member",
+    "email": "mik061@ucsd.edu",
     "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Social Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Social Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Social Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Social Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Social Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Social Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Social Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Social Events"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Online Content"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Online Content"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Online Content"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Online Content"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Online Content"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Online Content"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Online Content"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Online Content"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Online Content"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Infrastructure"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Infrastructure"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Infrastructure"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Infrastructure"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Infrastructure"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Infrastructure"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Infrastructure"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Infrastructure"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Infrastructure"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Projects"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Projects"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Projects"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Projects"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Projects"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Projects"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Projects"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Projects"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Projects"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Consulting"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Consulting"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Consulting"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Consulting"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Consulting"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Consulting"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Consulting"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Consulting"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
-  },
-  {
-    "name": "Name Placeholder",
-    "committees": ["Consulting"],
-    "image": "/src/Assets/Images/placeholder.png",
-    "website": "https://example.com",
-    "resume": "https://example.com/resume",
-    "linkedIn": "https://linkedin.com/in/example"
+    "website": "",
+    "resume": "https://docs.google.com/document/d/1y2Ve1UANgxoYe1FGuFLH5sg5ooxMiBfvB8dgyF4WHKQ/edit?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/minyoung-kim-360189222/"
   }
 ]
