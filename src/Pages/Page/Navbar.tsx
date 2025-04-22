@@ -56,7 +56,7 @@ const Navbar = () => {
         ))}
 
         <Link
-          to="/join"
+          to="/join-us"
           className={`bg-(--color-primary) px-4 py-2 hover:brightness-110 cursor-pointer rounded-xl text-center ${typographyClasses} font-semibold w-full md:w-auto`}
         >
           JOIN US
