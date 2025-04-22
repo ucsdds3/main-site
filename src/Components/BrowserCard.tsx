@@ -9,7 +9,7 @@ const BrowserCard = ({ title, date, link, location, image, description }: EventT
 
   return (
     <div
-      className={`relative w-full h-full p-4 rounded-lg border-2 hover:border-(--color-primary) duration-250 flex flex-col gap-2 group ${
+      className={`relative w-full h-full p-4 rounded-lg border-1 hover:border-(--color-primary) duration-250 flex flex-col gap-2 group ${
         notEvent && "cursor-pointer"
       }`}
       onClick={notEvent ? () => navigate(link.replace("www.ds3ucsd.com", "")) : undefined}
