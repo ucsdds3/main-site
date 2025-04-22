@@ -13,7 +13,7 @@ const ContactUs = () => {
 
         <div className="w-full flex flex-col">
           <h3 className="text-[clamp(1rem,2.5vw,1.5rem)] lg:text-[clamp(1rem,1.7vw,1.5rem)] font-semibold uppercase">Want to Learn More?</h3>
-          <h2 className="text-[clamp(2.2rem,6vw,4rem)] lg:text-[clamp(2.2rem,4vw,4rem)] font-semibold uppercase">Contact Us</h2>
+          <h2 className="text-[clamp(2.2rem,8vw,4rem)] lg:text-[clamp(2.2rem,4vw,4rem)] font-semibold uppercase">Contact Us</h2>
           <p className="text-[clamp(1rem,1.2vw,1.2rem)] font-light max-w-[clamp(20rem,50vw,40rem)]">
             Get in touch with us regarding blah blah we are so cool you will love being in our club,
             i think by the time you are here you would get a direct offer from amazon.

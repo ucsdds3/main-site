@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router";
 import Button from "../../../Components/Button";
 import logo from "/src/Assets/Images/ds3_logo.png";
 
 // &nbsp; is a non-breaking space
 export default function Text() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col justify-center items-center md:items-start px-8 mt-[10vh] lg:mt-[20vh]" id="textarea">
       <div className="flex gap-2 font-albert-sans text-[clamp(1.1rem,3vw,2rem)]">
@@ -23,7 +26,7 @@ export default function Text() {
         We are here to expand the horizons of data
         science&nbsp;as&nbsp;a&nbsp;community&nbsp;together.
       </p>
-      <Button onClick={() => {}}>JOIN US</Button>
+      <Button onClick={() => {navigate('/join-us')}}>JOIN US</Button>
     </div>
   );
 }

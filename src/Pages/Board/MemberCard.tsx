@@ -4,7 +4,7 @@ import { MemberType } from "../../Utils/types";
 const MemberCard = ({ image, name, website, linkedIn }: MemberType) => {
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="skeleton w-[240px] aspect-square">
+      <div className="skeleton w-[240px] aspect-square rounded-xl">
         <img
           src={image}
           className="size-full object-cover"
