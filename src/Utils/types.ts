@@ -24,6 +24,7 @@ export type TeamType = {
 
 export type MemberType = {
   name: string;
+  role?: string;
   title?: string;
   committees?: Committee[];
   image?: string;
