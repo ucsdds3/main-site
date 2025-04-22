@@ -1,14 +1,63 @@
 [
   {
-    "image": "/main-site/People/man1.png",
-    "title": "Data Engineer Intern | Atlassian",
+    "image": "/main-site/src/Assets/Images/Board/Krish-Kankure.jpg",
+    "title": "Data Engineer Intern | Atlassian '25",
     "description": "“I LOVE Ds3”",
-    "author": "Krish Kankure | First-Year | LinkedIn"
+    "author": "Krish Kankure - Infrastructure"
   },
   {
-    "image": "/main-site/People/man1.png",
-    "title": "Data Guy | Uber",
-    "description": "“I loved being a member here so much I felt as if I was on the moon and all my dreams came true. I got my dream job and I'm crying happily now.”",
-    "author": "John Smith | LinkedIn"
+    "image": "/main-site/src/Assets/Images/Board/April-Huang.JPG",
+    "title": "GoFundMe '25",
+    "description": "“I LOVE Ds3”",
+    "author": "April Huang - Infrastructure"
+  },
+  {
+    "image": "/main-site/src/Assets/Images/Board/Charles-Rivera.png",
+    "title": "Product Manager Intern | US Bank '25",
+    "description": "“I LOVE Ds3”",
+    "author": "Charles Rivera - Workshops"
+  },
+  {
+    "image": "/main-site/src/Assets/Images/Board/Anika-Thatavarthy.jpeg",
+    "title": "Google '25",
+    "description": "“I LOVE Ds3”",
+    "author": "Anika Thatavarthy - Advisor"
+  },
+  {
+    "image": "/main-site/src/Assets/Images/Board/Viki-Shi.jpg",
+    "title": "Walt Disney Studios '25",
+    "description": "“I LOVE Ds3”",
+    "author": "Viki Shi - Design"
+  },
+  {
+    "image": "/main-site/src/Assets/Images/Board/So-Hirota.jpeg",
+    "title": "NASA/JPL '25",
+    "description": "“I LOVE Ds3”",
+    "author": "So Hirota - DataHacks"
+  },
+  {
+    "image": "/main-site/src/Assets/Images/Board/Advaith-Ravishankar.jpeg",
+    "title": "ME, CSE @ Harvard",
+    "description": "“I LOVE Ds3”",
+    "author": "Advaith Ravishankar - President"
+  },
+  {
+    "image": "/main-site/src/Assets/Images/Board/Kaii-Bijlani.png",
+    "title": "Rivian '25",
+    "description": "“I LOVE Ds3”",
+    "author": "Kaii Bijlani - Projects"
+  },
+  {
+    "image": "/main-site/src/Assets/Images/Board/Anirudh-Annabathula.png",
+    "title": "Sensory Communication Lab @ UCSD",
+    "description": "“I LOVE Ds3”",
+    "author": "Anirudh - Infrastructure"
+  },
+  {
+    "image": "/main-site/src/Assets/Images/Board/Ishayu-Ghosh.png",
+    "title": "Chiba Lab @ UCSD",
+    "description": "“I LOVE Ds3”",
+    "author": "Ishayu - Infrastructure"
   }
+  
 ]
