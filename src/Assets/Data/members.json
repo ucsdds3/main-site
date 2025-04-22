@@ -122,7 +122,7 @@
   {
     "name": "Shamita Goyal",
     "committees": ["Infrastructure"],
-    "role": "UI Designer",
+    "role": "UI Designer & Software Developer",
     "email": "goyal.shamita4@gmail.com",
     "image": "/main-site/src/Assets/Images/Board/Shamita-Goyal.png",
     "website": "https://shamita-portfolio.vercel.app/",
@@ -132,7 +132,7 @@
   {
     "name": "Palina Volskaya",
     "committees": ["Infrastructure"],
-    "role": "UI Designer",
+    "role": "UI Designer & Software Developer",
     "email": "pvolskaya@ucsd.edu",
     "image": "/main-site/src/Assets/Images/Board/Palina-Volskaya.jpg",
     "website": "https://palkina.framer.website/",
@@ -142,7 +142,7 @@
   {
     "name": "Anagha Kamath",
     "committees": ["Infrastructure"],
-    "role": "UI Designer",
+    "role": "UI Designer & Software Developer",
     "email": "ankamath@ucsd.edu",
     "image": "/main-site/src/Assets/Images/Board/Anagha-Kamath.jpeg",
     "website": "https://anagha166.github.io/PersonalWebsite/",
