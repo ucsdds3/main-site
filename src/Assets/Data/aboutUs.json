@@ -4,6 +4,7 @@
     "title": "We are passionate about data, technology, and problem solving.",
     "content": "We are here to expand the horizons of data science as a community together.",
     "button": "OUR TEAM",
+    "link": "/board",
     "image": "/main-site/AboutUs/who-we-are.png"
   },
   {
@@ -11,6 +12,7 @@
     "title": "Build technical skills, network, and gain experience.",
     "content": "We are here to expand the horizons of data science as a community together.",
     "button": "EVENTS",
+    "link": "/events/upcoming",
     "image": "/main-site/AboutUs/what-we-do.png"
   }
 ]

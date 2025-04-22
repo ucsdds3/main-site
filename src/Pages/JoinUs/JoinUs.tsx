@@ -1,13 +1,22 @@
-import faq from "../../Assets/Data/FAQ.json"
-import FAQ from "../../Components/FAQ"
-import Page from "../Page/Page"
+import { useRef } from "react";
+import faq from "../../Assets/Data/FAQ.json";
+import ContactUs from "../../Components/ContactUs";
+import FAQ from "../../Components/FAQ";
+import Page from "../Page/Page";
+import Landing from "./Landing";
 
 const JoinUs = () => {
-  return (
-    <Page>
-      <FAQ faq={faq.joinUs} />
-    </Page>
-  )
-}
+  const scrollRef = useRef<HTMLDivElement>(null!);
 
-export default JoinUs
+  return (
+    <Page scrollRef={scrollRef}>
+      <Landing />
+      <div ref={scrollRef}>
+        <ContactUs />
+        <FAQ faq={faq.joinUs} />
+      </div>
+    </Page>
+  );
+};
+
+export default JoinUs;
