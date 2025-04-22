@@ -5,8 +5,9 @@ import committees from "../../Assets/Data/committees.json";
 import Page from "../Page/Page";
 import Star from "../../Components/Star";
 import SelectCommittee from "./SelectCommittee";
-import MemberCard from "./MemberCard";
+// import MemberCard from "./MemberCard";
 import { unbreakable } from "../../Utils/functions";
+import HoverCard from "../../Components/HoverCard";
 
 const Board = () => {
   const typedMembers = members as MemberType[];
@@ -33,7 +34,7 @@ const Board = () => {
 
           <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-y-8 py-12">
             {filteredMembers.map((member, index) => (
-              <MemberCard key={index} {...member} />
+              <HoverCard key={index} title={member.name} subtitle={member.title} image={member.image} links={member.links} />
             ))}
           </div>
         </div>
