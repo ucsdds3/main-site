@@ -1,14 +1,12 @@
 import workshopImage from "../../Assets/Images/event-landing.png";
-import ScrollArrow from "../../Components/ScrollArrow";
 import Section from "../../Components/Section";
 
 interface LandingProps {
   title: string;
   subtitle: string;
-  nextRef?: React.RefObject<HTMLDivElement>;
 }
 
-const Landing = ({ title, subtitle, nextRef }: LandingProps) => {
+const Landing = ({ title, subtitle }: LandingProps) => {
   return (
     <Section className="md:flex-row justify-center md:justify-between gap-[10vh] md:gap-[5vw] w-[80vw] max-w-[1300px] min-h-[90vh] md:min-h-[95vh]">
       <div className="flex flex-col text-center md:text-left">
@@ -25,8 +23,6 @@ const Landing = ({ title, subtitle, nextRef }: LandingProps) => {
         src={workshopImage}
         alt={`Logo Image`}
       />
-
-      {nextRef && <ScrollArrow nextRef={nextRef} />}
     </Section>
   );
 };
