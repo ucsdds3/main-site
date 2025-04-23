@@ -22,9 +22,18 @@ export type TeamType = {
 export type MemberType = {
   name: string;
   role?: string;
-  title?: string;
   committees?: Committee[];
   image?: string;
-  links?: Record<string, React.ReactNode>;
+  email?: string;
+  website?: string;
+  linkedIn?: string;
+  resume?: string;
   bio?: string;
+};
+
+export type LinkType = {
+  title: string;
+  href: string;
+  icon: React.ReactNode;
+  color: string;
 };
