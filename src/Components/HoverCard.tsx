@@ -15,7 +15,7 @@ interface HoverCardProps {
 
 const HoverCard = ({ title, subtitle, size, image, links }: HoverCardProps) => {
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 w-full">
       <div className="skeleton relative group" style={{ width: size, height: size }}>
         <img
           src={image}
