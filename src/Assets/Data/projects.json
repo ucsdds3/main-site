@@ -1,11 +1,46 @@
 {
   "about": {
     "name": "Projects",
-    "image": "main-site/GetInvolved/projects-img.jpeg",
+    "image": "/main-site/GetInvolved/projects-img.jpeg",
     "points": {
       "Gain Firsthand Experience": "Work on real projects—build language models, replicate top ML systems, and develop your own ideas with a team.",
       "Build Your Portfolio": "Strengthen your resume with hands-on projects while mastering in-demand ML tools and techniques.",
       "Collaborate With Your Peers": "Join a community of data enthusiasts, exchange ideas, and tackle challenges together to grow your skills."
     }
-  }
+  },
+  "images": [
+    "/main-site/GetInvolved/projects-img.jpeg",
+    "/main-site/",
+    "/main-site/GetInvolved/projects-img.jpeg",
+    "/main-site/",
+    "/main-site/",
+    "/main-site/GetInvolved/projects-img.jpeg",
+    "/main-site/GetInvolved/projects-img.jpeg"
+  ],
+  "projects": [
+    {
+      "name": "Project Name",
+      "image": "/main-site/",
+      "year": 2023,
+      "category": "Category 1"
+    },
+    {
+      "name": "Project Name",
+      "image": "/main-site/GetInvolved/projects-img.jpeg",
+      "year": 2021,
+      "category": "Category 1"
+    },
+    {
+      "name": "Project Name",
+      "image": "/main-site/GetInvolved/projects-img.jpeg",
+      "year": 2023,
+      "category": "Category 3"
+    },
+    {
+      "name": "Project Name",
+      "image": "/main-site/",
+      "year": 2022,
+      "category": "Category 4"
+    }
+  ]
 }
