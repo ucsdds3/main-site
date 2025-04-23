@@ -2,11 +2,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
-const ScrollArrow = ({ nextRef }: { nextRef: React.RefObject<HTMLDivElement> }) => {
+const ScrollArrow = ({ ref }: { ref: React.RefObject<HTMLDivElement> }) => {
   const [opacity, setOpacity] = useState(1);
 
   const scrollDown = () => {
-    nextRef.current?.scrollIntoView({ behavior: "smooth" });
+    ref.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
