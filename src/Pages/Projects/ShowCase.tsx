@@ -31,10 +31,10 @@ const ShowCase = () => {
 
   return (
     <Section>
-      <div className="flex justify-between items-center w-full">
-        <div className="flex flex-col">
+      <div className="flex flex-col md:flex-row gap-4 justify-between items-center w-full">
+        <div className="flex flex-col text-center md:text-left">
           <h2 className="text-2xl font-semibold">PROJECT SHOWCASE</h2>
-          <p>Take a look at some projects from previous years.</p>
+          <p>Here are some projects from previous years.</p>
         </div>
 
         <div className="flex gap-4">
@@ -67,9 +67,9 @@ const ShowCase = () => {
         </div>
       </div>
 
-      <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(360px,1fr))] gap-y-8">
+      <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(clamp(300px,40vw,350px),1fr))] justify-center gap-y-8">
         {filteredProjects.slice(0, 6).map(({ name, image }, index) => (
-          <HoverCard key={index} title={name} size="350px" image={image} />
+          <HoverCard key={index} title={name} size="clamp(300px, 40vw, 350px)" image={image} />
         ))}
       </div>
     </Section>
