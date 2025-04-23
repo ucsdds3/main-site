@@ -1,20 +1,16 @@
 import { twMerge } from "tailwind-merge";
+import { AnchorHTMLAttributes } from "react";
 
-interface SafeLinkProps {
+interface SafeLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
   glow?: boolean;
-  title?: string;
-  target?: string;
-  className?: string;
-  children?: React.ReactNode;
 }
 
-const SafeLink = ({ href, glow, target, className, children, title }: SafeLinkProps) => {
+const SafeLink = ({ href, glow, className, children, ...props }: SafeLinkProps) => {
   return (
     <a
       href={href}
-      title={title}
-      target={target || "_blank"}
+      target="_blank"
       rel="noopener noreferrer"
       className={twMerge(
         `transition-all duration-300 hover:underline ${
@@ -23,6 +19,7 @@ const SafeLink = ({ href, glow, target, className, children, title }: SafeLinkPr
         }`,
         className
       )}
+      {...props}
     >
       {children}
     </a>

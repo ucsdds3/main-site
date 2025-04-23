@@ -4,33 +4,44 @@ interface HoverCardProps {
   title: string;
   subtitle?: string;
   image?: string;
-  links?: Record<string, React.ReactNode>;
+  links?: {
+    title: string;
+    href: string;
+    icon: React.ReactNode;
+    color: string;
+  }[];
 }
 
 const HoverCard = ({ title, subtitle, image, links }: HoverCardProps) => {
-  const colors = ["bg-[#F58134]", "bg-[#19B5CA]", "bg-[#434343]"];
-
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="skeleton w-[240px] aspect-square rounded-xl relative group">
+      <div className="skeleton size-[240px] relative group">
         <img
           src={image}
-          className="size-full object-cover"
+          className="size-full object-cover rounded-2xl"
           onError={(e) => {
             e.currentTarget.style.display = "none";
           }}
         />
 
-        {links && <div className="hidden group-hover:flex absolute bottom-0 right-0 p-4 gap-4">
-          {Object.entries(links).map(([link, icon], index) => (
-            <SafeLink key={index} href={link} className={`btn btn-sm ${colors[index % 3]}`}>
-              {icon}
-            </SafeLink>
-          ))}
-        </div>}
+        {links && (
+          <div className="hidden group-hover:flex absolute bottom-0 w-full pb-2 gap-2 justify-center">
+            {links.map(({ title, href, icon, color }, index) => (
+              <SafeLink
+                key={index}
+                href={href}
+                title={title}
+                style={{ backgroundColor: color }}
+                className="btn text-lg text-(--color-primary-content)"
+              >
+                {icon}
+              </SafeLink>
+            ))}
+          </div>
+        )}
       </div>
 
-      <div className="text-lg flex flex-col">
+      <div className="text-lg flex flex-col w-[230px]">
         {title && <span className="text-2xl font-medium">{title}</span>}
         {subtitle && <span className="text-xl opacity-75 font-medium">{subtitle}</span>}
       </div>
