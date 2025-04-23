@@ -3,6 +3,7 @@ import SafeLink from "./SafeLink";
 interface HoverCardProps {
   title: string;
   subtitle?: string;
+  size: string;
   image?: string;
   links?: {
     title: string;
@@ -12,10 +13,10 @@ interface HoverCardProps {
   }[];
 }
 
-const HoverCard = ({ title, subtitle, image, links }: HoverCardProps) => {
+const HoverCard = ({ title, subtitle, size, image, links }: HoverCardProps) => {
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="skeleton size-[240px] relative group">
+      <div className="skeleton relative group" style={{ width: size, height: size }}>
         <img
           src={image}
           className="size-full object-cover rounded-2xl"
@@ -24,6 +25,7 @@ const HoverCard = ({ title, subtitle, image, links }: HoverCardProps) => {
           }}
         />
 
+        {/* TODO: Animate on hover */}
         {links && (
           <div className="hidden group-hover:flex absolute bottom-0 w-full pb-2 gap-2 justify-center">
             {links.map(({ title, href, icon, color }, index) => (
@@ -32,7 +34,7 @@ const HoverCard = ({ title, subtitle, image, links }: HoverCardProps) => {
                 href={href}
                 title={title}
                 style={{ backgroundColor: color }}
-                className="btn text-lg text-(--color-primary-content)"
+                className="btn p-3 text-lg text-(--color-primary-content)"
               >
                 {icon}
               </SafeLink>
@@ -41,7 +43,7 @@ const HoverCard = ({ title, subtitle, image, links }: HoverCardProps) => {
         )}
       </div>
 
-      <div className="text-lg flex flex-col w-[230px]">
+      <div className="text-lg flex flex-col" style={{ width: `calc(${size} * 0.95)` }}>
         {title && <span className="text-2xl font-medium">{title}</span>}
         {subtitle && <span className="text-xl opacity-75 font-medium">{subtitle}</span>}
       </div>

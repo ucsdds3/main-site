@@ -1,4 +1,4 @@
-import { Committee } from "../../Utils/types";
+import { CommitteeType } from "../../Utils/types";
 import { unbreakable } from "../../Utils/functions";
 import committees from "../../Assets/Data/committees.json";
 import Button from "../../Components/Button";
@@ -6,8 +6,8 @@ import Star from "../../Components/Star";
 import { useNavigate } from "react-router";
 
 interface SelectCommitteeProps {
-  committee: Committee;
-  setCommittee: (committee: Committee) => void;
+  committee: CommitteeType;
+  setCommittee: (committee: CommitteeType) => void;
 }
 
 const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
@@ -31,7 +31,7 @@ const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
                 name="committeeSelector"
                 className="radio radio-primary"
                 defaultChecked={index === 0}
-                onClick={() => setCommittee(committee as Committee)}
+                onClick={() => setCommittee(committee as CommitteeType)}
               />
               <label htmlFor={`committee-${index}`} className="cursor-pointer text-lg">
                 {unbreakable(committee)}
@@ -40,7 +40,13 @@ const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
           ))}
         </ul>
 
-        <Button onClick={() => {navigate('/join-us')}}>JOIN US</Button>
+        <Button
+          onClick={() => {
+            navigate("/join-us");
+          }}
+        >
+          JOIN US
+        </Button>
 
         <div className="relative h-[40px]">
           <Star size={1.4} className="absolute top-0 left-3/8" />
@@ -53,9 +59,8 @@ const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
         <span className="fieldset-legend text-lg">Committee</span>
         <select
           value={committee}
-          defaultValue={Object.keys(committees)[0]}
           className="select select-primary select-lg"
-          onChange={(e) => setCommittee(e.target.value as Committee)}
+          onChange={(e) => setCommittee(e.target.value as CommitteeType)}
         >
           {Object.keys(committees as object).map((committee, index) => (
             <option key={index}>{committee}</option>
