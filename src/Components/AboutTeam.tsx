@@ -24,7 +24,7 @@ const AboutTeam = ({ name, image, points }: TeamType) => {
           <div className="flex-[4] flex flex-col justify-center gap-8">
             {Object.entries(points).map(([point, description], index) => (
               <div key={index} className="flex gap-4">
-                <Star style={{ width: "30px", height: "30px" }} />
+                <Star className="mt-1" style={{ width: "30px", height: "30px" }} />
                 <div className="flex flex-col gap-2">
                   <p className="text-2xl font-bold uppercase">{point}</p>
                   <p>{description}</p>
