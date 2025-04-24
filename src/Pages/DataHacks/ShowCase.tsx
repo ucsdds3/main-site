@@ -5,6 +5,7 @@ import { useState } from "react";
 import About from "../../Components/About";
 import SafeLink from "../../Components/SafeLink";
 import Button from "../../Components/Button";
+import { newArray } from "../../Utils/functions";
 
 const ShowCase = () => {
   const [index, setIndex] = useState(0);
@@ -62,6 +63,17 @@ const ShowCase = () => {
         <button onClick={handleNext} className={btnClass} aria-label="Next">
           <IoIosArrowForward />
         </button>
+      </div>
+
+      <div className="flex gap-3 -mt-[clamp(3rem,4vw,8rem)]">
+        {newArray(winners.length).map((_, i) => (
+          <div
+            key={i}
+            className={`w-3 h-3 rounded-full ${
+              index == i ? "bg-(--color-primary)" : "bg-(--color-primary)/50"
+            }`}
+          />
+        ))}
       </div>
     </Section>
   );

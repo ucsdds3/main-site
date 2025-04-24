@@ -20,7 +20,7 @@ const ShowCase = () => {
     ),
   ];
 
-  const categories = [
+  const getCategories = (year: number) => [
     ...new Set(
       projects
         .filter((project) => project.year === year)
@@ -43,7 +43,10 @@ const ShowCase = () => {
             <select
               value={year}
               className="select select-primary"
-              onChange={(e) => setYear(parseInt(e.target.value))}
+              onChange={(e) => {
+                setYear(parseInt(e.target.value));
+                if (!getCategories(parseInt(e.target.value)).includes(category)) setCategory("All");
+              }}
             >
               {years.map((year, index) => (
                 <option key={index}>{year}</option>
@@ -59,7 +62,7 @@ const ShowCase = () => {
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value="All">All</option>
-              {categories.map((category, index) => (
+              {getCategories(year).map((category, index) => (
                 <option key={index}>{category}</option>
               ))}
             </select>
