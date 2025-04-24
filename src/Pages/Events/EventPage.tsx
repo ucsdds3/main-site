@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { TeamType } from "../../Utils/types";
-import AboutTeam from "../../Components/AboutTeam";
+import About from "../../Components/About";
 import Page from "../Page/Page";
 import Landing from "./Landing";
 import Events from "./Events";
@@ -17,7 +17,7 @@ const EventPage = ({ events: team }: { events: TeamType }) => {
     <Page scrollRef={scrollRef}>
       <Landing title={team.title.toUpperCase()} subtitle={team.subtitle} />
       <div ref={scrollRef}>
-        <AboutTeam {...team} />
+        <About {...team} />
         <Events />
       </div>
     </Page>

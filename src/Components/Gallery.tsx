@@ -1,7 +1,8 @@
 import { twMerge } from "tailwind-merge";
 import Section from "./Section";
+import Button from "./Button";
 
-const Gallery = ({ images }: { images: string[] }) => {
+const Gallery = ({ images, link }: { images: string[], link?: string }) => {
   const sizes = [
     "col-span-4 row-span-5 order-3 md:order-1",
     "col-span-3 row-span-3 order-4 md:order-2",
@@ -13,12 +14,14 @@ const Gallery = ({ images }: { images: string[] }) => {
   ];
 
   return (
-    <Section title="Gallery">
-      <div className="grid grid-cols-7 grid-rows-13 md:grid-rows-10 md:grid-cols-10 gap-2 h-[clamp(300px,80vh,600px)]">
-        {images.slice(0, sizes.length).map((image, index) => (
-          <div className={twMerge("skeleton rounded-sm", sizes[index])} key={index}>
+    <Section title="Gallery" className="gap-0">
+      {link && <Button onClick={() => window.open(link, "_blank")}>VIEW ALL</Button>}
+
+      <div className="grid grid-cols-7 grid-rows-13 md:grid-rows-10 md:grid-cols-10 gap-2 h-[clamp(300px,80vh,600px)] mt-10">
+        {sizes.map((size, index) => (
+          <div className={twMerge("skeleton rounded-sm", size)} key={index}>
             <img
-              src={image}
+              src={images[index] || "#"}
               className="size-full object-cover rounded-sm"
               onError={(e) => {
                 e.currentTarget.style.display = "none";
