@@ -1,3 +1,4 @@
+import { hideImage } from "../Utils/functions";
 import SafeLink from "./SafeLink";
 
 interface HoverCardProps {
@@ -20,9 +21,7 @@ const HoverCard = ({ title, subtitle, size, image, links }: HoverCardProps) => {
         <img
           src={image}
           className="size-full object-cover rounded-2xl"
-          onError={(e) => {
-            e.currentTarget.style.display = "none";
-          }}
+          onError={hideImage}
         />
 
         {/* TODO: Animate on hover */}

@@ -17,7 +17,7 @@ const PeopleCarousel = () => {
   };
 
   return (
-    <div className="w-full min-h-[550px] md:min-h-[400px] flex items-center justify-center gap-4 md:px-4 w-full">
+    <div className="w-full min-h-[550px] md:min-h-[400px] flex items-center justify-center gap-4 md:px-4">
       <button onClick={handlePrev} className={btnClass} aria-label="Previous">
         <IoIosArrowBack />
       </button>

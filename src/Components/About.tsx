@@ -1,23 +1,35 @@
 import Section from "./Section";
 import { TeamType } from "../Utils/types";
 import Star from "./Star";
+import { hideImage } from "../Utils/functions";
+import { twMerge } from "tailwind-merge";
 
-const AboutTeam = ({ name, image, points }: TeamType) => {
+interface AboutProps extends TeamType {
+  noAbout?: boolean;
+  className?: string;
+}
+
+const About = ({ name, image, points, noAbout, className }: AboutProps) => {
   if (!name || !image || !points) return null;
 
   return (
     <Section>
-      <div className="w-[80vw] max-w-[1204px] border-2 hover:border-(--color-primary) duration-300 rounded-xl p-[clamp(1.5rem,2vw,2.5rem)] group">
-        <h2 className="text-[clamp(2rem,2vw,2.5rem)] font-bold uppercase w-full">{`About ${name}`}</h2>
+      <div
+        className={twMerge(
+          "w-[80vw] max-w-[1204px] border-2 hover:border-(--color-primary) duration-300 rounded-xl p-[clamp(1.5rem,2vw,2.5rem)] group",
+          className
+        )}
+      >
+        <h2 className="text-[clamp(1.5rem,2vw,2.5rem)] font-bold uppercase w-full">
+          {noAbout ? name : `About ${name}`}
+        </h2>
 
         <div className="w-full flex flex-col lg:flex-row gap-8 mt-6">
           <div className="aspect-video skeleton flex-[6] rounded-md overflow-hidden">
             <img
               src={image}
               className="w-full h-full object-cover rounded-md group-hover:scale-105 duration-300"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-              }}
+              onError={hideImage}
             />
           </div>
 
@@ -26,8 +38,10 @@ const AboutTeam = ({ name, image, points }: TeamType) => {
               <div key={index} className="flex gap-4">
                 <Star className="mt-1" style={{ width: "30px", height: "30px" }} />
                 <div className="flex flex-col gap-2">
-                  <p className="text-2xl font-bold uppercase">{point}</p>
-                  <p>{description}</p>
+                  <p className="text-[clamp(1rem,1.4vw,1.4rem)] font-bold uppercase">{point}</p>
+                  <p className="text-[clamp(0.8rem,1.2vw,1.2rem)] opacity-75 line-clamp-6">
+                    {description}
+                  </p>
                 </div>
               </div>
             ))}
@@ -38,4 +52,4 @@ const AboutTeam = ({ name, image, points }: TeamType) => {
   );
 };
 
-export default AboutTeam;
+export default About;
