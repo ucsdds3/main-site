@@ -16,7 +16,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
       {label}
     </Link>
   ) : (
-    <div className="relative group w-full md:w-auto md:dropdown">
+    <div className="relative group w-full lg:w-auto lg:dropdown">
       <div
         tabIndex={0}
         role="button"
@@ -26,7 +26,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
         <IoIosArrowUp className="transition-transform duration-300 group-focus-within:rotate-180" />
       </div>
 
-      <ul className="hidden group-focus-within:flex group-hover:flex flex-col gap-3 md:gap-0 dropdown-content md:menu bg-base-100 md:w-52 z-10 p-2 shadow-sm group-focus-within:border-t border-(--color-primary) md:border md:border-white mt-2 md:rounded-lg text-center">
+      <ul className="hidden group-focus-within:flex group-hover:flex flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm group-focus-within:border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center">
         {Object.entries(data as object).map(([label, path]) => (
           <li key={label}>
             <Link to={path} className="hover:text-(--color-primary) text-base">
