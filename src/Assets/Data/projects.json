@@ -8,15 +8,7 @@
       "Collaborate With Your Peers": "Join a community of data enthusiasts, exchange ideas, and tackle challenges together to grow your skills."
     }
   },
-  "images": [
-    "/main-site/GetInvolved/projects-img.jpeg",
-    "/main-site/",
-    "/main-site/GetInvolved/projects-img.jpeg",
-    "/main-site/",
-    "/main-site/",
-    "/main-site/GetInvolved/projects-img.jpeg",
-    "/main-site/GetInvolved/projects-img.jpeg"
-  ],
+  "images": null,
   "projects": [
     {
       "name": "Project Name",
