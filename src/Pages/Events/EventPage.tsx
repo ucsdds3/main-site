@@ -16,7 +16,7 @@ const EventPage = ({ events: team }: { events: TeamType }) => {
   return (
     <Page scrollRef={scrollRef}>
       <Landing title={team.title.toUpperCase()} subtitle={team.subtitle} />
-      <div ref={scrollRef}>
+      <div className="flex flex-col items-center" ref={scrollRef}>
         <About {...team} />
         <Events />
       </div>

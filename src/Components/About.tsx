@@ -13,7 +13,7 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
   if (!name || !image || !points) return null;
 
   return (
-    <Section>
+    <Section className="pt-[12rem]">
       <div
         className={twMerge(
           "w-[80vw] max-w-[1204px] border-2 hover:border-(--color-primary) duration-300 rounded-xl p-[clamp(1.5rem,2vw,2.5rem)] group",
@@ -25,10 +25,10 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
         </h2>
 
         <div className="w-full flex flex-col lg:flex-row gap-8 mt-6">
-          <div className="aspect-video skeleton flex-[6] rounded-md overflow-hidden">
+          <div className="aspect-video skeleton flex-[6] rounded-2xl overflow-hidden">
             <img
               src={image}
-              className="w-full h-full object-cover rounded-md group-hover:scale-105 duration-300"
+              className="w-full h-full object-cover group-hover:scale-105 duration-300"
               onError={hideImage}
             />
           </div>
@@ -38,8 +38,8 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
               <div key={index} className="flex gap-4">
                 <Star className="mt-1" style={{ width: "30px", height: "30px" }} />
                 <div className="flex flex-col gap-2">
-                  <p className="text-[clamp(1rem,1.4vw,1.4rem)] font-bold uppercase">{point}</p>
-                  <p className="text-[clamp(0.8rem,1.2vw,1.2rem)] opacity-75 line-clamp-6">
+                  <p className="text-[clamp(1rem,2.5vw,1.4rem)] font-bold uppercase">{point}</p>
+                  <p className="text-[clamp(0.8rem,2.2vw,1.2rem)] opacity-75 line-clamp-6">
                     {description}
                   </p>
                 </div>

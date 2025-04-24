@@ -7,8 +7,8 @@ const FAQ = ({ faq }: { faq: Record<string, string> }) => {
         {Object.entries(faq).map(([question, answer], index) => (
           <div className="collapse collapse-arrow join-item border" key={index}>
             <input type="checkbox" />
-            <div className="collapse-title font-semibold">{question}</div>
-            <div className="collapse-content">{answer}</div>
+            <div className="collapse-title text-lg font-semibold">{question}</div>
+            <div className="collapse-content opacity-90">{answer}</div>
           </div>
         ))}
       </div>
