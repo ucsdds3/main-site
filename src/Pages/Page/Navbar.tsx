@@ -16,11 +16,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className="bg-[#0E1111] sticky top-0 w-full z-50 border-b border-(--color-primary) flex flex-col md:flex-row items-center justify-between px-6 py-4"
+      className="bg-[#0E1111] sticky top-0 w-full z-50 border-b border-(--color-primary) flex flex-col lg:flex-row items-center justify-between px-6 py-4"
       data-theme="dark"
     >
       {/* Top bar with logo and mobile menu button */}
-      <div className="w-full md:w-auto flex items-center justify-between">
+      <div className="w-full lg:w-auto flex items-center justify-between">
         <div className="flex items-center gap-5">
           <Link
             to="/"
@@ -38,7 +38,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile menu button */}
-        <label className="swap swap-rotate md:hidden">
+        <label className="swap swap-rotate lg:hidden">
           <input type="checkbox" checked={menuOpen} onChange={() => setMenuOpen(!menuOpen)} />
           <IoClose aria-label="enabled" className="swap-on text-2xl" />
           <GiHamburgerMenu aria-label="disabled" className="swap-off text-2xl" />
@@ -47,7 +47,7 @@ const Navbar = () => {
 
       {/* Navigation links */}
       <div
-        className={`w-full md:w-auto items-center flex-col md:flex md:flex-row gap-6 text-lg ${
+        className={`w-full lg:w-auto items-center flex-col lg:flex lg:flex-row gap-6 text-lg ${
           menuOpen ? "flex" : "hidden"
         } ${typographyClasses}`}
       >
@@ -57,7 +57,7 @@ const Navbar = () => {
 
         <Link
           to="/join-us"
-          className={`bg-(--color-primary) px-4 py-2 hover:brightness-110 cursor-pointer rounded-xl text-center ${typographyClasses} font-semibold w-full md:w-auto`}
+          className={`bg-(--color-primary) px-4 py-2 hover:brightness-110 cursor-pointer rounded-xl text-center ${typographyClasses} font-semibold w-full lg:w-auto`}
         >
           JOIN US
         </Link>
