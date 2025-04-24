@@ -11,28 +11,52 @@
   "images": null,
   "projects": [
     {
-      "name": "Project Name",
+      "name": "Category 1.1",
       "image": "/main-site/",
       "year": 2023,
       "category": "Category 1"
     },
     {
-      "name": "Project Name",
+      "name": "Category 1.2",
       "image": "/main-site/GetInvolved/projects-img.jpeg",
       "year": 2021,
       "category": "Category 1"
     },
     {
-      "name": "Project Name",
+      "name": "Category 3.1",
       "image": "/main-site/GetInvolved/projects-img.jpeg",
       "year": 2023,
       "category": "Category 3"
     },
     {
-      "name": "Project Name",
+      "name": "Category 4.1",
       "image": "/main-site/",
       "year": 2022,
       "category": "Category 4"
+    },
+    {
+      "name": "Category 2.1",
+      "image": "/main-site/GetInvolved/projects-img.jpeg",
+      "year": 2023,
+      "category": "Category 2"
+    },
+    {
+      "name": "Category 3.2",
+      "image": "/main-site/GetInvolved/projects-img.jpeg",
+      "year": 2022,
+      "category": "Category 3"
+    },
+    {
+      "name": "Category 4.2",
+      "image": "/main-site/",
+      "year": 2023,
+      "category": "Category 4"
+    },
+    {
+      "name": "Category 2.2",
+      "image": "/main-site/GetInvolved/projects-img.jpeg",
+      "year": 2022,
+      "category": "Category 2"
     }
   ]
 }
