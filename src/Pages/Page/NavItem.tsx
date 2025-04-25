@@ -1,24 +1,34 @@
 import { IoIosArrowUp } from "react-icons/io";
+import { HashLink } from "react-router-hash-link";
+import { setSite } from "../../Utils/functions";
 import { Link } from "react-router";
 
 interface NavItemProps {
   label: string;
-  data?:
-    | string
-    | {
-        [key: string]: string;
-      };
+  data?: string | Record<string, string>;
 }
 
 const NavItem = ({ label, data }: NavItemProps) => {
-  return typeof data === "string" ? (
-    <Link to={data!} className="hover:text-(--color-primary)">
+  if (typeof data === "string") {
+    return (
+      <Link to={data} className="hover:text-(--color-primary)">
+        {label}
+      </Link>
+    );
+  }
+
+  return data?.search ? (
+    <HashLink
+      to={data}
+      smooth
+      onClick={() => setSite("consulting")}
+      className="hover:text-(--color-primary)"
+    >
       {label}
-    </Link>
+    </HashLink>
   ) : (
     <div className="relative group w-full lg:w-auto lg:dropdown">
       <div
-        tabIndex={0}
         role="button"
         className="flex justify-center items-center gap-2 cursor-pointer hover:text-(--color-primary) focus:text-(--color-primary) duration-300"
       >

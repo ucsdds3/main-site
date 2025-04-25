@@ -1,18 +1,15 @@
 import { Link } from "react-router";
-import NavItem from "./NavItem";
 import { useState } from "react";
 import logo from "/src/Assets/Images/ds3_logo.png";
 import { useTheme } from "../../Hooks/useTheme";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
-import navData from "../../Assets/Data/navbar.json";
+import Links from "./Links";
 
 const Navbar = () => {
   const { isDark, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const typographyClasses = "font-quicksand font-normal tracking-[0px]";
 
   return (
     <nav
@@ -39,29 +36,13 @@ const Navbar = () => {
 
         {/* Mobile menu button */}
         <label className="swap swap-rotate lg:hidden">
-          <input type="checkbox" checked={menuOpen} onChange={() => setMenuOpen(!menuOpen)} />
+          <input type="checkbox" checked={menuOpen} onChange={() => setMenuOpen((prev) => !prev)} />
           <IoClose aria-label="enabled" className="swap-on text-2xl" />
           <GiHamburgerMenu aria-label="disabled" className="swap-off text-2xl" />
         </label>
       </div>
-
-      {/* Navigation links */}
-      <div
-        className={`w-full lg:w-auto items-center flex-col lg:flex lg:flex-row gap-6 text-lg ${
-          menuOpen ? "flex" : "hidden"
-        } ${typographyClasses}`}
-      >
-        {Object.entries(navData).map(([label, data]) => (
-          <NavItem key={label} label={label} data={data} />
-        ))}
-
-        <Link
-          to="/join-us"
-          className={`bg-(--color-primary) px-4 py-2 hover:brightness-110 cursor-pointer rounded-xl text-center ${typographyClasses} font-semibold w-full lg:w-auto`}
-        >
-          JOIN US
-        </Link>
-      </div>
+      
+      <Links menuOpen={menuOpen} />
     </nav>
   );
 };
