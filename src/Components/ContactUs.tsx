@@ -3,9 +3,9 @@ import Section from "./Section";
 import Button from "./Button";
 import Star from "./Star";
 
-const ContactUs = () => {
+const ContactUs = ({ ref }: { ref?: React.RefObject<HTMLDivElement> }) => {
   return (
-    <Section className="lg:flex-row pt-[10rem] px-[clamp(0.5rem,2vw,2.5rem)] gap-[clamp(6rem,8vw,10rem)]">      
+    <Section className="lg:flex-row pt-[10rem] px-[clamp(0.5rem,2vw,2.5rem)] gap-[clamp(6rem,8vw,10rem)]" id="contact" ref={ref}>      
       <div className="flex-1 flex flex-col justify-center items-center text-center lg:text-left px-[clamp(1rem,3vw,5rem)] relative">
         <Star size={2} className="absolute top-4 right-10" />
         <Star size={2} className="absolute -bottom-1/8 lg:top-7/16 left-1/8" />
@@ -26,8 +26,8 @@ const ContactUs = () => {
       </div>
 
       <form className="flex-1 w-[clamp(300px,70vw,400px)] flex flex-col gap-6">
-        {["Name", "Email", "Subject"].map((label) => (
-          <label className="flex flex-col gap-2">
+        {["Name", "Email", "Subject"].map((label, index) => (
+          <label className="flex flex-col gap-2" key={index}>
             <span className="text-lg font-semibold">{label}</span>
             <input
               type="text"

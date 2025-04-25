@@ -1,13 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
+import { scrollTo } from "../../Utils/functions";
 
 const ScrollArrow = ({ ref }: { ref: React.RefObject<HTMLDivElement> }) => {
   const [opacity, setOpacity] = useState(1);
-
-  const scrollDown = () => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   useEffect(() => {
     const scrollContainer = document.querySelector(".simplebar-content-wrapper");
@@ -36,7 +33,7 @@ const ScrollArrow = ({ ref }: { ref: React.RefObject<HTMLDivElement> }) => {
           ease: "easeIn",
         }}
       >
-        <IoIosArrowDown size={40} onClick={scrollDown} style={{ opacity }} />
+        <IoIosArrowDown size={40} onClick={() => scrollTo(ref)} style={{ opacity }} />
       </motion.div>
     </AnimatePresence>
   );
