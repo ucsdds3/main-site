@@ -23,3 +23,14 @@ export const getNextDeadline = (deadlines: Record<string, string>) =>
   Object.entries(deadlines)
     .filter(([_, value]) => parseToPST(value) > new Date())
     .sort((a, b) => parseToPST(a[1]).getTime() - parseToPST(b[1]).getTime())[0];
+
+export const scrollTo = (ref: React.RefObject<HTMLDivElement>) => {
+  ref.current?.scrollIntoView({ behavior: "smooth" });
+};
+
+export const setSite = (site: "main" | "consulting") => {
+  const params = new URLSearchParams(window.location.search);
+  params.set("site", site);
+  const newUrl = `${window.location.pathname}?${params.toString()}`;
+  window.history.pushState({}, "", newUrl);
+};

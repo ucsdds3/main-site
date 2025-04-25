@@ -1,13 +1,32 @@
 {
-  "Events": {
-    "Upcoming": "/events/upcoming",
-    "Workshops": "/events/workshops",
-    "Social": "/events/social",
-    "Professional": "/events/professional"
+  "main": {
+    "Events": {
+      "Upcoming": "/events/upcoming",
+      "Workshops": "/events/workshops",
+      "Social": "/events/social",
+      "Professional": "/events/professional"
+    },
+    "Board": "/board",
+    "Projects": "/projects",
+    "DataHacks": "/datahacks",
+    "Partners": "/partners",
+    "Consulting": {
+      "pathname": "/",
+      "search": "site=consulting"
+    }
   },
-  "Board": "/board",
-  "Projects": "/projects",
-  "DataHacks": "/datahacks",
-  "Partners": "/partners",
-  "Consulting": "https://ucsdds3.github.io/consulting-site/"
+  "consulting": {
+    "About Us": {
+      "hash": "#about",
+      "search": "site=consulting"
+    },
+    "Our Work": {
+      "hash": "#work",
+      "search": "site=consulting"
+    },
+    "Contact Us": {
+      "hash": "#contact",
+      "search": "site=consulting"
+    }
+  }
 }
