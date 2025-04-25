@@ -4,15 +4,17 @@ interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   className?: string;
   children?: React.ReactNode;
+  ref?: React.RefObject<HTMLDivElement>;
 }
 
-const Section = ({ title, className, children, ...props }: SectionProps) => {
+const Section = ({ title, className, children, ref, ...props }: SectionProps) => {
   return (
     <section
       className={twMerge(
         "flex flex-col items-center w-[90vw] lg:w-[80vw] py-[clamp(5rem,6vw,10rem)] gap-10",
         className
       )}
+      ref={ref}
       {...props}
     >
       {title && (
