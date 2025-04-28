@@ -1,6 +1,6 @@
 import Error from "../../Components/Error";
 import BrowserCard from "../../Components/BrowserCard";
-import { newArray } from "../../Utils/functions";
+import { newArray } from "../../Utils/functions.tsx";
 import Section from "../../Components/Section";
 import { useCalendarEvents } from "../../Hooks/useCalendarEvents";
 import { EventType } from "../../Utils/types";

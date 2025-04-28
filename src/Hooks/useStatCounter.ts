@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { newArray, setIndex } from "../Utils/functions";
+import { newArray, setIndex } from "../Utils/functions.tsx";
 
 export const useStatCounter = (values: number[]) => {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);

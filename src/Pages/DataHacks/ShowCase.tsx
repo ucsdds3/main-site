@@ -5,7 +5,7 @@ import { useState } from "react";
 import About from "../../Components/About";
 import SafeLink from "../../Components/SafeLink";
 import Button from "../../Components/Button";
-import { newArray } from "../../Utils/functions";
+import { newArray } from "../../Utils/functions.tsx";
 
 const ShowCase = () => {
   const [index, setIndex] = useState(0);
