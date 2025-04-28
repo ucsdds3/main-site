@@ -5,7 +5,7 @@ import About from "../../Components/About";
 import projects from "../../Assets/Data/projects.json";
 import ShowCase from "./ShowCase";
 import Gallery from "../../Components/Gallery";
-import { newArray } from "../../Utils/functions";
+import { newArray } from "../../Utils/functions.tsx";
 
 const Projects = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);

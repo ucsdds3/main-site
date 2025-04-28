@@ -1,7 +1,14 @@
-export const newArray = <T>(length: number, value?: T): T[] =>
+import { LinkType, MemberType } from "./types";
+import { IoMail } from "react-icons/io5";
+import { FaGlobe, FaLinkedin } from "react-icons/fa6";
+import { IoIosDocument } from "react-icons/io";
+
+export const newArray = <T,>(length: number, value?: T): T[] =>
   Array.from({ length }, () => (value !== undefined ? value : (null as T)));
 
-export const setIndex = <T>(arr: T[], idx: number, value: T) => [
+export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
+export const setIndex = <T,>(arr: T[], idx: number, value: T) => [
   ...arr.slice(0, idx),
   value,
   ...arr.slice(idx + 1),
@@ -34,3 +41,31 @@ export const setSite = (site: "main" | "consulting") => {
   const newUrl = `${window.location.pathname}?${params.toString()}`;
   window.history.pushState({}, "", newUrl);
 };
+
+export const formatMemberLinks = ({ email, website, linkedIn, resume }: MemberType) =>
+  [
+    email && {
+      title: "Email",
+      icon: <IoMail />,
+      href: `mailto:${email}`,
+      color: "#F58134",
+    },
+    linkedIn && {
+      title: "LinkedIn",
+      icon: <FaLinkedin />,
+      href: linkedIn,
+      color: "#11B3C9",
+    },
+    resume && {
+      title: "Resume",
+      icon: <IoIosDocument />,
+      href: resume,
+      color: "#434343",
+    },
+    website && {
+      title: "Website",
+      icon: <FaGlobe />,
+      href: website,
+      color: "#222222",
+    },
+  ].filter(Boolean) as LinkType[];

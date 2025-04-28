@@ -9,54 +9,182 @@
     }
   },
   "images": null,
-  "projects": [
-    {
-      "name": "Category 1.1",
-      "image": "/main-site/",
-      "year": 2023,
-      "category": "Category 1"
-    },
-    {
-      "name": "Category 1.2",
-      "image": "/main-site/GetInvolved/projects-img.jpeg",
-      "year": 2021,
-      "category": "Category 1"
-    },
-    {
-      "name": "Category 3.1",
-      "image": "/main-site/GetInvolved/projects-img.jpeg",
-      "year": 2023,
-      "category": "Category 3"
-    },
-    {
-      "name": "Category 4.1",
-      "image": "/main-site/",
-      "year": 2022,
-      "category": "Category 4"
-    },
-    {
-      "name": "Category 2.1",
-      "image": "/main-site/GetInvolved/projects-img.jpeg",
-      "year": 2023,
-      "category": "Category 2"
-    },
-    {
-      "name": "Category 3.2",
-      "image": "/main-site/GetInvolved/projects-img.jpeg",
-      "year": 2022,
-      "category": "Category 3"
-    },
-    {
-      "name": "Category 4.2",
-      "image": "/main-site/",
-      "year": 2023,
-      "category": "Category 4"
-    },
-    {
-      "name": "Category 2.2",
-      "image": "/main-site/GetInvolved/projects-img.jpeg",
-      "year": 2022,
-      "category": "Category 2"
-    }
-  ]
+  "projects": {
+    "2024": [
+      {
+        "title": "Augmented Reality: Food Nutrition Finder",
+        "description": "AR app to identify food and display nutrition info using headset or camera."
+      },
+      {
+        "title": "Tesla Autonomous Car Software",
+        "description": "Simulate Tesla's autopilot logic using computer vision techniques."
+      },
+      {
+        "title": "Cryptocurrency Price Prediction",
+        "description": "Analyze crypto trends and build models to predict future prices."
+      },
+      {
+        "title": "Audio Emotion Recognition",
+        "description": "Detect emotions in speech/music via audio processing and sentiment analysis."
+      },
+      {
+        "title": "Plant Disease Detection",
+        "description": "AI tool to detect plant diseases from image data for farming applications."
+      },
+      {
+        "title": "Amazon Product Recommendation System",
+        "description": "Investigate which factors influence Amazon product recommendations."
+      },
+      {
+        "title": "Facial Emotion Detection",
+        "description": "Predict facial emotions using landmarking and convolution techniques."
+      },
+      {
+        "title": "Zillow Ideal Real Investment Market",
+        "description": "Analyze real estate data to identify optimal investment locations."
+      },
+      {
+        "title": "Credit Card Fraud Transactions",
+        "description": "Detect fraudulent credit card activity using time series data."
+      },
+      {
+        "title": "Fantasy Football Player Stats Prediction",
+        "description": "Predict fantasy points using player stats and advanced ML models."
+      },
+      {
+        "title": "Public Transport Geospatial Analysis: Rail & Road",
+        "description": "Evaluate public transport ridership using geospatial data."
+      },
+      {
+        "title": "Consumer Price Index Modeling",
+        "description": "Model and visualize CPI trends to understand inflation and cost of living."
+      }
+    ],
+    "2023": [
+      {
+        "title": "Stack Exchange Breakdown",
+        "description": "Analyze Stack Exchange question trends and topic evolution."
+      },
+      {
+        "title": "Human Motion Tracking",
+        "description": "Use CV to track and interpret human motion for applications like robotics."
+      },
+      {
+        "title": "TED Talk Success Probability",
+        "description": "Predict TED Talk popularity using text analysis and trends."
+      },
+      {
+        "title": "Job Posting Fraud Detection",
+        "description": "Detect fraudulent job postings using machine learning."
+      },
+      {
+        "title": "Multi-Tumor Detection Using Representation Learning",
+        "description": "Detect various tumors using generalizable ML representation learning."
+      },
+      {
+        "title": "The Social Network Problem",
+        "description": "Build a social media recommender using user interaction data."
+      },
+      {
+        "title": "Formula One Breakdown",
+        "description": "Analyze F1 data to identify top drivers and performance predictors."
+      },
+      {
+        "title": "Aircraft Crash Prevention",
+        "description": "Reduce wildlife-related aviation incidents with FAA data analysis."
+      },
+      {
+        "title": "Reinforcement Learning Chatbot",
+        "description": "Build a human-like chatbot using reinforcement learning techniques."
+      },
+      {
+        "title": "Shazam 2.0",
+        "description": "Build a music genre classifier inspired by Shazam using MFCC + HMM."
+      },
+      {
+        "title": "S&P 500 Stock Recommendation System",
+        "description": "Create stock recommender based on ML analysis of market data."
+      },
+      {
+        "title": "Seizure and Brain Stroke Detection",
+        "description": "Predict seizures using EEG time series data for healthcare alerts."
+      }
+    ],
+    "2022": [
+      {
+        "title": "Soccer Team Success Predictors",
+        "description": "Analyze performance factors influencing soccer team success."
+      },
+      {
+        "title": "Audio Classification Using Urban Sounds Dataset",
+        "description": "Classify urban sounds using audio ML models."
+      },
+      {
+        "title": "Dirty Laundry: Financial Corruption Investigation",
+        "description": "Use ML to detect patterns of financial corruption."
+      },
+      {
+        "title": "Predicting Internet Outages and Severity",
+        "description": "Forecast internet outages using signal and usage data."
+      },
+      {
+        "title": "EDA of Global Health Data",
+        "description": "Explore and visualize international health metrics."
+      },
+      {
+        "title": "Geospatial Analysis on Squirrels in Central Park",
+        "description": "Map squirrel activity using NYC Central Park data."
+      },
+      {
+        "title": "CPI Modeling",
+        "description": "Model the consumer price index to study inflation trends."
+      },
+      {
+        "title": "Fake Amazon Reviews Classification",
+        "description": "Identify fake reviews using text classification techniques."
+      },
+      {
+        "title": "Facebook Ads Data Analysis",
+        "description": "Analyze engagement and reach patterns from Facebook ads."
+      },
+      {
+        "title": "Reinforcement Learning Based Poker Robot",
+        "description": "Create a poker bot using reinforcement learning."
+      }
+    ],
+    "2021": [
+      {
+        "title": "Spotify Recommender System",
+        "description": "Recommend music on Spotify using user behavior analytics."
+      },
+      {
+        "title": "Movie Recommendation System",
+        "description": "Suggest movies using collaborative filtering."
+      },
+      {
+        "title": "Human Activity Prediction",
+        "description": "Predict physical activities based on wearable sensor data."
+      },
+      {
+        "title": "Analyzing NFT Transaction Legitimacy",
+        "description": "Detect suspicious NFT transactions using graph theory."
+      },
+      {
+        "title": "USGS Wildfires Dashboard",
+        "description": "Create a dashboard for wildfire tracking and visualization."
+      },
+      {
+        "title": "Celebrity Speech Recognition",
+        "description": "Build a system to recognize celebrity voices from clips."
+      },
+      {
+        "title": "Rotten Tomatoes Data Analysis",
+        "description": "Analyze reviews and ratings on Rotten Tomatoes."
+      },
+      {
+        "title": "NASA Mars Image Classification",
+        "description": "Classify Martian images from NASA's datasets using ML."
+      }
+    ]
+  }
 }
