@@ -1,6 +1,6 @@
 import Button from "../../Components/Button";
 import Section from "../../Components/Section";
-import { hideImage } from "../../Utils/functions";
+import { hideImage } from "../../Utils/functions.tsx";
 
 const Landing = () => {
   return (

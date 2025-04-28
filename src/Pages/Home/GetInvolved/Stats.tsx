@@ -1,4 +1,4 @@
-import { unbreakable } from "../../../Utils/functions";
+import { unbreakable } from "../../../Utils/functions.tsx";
 import { useStatCounter } from "../../../Hooks/useStatCounter";
 import { useTheme } from "../../../Hooks/useTheme";
 import { motion } from "framer-motion";

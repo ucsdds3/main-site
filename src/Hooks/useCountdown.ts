@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getNextDeadline, parseToPST } from "../Utils/functions";
+import { getNextDeadline, parseToPST } from "../Utils/functions.tsx";
 
 export const useCountdown = (deadlines: Record<string, string>) => {
   const [time, setTime] = useState({ days: "00", hours: "00", mins: "00", secs: "00" });

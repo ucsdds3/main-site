@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { scrollTo } from "../../Utils/functions";
+import { scrollTo } from "../../Utils/functions.tsx";
 
 const ScrollArrow = ({ ref }: { ref: React.RefObject<HTMLDivElement> }) => {
   const [opacity, setOpacity] = useState(1);

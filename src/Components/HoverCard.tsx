@@ -1,9 +1,9 @@
-import { hideImage } from "../Utils/functions";
+import { hideImage } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
 
 interface HoverCardProps {
   title: string;
-  subtitle?: string;
+  description?: string;
   size: string;
   image?: string;
   links?: {
@@ -14,12 +14,12 @@ interface HoverCardProps {
   }[];
 }
 
-const HoverCard = ({ title, subtitle, size, image, links }: HoverCardProps) => {
+const HoverCard = ({ title, description, size, image, links }: HoverCardProps) => {
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <div className="skeleton relative group" style={{ width: size, height: size }}>
         <img
-          src={image}
+          src={image || "/main-site/"}
           className="size-full object-cover rounded-2xl"
           onError={hideImage}
         />
@@ -42,9 +42,9 @@ const HoverCard = ({ title, subtitle, size, image, links }: HoverCardProps) => {
         )}
       </div>
 
-      <div className="text-lg flex flex-col" style={{ width: `calc(${size} * 0.95)` }}>
-        {title && <span className="text-2xl font-medium">{title}</span>}
-        {subtitle && <span className="text-xl opacity-75 font-medium">{subtitle}</span>}
+      <div className="text-lg text-center flex flex-col gap-2" style={{ width: `calc(${size} * 0.95)` }}>
+        {title && <span className="text-xl font-medium">{title}</span>}
+        {description && <span className="text-sm opacity-75 font-medium">{description}</span>}
       </div>
     </div>
   );

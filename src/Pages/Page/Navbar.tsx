@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { useState } from "react";
 import logo from "/src/Assets/Images/ds3_logo.png";
 import { useTheme } from "../../Hooks/useTheme";
@@ -6,8 +5,11 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import Links from "./Links";
+import { useSiteHandler } from "../../Hooks/useSiteHandler";
+import { HashLink } from "react-router-hash-link";
 
 const Navbar = () => {
+  const isConsulting = useSiteHandler();
   const { isDark, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -19,12 +21,13 @@ const Navbar = () => {
       {/* Top bar with logo and mobile menu button */}
       <div className="w-full lg:w-auto flex items-center justify-between">
         <div className="flex items-center gap-5">
-          <Link
-            to="/"
+          <HashLink
+            smooth
+            to={{ hash: "#home", search: isConsulting ? "site=consulting" : "" }}
             className="space-x-2 cursor-pointer hover:-rotate-180 transition-all duration-500"
           >
             <img src={logo} alt="Logo" className="w-10" />
-          </Link>
+          </HashLink>
 
           {/* Theme Toggle */}
           <label className="toggle text-base-content" id="theme-toggle">
@@ -41,7 +44,7 @@ const Navbar = () => {
           <GiHamburgerMenu aria-label="disabled" className="swap-off text-2xl" />
         </label>
       </div>
-      
+
       <Links menuOpen={menuOpen} />
     </nav>
   );

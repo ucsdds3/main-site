@@ -1,6 +1,6 @@
 import { IoIosArrowUp } from "react-icons/io";
 import { HashLink } from "react-router-hash-link";
-import { setSite } from "../../Utils/functions";
+import { setSite } from "../../Utils/functions.tsx";
 import { Link } from "react-router";
 
 interface NavItemProps {

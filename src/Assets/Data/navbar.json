@@ -17,11 +17,11 @@
   },
   "consulting": {
     "About Us": {
-      "hash": "#about",
+      "hash": "#about-us",
       "search": "site=consulting"
     },
     "Our Work": {
-      "hash": "#work",
+      "hash": "#our-work",
       "search": "site=consulting"
     },
     "Contact Us": {
