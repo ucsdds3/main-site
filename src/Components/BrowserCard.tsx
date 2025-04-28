@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { EventType } from "../Utils/types";
-import { newArray } from "../Utils/functions";
+import { newArray } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
 
 const BrowserCard = ({ title, date, link, location, image, description }: EventType) => {

@@ -1,5 +1,5 @@
 import { CommitteeType } from "../../Utils/types";
-import { unbreakable } from "../../Utils/functions";
+import { unbreakable } from "../../Utils/functions.tsx";
 import committees from "../../Assets/Data/committees.json";
 import Button from "../../Components/Button";
 import Star from "../../Components/Star";

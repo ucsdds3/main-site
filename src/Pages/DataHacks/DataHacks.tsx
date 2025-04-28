@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { newArray } from "../../Utils/functions";
+import { newArray } from "../../Utils/functions.tsx";
 import Page from "../Page/Page";
 import Gallery from "../../Components/Gallery";
 import datahacks from "../../Assets/Data/datahacks.json";

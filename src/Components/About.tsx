@@ -1,7 +1,7 @@
 import Section from "./Section";
 import { TeamType } from "../Utils/types";
 import Star from "./Star";
-import { hideImage } from "../Utils/functions";
+import { hideImage } from "../Utils/functions.tsx";
 import { twMerge } from "tailwind-merge";
 
 interface AboutProps extends TeamType {
