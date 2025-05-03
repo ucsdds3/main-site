@@ -7,7 +7,9 @@ import SelectCommittee from "./SelectCommittee";
 import MemberCards from "./MemberCards";
 
 const Board = () => {
-  const [committee, setCommittee] = useState<CommitteeType>(Object.keys(committees)[0] as CommitteeType);
+  const [committee, setCommittee] = useState<CommitteeType>(
+    Object.keys(committees)[0] as CommitteeType
+  );
 
   return (
     <Page>
