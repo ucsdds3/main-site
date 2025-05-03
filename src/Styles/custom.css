@@ -1,17 +1,102 @@
 .hero-text-shadow {
-  text-shadow:
-    0 5px 20px #19b5ca66,
-    0 -5px 15px #19b5ca33,
-    0 0 30px #19b5ca55;
+  text-shadow: 0 5px 20px #19b5ca66, 0 -5px 15px #19b5ca33, 0 0 30px #19b5ca55;
 }
 
 .text-glow {
-  text-shadow:
-    0 2px 10px var(--color-primary),
-    0 -2px 10px var(--color-primary),
+  text-shadow: 0 2px 10px var(--color-primary), 0 -2px 10px var(--color-primary),
     0 0 30px var(--color-primary);
 }
 
 .glow {
   box-shadow: 0 0 8px var(--color-primary), 0 0 12px var(--color-primary);
+}
+
+/* Animations for numbers going up */
+@property --num700 {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+@property --num500 {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+@property --num100 {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+@property --num50 {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.stats-700 {
+  animation: counter700 1s forwards;
+  counter-set: num700 var(--num700);
+}
+.stats-700::after {
+  content: counter(num700) "+";
+}
+
+@keyframes counter700 {
+  from {
+    --num700: 0;
+  }
+  to {
+    --num700: 700;
+  }
+}
+
+.stats-100 {
+  animation: counter100 1s forwards;
+  counter-set: num100 var(--num100);
+}
+.stats-100::after {
+  content: counter(num100) "+";
+}
+
+@keyframes counter100 {
+  from {
+    --num100: 0;
+  }
+  to {
+    --num100: 100;
+  }
+}
+
+.stats-500 {
+  animation: counter500 1s forwards;
+  counter-set: num500 var(--num500);
+}
+.stats-500::after {
+  content: counter(num500) "+";
+}
+
+@keyframes counter500 {
+  from {
+    --num500: 0;
+  }
+  to {
+    --num500: 500;
+  }
+}
+
+.stats-50 {
+  animation: counter50 1s forwards;
+  counter-set: num50 var(--num50);
+}
+.stats-50::after {
+  content: counter(num50) "+";
+}
+
+@keyframes counter50 {
+  from {
+    --num50: 0;
+  }
+  to {
+    --num50: 50;
+  }
 }
