@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { CommitteeType } from "../../Utils/types";
 import committees from "../../Assets/Data/committees.json";
 import Page from "../Page/Page";
 import Star from "../../Components/Star";
 import SelectCommittee from "./SelectCommittee";
-import MemberCards from "./MemberCards";
+const MemberCards = lazy(() => {
+  return import("./MemberCards");
+});
 
 const Board = () => {
   const [committee, setCommittee] = useState<CommitteeType>(
@@ -18,7 +20,9 @@ const Board = () => {
         <Star size={1.1} className="absolute top-10 right-14" />
 
         <SelectCommittee committee={committee} setCommittee={setCommittee} />
-        <MemberCards committee={committee} />
+        <Suspense>
+          <MemberCards committee={committee} />
+        </Suspense>
       </div>
     </Page>
   );
