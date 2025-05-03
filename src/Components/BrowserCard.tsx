@@ -1,21 +1,39 @@
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import { EventType } from "../Utils/types";
 import { newArray } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
 
-const BrowserCard = ({ title, date, link, location, image, description }: EventType) => {
+const BrowserCard = ({
+  title,
+  date,
+  link,
+  location,
+  image,
+  description,
+  delay,
+}: EventType & { delay: number }) => {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3ucsd.com");
 
   return (
-    <div
-      className={`relative w-full h-full p-4 rounded-lg border-1 hover:border-(--color-primary) duration-250 flex flex-col gap-2 group ${
-        notEvent && "cursor-pointer"
+    <motion.div
+      initial={{ opacity: 0, y: 30 }} 
+      whileInView={{ opacity: 1, y: 0 }} 
+      viewport={{ once: true, amount: 0.2 }} 
+      transition={{
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+        delay,
+      }}
+      className={`relative w-full h-full pt-6 px-10 pb-6 rounded-2xl bg-[var(--bg-color)] border border-[var(--initial-border-color)] hover:border-[var(--border-color)] duration-150 flex flex-col gap-2 group ${
+        notEvent ? "cursor-pointer" : ""
       }`}
       onClick={notEvent ? () => navigate(link.replace("www.ds3ucsd.com", "")) : undefined}
     >
-      <div className="flex justify-between items-center gap-6">
-        <span className="w-[80%] h-6 px-4 truncate rounded-full bg-base-300 hover:underline">
+      <div className="flex justify-between items-center gap-6 mb-2">
+        <span className="w-[80%] h-6 px-4  truncate rounded-full text-[var(--link-textcolor)] bg-base-300 hover:underline">
           {notEvent && link}
         </span>
         <div className="flex gap-2">
@@ -26,7 +44,7 @@ const BrowserCard = ({ title, date, link, location, image, description }: EventT
       </div>
 
       <div className="pl-2 flex flex-col">
-        <h4 className="text-2xl font-normal">{title}</h4>
+        <h4 className="text-3xl font-normal">{title}</h4>
         <p className="text-lg opacity-75">
           {date && <span>{date}</span>}
           {date && location && <span> | </span>}
@@ -34,24 +52,21 @@ const BrowserCard = ({ title, date, link, location, image, description }: EventT
         </p>
       </div>
 
-      <div
-        className={`group overflow-hidden relative rounded-md flex items-center justify-center ${
-          notEvent ? "h-[300px]" : "h-[200px]"
-        }`}
-      >
+      <div className="group overflow-hidden relative rounded-lg bg-red-500 inline-block">
         {image ? (
-          <img
-            src={image}
-            alt={title}
-            className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : (
-          <div className="absolute top-0 skeleton z-1 w-full rounded-lg h-full" />
-        )}
-      </div>
+        <img
+        src={image}
+        alt={title}
+        className="object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+      ) : (
+      <div className="skeleton rounded-lg" />
+      )}
+    </div>
+
 
       {description ? (
-        <p className="text-lg line-clamp-5">{description}</p>
+        <p className="text-lg font-light mt-2 line-clamp-5 text-[var(--card-textcolor)]">{description}</p>
       ) : (
         <div className="md:max-h-[35%] overflow-y-auto w-full">
           {newArray(4).map((_, index) => (
@@ -71,7 +86,7 @@ const BrowserCard = ({ title, date, link, location, image, description }: EventT
         ) : (
           <div className="h-10 m-1 mt-4 rounded-md w-[50%] skeleton" />
         ))}
-    </div>
+    </motion.div>
   );
 };
 
