@@ -12,6 +12,7 @@ const FAQ = lazy(() => {
   return import("../../Components/FAQ");
 });
 import Page from "../Page/Page";
+import { lazy, Suspense } from "react";
 
 const Partners = () => {
   return (
