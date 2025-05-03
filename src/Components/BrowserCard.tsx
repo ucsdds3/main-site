@@ -2,11 +2,12 @@ import { useNavigate } from "react-router";
 import { EventType } from "../Utils/types";
 import { newArray } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
+import useImagePreloader from "../Hooks/useImagepreload.tsx";
 
 const BrowserCard = ({ title, date, link, location, image, description }: EventType) => {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3ucsd.com");
-
+  const ImagePreloader = useImagePreloader([image ? image : ""]);
   return (
     <div
       className={`relative w-full h-full p-4 rounded-lg border-1 hover:border-(--color-primary) duration-250 flex flex-col gap-2 group ${
@@ -39,7 +40,7 @@ const BrowserCard = ({ title, date, link, location, image, description }: EventT
           notEvent ? "h-[300px]" : "h-[200px]"
         }`}
       >
-        {image ? (
+        {image && ImagePreloader.imagesPreloaded ? (
           <img
             src={image}
             alt={title}

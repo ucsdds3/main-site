@@ -1,8 +1,10 @@
 import Section from "../../Components/Section";
 import data from "../../Assets/Data/aboutUs.json";
 import { Link } from "react-router";
+import useImagePreloader from "../../Hooks/useImagepreload";
 
 const AboutUs = () => {
+  const ImagePreloader = useImagePreloader(data.map((daton) => daton.image));
   return (
     <Section title="About Us">
       <div className="mt-10 flex flex-col gap-10">
@@ -31,11 +33,15 @@ const AboutUs = () => {
 
             <div className="flex-1 flex items-center">
               <div className="aspect-video w-full rounded-lg overflow-hidden border-2">
-                <img
-                  className="w-full h-full object-cover"
-                  src={section.image}
-                  alt={section.section}
-                />
+                {ImagePreloader.imagesPreloaded ? (
+                  <img
+                    className="w-full h-full object-cover"
+                    src={section.image}
+                    alt={section.section}
+                  />
+                ) : (
+                  <div className="skeleton min-w-[410px] h-full"></div>
+                )}
               </div>
             </div>
           </div>
