@@ -100,3 +100,17 @@
     --num50: 50;
   }
 }
+
+@keyframes scrollArrow {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.scroll-arrow {
+  animation: scrollArrow;
+  animation-timeline: view();
+  animation-range: 0 100vh;
+}
