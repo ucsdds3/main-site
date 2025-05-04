@@ -3,8 +3,16 @@ import { EventType } from "../Utils/types";
 import { newArray } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
 import useImagePreloader from "../Hooks/useImagepreload.tsx";
+import { memo } from "react";
 
-const BrowserCard = ({ title, date, link, location, image, description }: EventType) => {
+const BrowserCard = memo(function BrowserCard({
+  title,
+  date,
+  link,
+  location,
+  image,
+  description
+}: EventType) {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3ucsd.com");
   const ImagePreloader = useImagePreloader([image ? image : ""]);
@@ -74,6 +82,6 @@ const BrowserCard = ({ title, date, link, location, image, description }: EventT
         ))}
     </div>
   );
-};
+});
 
 export default BrowserCard;
