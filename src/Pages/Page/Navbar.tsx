@@ -6,7 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import Links from "./Links";
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
-import { HashLink } from "react-router-hash-link";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const isConsulting = useSiteHandler();
@@ -21,13 +21,15 @@ const Navbar = () => {
       {/* Top bar with logo and mobile menu button */}
       <div className="w-full lg:w-auto flex items-center justify-between">
         <div className="flex items-center gap-5">
-          <HashLink
-            smooth
-            to={{ hash: "#home", search: isConsulting ? "site=consulting" : "" }}
-            className="space-x-2 cursor-pointer hover:-rotate-180 transition-all duration-500"
-          >
-            <img src={logo} alt="Logo" className="w-10" />
-          </HashLink>
+        <Link
+        to={{
+          pathname: "/",
+          search: isConsulting ? "?site=consulting" : "",
+        }}
+        className="space-x-2 cursor-pointer hover:-rotate-180 transition-all duration-500"
+        >
+          <img src={logo} alt="Logo" className="w-10" />
+        </Link>
 
           {/* Theme Toggle */}
           <label className="toggle text-base-content" id="theme-toggle">
