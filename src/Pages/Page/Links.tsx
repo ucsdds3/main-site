@@ -19,7 +19,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       ))}
       <Link
         to={isConsulting ? { pathname: "/", search: "site=main" } : "/join-us"}
-        className={`bg-(--color-primary) px-4 py-2 hover:brightness-110 cursor-pointer rounded-xl text-center ${typographyClasses} font-semibold w-full lg:w-auto uppercase`}
+        className={`bg-(--color-primary) px-4 py-2 hover:brightness-110 cursor-pointer rounded-full text-center ${typographyClasses} font-medium w-full sm:w-auto min-w-[120px] uppercase`}
       >
         {isConsulting ? "Main Site" : "Join Us"}
       </Link>

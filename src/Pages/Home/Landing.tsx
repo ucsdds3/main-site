@@ -5,6 +5,7 @@ import logo from "/src/Assets/Images/ds3_logo.png";
 import starData from "../../Assets/Data/stars.json";
 import Star from "../../Components/Star";
 import Button from "../../Components/Button";
+import './dino.css'
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -58,6 +59,10 @@ const Landing = () => {
         src={dino}
         className="w-[clamp(20rem,40vw,30rem)] lg:w-[clamp(18rem,28vw,40rem)] h-fit mt-[clamp(5rem,10vw,10rem)] lg:mt-auto p-16 mb-10 mx-auto lg:mx-0 rotate-15"
       />
+        {/* <img
+        src={dino}
+        className="dino-img"
+      /> */}
     </div>
   );
 };
