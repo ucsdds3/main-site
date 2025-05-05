@@ -24,8 +24,8 @@ const Footer = () => {
             key={index}
             title={media.title}
             href={media.link}
-            className="hover:text-(--color-primary) transition-all duration-300 btn rounded-full text-xl w-14 h-14 bg-base-100 hover:brightness-125"
-          >
+            className="text-xl p-2 rounded-full hover:text-[var(--color-primary)] transition-all duration-300"
+            >
             {media.icon}
           </SafeLink>
         ))}
