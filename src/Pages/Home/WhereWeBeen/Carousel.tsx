@@ -11,7 +11,7 @@ export default function Carousel() {
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
     AutoScroll({
       playOnInit: true,
-      speed: 2,
+      speed: 1,
       stopOnInteraction: false,
       stopOnFocusIn: false,
     }),
