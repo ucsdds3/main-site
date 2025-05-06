@@ -14,7 +14,7 @@ const Events = () => {
       {error ? (
         <Error message={error!} />
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fit,clamp(350px,60vw,450px))] lg:grid-cols-[repeat(auto-fit,clamp(350px,40vw,380px))] justify-center lg:justify-start w-full lg:gap-5 ">
+        <div className="grid grid-cols-[repeat(auto-fit,clamp(350px,60vw,450px))] lg:grid-cols-[repeat(auto-fit,clamp(350px,40vw,360px))] justify-center lg:justify-start w-full lg:gap-5 ">
           {loading
             ? newArray(3).map((_, index) => <BrowserCard key={index} {...({} as EventType)} />)
             : events.map((event, index) => <BrowserCard key={index} {...event} />)}
