@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import faq from "../../Assets/Data/FAQ.json";
 import OurPartners from "../../Components/OurPartners";
 const WorkWithUs = lazy(() => {
   return import("./WorkWithUs");
@@ -7,10 +6,10 @@ const WorkWithUs = lazy(() => {
 const ContactUs = lazy(() => {
   return import("../../Components/ContactUs");
 });
-
-const FAQ = lazy(() => {
-  return import("../../Components/FAQ");
-});
+// import faq from "../../Assets/Data/FAQ.json";
+// const FAQ = lazy(() => {
+//   return import("../../Components/FAQ");
+// });
 import Page from "../Page/Page";
 
 const Partners = () => {
@@ -20,7 +19,7 @@ const Partners = () => {
       <Suspense>
         <WorkWithUs />
         <ContactUs />
-        <FAQ faq={faq.partners} />
+        {/* <FAQ faq={faq.partners} /> */}
       </Suspense>
     </Page>
   );
