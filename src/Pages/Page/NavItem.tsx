@@ -21,6 +21,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
     <HashLink
       to={data}
       smooth
+      target={data.target || "_self"}
       onClick={() => setSite("consulting")}
       className="hover:text-(--color-primary)"
     >
