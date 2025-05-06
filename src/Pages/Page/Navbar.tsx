@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="flex items-center gap-5">
           <HashLink
             smooth
-            to={{ hash: "#home", search: isConsulting ? "site=consulting" : "" }}
+            to={isConsulting ? { hash: "#home", search: "site=consulting" } : "/#home"}
             className="space-x-2 cursor-pointer hover:-rotate-180 transition-all duration-500"
           >
             <img src={logo} alt="Logo" className="w-10" />
