@@ -24,9 +24,9 @@ const Navbar = () => {
           <HashLink
             smooth
             to={isConsulting ? { hash: "#home", search: "site=consulting" } : "/#home"}
-            className="space-x-2 cursor-pointer hover:-rotate-180 transition-all duration-500"
+            className="space-x-2 cursor-pointer [&:hover>img]:-rotate-180"
           >
-            <img src={logo} alt="Logo" className="w-10" />
+            <img src={logo} alt="Logo" className="w-10 transition-all duration-500" />
           </HashLink>
 
           {/* Theme Toggle */}
