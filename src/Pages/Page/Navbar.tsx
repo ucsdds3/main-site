@@ -21,15 +21,13 @@ const Navbar = () => {
       {/* Top bar with logo and mobile menu button */}
       <div className="w-full lg:w-auto flex items-center justify-between">
         <div className="flex items-center gap-5">
-        <Link
-        to={{
-          pathname: "/",
-          search: isConsulting ? "?site=consulting" : "",
-        }}
-        className="space-x-2 cursor-pointer hover:-rotate-180 transition-all duration-500"
-        >
-          <img src={logo} alt="Logo" className="w-10" />
-        </Link>
+          <HashLink
+            smooth
+            to={isConsulting ? { hash: "#home", search: "site=consulting" } : "/#home"}
+            className="space-x-2 cursor-pointer hover:-rotate-180 transition-all duration-500"
+          >
+            <img src={logo} alt="Logo" className="w-10" />
+          </HashLink>
 
           {/* Theme Toggle */}
           <label className="toggle text-base-content" id="theme-toggle">
