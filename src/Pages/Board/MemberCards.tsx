@@ -18,7 +18,8 @@ const MemberCards = ({ committee }: { committee: CommitteeType }) => {
       <h1 className="text-[clamp(1.8rem,5vw,2.5rem)] font-medium text-center lg:text-left">
         {"Meet our "}
         <span className="text-(--color-primary) text-glow">{committee}</span>
-        {committee !== "Alumni" && unbreakable(" Team")}!
+        {/* {committee !== "Alumni" && unbreakable(" Team")}! */}
+        {unbreakable(" Team")}!
       </h1>
       <p className="text-[clamp(1.1rem,1.5vw,1.4rem)] font-light px-[clamp(1rem,3vw,5rem)] lg:px-0 indent-8 lg:indent-0">
         {committees[committee]}

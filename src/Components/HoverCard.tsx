@@ -25,6 +25,7 @@ const HoverCard = ({ title, description, size, image, links }: HoverCardProps) =
             src={image || "/main-site/"}
             className="size-full object-cover rounded-2xl"
             onError={hideImage}
+            onLoad={(e) => (e.currentTarget.style.display = "block")}
           />
         )}
 
