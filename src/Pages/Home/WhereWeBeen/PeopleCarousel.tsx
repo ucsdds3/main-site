@@ -1,20 +1,22 @@
-import { useState } from "react";
 import cardData from "../../../Assets/Data/testimonials.json";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import useImagePreloader from "../../../Hooks/useImagepreload";
+import useEmblaCarousel from "embla-carousel-react";
 
 const PeopleCarousel = () => {
-  const [index, setIndex] = useState(0);
-  const ImagePreloader = useImagePreloader(cardData.map((daton) => daton.image));
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const ImagePreloader = useImagePreloader(
+    cardData.map((daton) => daton.image)
+  );
   const btnClass =
     "rounded-full hover:text-(--color-primary) p-3 hover:bg-base-300 transition-colors duration-300 cursor-pointer text-2xl md:mx-8 z-100";
 
   const handlePrev = () => {
-    setIndex((prev) => (prev == 0 ? cardData.length - 1 : prev - 1));
+    emblaApi?.scrollPrev();
   };
 
   const handleNext = () => {
-    setIndex((prev) => (prev == cardData.length - 1 ? 0 : prev + 1));
+    emblaApi?.scrollNext();
   };
 
   return (
@@ -23,16 +25,16 @@ const PeopleCarousel = () => {
         <IoIosArrowBack />
       </button>
 
-      <span className="w-full flex min-h-[550px] md:min-h-[400px] overflow-hidden">
-        <section
-          className="flex justify-center items-center relative w-full duration-500 ease-in-out"
-          style={{ transform: "translateX(" + -index * 100 + "%)" }}
-        >
+      <span
+        className="w-full flex min-h-[550px] md:min-h-[400px] overflow-hidden embla"
+        ref={emblaRef}
+      >
+        <section className="flex flex-row w-full ease-in-out embla__container">
           {cardData.map((data, i) => {
             return (
               <div
-                className="flex flex-col md:flex-row items-center justify-center w-full gap-[clamp(1rem,6vw,6rem)] absolute z-100"
-                style={{ transform: "translateX(" + i * 100 + "%)" }}
+                key={i}
+                className="flex-shrink-0 flex flex-col md:flex-row items-center justify-center w-full gap-[clamp(1rem,6vw,6rem)] z-100 embla__slides"
               >
                 <div className="md:w-auto w-full flex justify-center mb-6 md:mb-0">
                   {ImagePreloader.imagesPreloaded ? (
