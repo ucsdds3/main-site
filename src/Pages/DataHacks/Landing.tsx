@@ -20,7 +20,6 @@ const Landing = () => {
       </div>
 
       <Countdown />
-
       {deadline && deadline[0].toLowerCase().includes("apply") && (
         <Button
           onClick={() => {

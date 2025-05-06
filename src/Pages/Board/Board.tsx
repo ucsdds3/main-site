@@ -10,7 +10,9 @@ import MemberCards from "./MemberCards";
 //   "Alumni": "The alumni committee helps maintain a strong community of former DS3 members. They provide networking opportunities for alumni to connect with current members and share their experiences."
 
 const Board = () => {
-  const [committee, setCommittee] = useState<CommitteeType>(Object.keys(committees)[0] as CommitteeType);
+  const [committee, setCommittee] = useState<CommitteeType>(
+    Object.keys(committees)[0] as CommitteeType
+  );
 
   return (
     <Page>
