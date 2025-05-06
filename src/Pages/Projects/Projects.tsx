@@ -13,21 +13,9 @@ const Gallery = lazy(() => {
 
 import projects from "../../Assets/Data/projects.json";
 
-import { newArray } from "../../Utils/functions.tsx";
-
 const Projects = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
-  const ProjectsGallery = [
-    "/main-site/Projects/P1.jpeg",
-    "/main-site/Projects/P2.jpg",
-    "/main-site/Projects/P3.jpg",
-    "/main-site/Projects/P4.jpg",
-    "/main-site/Projects/P5.jpg",
-    "/main-site/Projects/P6.jpg",
-    "/main-site/Projects/P7.jpg"
-  ]
   
-
   return (
     <Page scrollRef={scrollRef}>
       <Landing />
@@ -35,7 +23,7 @@ const Projects = () => {
         <Suspense>
           <About {...projects.about} />
           <ShowCase />
-          <Gallery images={projects.images || ProjectsGallery} />
+          <Gallery images={projects.images} />
         </Suspense>
       </div>
     </Page>
