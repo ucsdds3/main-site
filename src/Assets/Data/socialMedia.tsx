@@ -6,7 +6,7 @@ import { IoMail } from "react-icons/io5";
 export default [
   {
     title: "Discord",
-    link: "https://discord.com/invite/fbnAP848V9",
+    link: "https://discord.gg/K3g6qKkx",
     icon: <FaDiscord />
   },
   {
