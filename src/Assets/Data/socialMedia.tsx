@@ -6,32 +6,32 @@ import { IoMail } from "react-icons/io5";
 export default [
   {
     title: "Discord",
-    link: "https://discord.gg/fbnAP848V9",
+    link: "https://discord.gg/K3g6qKkx",
     icon: <FaDiscord />
   },
   {
     title: "Spotify",
-    link: "https://open.spotify.com/playlist/4M7QKz9Z9DZ6d9hGgU9z9D",
+    link: "https://open.spotify.com/show/7yHiQn4eqjy2EAzRNEmQdf",
     icon: <FaSpotify />
   },
   {
     title: "Instagram",
-    link: "https://www.instagram.com/ds3atucsd/",
+    link: "https://www.instagram.com/ds3atucsd/?hl=en",
     icon: <FaInstagram />
   },
   {
     title: "Medium",
-    link: "https://medium.com/@ds3atucsd",
+    link: "https://medium.com/ds3ucsd",
     icon: <FaMedium />
   },
   {
     title: "Github",
-    link: "https://github.com/TheBoyRoy05/",
+    link: "https://github.com/ucsdds3",
     icon: <FaGithub />
   },
   {
     title: "Linkedin",
-    link: "https://www.linkedin.com/in/issacroy/",
+    link: "https://www.linkedin.com/company/data-science-student-society-at-ucsd/",
     icon: <FaLinkedin />
   },
   {
