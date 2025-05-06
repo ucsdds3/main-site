@@ -6,6 +6,9 @@ import Star from "../../Components/Star";
 import SelectCommittee from "./SelectCommittee";
 import MemberCards from "./MemberCards";
 
+// "Consulting": "Our consulting committee meets with external companies and faculty to create new DS3 events and opportunities. They build partnerships that enhance our offerings and connect our organization with the broader data science community.",
+//   "Alumni": "The alumni committee helps maintain a strong community of former DS3 members. They provide networking opportunities for alumni to connect with current members and share their experiences."
+
 const Board = () => {
   const [committee, setCommittee] = useState<CommitteeType>(Object.keys(committees)[0] as CommitteeType);
 
