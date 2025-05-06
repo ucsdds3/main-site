@@ -1,6 +1,9 @@
-import { useRef } from "react";
+import { lazy, useRef } from "react";
 import faq from "../../Assets/Data/FAQ.json";
-import ContactUs from "../../Components/ContactUs";
+
+const ContactUs = lazy(() => {
+  return import("../../Components/ContactUs");
+});
 import FAQ from "../../Components/FAQ";
 import Page from "../Page/Page";
 import Landing from "./Landing";

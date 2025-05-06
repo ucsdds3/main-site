@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -7,7 +8,7 @@ interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
   ref?: React.RefObject<HTMLDivElement>;
 }
 
-const Section = ({ title, className, children, ref, ...props }: SectionProps) => {
+const Section = memo(function Section({ title, className, children, ref, ...props }: SectionProps) {
   return (
     <section
       className={twMerge(
@@ -25,6 +26,6 @@ const Section = ({ title, className, children, ref, ...props }: SectionProps) =>
       {children}
     </section>
   );
-};
+});
 
 export default Section;

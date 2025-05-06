@@ -2,25 +2,25 @@
   {
     "title": "DataHacks",
     "image": "/main-site/GetInvolved/datahacks_2.jpeg",
-    "description": "Do projects and make your resume look better. I love projects so much omg! Do projects and make your resume look better. I love projects so much omg!",
+    "description": "A premier hackathon to sharpen your Data Science skills. Work with real data, build impactful projects, and compete with peers.",
     "link": "www.ds3ucsd.com/our-team/datahacks"
   },
   {
     "title": "Projects & Consulting",
     "image": "/main-site/GetInvolved/projects-img.jpeg",
-    "description": "Do projects and make your resume look better. I love projects so much omg!",
+    "description": "Tackle real-world data projects, from language models to nonprofit challenges, gain hands-on experience, and create a real impact with peers.",
     "link": "www.ds3ucsd.com/our-team/projects"
   },
   {
     "title": "Workshops",
     "image": "/main-site/GetInvolved/workshop-img.png",
-    "description": "Do projects and make your resume look better. I love projects so much omg!",
+    "description": "Explore hands-on workshops in Python, machine learning, data visualization, AI, and more—designed for all skill levels.",
     "link": "www.ds3ucsd.com/our-team/workshops"
   },
   {
     "title": "Professional Events",
     "image": "/main-site/GetInvolved/pf-events-img.png",
-    "description": "Do projects and make your resume look better. I love projects so much omg!",  
+    "description": "Explore interactive workshops in Python, machine learning, data visualization, AI, and more, designed to enhance skills at every level.",  
     "link": "www.ds3ucsd.com/our-team/professional"
   }
 ]
