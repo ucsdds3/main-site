@@ -21,15 +21,6 @@ const Landing = () => {
 
       <Countdown />
 
-      {deadline && deadline[0].toLowerCase().includes("apply") && (
-        <Button
-          onClick={() => {
-            window.open(datahacks.application, "_blank");
-          }}
-        >
-          APPLY NOW
-        </Button>
-      )}
     </Section>
   );
 };
