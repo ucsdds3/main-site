@@ -116,13 +116,27 @@
 }
 
 
-/* animation for title landing page */
-.title-long{
-  animation: title-long 1s forwards;
-  animation-delay: 2s;
-  interpolate-size: allow-keywords;
-}
+@media (width >= 48rem /* 768px */) {
 
+  /* animation for title landing page */
+  .title-long{
+    animation: title-long 0.5s forwards;
+    animation-delay: 2s;
+    interpolate-size: allow-keywords;
+  }
+  .title-short{
+    animation:title-short 0.5s forwards;
+    animation-delay: 3.5s;
+    width:0;
+    interpolate-size:allow-keywords;
+  }
+  
+  .caret{
+    animation: caret 2s forwards;
+    animation-delay: 1s;
+  }
+}
+  
 @keyframes title-long{
   from{width:max-content}
   to{width:0;}
@@ -130,17 +144,6 @@
 @keyframes title-short{
   from{width:0}
   to{width:max-content}
-}
-.title-short{
-  animation:title-short 0.5s forwards;
-  animation-delay: 3s;
-  width:0;
-  interpolate-size:allow-keywords;
-}
-
-.caret{
-  animation: caret 3s forwards;
-  animation-delay: 1s;
 }
 
 @keyframes caret{

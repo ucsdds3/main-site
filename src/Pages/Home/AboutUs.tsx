@@ -41,7 +41,7 @@ const AboutUs = () => {
             </div>
 
             <div className="flex-1 flex items-center">
-              <div className="aspect-video w-full rounded-lg overflow-hidden border">
+              <div className="aspect-video w-full rounded-lg overflow-hidden ">
                 {ImagePreloader.imagesPreloaded ? (
                   <img
                     className="w-full h-full object-cover"
