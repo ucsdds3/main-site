@@ -30,6 +30,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
     <div className="relative group w-full lg:w-auto lg:dropdown">
       <div
         role="button"
+        tabIndex={0}
         className="flex justify-center items-center gap-2 cursor-pointer hover:text-(--color-primary) focus:text-(--color-primary) duration-300"
       >
         <span>{label}</span>
