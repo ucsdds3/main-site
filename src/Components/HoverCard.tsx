@@ -1,3 +1,4 @@
+import useImagePreloader from "../Hooks/useImagepreload.tsx";
 import { hideImage } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
 
@@ -15,15 +16,18 @@ interface HoverCardProps {
 }
 
 const HoverCard = ({ title, description, size, image, links }: HoverCardProps) => {
+  const ImagePreloader = useImagePreloader([image ? image : ""]);
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <div className="skeleton relative group" style={{ width: size, height: size }}>
-        <img
-          src={image || "/main-site/"}
-          className="size-full object-cover rounded-2xl"
-          onError={hideImage}
-          onLoad={(e) => (e.currentTarget.style.display = "block")}
-        />
+        {ImagePreloader.imagesPreloaded && (
+          <img
+            src={image || "/main-site/"}
+            className="size-full object-cover rounded-2xl"
+            onError={hideImage}
+            onLoad={(e) => (e.currentTarget.style.display = "block")}
+          />
+        )}
 
         {/* TODO: Animate on hover */}
         {links && (
@@ -43,7 +47,10 @@ const HoverCard = ({ title, description, size, image, links }: HoverCardProps) =
         )}
       </div>
 
-      <div className="text-lg text-center flex flex-col gap-2" style={{ width: `calc(${size} * 0.95)` }}>
+      <div
+        className="text-lg text-center flex flex-col gap-2"
+        style={{ width: `calc(${size} * 0.95)` }}
+      >
         {title && <span className="text-xl font-medium">{title}</span>}
         {description && <span className="text-sm opacity-75 font-medium">{description}</span>}
       </div>
