@@ -9,7 +9,7 @@ import { newArray } from "../../Utils/functions.tsx";
 
 const Projects = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
-  const fakeGallery = [
+  const ProjectsGallery = [
     "/main-site/Projects/P1.jpeg",
     "/main-site/Projects/P2.jpg",
     "/main-site/Projects/P3.jpg",
@@ -26,7 +26,7 @@ const Projects = () => {
       <div ref={scrollRef}>
         <About {...projects.about} />
         <ShowCase />
-        <Gallery images={projects.images || fakeGallery} />
+        <Gallery images={projects.images || ProjectsGallery} />
       </div>
     </Page>
   );
