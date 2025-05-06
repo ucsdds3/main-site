@@ -6,7 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import Links from "./Links";
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
-import { HashLink } from "react-router-hash-link";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const isConsulting = useSiteHandler();
