@@ -114,3 +114,46 @@
   animation-timeline: view();
   animation-range: 0 100vh;
 }
+
+
+/* animation for title landing page */
+.title-long{
+  animation: title-long 1s forwards;
+  animation-delay: 2s;
+  interpolate-size: allow-keywords;
+}
+
+@keyframes title-long{
+  from{width:max-content}
+  to{width:0;}
+}
+@keyframes title-short{
+  from{width:0}
+  to{width:max-content}
+}
+.title-short{
+  animation:title-short 0.5s forwards;
+  animation-delay: 3s;
+  width:0;
+  interpolate-size:allow-keywords;
+}
+
+.caret{
+  animation: caret 3s forwards;
+  animation-delay: 1s;
+}
+
+@keyframes caret{
+  0%{
+    rotate: 0deg;
+  }
+  10%{
+    rotate: 180deg;
+  }
+  90%{
+    rotate: 180deg;
+  }
+  100%{
+    rotate: 0deg;
+  }
+}
