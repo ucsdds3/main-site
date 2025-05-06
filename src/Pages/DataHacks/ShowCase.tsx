@@ -43,9 +43,7 @@ const ShowCase = () => {
 
   return (
     <Section title="Past Winners" className="gap-0">
-      <Button onClick={() => window.open("https://datahacks-25.devpost.com/", "_blank")}>
-        DEVPOST
-      </Button>
+      
 
       <div className="w-full flex items-center justify-center gap-[clamp(0.5rem,1vw,1rem)] md:px-4">
         <button onClick={handlePrev} className={btnClass} aria-label="Previous">
@@ -75,6 +73,9 @@ const ShowCase = () => {
           />
         ))}
       </div>
+      <Button className={"mt-10"} onClick={() => window.open("https://datahacks-25.devpost.com/", "_blank")}>
+        DEVPOST
+      </Button>
     </Section>
   );
 };
