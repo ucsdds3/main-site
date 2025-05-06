@@ -32,7 +32,7 @@ const Landing = () => {
         className="flex flex-col justify-center items-center md:items-start px-8 mt-[10vh] lg:mt-[20vh]"
         id="textarea"
       >
-        <div className="flex gap-2 font-albert-sans text-[clamp(1.1rem,3vw,2rem)]">
+        <div className="flex gap-2 font-albert-sans text-[clamp(1rem,3vw,2rem)]">
           <div className="text-[#F58134]">LEARN,</div>
           <div className="text-[#19B5CA]">BUILD,</div>
           <div className="text-[#A9A9A9]">INNOVATE</div>
@@ -40,10 +40,10 @@ const Landing = () => {
         </div>
 
         <div className="flex items-center text-center md:text-left">
-          <h1 className="text-[clamp(2.7rem,3.5vw,4rem)] font-medium font-albert-sans title-long overflow-hidden text-nowrap">
+          <h1 className="text-[clamp(2.7rem,3.5vw,4rem)] font-medium font-albert-sans  md:overflow-hidden title-short md:text-nowrap">
             Data Science Student Society
           </h1>
-          <h1 className="text-[clamp(2.7rem,3.5vw,4rem)] font-medium font-albert-sans title-short overflow-hidden">
+          <h1 className="text-[clamp(2.7rem,3.5vw,4rem)] font-medium font-albert-sans md:block hidden title-long md:overflow-hidden">
             DS3
           </h1>
           <img
