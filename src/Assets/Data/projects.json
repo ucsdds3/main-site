@@ -3,49 +3,57 @@
     "name": "Projects",
     "image": "/main-site/GetInvolved/projects-img.jpeg",
     "points": {
-      "Gain Firsthand Experience": "Work on real projects—build language models, replicate top ML systems, and develop your own ideas with a team.",
+      "Gain Firsthand Experience": "Work on real projects\u2014build language models, replicate top ML systems, and develop your own ideas with a team.",
       "Build Your Portfolio": "Strengthen your resume with hands-on projects while mastering in-demand ML tools and techniques.",
       "Collaborate With Your Peers": "Join a community of data enthusiasts, exchange ideas, and tackle challenges together to grow your skills."
     }
   },
-  "images": null,
   "projects": {
     "2024": [
       {
         "title": "Augmented Reality: Food Nutrition Finder",
-        "description": "AR app to identify food and display nutrition info using headset or camera."
+        "description": "AR app to identify food and display nutrition info using headset or camera.",
+        "image": "/main-site/projects/project1_2024.png"
       },
       {
         "title": "Tesla Autonomous Car Software",
-        "description": "Simulate Tesla's autopilot logic using computer vision techniques."
+        "description": "Simulate Tesla's autopilot logic using computer vision techniques.",
+        "image": "/main-site/projects/project2_2024.png"
       },
       {
         "title": "Cryptocurrency Price Prediction",
-        "description": "Analyze crypto trends and build models to predict future prices."
+        "description": "Analyze crypto trends and build models to predict future prices.",
+        "image": "/main-site/projects/project3_2024.png"
       },
       {
         "title": "Audio Emotion Recognition",
-        "description": "Detect emotions in speech/music via audio processing and sentiment analysis."
+        "description": "Detect emotions in speech/music via audio processing and sentiment analysis.",
+        "image": "/main-site/projects/project4_2024.png"
       },
       {
         "title": "Plant Disease Detection",
-        "description": "AI tool to detect plant diseases from image data for farming applications."
+        "description": "AI tool to detect plant diseases from image data for farming applications.",
+        "image": "/main-site/projects/project5_2024.png"
       },
       {
         "title": "Amazon Product Recommendation System",
-        "description": "Investigate which factors influence Amazon product recommendations."
+        "description": "Investigate which factors influence Amazon product recommendations.",
+        "image": "/main-site/projects/project6_2024.png"
       },
       {
         "title": "Facial Emotion Detection",
-        "description": "Predict facial emotions using landmarking and convolution techniques."
+        "description": "Predict facial emotions using landmarking and convolution techniques.",
+        "image": "/main-site/projects/project7_2024.png"
       },
       {
         "title": "Zillow Ideal Real Investment Market",
-        "description": "Analyze real estate data to identify optimal investment locations."
+        "description": "Analyze real estate data to identify optimal investment locations.",
+        "image": "/main-site/projects/project8_2024.png"
       },
       {
         "title": "Credit Card Fraud Transactions",
-        "description": "Detect fraudulent credit card activity using time series data."
+        "description": "Detect fraudulent credit card activity using time series data.",
+        "image": "/main-site/projects/project9_2024.png"
       },
       {
         "title": "Fantasy Football Player Stats Prediction",
