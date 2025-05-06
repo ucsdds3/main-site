@@ -17,9 +17,16 @@ import { newArray } from "../../Utils/functions.tsx";
 
 const Projects = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
-  const fakeGallery = newArray(7, "").map(() =>
-    Math.random() > 0.5 ? "" : "/main-site/GetInvolved/projects-img.jpeg"
-  );
+  const ProjectsGallery = [
+    "/main-site/Projects/P1.jpeg",
+    "/main-site/Projects/P2.jpg",
+    "/main-site/Projects/P3.jpg",
+    "/main-site/Projects/P4.jpg",
+    "/main-site/Projects/P5.jpg",
+    "/main-site/Projects/P6.jpg",
+    "/main-site/Projects/P7.jpg"
+  ]
+  
 
   return (
     <Page scrollRef={scrollRef}>
@@ -28,7 +35,7 @@ const Projects = () => {
         <Suspense>
           <About {...projects.about} />
           <ShowCase />
-          <Gallery images={projects.images || fakeGallery} />
+          <Gallery images={projects.images || ProjectsGallery} />
         </Suspense>
       </div>
     </Page>
