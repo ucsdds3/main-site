@@ -11,7 +11,7 @@ const Partners = () => {
       <OurPartners />
       <WorkWithUs />
       <ContactUs />
-      <FAQ faq={faq.partners} />
+      {/* <FAQ faq={faq.partners} /> */}
     </Page>
   );
 };
