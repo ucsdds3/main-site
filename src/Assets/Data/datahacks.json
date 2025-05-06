@@ -69,5 +69,13 @@
       "devpost": "https://devpost.com/software/statpilot"
     }
   ],
-  "images": null
+  "images": [
+    "/main-site/DataHacks/D1.jpg",
+    "/main-site/DataHacks/D2.jpg",
+    "/main-site/DataHacks/D3.jpg",
+    "/main-site/DataHacks/D4.jpg",
+    "/main-site/DataHacks/D5.jpg",
+    "/main-site/DataHacks/D6.jpeg",
+    "/main-site/DataHacks/D7.jpg"
+  ]
 }
