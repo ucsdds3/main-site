@@ -9,9 +9,15 @@ import Landing from "./Landing";
 
 const DataHacks = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
-  const fakeGallery = newArray(7, "").map(() =>
-    Math.random() > 0.5 ? "" : "/main-site/GetInvolved/datahacks_2.jpeg"
-  );
+  const DataHacksGallery = [
+    "/main-site/DataHacks/D1.jpg",
+    "/main-site/DataHacks/D2.jpg",
+    "/main-site/DataHacks/D3.jpg",
+    "/main-site/DataHacks/D4.jpg",
+    "/main-site/DataHacks/D5.jpg",
+    "/main-site/DataHacks/D6.jpeg",
+    "/main-site/DataHacks/D7.jpg"
+  ]
 
   return (
     <Page scrollRef={scrollRef}>
@@ -20,7 +26,7 @@ const DataHacks = () => {
         <About {...datahacks.about} />
         <ShowCase />
         <Gallery
-          images={datahacks.images || fakeGallery}
+          images={datahacks.images || DataHacksGallery}
           link="https://drive.google.com/drive/folders/1uHYeanJW0hPyiCUOcI7tPYQRlkWrJnsU"
         />
       </div>
