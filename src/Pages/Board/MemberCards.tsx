@@ -2,11 +2,16 @@ import { formatMemberLinks, unbreakable } from "../../Utils/functions.tsx";
 import { CommitteeType, MemberType } from "../../Utils/types";
 import committees from "../../Assets/Data/committees.json";
 import members from "../../Assets/Data/members.json";
-import HoverCard from "../../Components/HoverCard";
+import { lazy, Suspense } from "react";
+const HoverCard = lazy(() => {
+  return import("../../Components/HoverCard");
+});
 
 const MemberCards = ({ committee }: { committee: CommitteeType }) => {
   const typedMembers = members as MemberType[];
-  const filteredMembers = typedMembers.filter((member) => member.committees?.includes(committee));
+  const filteredMembers = typedMembers.filter((member) =>
+    member.committees?.includes(committee)
+  );
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -22,14 +27,16 @@ const MemberCards = ({ committee }: { committee: CommitteeType }) => {
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-y-8 py-12">
         {filteredMembers.map((member, index) => (
-          <HoverCard
-            key={index}
-            title={member.name}
-            description={member.role}
-            image={member.image}
-            size="240px"
-            links={formatMemberLinks(member)}
-          />
+          <Suspense fallback={<div className="w-full" />}>
+            <HoverCard
+              key={index}
+              title={member.name}
+              description={member.role}
+              image={member.image}
+              size="240px"
+              links={formatMemberLinks(member)}
+            />
+          </Suspense>
         ))}
       </div>
     </div>

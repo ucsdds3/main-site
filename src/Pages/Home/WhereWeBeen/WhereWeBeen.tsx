@@ -4,7 +4,7 @@ import Carousel from "./Carousel";
 
 const WhereWeBeen = () => {
   return (
-    <Section title="Where We've Been">
+    <Section title="Where We Are">
       <PeopleCarousel />
       <Carousel />
     </Section>
