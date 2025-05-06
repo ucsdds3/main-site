@@ -11,6 +11,7 @@
     "DataHacks": "/datahacks",
     "Partners": "/partners",
     "Consulting": {
+      "target": "_blank",
       "pathname": "/",
       "search": "site=consulting"
     }
