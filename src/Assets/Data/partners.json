@@ -1,28 +1,28 @@
 {
   "light": {
-    "Intel": "/main-site/Partners/intel.png",
-    "ASML": "/main-site/Partners/asml.png",
-    "HP": "/main-site/Partners/hp.png",
-    "Blizzard": "/main-site/Partners/blizzard.png",
-    "Rockstar": "/main-site/Partners/rockstar.png",
-    "Marimo": "/main-site/Partners/marimo.png",
-    "SDX": "/main-site/Partners/SDX-logo.png",
-    "Palantir": "/main-site/Partners/palantir_dark.png",
-    "HDSI": "/main-site/Partners/hdsi-logo.svg",
-    "CSE": "/main-site/Partners/cse-logo.svg",
-    "IBM": "/main-site/Partners/ibm.svg"
+    "Intel": "/main-site/Partners/intel.webp",
+    "ASML": "/main-site/Partners/asml.webp",
+    "HP": "/main-site/Partners/hp.webp",
+    "Blizzard": "/main-site/Partners/blizzard.webp",
+    "Rockstar": "/main-site/Partners/rockstar.webp",
+    "Marimo": "/main-site/Partners/marimo.webp",
+    "SDX": "/main-site/Partners/SDX-logo.webp",
+    "Palantir": "/main-site/Partners/plantir.webp",
+    "HDSI": "/main-site/Partners/hdsi-logo.webp",
+    "CSE": "/main-site/Partners/cse-logo.webp",
+    "IBM": "/main-site/Partners/ibm.webp"
   },
   "dark": {
-    "Intel": "/main-site/Partners/intel.png",
-    "ASML": "/main-site/Partners/asml.png",
-    "HP": "/main-site/Partners/hp.png",
-    "Blizzard": "/main-site/Partners/blizzard.png",
-    "Rockstar": "/main-site/Partners/rockstar.png",
-    "Marimo": "/main-site/Partners/marimo.png",
-    "SDX": "/main-site/Partners/SDX-logo.png",
-    "Palantir": "/main-site/Partners/palantir_dark.png",
-    "HDSI": "/main-site/Partners/hdsi-logo-light.png",
-    "CSE": "/main-site/Partners/cse-logo.svg",
-    "IBM": "/main-site/Partners/ibm.svg"
-  }  
+    "Intel": "/main-site/Partners/intel.webp",
+    "ASML": "/main-site/Partners/asml.webp",
+    "HP": "/main-site/Partners/hp.webp",
+    "Blizzard": "/main-site/Partners/blizzard.webp",
+    "Rockstar": "/main-site/Partners/rockstar.webp",
+    "Marimo": "/main-site/Partners/marimo.webp",
+    "SDX": "/main-site/Partners/SDX-logo.webp",
+    "Palantir": "/main-site/Partners/palantir_dark.webp",
+    "HDSI": "/main-site/Partners/hdsi-logo-light.webp",
+    "CSE": "/main-site/Partners/cse-logo.webp",
+    "IBM": "/main-site/Partners/ibm.webp"
+  }
 }
