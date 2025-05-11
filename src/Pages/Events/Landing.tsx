@@ -1,4 +1,4 @@
-import workshopImage from "../../Assets/Images/event-landing.png";
+import workshopImage from "../../Assets/Images/event-landing.webp";
 import Section from "../../Components/Section";
 
 interface LandingProps {
