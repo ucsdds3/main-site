@@ -120,19 +120,19 @@
 
   /* animation for title landing page */
   .title-long{
-    animation: title-long 0.5s forwards;
-    animation-delay: 2s;
+    animation: title-long 0.1s forwards;
+    animation-delay: 1.5s;
     interpolate-size: allow-keywords;
   }
   .title-short{
-    animation:title-short 0.5s forwards;
-    animation-delay: 3.5s;
+    animation:title-short 0.3s forwards;
+    animation-delay: 2.2s;
     width:0;
     interpolate-size:allow-keywords;
   }
   
   .caret{
-    animation: caret 2s forwards;
+    animation: caret 1s forwards;
     animation-delay: 1s;
   }
 }

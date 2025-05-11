@@ -1,5 +1,4 @@
 import { lazy, Suspense, useRef } from "react";
-import { newArray } from "../../Utils/functions.tsx";
 import Page from "../Page/Page";
 import datahacks from "../../Assets/Data/datahacks.json";
 
@@ -15,9 +14,6 @@ const Gallery = lazy(() => {
 });
 const DataHacks = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
-  const fakeGallery = newArray(7, "").map(() =>
-    Math.random() > 0.5 ? "" : "/main-site/GetInvolved/datahacks_2.jpeg"
-  );
 
   return (
     <Page scrollRef={scrollRef}>
@@ -27,7 +23,7 @@ const DataHacks = () => {
           <About {...datahacks.about} />
           <ShowCase />
           <Gallery
-            images={datahacks.images || fakeGallery}
+            images={datahacks.images}
             link="https://drive.google.com/drive/folders/1uHYeanJW0hPyiCUOcI7tPYQRlkWrJnsU"
           />
         </Suspense>
