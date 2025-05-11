@@ -1,4 +1,4 @@
-import logo from "/src/Assets/Images/ds3_logo.png";
+import logo from "/src/Assets/Images/ds3_logo.webp";
 import socialMedia from "../../Assets/Data/socialMedia.tsx";
 import SafeLink from "../../Components/SafeLink.tsx";
 
