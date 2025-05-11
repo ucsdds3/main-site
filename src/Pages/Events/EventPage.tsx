@@ -1,11 +1,11 @@
 import { useRef } from "react";
-import { TeamType } from "../../Utils/types";
+import { cardData, TeamType } from "../../Utils/types";
 import About from "../../Components/About";
 import Page from "../Page/Page";
 import Landing from "./Landing";
 import Events from "./Events";
-
-const EventPage = ({ events: team }: { events: TeamType }) => {
+import SlideshowCarousel from "../../Components/SlideshowCarousel";
+const EventPage = ({ events: team, images }: { events: TeamType; images?: cardData[] }) => {
   const scrollRef = useRef<HTMLDivElement>(null!);
 
   if (!team.title || !team.subtitle) {
@@ -18,6 +18,7 @@ const EventPage = ({ events: team }: { events: TeamType }) => {
       <Landing title={team.title.toUpperCase()} subtitle={team.subtitle} />
       <div className="flex flex-col items-center" ref={scrollRef}>
         <About {...team} />
+        <div className="w-[80vw]">{images && <SlideshowCarousel images={images} />}</div>
         <Events />
       </div>
     </Page>

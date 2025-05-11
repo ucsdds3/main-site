@@ -1,11 +1,11 @@
 import Section from "../../../Components/Section";
-import PeopleCarousel from "./PeopleCarousel";
+import SlideshowCarousel from "../../../Components/SlideshowCarousel";
 import Carousel from "./Carousel";
-
+import cardData from "../../../Assets/Data/testimonials.json";
 const WhereWeBeen = () => {
   return (
     <Section title="Where We Are">
-      <PeopleCarousel />
+      <SlideshowCarousel images={cardData} />
       <Carousel />
     </Section>
   );
