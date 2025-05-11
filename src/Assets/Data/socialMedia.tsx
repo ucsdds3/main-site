@@ -2,7 +2,6 @@ import { FaDiscord, FaSpotify, FaInstagram, FaGithub, FaLinkedin } from "react-i
 import { FaMedium } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 
-// TODO: Use actual links
 export default [
   {
     title: "Discord",
