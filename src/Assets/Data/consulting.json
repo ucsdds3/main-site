@@ -3,22 +3,22 @@
     {
       "title": "Model Design",
       "description": "We design and implement custom models—specializing in NLP and Computer Vision—tailored to your data and business goals through deep collaboration",
-      "image": "/main-site/Consulting/Model_Design.png"
+      "image": "/main-site/Consulting/Model_Design.webp"
     },
     {
       "title": "MLOPS",
       "description": "We deploy, monitor, and continually optimize ML models in production to maximize performance and extract business value at scale",
-      "image": "/main-site/Consulting/MLOPS.png"
+      "image": "/main-site/Consulting/MLOPS.webp"
     },
     {
       "title": "Data Analytics",
       "description": "We transform your data into actionable insights—building efficient data models and compelling dashboards that drive decision-making",
-      "image": "/main-site/Consulting/Data_Analytics.png"
+      "image": "/main-site/Consulting/Data_Analytics.webp"
     },
     {
       "title": "Solutions Architecture",
       "description": "We design scalable, end-to-end cloud systems tailored to your industry—helping you choose the right tools and track data effectively",
-      "image": "/main-site/Consulting/Solutions_Architecture.png"
+      "image": "/main-site/Consulting/Solutions_Architecture.webp"
     }
   ],
   "members": [
@@ -27,7 +27,7 @@
       "committees": ["Infrastructure"],
       "role": "Software Developer",
       "email": "issacroy05@gmail.com",
-      "image": "/main-site/Board/Issac-Roy.jpeg",
+      "image": "/main-site/Board/Issac-Roy.webp",
       "website": "https://www.issacroy.com/",
       "resume": "https://drive.google.com/file/d/1FkvdyGzJHi-MHh5v0CJpzZgfwSx8yrbc/view?usp=sharing",
       "linkedIn": "https://www.linkedin.com/in/issacroy/"
@@ -37,7 +37,7 @@
       "committees": ["Infrastructure", "Projects"],
       "role": "Software Developer",
       "email": "vannabathula@ucsd.edu",
-      "image": "/main-site/Board/Anirudh-Annabathula.png",
+      "image": "/main-site/Board/Anirudh-Annabathula.webp",
       "website": "https://anirudhannabathula.com/",
       "resume": "https://drive.google.com/file/d/1RtempyMgEcMIrgh04Sujv-QnMA3att8M/view?usp=sharing",
       "linkedIn": "https://www.linkedin.com/in/anirudha9/"
@@ -47,7 +47,7 @@
       "committees": ["Infrastructure"],
       "role": "Software Developer",
       "email": "krishkankure6@gmail.com",
-      "image": "/main-site/Board/Krish-Kankure.jpg",
+      "image": "/main-site/Board/Krish-Kankure.webp",
       "website": "https://www.krishkankure.com/",
       "resume": "https://drive.google.com/file/d/1-ppkqcQvorP7m6NMpEIA0DCK8oYk4GEr/view?usp=sharing",
       "linkedIn": "https://www.linkedin.com/in/krishkankure/"
@@ -57,7 +57,7 @@
       "committees": ["Infrastructure"],
       "role": "Software Developer",
       "email": "ighosh@ucsd.edu",
-      "image": "/main-site/Board/Ishayu-Ghosh.png",
+      "image": "/main-site/Board/Ishayu-Ghosh.webp",
       "website": "https://ishayu1.github.io/portfolio_website/",
       "resume": "https://drive.google.com/file/d/1xZ7tO7iYJRYOvQMDGwLcs_y4Be4xmhdg/view?usp=share_link",
       "linkedIn": "www.linkedin.com/in/ishayughosh"
@@ -67,7 +67,7 @@
       "committees": ["Infrastructure"],
       "role": "UI Designer & Software Developer",
       "email": "ankamath@ucsd.edu",
-      "image": "/main-site/Board/Anagha-Kamath.jpeg",
+      "image": "/main-site/Board/Anagha-Kamath.webp",
       "website": "https://anagha166.github.io/PersonalWebsite/",
       "resume": "https://drive.google.com/file/d/1QHOUvLNwAW4csYLMs1CEKMIfp9Hi4EZB/view?usp=drivesdk",
       "linkedIn": "https://www.linkedin.com/in/anagha-k-b00117266"
@@ -76,27 +76,27 @@
   "clients": [
     {
       "name": "Amazon",
-      "image": "/main-site/WhereWeBeen/amazon.png"
+      "image": "/main-site/WhereWeBeen/amazon.webp"
     },
     {
       "name": "Google",
-      "image": "/main-site/WhereWeBeen/google.png"
+      "image": "/main-site/WhereWeBeen/google.webp"
     },
     {
       "name": "Microsoft",
-      "image": "/main-site/WhereWeBeen/microsoft.png"
+      "image": "/main-site/WhereWeBeen/microsoft.webp"
     },
     {
       "name": "Meta",
-      "image": "/main-site/WhereWeBeen/meta.png"
+      "image": "/main-site/WhereWeBeen/meta.webp"
     },
     {
       "name": "Netflix",
-      "image": "/main-site/WhereWeBeen/netflix.png"
+      "image": "/main-site/WhereWeBeen/netflix.webp"
     },
     {
       "name": "Tesla",
-      "image": "/main-site/WhereWeBeen/tesla.png"
+      "image": "/main-site/WhereWeBeen/tesla.webp"
     }
   ]
 }
