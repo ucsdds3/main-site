@@ -1,13 +1,11 @@
-import cardData from "../../../Assets/Data/testimonials.json";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import useImagePreloader from "../../../Hooks/useImagepreload";
+import useImagePreloader from "../Hooks/useImagepreload";
 import useEmblaCarousel from "embla-carousel-react";
+import { cardData } from "../Utils/types";
 
-const PeopleCarousel = () => {
+const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  const ImagePreloader = useImagePreloader(
-    cardData.map((daton) => daton.image)
-  );
+  const ImagePreloader = useImagePreloader(images.map((daton) => daton.image));
   const btnClass =
     "rounded-full hover:text-(--color-primary) p-3 hover:bg-base-300 transition-colors duration-300 cursor-pointer text-2xl md:mx-8 z-100";
 
@@ -30,7 +28,7 @@ const PeopleCarousel = () => {
         ref={emblaRef}
       >
         <section className="flex flex-row w-full ease-in-out embla__container">
-          {cardData.map((data, i) => {
+          {images.map((data, i) => {
             return (
               <div
                 key={i}
@@ -72,4 +70,4 @@ const PeopleCarousel = () => {
   );
 };
 
-export default PeopleCarousel;
+export default SlideshowCarousel;
