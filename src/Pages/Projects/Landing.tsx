@@ -1,4 +1,4 @@
-import dino from "/src/Assets/Images/dino.png";
+import dino from "/src/Assets/Images/dino.webp";
 import Section from "../../Components/Section";
 import Star from "../../Components/Star";
 
