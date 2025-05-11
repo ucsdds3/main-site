@@ -9,13 +9,13 @@
     }
   },
   "images": [
-    "/main-site/Projects/P1.jpeg",
-    "/main-site/Projects/P2.jpg",
-    "/main-site/Projects/P3.jpg",
-    "/main-site/Projects/P4.jpg",
-    "/main-site/Projects/P5.jpg",
-    "/main-site/Projects/P6.jpg",
-    "/main-site/Projects/P7.jpg"
+    "/main-site/Projects/P1.webp",
+    "/main-site/Projects/P2.webp",
+    "/main-site/Projects/P3.webp",
+    "/main-site/Projects/P4.webp",
+    "/main-site/Projects/P5.webp",
+    "/main-site/Projects/P6.webp",
+    "/main-site/Projects/P7.webp"
   ],
   "projects": {
     "2024": [
