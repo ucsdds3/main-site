@@ -13,14 +13,9 @@ const Gallery = lazy(() => {
 
 import projects from "../../Assets/Data/projects.json";
 
-import { newArray } from "../../Utils/functions.tsx";
-
 const Projects = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
-  const fakeGallery = newArray(7, "").map(() =>
-    Math.random() > 0.5 ? "" : "/main-site/GetInvolved/projects-img.jpeg"
-  );
-
+  
   return (
     <Page scrollRef={scrollRef}>
       <Landing />
@@ -28,7 +23,7 @@ const Projects = () => {
         <Suspense>
           <About {...projects.about} />
           <ShowCase />
-          <Gallery images={projects.images || fakeGallery} />
+          <Gallery images={projects.images} />
         </Suspense>
       </div>
     </Page>

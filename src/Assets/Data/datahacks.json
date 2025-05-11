@@ -8,7 +8,7 @@
   "application": "",
   "about": {
     "name": "DataHacks",
-    "image": "/main-site/GetInvolved/datahacks_2.jpeg",
+    "image": "/main-site/GetInvolved/datahacks_2.webp",
     "points": {
       "Event Overview": "DataHacks is an annual data science hackathon hosted by DS3 every Spring Quarter",
       "Community Engagement": "Over 150 attendees from diverse backgrounds participated in DataHacks 2024",
@@ -21,7 +21,7 @@
       "description": "OnlyDance is an interactive dance app that uses real-time pose detection and scoring to teach choreography, giving users instant feedback and making learning dance fun.",
       "members": ["Issac Roy", "Noah Golder", "Matthew Tokunaga", "Bryan Zhang"],
       "category": "Advanced Winner",
-      "image": "/main-site/DataHacks/OnlyDance.png",
+      "image": "/main-site/DataHacks/OnlyDance.webp",
       "devpost": "https://play.typeracer.com?rt=1vxfaqipzw",
       "github": "https://github.com/Giraff-o-titans/OnlyDance"
     },
@@ -30,7 +30,7 @@
       "description": "Test your skills & get moving! AI Dance Battle is an interactive web app where you dance, get feedback, and challenge friends — no studio required.",
       "members": ["Esther Chung", "Abhi Sathvika Goriparthy", "Preethi Manne", "Mythri Kishore"],
       "category": "Intermediate Winner",
-      "image": "/main-site/DataHacks/AI_Dance_Battle.png",
+      "image": "/main-site/DataHacks/AI_Dance_Battle.webp",
       "devpost": "https://devpost.com/software/pose-jam"
     },
     {
@@ -38,7 +38,7 @@
       "description": "Central or Centel? A real-time tweet verifier that helps fans separate NBA facts from fiction.",
       "members": ["Krishang Khandelwal"],
       "category": "Beginner Winner",
-      "image": "/main-site/DataHacks/Central_or_Centel.png",
+      "image": "/main-site/DataHacks/Central_or_Centel.webp",
       "devpost": "https://devpost.com/software/central-or-centel",
       "github": "https://github.com/krishang2006/Central-or-Centel"
     },
@@ -46,8 +46,8 @@
       "title": "Script2Screen",
       "description": "Script2Screen predicts your movie's success and revenue using AI on its synopsis and key features—while generating a visual and interactive web app to bring your idea to life.",
       "category": "Promising Prototype Award",
-      "members": ["Lakshmi Maddi", "Ritvik Mohindru", "Sai Yadlapati","Rakshan Patnaik"],
-      "image": "/main-site/DataHacks/Script2Screen.png",
+      "members": ["Lakshmi Maddi", "Ritvik Mohindru", "Sai Yadlapati", "Rakshan Patnaik"],
+      "image": "/main-site/DataHacks/Script2Screen.webp",
       "devpost": "https://devpost.com/software/script2screen",
       "github": "https://manasamaddi05.github.io/Script2Screen/"
     },
@@ -56,7 +56,7 @@
       "description": "Korean color analysis has been very popular recently. However, the service can be costly and inaccessible, so we created a tool that allows you to receive an analysis conveniently.",
       "category": "Best Presentation",
       "members": ["Snigdha Podugu", "Vaidehi Karve", "deepaldeleena", "Arya Verma"],
-      "image": "/main-site/DataHacks/Koreai.png",
+      "image": "/main-site/DataHacks/Koreai.webp",
       "devpost": "https://devpost.com/software/koreai",
       "github": "https://github.com/snigdhapodugu/koreai/tree/main"
     },
@@ -65,9 +65,17 @@
       "description": "We developed a web-based application that provides users with insightful information to make probability based decisions on NBA game stat lines.",
       "category": "Innovation Launchpad Award",
       "members": ["Alan Aquino", "Antony Munkhchuluun", "Keanu Ventura", "hasaam butt"],
-      "image": "/main-site/DataHacks/StatPilot.png",
+      "image": "/main-site/DataHacks/StatPilot.webp",
       "devpost": "https://devpost.com/software/statpilot"
     }
   ],
-  "images": null
+  "images": [
+    "/main-site/DataHacks/D1.webp",
+    "/main-site/DataHacks/D2.webp",
+    "/main-site/DataHacks/D3.webp",
+    "/main-site/DataHacks/D4.webp",
+    "/main-site/DataHacks/D5.webp",
+    "/main-site/DataHacks/D6.webp",
+    "/main-site/DataHacks/D7.webp"
+  ]
 }

@@ -86,7 +86,7 @@ const BrowserCard = memo(function BrowserCard({
         (link ? (
           <SafeLink
             href={link}
-            className="text-lg text-center font-semibold rounded-md bg-(--color-primary) w-[50%] self-start hover:brightness-110 mt-4 p-2"
+            className="text-lg text-center font-semibold rounded-md bg-(--color-primary) w-[60%] self-start hover:brightness-110 mt-4 p-2"
           >
             Add to Calendar
           </SafeLink>
