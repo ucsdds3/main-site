@@ -37,3 +37,10 @@ export type LinkType = {
   icon: React.ReactNode;
   color: string;
 };
+
+export type cardData = {
+  image: string;
+  title: string;
+  description: string;
+  author: string;
+};
