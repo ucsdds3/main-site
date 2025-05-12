@@ -2,7 +2,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import { HashLink } from "react-router-hash-link";
 import { setSite } from "../../Utils/functions.tsx";
 import { Link } from "react-router";
-
+import { FaLink } from "react-icons/fa6";
 interface NavItemProps {
   label: string;
   data?: string | Record<string, string>;
@@ -23,9 +23,10 @@ const NavItem = ({ label, data }: NavItemProps) => {
       smooth
       target={data.target || "_self"}
       onClick={() => setSite("consulting")}
-      className="hover:text-(--color-primary)"
+      className="hover:text-(--color-primary) relative flex items-center gap-1 group"
     >
       {label}
+      {label == "Consulting" && <FaLink className="opacity-0 group-hover:opacity-100 " />}
     </HashLink>
   ) : (
     <div className="relative group w-full lg:w-auto lg:dropdown">
