@@ -23,7 +23,7 @@ const Events = () => {
         </div>
       ) : (
         <span className="text-[clamp(20px,2vw,40px)] text-balance text-center">
-          No upcoming Events at this point in time, check our social media for the most up-to-date
+          No upcoming events at this point in time, check our social media for the most up-to-date
           news!!
         </span>
       )}
