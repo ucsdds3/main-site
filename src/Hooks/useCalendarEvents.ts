@@ -18,7 +18,6 @@ export function useCalendarEvents() {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         const now = new Date();
-        // console.log(data);
 
         const mappedEvents = (data.items || [])
           .filter((item: any) => {
@@ -81,8 +80,9 @@ export function useCalendarEvents() {
       } catch (err: any) {
         setError(err.message);
       } finally {
+        setLoading(false);
         // TODO: Remove artificial delay
-        setTimeout(() => setLoading(false), 5000);
+        // setTimeout(() => setLoading(false), 5000);
       }
     };
 
