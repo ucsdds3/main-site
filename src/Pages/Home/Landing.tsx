@@ -40,10 +40,10 @@ const Landing = () => {
         </div>
 
         <div className="flex items-center text-center md:text-left">
-          <h1 className="text-[clamp(2.7rem,3.5vw,4rem)] font-medium font-albert-sans  md:overflow-hidden title-short md:text-nowrap">
+          <h1 className="text-[clamp(2.7rem,4.5vw,4rem)] font-semibold md:overflow-hidden title-short md:text-nowrap">
             Data Science Student Society
           </h1>
-          <h1 className="text-[clamp(2.7rem,3.5vw,4rem)] font-medium font-albert-sans md:block hidden title-long md:overflow-hidden">
+          <h1 className="text-[clamp(2.7rem,4.5vw,4rem)] font-semibold md:block hidden title-long md:overflow-hidden">
             DS3
           </h1>
           <img
