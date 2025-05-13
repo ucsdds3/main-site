@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "/src/Assets/Images/ds3_logo.png";
+import logo from "/src/Assets/Images/ds3_logo.webp";
 import { useTheme } from "../../Hooks/useTheme";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";

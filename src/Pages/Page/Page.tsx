@@ -2,7 +2,7 @@ import "simplebar-react/dist/simplebar.min.css";
 import SimpleBar from "simplebar-react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import bear from "/src/Assets/Images/Sleepy_Bear.png";
+import bear from "/src/Assets/Images/Sleepy_Bear.webp";
 import ScrollArrow from "./ScrollArrow";
 
 interface PageProps extends React.HTMLAttributes<HTMLDivElement> {
