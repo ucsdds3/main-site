@@ -4,7 +4,7 @@ import About from "../../Components/About";
 import Page from "../Page/Page";
 import Landing from "./Landing";
 import Events from "./Events";
-import SlideshowCarousel from "../../Components/SlideshowCarousel";
+import EventsShowCase from "./EventsShowcase";
 const EventPage = ({ events: team, images }: { events: TeamType; images?: cardData[] }) => {
   const scrollRef = useRef<HTMLDivElement>(null!);
 
@@ -18,7 +18,7 @@ const EventPage = ({ events: team, images }: { events: TeamType; images?: cardDa
       <Landing title={team.title.toUpperCase()} subtitle={team.subtitle} />
       <div className="flex flex-col items-center" ref={scrollRef}>
         <About {...team} />
-        <div className="w-[80vw]">{images && <SlideshowCarousel images={images} />}</div>
+        <EventsShowCase />
         <Events />
       </div>
     </Page>

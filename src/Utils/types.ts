@@ -44,3 +44,23 @@ export type cardData = {
   description: string;
   author: string;
 };
+
+export type datahacksWinner =
+  | {
+      title: string;
+      description: string;
+      members: string[];
+      category: string;
+      image: string;
+      devpost: string;
+      github: string;
+    }
+  | {
+      title: string;
+      description: string;
+      members: string[];
+      category: string;
+      image: string;
+      devpost: string;
+      github?: undefined;
+    };
