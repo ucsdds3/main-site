@@ -10,7 +10,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
 
   return (
     <div
-      className={`w-full lg:w-auto items-center flex-col lg:flex lg:flex-row gap-6 text-lg ${
+      className={`w-full lg:w-auto items-center flex-col lg:flex lg:flex-row gap-6 text-2xl ${
         menuOpen ? "flex" : "hidden"
       } ${typographyClasses}`}
     >
@@ -19,7 +19,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       ))}
       <Link
         to={isConsulting ? { pathname: "/", search: "site=main" } : "/join-us"}
-        className={`bg-(--color-primary) px-4 py-2 hover:brightness-110 cursor-pointer rounded-full text-center ${typographyClasses} font-medium w-full sm:w-auto min-w-[120px] uppercase`}
+        className={`bg-(--color-primary) px-4 pb-2 pt-1 hover:brightness-110 cursor-pointer rounded-full text-center ${typographyClasses} font-medium w-full sm:w-auto min-w-[120px] uppercase`}
       >
         {isConsulting ? "Main Site" : "Join Us"}
       </Link>

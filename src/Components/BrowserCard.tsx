@@ -4,7 +4,7 @@ import { EventType } from "../Utils/types";
 import { newArray } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
 import useImagePreloader from "../Hooks/useImagepreload.tsx";
-import { memo } from "react";
+import { memo, useState } from "react";
 
 const BrowserCard = memo(function BrowserCard({
   title,
@@ -13,11 +13,13 @@ const BrowserCard = memo(function BrowserCard({
   location,
   image,
   description,
-  delay,
-}: EventType & { delay: number }) {
+  delay = 0,
+  linkText = "View",
+}: EventType & { delay?: number; linkText?: string }) {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3ucsd.com");
   const ImagePreloader = useImagePreloader([image ? image : ""]);
+  const [imageError, setImageError] = useState(false);
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -29,18 +31,14 @@ const BrowserCard = memo(function BrowserCard({
         damping: 20,
         delay,
       }}
-      className={`relative w-full h-full pt-6 px-10 pb-6 rounded-2xl bg-[var(--bg-color)] border border-[var(--initial-border-color)] hover:border-[var(--border-color)] duration-150 flex flex-col gap-2 group ${
+      className={`relative w-full h-full pt-6 px-10 pb-6 rounded-2xl bg-base-400 border border-[var(--initial-border-color)] hover:border-[var(--border-color)] duration-150 flex flex-col gap-2 group ${
         notEvent ? "cursor-pointer" : ""
       }`}
-      onClick={
-        notEvent
-          ? () => navigate(link.replace("www.ds3ucsd.com", ""))
-          : undefined
-      }
+      onClick={notEvent ? () => navigate(link.replace("www.ds3ucsd.com", "")) : undefined}
     >
       <div className="flex justify-between items-center gap-6 mb-2">
         <span className="w-[80%] h-6 px-4  truncate rounded-full text-[var(--link-textcolor)] bg-base-300 hover:underline">
-          {notEvent && link}
+          {link}
         </span>
         <div className="flex gap-2">
           <span className="w-3 h-3 bg-[#F58134] rounded-full" />
@@ -50,7 +48,7 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       <div className="pl-2 flex flex-col">
-        <h4 className="text-3xl font-normal">{title}</h4>
+        <h4 className="text-2xl font-normal line-clamp-3">{title}</h4>
         <p className="text-lg opacity-75">
           {date && <span>{date}</span>}
           {date && location && <span> | </span>}
@@ -59,11 +57,13 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       <div className="group overflow-hidden relative rounded-lg inline-block">
-        {image && ImagePreloader.imagesPreloaded ? (
+        {image && ImagePreloader.imagesPreloaded && !imageError ? (
           <img
             src={image}
             alt={title}
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-cover aspect-[1.4/1] transition-transform duration-300 group-hover:scale-105"
+            onError={() => setImageError(true)}
+            style={{ display: "block" }}
           />
         ) : (
           <div className="skeleton w-full aspect-[1.4/1] rounded-lg" />
@@ -86,12 +86,12 @@ const BrowserCard = memo(function BrowserCard({
         (link ? (
           <SafeLink
             href={link}
-            className="text-lg text-center font-semibold rounded-md bg-(--color-primary) w-[60%] self-start hover:brightness-110 mt-4 p-2"
+            className="text-lg text-center font-semibold rounded-md bg-(--color-primary) self-start hover:brightness-110 mt-auto py-2 px-6"
           >
-            Add to Calendar
+            {linkText}
           </SafeLink>
         ) : (
-          <div className="h-10 m-1 mt-4 rounded-md w-[50%] skeleton" />
+          <div className="h-10 m-1 mt-auto rounded-md w-[50%] skeleton" />
         ))}
     </motion.div>
   );

@@ -1,4 +1,4 @@
-import dino from "/src/Assets/Images/dino.png";
+import dino from "/src/Assets/Images/dino.webp";
 import Section from "../../Components/Section";
 import Star from "../../Components/Star";
 
@@ -9,13 +9,9 @@ const Landing = () => {
         <h3 className="text-[clamp(1rem,2.5vw,1.5rem)] lg:text-[clamp(1rem,1.7vw,1.5rem)] font-semibold uppercase">
           Want to Build Your Resume?
         </h3>
-        <h2 className="text-[clamp(2.2rem,8vw,4rem)] lg:text-[clamp(2.2rem,4vw,4rem)]  font-semibold uppercase">
+        <h2 className="text-[clamp(3rem,10vw,6rem)] lg:text-[clamp(3rem,6vw,5rem)]  font-semibold uppercase">
           Projects
         </h2>
-        <p className="text-[clamp(1rem,1.6vw,1.8rem)] font-light max-w-[clamp(20rem,40vw,30rem)]">
-          Assisting students with 25+ projects to gain practical data-science experience by working
-          on real-world problems, in collaboration with both faculty and industry.
-        </p>
         <div className="hidden lg:block relative w-full h-[80px]">
           <Star size={1.4} className="absolute top-3/8 left-1/8" />
           <Star size={2} className="absolute top-5/8 left-1/4" />

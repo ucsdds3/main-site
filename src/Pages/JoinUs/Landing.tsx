@@ -29,7 +29,7 @@ const Landing = () => {
       <div className="aspect-video w-[clamp(300px,60vw,700px)] lg:w-[clamp(300px,40vw,700px)] rounded-lg overflow-hidden border-2 hover:border-(--color-primary)">
         <img
           className="w-full h-full object-cover hover:scale-105 duration-300"
-          src="/main-site/GetInvolved/pf-events-img.png"
+          src="/main-site/GetInvolved/pf-events-img.webp"
           onError={hideImage}
         />
       </div>

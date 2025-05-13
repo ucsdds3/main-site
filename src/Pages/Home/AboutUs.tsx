@@ -15,19 +15,15 @@ const AboutUs = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             className={`flex flex-col-reverse gap-6 lg:gap-[6vw] w-full ${
               index % 2 === 0 ? "lg:flex-row-reverse" : "lg:flex-row"
             }`}
           >
             <div className="flex-1 flex flex-col justify-between gap-6">
               <div className="flex flex-col gap-2">
-                <h3 className="text-[clamp(1.2rem,2vw,2rem)] brightness-75">
-                  {section.section}
-                </h3>
-                <h2 className="text-[clamp(2rem,3vw,2.3rem)] leading-tight">
-                  {section.title}
-                </h2>
+                <h3 className="text-[clamp(1.2rem,2vw,2rem)] brightness-75">{section.section}</h3>
+                <h2 className="text-[clamp(2rem,3vw,2.3rem)] font-[500] leading-tight">{section.title}</h2>
                 <p className="text-[clamp(1.2rem,1.5vw,2rem)] mt-2 brightness-75">
                   {section.content}
                 </p>

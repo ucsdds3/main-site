@@ -18,7 +18,7 @@ const Partners = () => {
       <OurPartners />
       <Suspense>
         <WorkWithUs />
-        <ContactUs />
+        <ContactUs type="partners" />
         {/* <FAQ faq={faq.partners} /> */}
       </Suspense>
     </Page>
