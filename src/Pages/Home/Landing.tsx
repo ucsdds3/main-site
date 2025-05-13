@@ -53,7 +53,7 @@ const Landing = () => {
           />
         </div>
 
-        <p className="mt-2 text-[clamp(1rem,3vw,1.2rem)] pb-[clamp(1rem,3vw,2rem)] font-albert-sans text-center md:text-left">
+        <p className="mt-2 text-[clamp(1rem,4vw,1.5rem)] pb-[clamp(1rem,3vw,2rem)] font-albert-sans text-center md:text-left">
           We are here to expand the horizons of data science as a community
           together.
         </p>
