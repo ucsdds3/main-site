@@ -24,7 +24,7 @@
   "members": [
     {
       "name": "Issac Roy",
-      "committees": ["Infrastructure"],
+      "committees": ["Software"],
       "role": "Software Developer",
       "email": "issacroy05@gmail.com",
       "image": "/main-site/Board/Issac-Roy.webp",
@@ -34,7 +34,7 @@
     },
     {
       "name": "Anirudh Annabathula",
-      "committees": ["Infrastructure", "Projects"],
+      "committees": ["Software", "Projects"],
       "role": "Software Developer",
       "email": "vannabathula@ucsd.edu",
       "image": "/main-site/Board/Anirudh-Annabathula.webp",
@@ -44,7 +44,7 @@
     },
     {
       "name": "Krish Kankure",
-      "committees": ["Infrastructure"],
+      "committees": ["Software"],
       "role": "Software Developer",
       "email": "krishkankure6@gmail.com",
       "image": "/main-site/Board/Krish-Kankure.webp",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Ishayu Ghosh",
-      "committees": ["Infrastructure"],
+      "committees": ["Software"],
       "role": "Software Developer",
       "email": "ighosh@ucsd.edu",
       "image": "/main-site/Board/Ishayu-Ghosh.webp",
@@ -64,7 +64,7 @@
     },
     {
       "name": "Anagha Kamath",
-      "committees": ["Infrastructure"],
+      "committees": ["Software"],
       "role": "UI Designer & Software Developer",
       "email": "ankamath@ucsd.edu",
       "image": "/main-site/Board/Anagha-Kamath.webp",
