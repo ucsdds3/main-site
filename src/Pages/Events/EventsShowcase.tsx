@@ -17,7 +17,7 @@ const EventsShowCase = ({ images }: { images: { title: string; image: string }[]
   };
 
   return (
-    <Section className="gap-0 ">
+    <Section className="gap-8 " title="Notable Workshops">
       <div className="w-[80vw] h-[30vw] flex items-center">
         <button onClick={handlePrev} className={btnClass} aria-label="Previous">
           <IoIosArrowBack />
@@ -29,10 +29,18 @@ const EventsShowCase = ({ images }: { images: { title: string; image: string }[]
                 <div className="w-full h-full flex-shrink-0">
                   <div
                     key={i}
-                    className="flex-shrink-0 border-2 hover:border-(--color-primary) duration-300 rounded-xl flex flex-col w-full h-full items-center justify-center  p-[clamp(1.5rem,2vw,2.5rem)]"
+                    className="flex-shrink-0 border-2 hover:border-(--color-primary) duration-300 rounded-xl flex flex-col w-full h-full items-center justify-center  p-[clamp(1.5rem,2vw,2.5rem)] gap-2"
                   >
-                    <h1>{image.title}</h1>
-                    <img src={image.image} alt="" className="h-full object-cover" />
+                    <h2 className="text-[clamp(1.5rem,2vw,2.5rem)] font-bold uppercase w-fit">
+                      {image.title}
+                    </h2>
+
+                    <div className="aspect-video skeleton flex-[6] rounded-2xl overflow-hidden">
+                      <img
+                        src={image.image}
+                        className="w-full h-full object-cover group-hover:scale-105 duration-300"
+                      />
+                    </div>
                   </div>
                 </div>
               );
