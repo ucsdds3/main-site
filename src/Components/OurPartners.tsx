@@ -16,7 +16,7 @@ const OurPartners = () => {
         </SafeLink>
         {" or view our sponsor package "}
         {/* TODO: add link to sponsor package */}
-        <SafeLink href="" className="underline">
+        <SafeLink href="https://drive.google.com/file/d/1bMJLw3mid90WxVuFgFaFNUPnX2FJknbW/view?usp=sharing" className="underline">
           here
         </SafeLink>
         .

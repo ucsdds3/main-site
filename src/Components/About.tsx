@@ -41,9 +41,7 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
                   style={{ width: "30px", height: "30px" }}
                 />
                 <div className="flex flex-col gap-2">
-                  <p className="text-[clamp(1rem,2.5vw,1.4rem)] font-bold uppercase">
-                    {point}
-                  </p>
+                  <p className="text-[clamp(1rem,2.5vw,1.4rem)] font-bold">{point}</p>
                   <p className="text-[clamp(0.8rem,2.2vw,1.2rem)] opacity-75 line-clamp-6">
                     {description}
                   </p>
