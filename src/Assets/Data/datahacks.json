@@ -22,7 +22,7 @@
       "members": ["Issac Roy", "Noah Golder", "Matthew Tokunaga", "Bryan Zhang"],
       "category": "Advanced Winner",
       "image": "/main-site/DataHacks/OnlyDance.webp",
-      "devpost": "https://play.typeracer.com?rt=1vxfaqipzw",
+      "devpost": "https://devpost.com/software/onlydance",
       "github": "https://github.com/Giraff-o-titans/OnlyDance"
     },
     {
@@ -30,7 +30,7 @@
       "description": "Test your skills & get moving! AI Dance Battle is an interactive web app where you dance, get feedback, and challenge friends — no studio required.",
       "members": ["Esther Chung", "Abhi Sathvika Goriparthy", "Preethi Manne", "Mythri Kishore"],
       "category": "Intermediate Winner",
-      "image": "/main-site/DataHacks/AI_Dance_Battle.webp",
+      "image": "/main-site/DataHacks/DanceBattleAI.webp",
       "devpost": "https://devpost.com/software/pose-jam"
     },
     {
@@ -38,7 +38,7 @@
       "description": "Central or Centel? A real-time tweet verifier that helps fans separate NBA facts from fiction.",
       "members": ["Krishang Khandelwal"],
       "category": "Beginner Winner",
-      "image": "/main-site/DataHacks/Central_or_Centel.webp",
+      "image": "/main-site/DataHacks/CentralorCentel.webp",
       "devpost": "https://devpost.com/software/central-or-centel",
       "github": "https://github.com/krishang2006/Central-or-Centel"
     },
