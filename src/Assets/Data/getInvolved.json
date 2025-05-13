@@ -1,26 +1,26 @@
 [
   {
     "title": "DataHacks",
-    "image": "/main-site/GetInvolved/datahacks_2.webp",
-    "description": "A premier hackathon to sharpen your Data Science skills. Work with real data, build impactful projects, and compete with peers.",
+    "image": "/main-site/GetInvolved/datahacks_2.jpeg",
+    "description": "Over one action-packed weekend, participants work with real-world datasets, build innovative solutions, and present their projects to professors & industry judges—gaining experience, mentorship, and new connections along the way.",
     "link": "www.ds3ucsd.com/our-team/datahacks"
   },
   {
     "title": "Projects & Consulting",
-    "image": "/main-site/GetInvolved/projects-img.webp",
-    "description": "Tackle real-world data projects, from language models to nonprofit challenges, gain hands-on experience, and create a real impact with peers.",
+    "image": "/main-site/GetInvolved/projects-img.jpeg",
+    "description": "From language models to nonprofit partnerships, our projects and consulting teams give students the chance to collaborate, grow professionally, and land research or internship opportunities through their work.",
     "link": "www.ds3ucsd.com/our-team/projects"
   },
   {
     "title": "Workshops",
-    "image": "/main-site/GetInvolved/workshop-img.webp",
-    "description": "Explore hands-on workshops in Python, machine learning, data visualization, AI, and more—designed for all skill levels.",
+    "image": "/main-site/GetInvolved/workshop-img.png",
+    "description": "Dive into topics like Python, machine learning, data visualization, and AI—designed for all skill levels. Our workshops help you build practical skills directly applicable to research and internships, ask questions, and grow at your own pace.",
     "link": "www.ds3ucsd.com/our-team/workshops"
   },
   {
-    "title": "Professional Events",
-    "image": "/main-site/GetInvolved/pf-events-img.webp",
-    "description": "Explore interactive workshops in Python, machine learning, data visualization, AI, and more, designed to enhance skills at every level.",
+    "title": "Social & Professional Events",
+    "image": "/main-site/GetInvolved/pf-events-img.png",
+    "description": "Engage with faculty & industry through panels, talks, & DS3 career fairs to gain mentorship & career advice. Join beach bonfires, ice-skating nights, and our Big-Little mentorship program to build lasting friendships and a stronger DS3 community.",  
     "link": "www.ds3ucsd.com/our-team/professional"
   }
 ]
