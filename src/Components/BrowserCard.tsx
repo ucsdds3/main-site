@@ -13,8 +13,9 @@ const BrowserCard = memo(function BrowserCard({
   location,
   image,
   description,
-  delay,
-}: EventType & { delay: number }) {
+  delay = 0,
+  linkText = "View",
+}: EventType & { delay?: number, linkText?: string }) {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3ucsd.com");
   const ImagePreloader = useImagePreloader([image ? image : ""]);
@@ -29,7 +30,7 @@ const BrowserCard = memo(function BrowserCard({
         damping: 20,
         delay,
       }}
-      className={`relative w-full h-full pt-6 px-10 pb-6 rounded-2xl bg-[var(--bg-color)] border border-[var(--initial-border-color)] hover:border-[var(--border-color)] duration-150 flex flex-col gap-2 group ${
+      className={`relative w-full h-full pt-6 px-10 pb-6 rounded-2xl bg-base-300 border border-[var(--initial-border-color)] hover:border-[var(--border-color)] duration-150 flex flex-col gap-2 group ${
         notEvent ? "cursor-pointer" : ""
       }`}
       onClick={
@@ -50,7 +51,7 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       <div className="pl-2 flex flex-col">
-        <h4 className="text-3xl font-normal">{title}</h4>
+        <h4 className="text-2xl font-normal line-clamp-3">{title}</h4>
         <p className="text-lg opacity-75">
           {date && <span>{date}</span>}
           {date && location && <span> | </span>}
@@ -86,9 +87,9 @@ const BrowserCard = memo(function BrowserCard({
         (link ? (
           <SafeLink
             href={link}
-            className="text-lg text-center font-semibold rounded-md bg-(--color-primary) w-[60%] self-start hover:brightness-110 mt-4 p-2"
+            className="text-lg text-center font-semibold rounded-md bg-(--color-primary) self-start hover:brightness-110 mt-4 py-2 px-6"
           >
-            Add to Calendar
+            {linkText}
           </SafeLink>
         ) : (
           <div className="h-10 m-1 mt-4 rounded-md w-[50%] skeleton" />
