@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "/src/Assets/Images/ds3_logo.png";
+import logo from "/src/Assets/Images/ds3_logo.webp";
 import { useTheme } from "../../Hooks/useTheme";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -24,9 +24,9 @@ const Navbar = () => {
           <HashLink
             smooth
             to={isConsulting ? { hash: "#home", search: "site=consulting" } : "/#home"}
-            className="space-x-2 cursor-pointer hover:-rotate-180 transition-all duration-500"
+            className="space-x-2 cursor-pointer [&:hover>img]:-rotate-180"
           >
-            <img src={logo} alt="Logo" className="w-10" />
+            <img src={logo} alt="Logo" className="w-10 transition-all duration-500" />
           </HashLink>
 
           {/* Theme Toggle */}

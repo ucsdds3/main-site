@@ -2,20 +2,23 @@ import Section from "../../Components/Section";
 
 const AboutUs = () => {
   return (
-    <Section id="about-us" className="flex-col-reverse md:flex-row md:gap-[10vw] min-h-[80vh] pt-[clamp(10rem,12vw,20rem)] pb-0">
+    <Section
+      id="about-us"
+      className="flex-col-reverse md:flex-row md:gap-[10vw] min-h-[80vh] pt-[clamp(10rem,12vw,20rem)] pb-0"
+    >
       <div className="flex-3 relative top-0 left-0 size-full min-h-[500px]">
         <img
-          src="/main-site/Consulting/Layer3.png"
+          src="/main-site/Consulting/Layer3.webp"
           alt="Layer 3"
           className="absolute w-full max-w-[350px] z-3 top-[35%] left-1/2 -translate-1/2"
         />
         <img
-          src="/main-site/Consulting/Layer2.png"
+          src="/main-site/Consulting/Layer2.webp"
           alt="Layer 2"
           className="absolute w-full max-w-[350px] z-2 top-[50%] left-1/2 -translate-1/2"
         />
         <img
-          src="/main-site/Consulting/Layer1.png"
+          src="/main-site/Consulting/Layer1.webp"
           alt="Layer 1"
           className="absolute w-full max-w-[350px] z-1 top-[65%] left-1/2 -translate-1/2"
         />
