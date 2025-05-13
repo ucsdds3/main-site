@@ -4,13 +4,13 @@ import Star from "./Star";
 import { hideImage } from "../Utils/functions.tsx";
 import { twMerge } from "tailwind-merge";
 
-interface AboutProps extends TeamType {
+export interface AboutProps extends TeamType {
   noAbout?: boolean;
   className?: string;
 }
 
 const About = ({ name, image, points, noAbout, className }: AboutProps) => {
-  if (!name || !image || !points) return null;
+  if (!name || !image) return null;
 
   return (
     <Section className="pt-[12rem]">
@@ -33,19 +33,21 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
             />
           </div>
 
-          <div className="flex-[4] flex flex-col justify-center gap-8">
-            {Object.entries(points).map(([point, description], index) => (
-              <div key={index} className="flex gap-4">
-                <Star className="mt-1" style={{ width: "30px", height: "30px" }} />
-                <div className="flex flex-col gap-2">
-                  <p className="text-[clamp(1rem,2.5vw,1.4rem)] font-bold uppercase">{point}</p>
-                  <p className="text-[clamp(0.8rem,2.2vw,1.2rem)] opacity-75 line-clamp-6">
-                    {description}
-                  </p>
+          {points && (
+            <div className="flex-[4] flex flex-col justify-center gap-8">
+              {Object.entries(points).map(([point, description], index) => (
+                <div key={index} className="flex gap-4">
+                  <Star className="mt-1" style={{ width: "30px", height: "30px" }} />
+                  <div className="flex flex-col gap-2">
+                    <p className="text-[clamp(1rem,2.5vw,1.4rem)] font-bold uppercase">{point}</p>
+                    <p className="text-[clamp(0.8rem,2.2vw,1.2rem)] opacity-75 line-clamp-6">
+                      {description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Section>
