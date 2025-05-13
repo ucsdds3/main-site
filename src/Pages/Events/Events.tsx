@@ -10,14 +10,18 @@ const Events = () => {
   const { events, loading, error } = useCalendarEvents();
 
   return (
-    <Section className="py-20 w-[80vw] max-w-[1204px]">
+    <Section className="py-10 w-[80vw] max-w-[1204px]">
       {error ? (
         <Error message={error!} />
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fit,clamp(350px,60vw,450px))] lg:grid-cols-[repeat(auto-fit,clamp(350px,40vw,380px))] justify-center lg:justify-start w-full lg:gap-5 ">
+        <div className="grid grid-cols-[repeat(auto-fit,clamp(350px,60vw,450px))] lg:grid-cols-[repeat(auto-fit,clamp(350px,40vw,360px))] justify-center lg:justify-start w-full lg:gap-5 ">
           {loading
-            ? newArray(3).map((_, index) => <BrowserCard key={index} {...({} as EventType)} />)
-            : events.map((event, index) => <BrowserCard key={index} {...event} />)}
+            ? newArray(3).map((_, index) => (
+                <BrowserCard key={index} {...({} as EventType)} delay={0} />
+              ))
+            : events.map((event, index) => (
+                <BrowserCard key={index} {...event} delay={0} linkText="Add to Calendar" />
+              ))}
         </div>
       )}
     </Section>
