@@ -1,7 +1,7 @@
 {
   "about": {
     "name": "Projects",
-    "image": "/main-site/GetInvolved/projects-img.jpeg",
+    "image": "/main-site/GetInvolved/projects-img.webp",
     "points": {
       "Gain First-hand Experience": "Build real, product-focused projects—from language models to applied ML systems—that result in tangible outcomes you can showcase.",
       "Build Your Portfolio": "Create impactful deliverables that strengthen your resume and demonstrate your proficiency with in-demand tools and technologies.",
@@ -22,17 +22,17 @@
       {
         "title": "Automated Face Recognition System",
         "description": "A robust system for accurate and efficient facial identification and verification.",
-        "image": "/main-site/WhereWeBeen/face-recog.png"
+        "image": "/main-site/WhereWeBeen/face-recog.webp"
       },
       {
         "title": "Interpretable Scoring Algorithm for Predictive Analysis",
         "description": "An algorithm providing clear, interpretable scores for data-driven decision-making.",
-        "image": "/main-site/WhereWeBeen/isa.png"
+        "image": "/main-site/WhereWeBeen/isa.webp"
       },
       {
         "title": "Conversational AI with Large Language Models",
         "description": "A chatbot leveraging LLMs for natural, human-like interactions.",
-        "image": "/main-site/WhereWeBeen/llm.png"
+        "image": "/main-site/WhereWeBeen/llm.webp"
       }
     ]
   }

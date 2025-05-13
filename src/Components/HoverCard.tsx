@@ -31,7 +31,7 @@ const HoverCard = ({ title, description, size, image, links }: HoverCardProps) =
 
         {/* TODO: Animate on hover */}
         {links && (
-          <div className="hidden group-hover:flex absolute bottom-0 w-full pb-2 gap-2 justify-center">
+          <div className="hidden group-hover:flex absolute bottom-0 w-full pb-2 gap-2 justify-center animate-[hoverCardAnimate_0.2s]">
             {links.map(({ title, href, icon, color }, index) => (
               <SafeLink
                 key={index}
