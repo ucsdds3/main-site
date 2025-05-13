@@ -92,7 +92,7 @@
   {
     "name": "Nolan Chu",
     "committees": ["Workshops"],
-    "role": "",
+    "role": "Workshops",
     "email": "ncchu@ucsd.edu",
     "image": "/main-site/Board/Nolan_Chu.webp",
     "website": "https://nolancchu.vercel.app/",
@@ -243,7 +243,7 @@
   {
     "name": "Priya Iyer",
     "committees": ["Design"],
-    "role": "",
+    "role": "Designer",
     "email": "pliyer@ucsd.edu",
     "image": "/main-site/Board/Priya_Iyer.webp",
     "website": "https://www.priyaiyerdesign.com/",
