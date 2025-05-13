@@ -37,3 +37,30 @@ export type LinkType = {
   icon: React.ReactNode;
   color: string;
 };
+
+export type cardData = {
+  image: string;
+  title: string;
+  description: string;
+  author: string;
+};
+
+export type datahacksWinner =
+  | {
+      title: string;
+      description: string;
+      members: string[];
+      category: string;
+      image: string;
+      devpost: string;
+      github: string;
+    }
+  | {
+      title: string;
+      description: string;
+      members: string[];
+      category: string;
+      image: string;
+      devpost: string;
+      github?: undefined;
+    };

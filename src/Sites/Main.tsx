@@ -7,7 +7,7 @@ import Projects from "../Pages/Projects/Projects";
 import DataHacks from "../Pages/DataHacks/DataHacks";
 import JoinUs from "../Pages/JoinUs/JoinUs";
 import Partners from "../Pages/Partners/Partners";
-
+import workshopData from "../Assets/Data/Workshops.json";
 const Main = () => {
   const { upcoming, workshops, social, professional } = events;
 
@@ -16,7 +16,7 @@ const Main = () => {
       <Route index element={<Home />} />
       <Route path="/events">
         <Route path="upcoming" element={<EventPage events={upcoming} />} />
-        <Route path="workshops" element={<EventPage events={workshops} />} />
+        <Route path="workshops" element={<EventPage events={workshops} images={workshopData} />} />
         <Route path="social" element={<EventPage events={social} />} />
         <Route path="professional" element={<EventPage events={professional} />} />
       </Route>
@@ -26,7 +26,7 @@ const Main = () => {
       <Route path="/partners" element={<Partners />} />
       <Route path="/join-us" element={<JoinUs />} />
     </Routes>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;

@@ -3,9 +3,9 @@
     "name": "Projects",
     "image": "/main-site/GetInvolved/projects-img.jpeg",
     "points": {
-      "Gain First-hand Experience": "Build real, product-focused projects—from language models to applied ML systems—that result in tangible outcomes you can showcase.",
-      "Build Your Portfolio": "Create impactful deliverables that strengthen your resume and demonstrate your proficiency with in-demand tools and technologies.",
-      "Collaborate With Your Peers": "Work alongside a team of data enthusiasts & an experienced DS3 mentor to brainstorm, develop, and launch projects that reflect real-world challenges and solutions."
+      "Gain Firsthand Experience": "Work on real projects—build language models, replicate top ML systems, and develop your own ideas with a team.",
+      "Build Your Portfolio": "Strengthen your resume with hands-on projects while mastering in-demand ML tools and techniques.",
+      "Collaborate With Your Peers": "Join a community of data enthusiasts, exchange ideas, and tackle challenges together to grow your skills."
     }
   },
   "images": [
@@ -20,14 +20,6 @@
   "projects": {
     "2024": [
       {
-        "title": "Automated Face Recognition System",
-        "description": "A robust system for accurate and efficient facial identification and verification.",
-        "image": "/main-site/WhereWeBeen/face-recog.png"
-      },
-      {
-        "title": "Interpretable Scoring Algorithm for Predictive Analysis",
-        "description": "An algorithm providing clear, interpretable scores for data-driven decision-making.",
-        "image": "/main-site/WhereWeBeen/isa.png"
         "title": "Augmented Reality: Food Nutrition Finder",
         "description": "AR app to identify food and display nutrition info using headset or camera.",
         "image": "/main-site/projects/project1_2024.png"
@@ -142,9 +134,6 @@
         "image": "/main-site/projects/project1_2022.png"
       },
       {
-        "title": "Conversational AI with Large Language Models",
-        "description": "A chatbot leveraging LLMs for natural, human-like interactions.",
-        "image": "/main-site/WhereWeBeen/llm.png"
         "title": "Audio Classification Using Urban Sounds Dataset",
         "description": "Classify urban sounds using audio ML models.",
         "image": "/main-site/projects/project2_2022.png"
