@@ -50,10 +50,10 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
                   <h4 className="text-[clamp(1.2rem,4vw,2rem)] md:text-[clamp(1rem,2vw,2rem)] font-semibold mb-2">
                     {data.title}
                   </h4>
-                  <p className="text-[clamp(1rem,2.5vw,2rem)] md:text-[clamp(0.8rem,1.5vw,1.2rem)] mb-4 leading-relaxed opacity-75">
+                  <p className="text-[clamp(1.5rem,2.5vw,2rem)] md:text-[clamp(1.5rem,1.5vw,1.8rem)] mb-4 leading-relaxed opacity-75">
                     {data.description}
                   </p>
-                  <p className="text-[clamp(1rem,2.5vw,2rem)] md:text-[clamp(0.8rem,1.5vw,1.2rem)] font-light">
+                  <p className="text-[clamp(1.7rem,2.5vw,2rem)] md:text-[clamp(1.7rem,1.5vw,1.9rem)] font-light">
                     {data.author}
                   </p>
                 </div>

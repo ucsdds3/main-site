@@ -9,7 +9,7 @@ const OurPartners = () => {
 
   return (
     <Section title="Our Partners" className="gap-0">
-      <p className="text-lg font-light max-w-xl text-center px-10">
+      <p className="text-2xl font-light max-w-xl text-center px-10">
         {"Interested in hearing how we can help you? Contact us at "}
         <SafeLink href="mailto:ds3@ucsd.edu" className="underline">
           ds3@ucsd.edu
