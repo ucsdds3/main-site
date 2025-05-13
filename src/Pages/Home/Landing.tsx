@@ -5,7 +5,6 @@ import logo from "/src/Assets/Images/ds3_logo.webp";
 import starData from "../../Assets/Data/stars.json";
 import Star from "../../Components/Star";
 import Button from "../../Components/Button";
-import "./dino.css";
 
 const Landing = () => {
   const navigate = useNavigate();
