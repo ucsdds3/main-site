@@ -10,7 +10,7 @@ const Events = () => {
   const { events, loading, error } = useCalendarEvents();
 
   return (
-    <Section className="py-20 w-[80vw] max-w-[1204px]">
+    <Section className="py-10 w-[80vw] max-w-[1204px]">
       {error ? (
         <Error message={error!} />
       ) : (
