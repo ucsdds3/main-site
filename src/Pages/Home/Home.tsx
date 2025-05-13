@@ -1,6 +1,7 @@
 import { lazy, Suspense, useRef } from "react";
 import Page from "../Page/Page";
 import Landing from "./Landing";
+import OnlineContent from "./OnlineContent";
 
 const AboutUs = lazy(() => import("./AboutUs"));
 const GetInvolved = lazy(() => import("./GetInvolved/GetInvolved"));
@@ -18,6 +19,7 @@ const Home = () => {
           <AboutUs />
           <GetInvolved />
           <WhereWeBeen />
+          <OnlineContent />
           <OurPartners />
         </Suspense>
       </div>
