@@ -75,28 +75,16 @@
   ],
   "clients": [
     {
-      "name": "Amazon",
-      "image": "/main-site/WhereWeBeen/amazon.png"
+      "name": "Promo Drone",
+      "image": "/main-site/WhereWeBeen/promodrone_logo.jpg"
     },
     {
-      "name": "Google",
-      "image": "/main-site/WhereWeBeen/google.png"
+      "name": "Alama AI",
+      "image": "/main-site/WhereWeBeen/alama-ai.jpg"
     },
     {
-      "name": "Microsoft",
-      "image": "/main-site/WhereWeBeen/microsoft.png"
-    },
-    {
-      "name": "Meta",
-      "image": "/main-site/WhereWeBeen/meta.png"
-    },
-    {
-      "name": "Netflix",
-      "image": "/main-site/WhereWeBeen/netflix.png"
-    },
-    {
-      "name": "Tesla",
-      "image": "/main-site/WhereWeBeen/tesla.png"
+      "name": "7sherpas",
+      "image": "/main-site/WhereWeBeen/7sherpas.png"
     }
   ]
 }
