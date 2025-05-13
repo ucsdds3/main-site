@@ -13,7 +13,7 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
   if (!name || !image || !points) return null;
 
   return (
-    <Section className="pt-[12rem]">
+    <Section className="pt-[4rem]">
       <div
         className={twMerge(
           "w-[80vw] max-w-[1204px] border-2 hover:border-(--color-primary) duration-300 rounded-xl p-[clamp(1.5rem,2vw,2.5rem)] group",
@@ -36,9 +36,14 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
           <div className="flex-[4] flex flex-col justify-center gap-8">
             {Object.entries(points).map(([point, description], index) => (
               <div key={index} className="flex gap-4">
-                <Star className="mt-1" style={{ width: "30px", height: "30px" }} />
+                <Star
+                  className="mt-1"
+                  style={{ width: "30px", height: "30px" }}
+                />
                 <div className="flex flex-col gap-2">
-                  <p className="text-[clamp(1rem,2.5vw,1.4rem)] font-bold uppercase">{point}</p>
+                  <p className="text-[clamp(1rem,2.5vw,1.4rem)] font-bold uppercase">
+                    {point}
+                  </p>
                   <p className="text-[clamp(0.8rem,2.2vw,1.2rem)] opacity-75 line-clamp-6">
                     {description}
                   </p>
