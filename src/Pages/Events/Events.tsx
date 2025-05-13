@@ -19,7 +19,9 @@ const Events = () => {
             ? newArray(3).map((_, index) => (
                 <BrowserCard key={index} {...({} as EventType)} delay={0} />
               ))
-            : events.map((event, index) => <BrowserCard key={index} {...event} delay={0} />)}
+            : events.map((event, index) => (
+                <BrowserCard key={index} {...event} delay={0} linkText="Add to Calendar" />
+              ))}
         </div>
       )}
     </Section>
