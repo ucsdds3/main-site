@@ -48,7 +48,7 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       <div className="pl-2 flex flex-col">
-        <h4 className="text-2xl font-normal line-clamp-3">{title}</h4>
+        <h4 className="text-4xl font-bold line-clamp-3">{title}</h4>
         <p className="text-lg opacity-75">
           {date && <span>{date}</span>}
           {date && location && <span> | </span>}
@@ -71,7 +71,7 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       {description ? (
-        <p className="text-lg font-light mt-2 line-clamp-5 text-[var(--card-textcolor)]">
+        <p className="text-2xl font-light mt-2 line-clamp-5 text-[var(--card-textcolor)]">
           {description}
         </p>
       ) : (
