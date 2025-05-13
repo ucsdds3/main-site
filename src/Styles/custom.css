@@ -11,11 +11,6 @@
   box-shadow: 0 0 8px var(--color-primary), 0 0 12px var(--color-primary);
 }
 
-.h2{
-  font-weight: 900;
-}
-
-
 /* Animations for numbers going up */
 @property --num700 {
   syntax: "<integer>";
