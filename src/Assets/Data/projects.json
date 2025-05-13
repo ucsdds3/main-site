@@ -63,21 +63,6 @@
         "title": "Credit Card Fraud Transactions",
         "description": "Detect fraudulent credit card activity using time series data.",
         "image": "/main-site/projects/project9_2024.png"
-      },
-      {
-        "title": "Fantasy Football Player Stats Prediction",
-        "description": "Predict fantasy points using player stats and advanced ML models.",
-        "image": "/main-site/projects/project10_2024.png"
-      },
-      {
-        "title": "Public Transport Geospatial Analysis: Rail & Road",
-        "description": "Evaluate public transport ridership using geospatial data.",
-        "image": "/main-site/projects/project11_2024.png"
-      },
-      {
-        "title": "Consumer Price Index Modeling",
-        "description": "Model and visualize CPI trends to understand inflation and cost of living.",
-        "image": "/main-site/projects/project12_2024.png"
       }
     ],
     "2023": [
