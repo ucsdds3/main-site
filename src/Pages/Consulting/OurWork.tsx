@@ -8,7 +8,7 @@ import { MemberType } from "../../Utils/types";
 import { twMerge } from "tailwind-merge";
 
 const OurWork = () => {
-  const sections = ["projects", "members", "clients"];
+  const sections = ["projects", "clients"];
   const [currSection, setCurrSection] = useState<(typeof sections)[number]>("projects");
 
   const projects = projectsData.projects;
