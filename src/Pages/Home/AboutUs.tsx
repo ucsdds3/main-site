@@ -23,7 +23,7 @@ const AboutUs = () => {
             <div className="flex-1 flex flex-col justify-between gap-6">
               <div className="flex flex-col gap-2">
                 <h3 className="text-[clamp(1.2rem,2vw,2rem)] brightness-75">{section.section}</h3>
-                <h2 className="text-[clamp(2rem,3vw,2.3rem)] leading-tight">{section.title}</h2>
+                <h2 className="text-[clamp(2rem,3vw,2.3rem)] font-[500] leading-tight">{section.title}</h2>
                 <p className="text-[clamp(1.2rem,1.5vw,2rem)] mt-2 brightness-75">
                   {section.content}
                 </p>

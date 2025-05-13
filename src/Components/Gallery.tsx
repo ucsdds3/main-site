@@ -15,8 +15,6 @@ const Gallery = ({ images, link }: { images: string[], link?: string }) => {
 
   return (
     <Section title="Gallery" className="gap-0">
-      {link && <Button onClick={() => window.open(link, "_blank")}>VIEW ALL</Button>}
-
       <div className="grid grid-cols-7 grid-rows-13 md:grid-rows-10 md:grid-cols-10 gap-2 max-w-[1200px] h-[clamp(300px,80vh,600px)] mt-10">
         {sizes.map((size, index) => (
           <div className={twMerge("skeleton rounded-sm", size)} key={index}>
@@ -30,6 +28,8 @@ const Gallery = ({ images, link }: { images: string[], link?: string }) => {
           </div>
         ))}
       </div>
+      {link && <Button onClick={() => window.open(link, "_blank")} className="mt-8">VIEW ALL</Button>}
+
     </Section>
   );
 };
