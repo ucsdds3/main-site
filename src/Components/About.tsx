@@ -13,7 +13,7 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
   if (!name || !image) return null;
 
   return (
-    <Section className="pt-[12rem]">
+    <Section className="pt-[4rem]">
       <div
         className={twMerge(
           "w-[80vw] max-w-[1204px] border-2 hover:border-(--color-primary) duration-300 rounded-xl p-[clamp(1.5rem,2vw,2.5rem)] group",
