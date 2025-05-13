@@ -80,6 +80,26 @@
     "linkedIn": "https://www.linkedin.com/in/kylee-kim-919a85260/"
   },
   {
+    "name": "Camille Sicat",
+    "committees": ["Marketing"],
+    "role": "Marketing Events Director",
+    "email": "camillesicatwork@gmail.com",
+    "image": "/main-site/Board/Camille_Sicat.webp",
+    "website": "https://iris-hep.org/fellows/couchsnail.html",
+    "resume": "https://docs.google.com/document/d/1LGcSgXJ9vzXLBio_4G5_c6AjLBx32SjOOUtJPA3-9r4/edit?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/camille-sicat-8b3267256"
+  },
+  {
+    "name": "Nolan Chu",
+    "committees": ["Workshops"],
+    "role": "Workshops",
+    "email": "ncchu@ucsd.edu",
+    "image": "/main-site/Board/Nolan_Chu.webp",
+    "website": "https://nolancchu.vercel.app/",
+    "resume": "https://drive.google.com/file/d/1BfEGTIVa0JIAV4CK3GLHffRVkt1a5x8h/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/nolan-chu/"
+  },
+  {
     "name": "Jennifer Chang",
     "committees": ["Executive", "Design"],
     "role": "Design Co-Director",
@@ -89,6 +109,7 @@
     "resume": "https://docs.google.com/document/d/1Mh8GlXlRiroMFS1xqhCmxI1KXcv2neciDp0z5EnpCA8/edit?usp=sharing",
     "linkedIn": "https://www.linkedin.com/in/jennifer-chang-769ba71b3/"
   },
+
   {
     "name": "Jiahe Qin",
     "committees": ["Executive", "Social Events"],
@@ -218,6 +239,16 @@
     "website": "aprilrhuang.netlify.app/",
     "resume": "https://docs.google.com/document/d/1pXW007M0dxccoeBevx-QCfH7SFwx3c8eCcd6FnSgZSk/edit?usp=drivesdk",
     "linkedIn": "https://www.linkedin.com/in/april\u2014huang"
+  },
+  {
+    "name": "Priya Iyer",
+    "committees": ["Design"],
+    "role": "Designer",
+    "email": "pliyer@ucsd.edu",
+    "image": "/main-site/Board/Priya_Iyer.webp",
+    "website": "https://www.priyaiyerdesign.com/",
+    "resume": "https://docs.google.com/document/d/1E4EXi_ZqW5GGgmmHzF-mCeOI5CED7gua_UsDJbtrSvg/edit?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/pliyer"
   },
   {
     "name": "Charles Rivera",
@@ -481,7 +512,7 @@
   },
   {
     "name": "Vaidehi Karve",
-    "committees": ["Executive"],
+    "committees": ["Internal"],
     "role": "Events Coordinator",
     "email": "vkarve@ucsd.edu",
     "image": "/main-site/Board/Vaidehi-Karve.webp",
