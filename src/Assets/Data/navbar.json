@@ -6,15 +6,15 @@
       "Social": "/events/social",
       "Professional": "/events/professional"
     },
-    "Board": "/board",
     "Projects": "/projects",
-    "DataHacks": "/datahacks",
-    "Partners": "/partners",
     "Consulting": {
       "target": "_blank",
       "pathname": "/",
       "search": "site=consulting"
-    }
+    },
+    "DataHacks": "/datahacks",
+    "Board": "/board",
+    "Partners": "/partners"
   },
   "consulting": {
     "About Us": {
