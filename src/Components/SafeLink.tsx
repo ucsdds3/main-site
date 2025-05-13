@@ -15,7 +15,7 @@ const SafeLink = ({ href, glow, className, children, ...props }: SafeLinkProps) 
       className={twMerge(
         `hover:underline ${
           glow &&
-          "hover:text-(--color-primary) hover:[text-shadow:0_0_8px_var(--color-primary),0_0_12px_var(--color-primary)]"
+          "hover:text-(--color-primary) hover:[text-shadow:0_0_3px_var(--color-primary),0_0_12px_var(--color-primary)] transition duration-300"
         }`,
         className
       )}
