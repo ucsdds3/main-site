@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
-import dino from "/src/Assets/Images/dino.png";
-import logo from "/src/Assets/Images/ds3_logo.png";
+import dino from "/src/Assets/Images/dino.webp";
+import logo from "/src/Assets/Images/ds3_logo.webp";
 import starData from "../../Assets/Data/stars.json";
 import Star from "../../Components/Star";
 import Button from "../../Components/Button";
