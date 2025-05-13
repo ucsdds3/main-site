@@ -1,11 +1,10 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
-import dino from "/src/Assets/Images/dino.png";
-import logo from "/src/Assets/Images/ds3_logo.png";
+import dino from "/src/Assets/Images/dino.webp";
+import logo from "/src/Assets/Images/ds3_logo.webp";
 import starData from "../../Assets/Data/stars.json";
 import Star from "../../Components/Star";
 import Button from "../../Components/Button";
-import "./dino.css";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -40,10 +39,10 @@ const Landing = () => {
         </div>
 
         <div className="flex items-center text-center md:text-left">
-          <h1 className="text-[clamp(2.7rem,3.5vw,4rem)] font-medium font-albert-sans  md:overflow-hidden title-short md:text-nowrap">
+          <h1 className="text-[clamp(2.7rem,4.5vw,4rem)] font-semibold md:overflow-hidden title-short md:text-nowrap">
             Data Science Student Society
           </h1>
-          <h1 className="text-[clamp(2.7rem,3.5vw,4rem)] font-medium font-albert-sans md:block hidden title-long md:overflow-hidden">
+          <h1 className="text-[clamp(2.7rem,4.5vw,4rem)] font-semibold md:block hidden title-long md:overflow-hidden">
             DS3
           </h1>
           <img
@@ -52,7 +51,6 @@ const Landing = () => {
             className="h-[clamp(3rem,5vw,5rem)] hidden md:block caret"
           />
         </div>
-
         <p className="mt-2 text-[clamp(1rem,3vw,1.2rem)] pb-[clamp(1rem,3vw,2rem)] font-albert-sans text-center md:text-left">
         Expanding the horizons of data science through community, curiosity, and collaboration.
         </p>
