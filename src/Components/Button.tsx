@@ -16,7 +16,7 @@ const Button = ({ onClick, children, className }: ButtonProps) => {
   return (
     <div className={twMerge("relative size-fit my-3", className)} onClick={onClick}>
       <motion.button
-        className="border-2 rounded-full py-3 px-10 whitespace-nowrap cursor-pointer text-[clamp(1rem,1.2vw,2rem)] min-w-[clamp(8rem,10vw,15rem)] bg-(--color) border-(--color-primary) uppercase font-semibold"
+        className="border-2 rounded-full py-3 px-10 whitespace-nowrap cursor-pointer text-[clamp(1rem,1.2vw,2rem)] min-w-[clamp(8rem,12vw,15rem)] bg-(--color) border-(--color-primary) uppercase font-semibold"
         variants={buttonVariants}
         initial="initial"
         animate="initial"

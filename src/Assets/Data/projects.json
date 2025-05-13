@@ -3,12 +3,20 @@
     "name": "Projects",
     "image": "/main-site/GetInvolved/projects-img.jpeg",
     "points": {
-      "Gain Firsthand Experience": "Work on real projects—build language models, replicate top ML systems, and develop your own ideas with a team.",
+      "Gain Firsthand Experience": "Work on real projects\u2014build language models, replicate top ML systems, and develop your own ideas with a team.",
       "Build Your Portfolio": "Strengthen your resume with hands-on projects while mastering in-demand ML tools and techniques.",
       "Collaborate With Your Peers": "Join a community of data enthusiasts, exchange ideas, and tackle challenges together to grow your skills."
     }
   },
-  "images": null,
+  "images": [
+    "/main-site/Projects/P1.webp",
+    "/main-site/Projects/P2.webp",
+    "/main-site/Projects/P3.webp",
+    "/main-site/Projects/P4.webp",
+    "/main-site/Projects/P5.webp",
+    "/main-site/Projects/P6.webp",
+    "/main-site/Projects/P7.webp"
+  ],
   "projects": {
     "2024": [
       {

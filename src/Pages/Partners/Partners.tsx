@@ -1,17 +1,26 @@
-import faq from "../../Assets/Data/FAQ.json";
+import { lazy, Suspense } from "react";
 import OurPartners from "../../Components/OurPartners";
-import WorkWithUs from "./WorkWithUs";
-import ContactUs from "../../Components/ContactUs";
-import FAQ from "../../Components/FAQ";
+const WorkWithUs = lazy(() => {
+  return import("./WorkWithUs");
+});
+const ContactUs = lazy(() => {
+  return import("../../Components/ContactUs");
+});
+// import faq from "../../Assets/Data/FAQ.json";
+// const FAQ = lazy(() => {
+//   return import("../../Components/FAQ");
+// });
 import Page from "../Page/Page";
 
 const Partners = () => {
   return (
     <Page>
       <OurPartners />
-      <WorkWithUs />
-      <ContactUs />
-      {/* <FAQ faq={faq.partners} /> */}
+      <Suspense>
+        <WorkWithUs />
+        <ContactUs />
+        {/* <FAQ faq={faq.partners} /> */}
+      </Suspense>
     </Page>
   );
 };
