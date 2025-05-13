@@ -1,0 +1,8 @@
+[
+  { "image": "/main-site/Workshops/Personal_Site.webp", "title": "Personal website" },
+  { "image": "/main-site/Workshops/IntroScikit.webp", "title": "Intro to Sci Kit" },
+  {
+    "image": "/main-site/Workshops/Blizzard_Games_Technical_Talk.webp",
+    "title": "Blizzard Games Technical Talk"
+  }
+]

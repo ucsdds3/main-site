@@ -11,12 +11,8 @@ const Landing = () => {
   const stars = starData.positions[Math.round(Math.random() * 4)];
 
   return (
-    <div className="flex flex-col lg:flex-row justify-between items-start w-[95vw] min-h-[95vh] mx-auto">
-      <motion.div
-        variants={starData.appearingVariants}
-        animate="animate"
-        className="-z-1"
-      >
+    <div className="flex flex-col lg:flex-row  items-start w-[95vw] min-h-[95vh] mx-auto">
+      <motion.div variants={starData.appearingVariants} animate="animate" className="-z-1">
         {stars.map((star, index) => (
           <Star
             key={index}
@@ -45,11 +41,7 @@ const Landing = () => {
           <h1 className="text-[clamp(2.7rem,4.5vw,4rem)] font-semibold md:block hidden title-long md:overflow-hidden">
             DS3
           </h1>
-          <img
-            src={logo}
-            alt="Logo"
-            className="h-[clamp(3rem,5vw,5rem)] hidden md:block caret"
-          />
+          <img src={logo} alt="Logo" className="h-[clamp(3rem,5vw,5rem)] hidden md:block caret" />
         </div>
         <p className="mt-2 text-[clamp(1rem,3vw,1.2rem)] pb-[clamp(1rem,3vw,2rem)] font-albert-sans text-center md:text-left">
         Expanding the horizons of data science through community, curiosity, and collaboration.
@@ -65,7 +57,7 @@ const Landing = () => {
 
       <img
         src={dino}
-        className="w-[clamp(20rem,40vw,30rem)] lg:w-[clamp(18rem,28vw,40rem)] mt-[clamp(5rem,10vw,10rem)] lg:mt-auto p-16 mb-10 mx-auto lg:mx-0 rotate-15"
+        className="w-[clamp(20rem,40vw,30rem)] absolute right-0 bottom-0 lg:w-[clamp(18rem,28vw,40rem)] mt-[clamp(5rem,10vw,10rem)] lg:mt-auto p-16 mb-10 mx-auto lg:mx-0 rotate-15"
       />
       {/* <img
         src={dino}

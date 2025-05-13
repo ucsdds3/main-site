@@ -1,26 +1,26 @@
 [
   {
     "title": "DataHacks",
-    "image": "/main-site/GetInvolved/datahacks_2.jpeg",
+    "image": "/main-site/GetInvolved/datahacks_2.webp",
     "description": "Over one action-packed weekend, participants work with real-world datasets, build innovative solutions, and present their projects to professors & industry judges—gaining experience, mentorship, and new connections along the way.",
     "link": "www.ds3ucsd.com/our-team/datahacks"
   },
   {
     "title": "Projects & Consulting",
-    "image": "/main-site/GetInvolved/projects-img.jpeg",
+    "image": "/main-site/GetInvolved/projects-img.webp",
     "description": "From language models to nonprofit partnerships, our projects and consulting teams give students the chance to collaborate, grow professionally, and land research or internship opportunities through their work.",
     "link": "www.ds3ucsd.com/our-team/projects"
   },
   {
     "title": "Workshops",
-    "image": "/main-site/GetInvolved/workshop-img.png",
+    "image": "/main-site/GetInvolved/workshop-img.webp",
     "description": "Dive into topics like Python, machine learning, data visualization, and AI—designed for all skill levels. Our workshops help you build practical skills directly applicable to research and internships, ask questions, and grow at your own pace.",
     "link": "www.ds3ucsd.com/our-team/workshops"
   },
   {
     "title": "Social & Professional Events",
-    "image": "/main-site/GetInvolved/pf-events-img.png",
-    "description": "Engage with faculty & industry through panels, talks, & DS3 career fairs to gain mentorship & career advice. Join beach bonfires, ice-skating nights, and our Big-Little mentorship program to build lasting friendships and a stronger DS3 community.",  
+    "image": "/main-site/GetInvolved/pf-events-img.webp",
+    "description": "Engage with faculty & industry through panels, talks, & DS3 career fairs to gain mentorship & career advice. Join beach bonfires, ice-skating nights, and our Big-Little mentorship program to build lasting friendships and a stronger DS3 community.",
     "link": "www.ds3ucsd.com/our-team/professional"
   }
 ]
