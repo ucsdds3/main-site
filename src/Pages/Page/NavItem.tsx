@@ -11,7 +11,7 @@ interface NavItemProps {
 const NavItem = ({ label, data }: NavItemProps) => {
   if (typeof data === "string") {
     return (
-      <Link to={data} className="hover:text-(--color-primary)">
+      <Link to={data} className="hover:text-(--color-primary) duration-150">
         {label}
       </Link>
     );
@@ -33,7 +33,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
       <div
         role="button"
         tabIndex={0}
-        className="flex justify-center items-center gap-2 cursor-pointer hover:text-(--color-primary) focus:text-(--color-primary) duration-300"
+        className="flex justify-center items-center gap-2 cursor-pointer hover:text-(--color-primary) transition duration-150 focus:text-(--color-primary) duration-300"
       >
         <span>{label}</span>
         <IoIosArrowUp className="transition-transform duration-300 group-focus-within:rotate-180" />
