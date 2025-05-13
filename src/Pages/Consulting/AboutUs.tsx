@@ -29,10 +29,7 @@ const AboutUs = () => {
           About Us
         </h2>
         <p className="text-[clamp(1.2rem,1.5vw,2rem)] opacity-75 indent-8 font-light md:leading-loose text-justify text-wrap px-[clamp(1rem,7vw,7rem)] md:px-0">
-          There are many variations of passages of Lorem Ipsum available, but the majority have
-          suffered alteration in some form, by injected humour, or randomised words which don't look
-          even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be
-          sure there isn't anything embarrassing hidden in the middle of text.
+        DS3 Consulting is a student-run team of data scientists and engineers offering end-to-end solutions in analytics, machine learning, MLOps, and architecture. We collaborate with organizations of all sizes to deliver custom insights, models, and scalable data products that drive impact. While we proudly offer pro bono support to local small businesses and nonprofits, we also welcome paid partnerships and contract work with startups, research teams, and enterprise clients seeking reliable, high-quality technical solutions.
         </p>
       </div>
     </Section>
