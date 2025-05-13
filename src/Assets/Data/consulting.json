@@ -76,15 +76,15 @@
   "clients": [
     {
       "name": "Promo Drone",
-      "image": "/main-site/WhereWeBeen/promodrone_logo.jpg"
+      "image": "/main-site/WhereWeBeen/promodrone_logo.webp"
     },
     {
       "name": "Alama AI",
-      "image": "/main-site/WhereWeBeen/alama-ai.jpg"
+      "image": "/main-site/WhereWeBeen/alama-ai.webp"
     },
     {
       "name": "7sherpas",
-      "image": "/main-site/WhereWeBeen/7sherpas.png"
+      "image": "/main-site/WhereWeBeen/7sherpas.webp"
     }
   ]
 }
