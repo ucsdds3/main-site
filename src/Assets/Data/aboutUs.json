@@ -1,16 +1,16 @@
 [
   {
     "section": "WHO WE ARE",
-    "title": "We are passionate about data, technology, and problem solving.",
-    "content": "We’re a community driven to push the boundaries of data science together.",
+    "title": "Together, we collaborate, learn, and lead the future of data science.",
+    "content": "We're a diverse community of students passionate about data, technology, and solving real-world problems.",
     "button": "OUR TEAM",
     "link": "/board",
     "image": "/main-site/AboutUs/who.webp"
   },
   {
     "section": "WHAT WE DO",
-    "title": "Build technical skills, network, and gain experience.",
-    "content": "We explore the frontiers and push the boundaries of data science and technology.",
+    "title": "From workshops to online articles — we turn curiosity into capability.",
+    "content": "We provide opportunities to build technical skills, gain real-world experience, and network with industry & peers.",
     "button": "EVENTS",
     "link": "/events/upcoming",
     "image": "/main-site/AboutUs/what.webp"
@@ -18,8 +18,8 @@
   ,
   {
     "section": "HOW TO GET INVOLVED",
-    "title": "Projects, consulting, hackathons, events—make it yours.",
-    "content": "We welcome everyone to explore projects, hackathons, and weekly events for growth and connection.",
+    "title": "Projects. Consulting. DataHacks. Big-Little. Your journey starts here.",
+    "content": "Explore weekly professional & social events, quarterly projects, and real-world consulting open for all majors & skill levels.",
     "button": "LEARN MORE",
     "link": "/events/upcoming",
     "image": "/main-site/AboutUs/how.webp"

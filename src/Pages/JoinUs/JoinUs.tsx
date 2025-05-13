@@ -15,7 +15,7 @@ const JoinUs = () => {
     <Page scrollRef={scrollRef}>
       <Landing />
       <div ref={scrollRef}>
-        <ContactUs />
+        <ContactUs type="students" />
         <FAQ faq={faq.joinUs} />
       </div>
     </Page>

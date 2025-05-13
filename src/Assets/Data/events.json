@@ -5,33 +5,35 @@
   },
   "workshops": {
     "title": "Workshops",
-    "subtitle": "Want to learn something new?",
+    "subtitle": "Python. GitHub. Web Development. Generative AI.",
     "name": "Workshops",
     "image": "/main-site/GetInvolved/workshop-img.webp",
     "points": {
-      "Making Data Science Accessible": "The Workshops Team is here to make data science accessible to everyone! Whether you're just starting out or diving into advanced topics, our workshops are designed to help students build the skills and confidence to thrive as data scientists.",
-      "Hands-on Learning": "We run workshops on a variety of topics, including Exploratory Data Analysis, Scikit-Learn, Generative AI Theory, LLMs, and AI Agents."
+      "Accessible for All": "Our workshops are designed for every skill level — whether you're brand new to data science or diving into advanced topics.",
+      "Experience Through Practice": "We focus on helping students build practical skills and confidence to grow as capable data scientists.",
+      "Diverse Topics": "Sessions cover everything from Exploratory Data Analysis and Scikit-Learn to Generative AI, LLMs, and AI agents."
     }
   },
   "social": {
     "title": "Social Events",
-    "subtitle": "Here to have some fun?",
-    "name": "Social",
-    "image": "/main-site/GetInvolved/social-img.webp",
+    "subtitle": "Mentorship. Community. Fun.",
+    "name": "Social Events",
+    "image": "/main-site/GetInvolved/social-img.png",
     "points": {
-      "Building community through data": "The Social Subcommittee fosters a welcoming, inclusive community by creating opportunities for members to connect, collaborate, and have fun beyond coding.",
-      "Networking and engagement": "We organize a variety of events, including social mixers, study jams, and mentorship programs, to help members build lasting connections while growing together in the field."
+      "Mentorship": "Through our Big-Little mentorship program, members are matched for guidance, friendship, and support—building strong connections across experience levels.",
+      "Community Beyond Coding": "From beach bonfires to game nights, we host events that bring members together for fun, relaxation, and real community.",
+      "Social Meets Growth": "Whether it's ice skating, study jams, or themed mixers, our events help members unwind, engage, and grow alongside fellow data enthusiasts."
     }
   },
   "professional": {
     "title": "Professional Events",
-    "subtitle": "Want to advance your career?",
-    "name": "Professional",
-    "image": "/main-site/GetInvolved/pf-events-img.webp",
+    "subtitle": "Networking. Career Growth. Industry Insights.",
+    "name": "Professional Events",
+    "image": "/main-site/GetInvolved/pf-events-img.png",
     "points": {
-      "Grow your network": "Connect with various professionals through exclusive speaker events, panels, and networking sessions.",
-      "Enhance your Career Toolkit": "Improve your resume, portfolio, and professional presence with hands-on workshops.",
-      "Explore Data Science": "Discover diverse paths in the field and learn how to leverage your skills for success."
+      "Grow Your Network": "Connect with professionals, alumni, and recruiters through speaker panels, career nights, and exclusive networking events.",
+      "Build Your Career Toolkit": "Strengthen your resume, portfolio, and LinkedIn through interactive workshops on personal branding and professional storytelling.",
+      "Discover Your Path in Data Science": "Explore roles across industry and research, and gain insights on how to turn your skills into meaningful opportunities."
     }
   }
 }
