@@ -13,7 +13,7 @@ const ShowCase = () => {
   const { title, description, members, image, category, devpost, github } = winners[index];
 
   const btnClass =
-    "rounded-full hover:text-(--color-primary) p-3 hover:bg-base-300 transition-colors duration-300 cursor-pointer text-2xl lg:mx-8";
+    "rounded-full hover:text-(--color-primary) transition duration-150 p-3 hover:bg-base-300 transition-colors duration-300 cursor-pointer text-2xl lg:mx-8";
 
   const points: Record<string, React.ReactNode> = {
     Members: members.join(", "),

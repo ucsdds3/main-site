@@ -10,7 +10,7 @@ const Events = () => {
   const { events, loading, error } = useCalendarEvents();
 
   return (
-    <Section className="py-20 w-[80vw] max-w-[1204px]">
+    <Section className="py-10 w-[80vw] max-w-[1204px]">
       {error ? (
         <Error message={error!} />
       ) : (
@@ -19,7 +19,9 @@ const Events = () => {
             ? newArray(3).map((_, index) => (
                 <BrowserCard key={index} {...({} as EventType)} delay={0} />
               ))
-            : events.map((event, index) => <BrowserCard key={index} {...event} delay={0} />)}
+            : events.map((event, index) => (
+                <BrowserCard key={index} {...event} delay={0} linkText="Add to Calendar" />
+              ))}
         </div>
       )}
     </Section>
