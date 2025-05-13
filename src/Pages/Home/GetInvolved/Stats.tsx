@@ -9,7 +9,7 @@ const Stats = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const stats = [
-    { title: "Hackathon Attendees", value: 700, color: "#F58134" },
+    { title: "DataHacks Attendees", value: 700, color: "#F58134" },
     { title: "Workshops Hosted", value: 100, color: "#11B3C9" },
     { title: "Active Members", value: 500, color: "#6C6C6C" },
     {
@@ -63,7 +63,7 @@ const Stats = () => {
             }`}
           ></span>
 
-          <span className="text-[clamp(1.2rem,1.7vw,1.5rem)] md:text-center">
+          <span className="text-[clamp(1.5rem,1.7vw,1.5rem)] md:text-center">
             {unbreakable(stats[index].title)}
           </span>
         </div>
