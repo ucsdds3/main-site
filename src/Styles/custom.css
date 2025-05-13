@@ -12,8 +12,9 @@
 }
 
 .h2{
-  font-weight: 600;
+  font-weight: 900;
 }
+
 
 /* Animations for numbers going up */
 @property --num700 {
