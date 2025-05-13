@@ -14,7 +14,7 @@ const Landing = ({ contactRef }: { contactRef: React.RefObject<HTMLDivElement> }
         <span>{" CONSULTING"}</span>
       </h1>
       <p className="text-[clamp(16px,2.5vw,35px)] w-8/10 text-center mb-4">
-        PRO BONO SUPPORT FOR LOCAL BUSINESSES
+        Empowering Your Organization Through Applied Data Science.
       </p>
       <Button onClick={() => scrollTo(contactRef)}>CONTACT US</Button>
 
