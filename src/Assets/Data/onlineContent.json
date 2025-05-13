@@ -1,22 +1,22 @@
 [
   {
     "image": "/main-site/OnlineContent/Stocks.webp",
-    "title": "Mastering the Markets: (Reinforcement) Learning About the Stock Market",
-    "description": "In the stock day trading world, millions of decisions must be made every second. Experienced traders navigate this world by creating an investment strategy, evaluating its results, and modifying their approach based on their profits. Now imagine an AI that could perform the same tasks, eliminating the exhaustive time spent by these day traders. That is the power of reinforcement learning (RL), a technique transforming industries from finance to healthcare.",
+    "title": "Mastering the Markets",
+    "description": "In the stock day trading world, millions of decisions must be made every second. Now imagine an AI that could perform the same tasks, eliminating exhaustive time spent.",
     "author": "Srinivas Sriram",
     "link": "https://medium.com/ds3ucsd/mastering-the-markets-reinforcement-learning-about-the-stock-market-1679f1bfd760"
   },
   {
     "image": "/main-site/OnlineContent/AIHistory.webp",
-    "title": "How AI Went from Solving CAPTCHAs to Painting Masterpieces",
-    "description": "How many times have you had to fill out a CAPTCHA while signing up for anything? Ever thought it was tedious and troublesome? After all, bots nowadays can solve these puzzles better, on average, than human users. So what's the point?",
+    "title": "AI-Solving CAPTCHAs",
+    "description": "How many times have you had to fill out a CAPTCHA while signing up for anything? Bots nowadays can solve these puzzles better, on average, than human users. So what's the point?",
     "author": "Jeffery Kang",
     "link": "https://medium.com/ds3ucsd/how-ai-went-from-solving-captchas-to-painting-masterpieces-5477f1ab8832"
   },
   {
     "image": "/main-site/OnlineContent/Matrix.webp",
-    "title": "How Matrices are Used for Speech Recognition",
-    "description": "Services like Google Translate seem to amazingly understand the meaning behind thousands of languages, contexts, and accents. Even when given broken sentences, most of the time, it's able to accurately understand and respond to the input. How? Matrices.",
+    "title": "Matrices for Speech",
+    "description": "Services like Google Translate seem to amazingly understand the meaning behind thousands of languages, contexts, and accents. But how? Through matrices.",
     "author": "Anisha Kalgi",
     "link": "https://medium.com/ds3ucsd/how-matrices-are-used-for-speech-recognition-8ba5f48418df"
   }
