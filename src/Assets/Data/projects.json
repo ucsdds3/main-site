@@ -10,14 +10,14 @@
   },
   "images": null,
   "projects": {
-    "2025": [
+    "2024": [
       {
         "title": "Automated Face Recognition System",
         "description": "A robust system for accurate and efficient facial identification and verification.",
         "image": "/main-site/WhereWeBeen/face-recog.png"
       },
       {
-        "title": "nterpretable Scoring Algorithm for Predictive Analysis",
+        "title": "Interpretable Scoring Algorithm for Predictive Analysis",
         "description": "An algorithm providing clear, interpretable scores for data-driven decision-making.",
         "image": "/main-site/WhereWeBeen/isa.png"
       },
