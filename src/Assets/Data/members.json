@@ -26,12 +26,12 @@
     "email": "c5ni@ucsd.edu",
     "image": "/main-site/Board/Kai-ChesterNi.webp",
     "website": "https://ckai.io/",
-    "resume": "",
+    "resume": "https://ckai.io/",
     "linkedIn": "https://www.linkedin.com/in/ckai-io/"
   },
   {
     "name": "Jared Simpauco",
-    "committees": ["Executive"],
+    "committees": ["Executive", "Finance"],
     "role": "VP Finance",
     "email": "jsimpauco@ucsd.edu",
     "image": "/main-site/Board/Jared-Simpauco.webp",
@@ -81,8 +81,8 @@
   },
   {
     "name": "Camille Sicat",
-    "committees": ["Marketing"],
-    "role": "Marketing Events Director",
+    "committees": ["Executive", "Workshops"],
+    "role": "Workshops Director",
     "email": "camillesicatwork@gmail.com",
     "image": "/main-site/Board/Camille_Sicat.webp",
     "website": "https://iris-hep.org/fellows/couchsnail.html",
@@ -263,7 +263,7 @@
   {
     "name": "Vivian Zhu",
     "committees": ["External"],
-    "role": "External Team Member & Procurement Chair",
+    "role": "Procurement Chair",
     "email": "v1zhu@ucsd.edu",
     "image": "/main-site/Board/Vivian-Zhu.webp",
     "website": "https://github.com/v1zhu",
@@ -393,7 +393,7 @@
   {
     "name": "Joy Liu",
     "committees": ["Professional Events", "External"],
-    "role": "Professional Events Board Member, Team External Board Member",
+    "role": "External Team",
     "email": "jol127@ucsd.edu",
     "image": "/main-site/Board/Joy-Liu.webp",
     "website": "",
@@ -422,7 +422,7 @@
   },
   {
     "name": "Anika Thatavarthy",
-    "committees": ["Executive", "Alumni"],
+    "committees": ["Executive", "Advisors"],
     "role": "Advisor",
     "email": "athatavarthy@ucsd.edu",
     "image": "/main-site/Board/Anika-Thatavarthy.webp",
@@ -453,7 +453,7 @@
   {
     "name": "Anisha Kalgi",
     "committees": ["Online Content"],
-    "role": "Writer, Technical Team. Member on the consulting team.",
+    "role": "Writer",
     "email": "akalgi@ucsd.edu",
     "image": "/main-site/Board/Anisha-Kalgi.webp",
     "website": "",
@@ -463,7 +463,7 @@
   {
     "name": "Essie Cheng",
     "committees": ["Marketing"],
-    "role": "Marketing committee",
+    "role": "Marketing Chair",
     "email": "e3cheng@ucsd.edu",
     "image": "/main-site/Board/Essie-Cheng.webp",
     "website": "",
@@ -503,7 +503,7 @@
   {
     "name": "Mehul Verma",
     "committees": ["Social Events"],
-    "role": "Social Board",
+    "role": "Social Chair",
     "email": "meverma@ucsd.edu",
     "image": "/main-site/Board/Mehul-Verma.webp",
     "website": "",
@@ -533,7 +533,7 @@
   {
     "name": "Minyoung Kim",
     "committees": ["Social Events"],
-    "role": "Social Team Member",
+    "role": "Social Chair",
     "email": "mik061@ucsd.edu",
     "image": "/main-site/Board/Minyoung-Kim.webp",
     "website": "",
