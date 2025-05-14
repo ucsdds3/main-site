@@ -44,7 +44,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
           <li key={label}>
             <Link
               to={path}
-              className="hover:text-(--color-primary) text-base"
+              className="hover:text-(--color-primary) text-xl text-base"
               onMouseDown={(e) => e.preventDefault()}
             >
               {label}
