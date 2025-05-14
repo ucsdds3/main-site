@@ -51,8 +51,8 @@ const HoverCard = ({ title, description, size, image, links }: HoverCardProps) =
         className="text-lg text-center flex flex-col gap-2"
         style={{ width: `calc(${size} * 0.95)` }}
       >
-        {title && <span className="text-xl font-medium">{title}</span>}
-        {description && <span className="text-sm opacity-75 font-medium">{description}</span>}
+        {title && <span className="text-2xl font-bold">{title}</span>}
+        {description && <span className="text-xl opacity-75 font-medium">{description}</span>}
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
           className
         )}
       >
-        <h2 className="text-[clamp(1.5rem,2vw,2.5rem)] font-bold uppercase w-full">
+        <h2 className="text-[clamp(2.5rem,2vw,3.0rem)] font-bold uppercase w-full">
           {noAbout ? name : `About ${name}`}
         </h2>
 

@@ -20,8 +20,8 @@ const ShowCase = () => {
     <Section>
       <div className="flex flex-col md:flex-row gap-4 justify-between items-center w-full">
         <div className="flex flex-col text-center md:text-left">
-          <h2 className="text-2xl font-semibold">PROJECT SHOWCASE</h2>
-          <p>Here are some projects from previous years.</p>
+          <h2 className="text-5xl font-semibold">PROJECT SHOWCASE</h2>
+          <p className="text-2xl"> Here are some projects from previous years.</p>
         </div>
 
         <fieldset className="fieldset w-[clamp(10rem,15vw,15rem)] flex flex-col items-center">
