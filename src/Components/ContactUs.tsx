@@ -32,7 +32,7 @@ const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
           <h2 className="text-[clamp(2.2rem,8vw,4rem)] lg:text-[clamp(2.2rem,4vw,4rem)] font-semibold uppercase">
             Contact Us
           </h2>
-          <p className="text-[clamp(1rem,1.2vw,1.2rem)] font-light max-w-[clamp(20rem,50vw,40rem)]">
+          <p className="text-[clamp(1.4rem,1.2vw,1.5rem)] font-light max-w-[clamp(20rem,50vw,40rem)]">
             {description}
           </p>
         </div>
@@ -45,7 +45,7 @@ const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
       <form className="flex-1 w-[clamp(300px,70vw,400px)] flex flex-col gap-6">
         {["Name", "Email", "Subject"].map((label, index) => (
           <label className="flex flex-col gap-2" key={index}>
-            <span className="text-lg font-semibold">{label}</span>
+            <span className="text-2xl font-semibold">{label}</span>
             <input
               type="text"
               required
@@ -55,7 +55,7 @@ const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
           </label>
         ))}
         <label className="flex flex-col gap-2">
-          <span className="text-lg font-semibold">Message</span>
+          <span className="text-2xl font-semibold">Message</span>
           <textarea
             required
             placeholder="Message"

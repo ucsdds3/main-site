@@ -2,22 +2,22 @@
   "services": [
     {
       "title": "Model Design",
-      "description": "We design and implement custom models—specializing in NLP and Computer Vision—tailored to your data and business goals through deep collaboration",
+      "description": "We design and implement custom models—specializing in NLP and Computer Vision—tailored to your data and business goals through deep collaboration.",
       "image": "/main-site/Consulting/Model_Design.webp"
     },
     {
       "title": "MLOPS",
-      "description": "We deploy, monitor, and continually optimize ML models in production to maximize performance and extract business value at scale",
+      "description": "We deploy, monitor, and continually optimize ML models in production to maximize performance and extract business value at scale.",
       "image": "/main-site/Consulting/MLOPS.webp"
     },
     {
       "title": "Data Analytics",
-      "description": "We transform your data into actionable insights—building efficient data models and compelling dashboards that drive decision-making",
+      "description": "We transform your data into actionable insights—building efficient data models and compelling dashboards that drive decision-making.",
       "image": "/main-site/Consulting/Data_Analytics.webp"
     },
     {
-      "title": "Solutions Architecture",
-      "description": "We design scalable, end-to-end cloud systems tailored to your industry—helping you choose the right tools and track data effectively",
+      "title": "Infrastructure",
+      "description": "We design scalable, end-to-end cloud systems tailored to your industry—helping you choose the right tools and track data effectively.",
       "image": "/main-site/Consulting/Solutions_Architecture.webp"
     }
   ],

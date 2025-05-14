@@ -13,7 +13,7 @@ const FlipCard = ({ title, description, image }: FlipCardProps) => {
 
   const isFlipped = isLockedFlipped || isHovered;
   const cardClass = "absolute inset-0 flex flex-col items-center justify-center gap-4 border hover:border-(--color-primary) rounded-2xl overflow-hidden bg-base-300 [backface-visibility:hidden]";
-  const textContainerClass = "relative z-10 text-center px-8 h-[80%] flex flex-col gap-8 justify-start pt-6 w-full";
+  const textContainerClass = "relative z-10 text-center px-8 h-[95%] flex flex-col gap-8 justify-start pt-6 w-full";
 
   return (
     <div
@@ -35,15 +35,15 @@ const FlipCard = ({ title, description, image }: FlipCardProps) => {
             className="absolute w-[80%] object-cover opacity-100 transition-opacity duration-300 left-1/2 top-[30%] transform -translate-x-1/2"
           />
           <div className={textContainerClass}>
-            <h3 className="text-[clamp(1rem,3vw,1.25rem)] font-bold">{title}</h3>
+            <h3 className="text-[clamp(2.0rem,2vw,1.7rem)] font-bold">{title}</h3>
           </div>
         </div>
 
         {/* Back Side */}
         <div className={twMerge(cardClass, "[transform:rotateY(180deg)]")}>
           <div className={textContainerClass}>
-            <h3 className="text-[clamp(1rem,3vw,1.25rem)] font-bold">{title}</h3>
-            <p className="indent-6 text-left leading-relaxed">{description}</p>
+            <h3 className="text-[clamp(2rem,3vw,1.25rem)] font-bold">{title}</h3>
+            <p className="text-left text-[clamp(1rem,3vw,1.25rem)] leading-relaxed">{description}</p>
           </div>
         </div>
       </div>
