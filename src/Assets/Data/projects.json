@@ -3,9 +3,9 @@
     "name": "Projects",
     "image": "/main-site/GetInvolved/projects-img.jpeg",
     "points": {
-      "Gain Firsthand Experience": "Work on real projects—build language models, replicate top ML systems, and develop your own ideas with a team.",
-      "Build Your Portfolio": "Strengthen your resume with hands-on projects while mastering in-demand ML tools and techniques.",
-      "Collaborate With Your Peers": "Join a community of data enthusiasts, exchange ideas, and tackle challenges together to grow your skills."
+      "Gain First-hand Experience": "Build real, product-focused projects—from language models to applied ML systems—that result in tangible outcomes you can showcase.",
+      "Build Your Portfolio": "Create impactful deliverables that strengthen your resume and demonstrate your proficiency with in-demand tools and technologies.",
+      "Collaborate With Your Peers": "Work alongside a team of data enthusiasts & an experienced DS3 mentor to brainstorm, develop, and launch projects that reflect real-world challenges and solutions."
     }
   },
   "images": [
@@ -22,198 +22,193 @@
       {
         "title": "Augmented Reality: Food Nutrition Finder",
         "description": "AR app to identify food and display nutrition info using headset or camera.",
-        "image": "/main-site/projects/project1_2024.png"
+        "image": "/main-site/Projects/2024/project1_2024.png"
       },
       {
         "title": "Tesla Autonomous Car Software",
         "description": "Simulate Tesla's autopilot logic using computer vision techniques.",
-        "image": "/main-site/projects/project2_2024.png"
+        "image": "/main-site/Projects/2024/project2_2024.png"
       },
       {
         "title": "Cryptocurrency Price Prediction",
         "description": "Analyze crypto trends and build models to predict future prices.",
-        "image": "/main-site/projects/project3_2024.png"
+        "image": "/main-site/Projects/2024/project3_2024.png"
       },
       {
         "title": "Audio Emotion Recognition",
         "description": "Detect emotions in speech/music via audio processing and sentiment analysis.",
-        "image": "/main-site/projects/project4_2024.png"
+        "image": "/main-site/Projects/2024/project4_2024.png"
       },
       {
         "title": "Plant Disease Detection",
         "description": "AI tool to detect plant diseases from image data for farming applications.",
-        "image": "/main-site/projects/project5_2024.png"
+        "image": "/main-site/Projects/2024/project5_2024.png"
       },
       {
         "title": "Amazon Product Recommendation System",
         "description": "Investigate which factors influence Amazon product recommendations.",
-        "image": "/main-site/projects/project6_2024.png"
+        "image": "/main-site/Projects/2024/project6_2024.png"
       },
       {
         "title": "Facial Emotion Detection",
         "description": "Predict facial emotions using landmarking and convolution techniques.",
-        "image": "/main-site/projects/project7_2024.png"
+        "image": "/main-site/Projects/2024/project7_2024.png"
       },
       {
         "title": "Zillow Ideal Real Investment Market",
         "description": "Analyze real estate data to identify optimal investment locations.",
-        "image": "/main-site/projects/project8_2024.png"
+        "image": "/main-site/Projects/2024/project8_2024.png"
       },
       {
         "title": "Credit Card Fraud Transactions",
         "description": "Detect fraudulent credit card activity using time series data.",
-        "image": "/main-site/projects/project9_2024.png"
+        "image": "/main-site/Projects/2024/project9_2024.png"
       }
     ],
     "2023": [
       {
-        "title": "Stack Exchange Breakdown",
-        "description": "Analyze Stack Exchange question trends and topic evolution.",
-        "image": "/main-site/projects/project1_2023.png"
-      },
-      {
         "title": "Human Motion Tracking",
         "description": "Use CV to track and interpret human motion for applications like robotics.",
-        "image": "/main-site/projects/project2_2023.png"
-      },
-      {
-        "title": "TED Talk Success Probability",
-        "description": "Predict TED Talk popularity using text analysis and trends.",
-        "image": "/main-site/projects/project3_2023.png"
+        "image": "/main-site/Projects/2023/project2_2023.png"
       },
       {
         "title": "Job Posting Fraud Detection",
         "description": "Detect fraudulent job postings using machine learning.",
-        "image": "/main-site/projects/project4_2023.png"
+        "image": "/main-site/Projects/2023/project4_2023.png"
       },
       {
         "title": "Multi-Tumor Detection Using Representation Learning",
         "description": "Detect various tumors using generalizable ML representation learning.",
-        "image": "/main-site/projects/project5_2023.png"
-      },
-      {
-        "title": "The Social Network Problem",
-        "description": "Build a social media recommender using user interaction data.",
-        "image": "/main-site/projects/project6_2023.png"
+        "image": "/main-site/Projects/2023/project5_2023.png"
       },
       {
         "title": "Formula One Breakdown",
         "description": "Analyze F1 data to identify top drivers and performance predictors.",
-        "image": "/main-site/projects/project7_2023.png"
+        "image": "/main-site/Projects/2023/project7_2023.png"
       },
       {
         "title": "Aircraft Crash Prevention",
         "description": "Reduce wildlife-related aviation incidents with FAA data analysis.",
-        "image": "/main-site/projects/project8_2023.png"
-      },
-      {
-        "title": "Reinforcement Learning Chatbot",
-        "description": "Build a human-like chatbot using reinforcement learning techniques.",
-        "image": "/main-site/projects/project9_2023.png"
+        "image": "/main-site/Projects/2023/project8_2023.png"
       },
       {
         "title": "Shazam 2.0",
         "description": "Build a music genre classifier inspired by Shazam using MFCC + HMM.",
-        "image": "/main-site/projects/project10_2023.png"
+        "image": "/main-site/Projects/2023/project10_2023.png"
       },
       {
         "title": "S&P 500 Stock Recommendation System",
         "description": "Create stock recommender based on ML analysis of market data.",
-        "image": "/main-site/projects/project11_2023.png"
+        "image": "/main-site/Projects/2023/project11_2023.png"
       },
       {
         "title": "Seizure and Brain Stroke Detection",
         "description": "Predict seizures using EEG time series data for healthcare alerts.",
-        "image": "/main-site/projects/project12_2023.png"
+        "image": "/main-site/Projects/2023/project12_2023.png"
+      },
+      {
+        "title": "Topic Modeling in NLP",
+        "description": "Explore topic modeling using unsupervised learning techniques.",
+        "image": "/main-site/Projects/2023/project13_2023.png"
+      },
+      {
+        "title": "Text Classification Pipeline",
+        "description": "Develop text classification models using labeled datasets.",
+        "image": "/main-site/Projects/2023/project14_2023.png"
+      },
+      {
+        "title": "Music Recommendation System",
+        "description": "Build a system to recommend music based on listener behavior.",
+        "image": "/main-site/Projects/2023/project15_2023.png"
       }
-    ],
+      ],
     "2022": [
       {
         "title": "Soccer Team Success Predictors",
         "description": "Analyze performance factors influencing soccer team success.",
-        "image": "/main-site/projects/project1_2022.png"
+        "image": "/main-site/Projects/2022/project1_2022.png"
       },
       {
         "title": "Audio Classification Using Urban Sounds Dataset",
         "description": "Classify urban sounds using audio ML models.",
-        "image": "/main-site/projects/project2_2022.png"
+        "image": "/main-site/Projects/2022/project2_2022.png"
       },
       {
         "title": "Dirty Laundry: Financial Corruption Investigation",
         "description": "Use ML to detect patterns of financial corruption.",
-        "image": "/main-site/projects/project3_2022.png"
+        "image": "/main-site/Projects/2022/project3_2022.png"
       },
       {
         "title": "Predicting Internet Outages and Severity",
         "description": "Forecast internet outages using signal and usage data.",
-        "image": "/main-site/projects/project4_2022.png"
+        "image": "/main-site/Projects/2022/project4_2022.png"
       },
       {
         "title": "EDA of Global Health Data",
         "description": "Explore and visualize international health metrics.",
-        "image": "/main-site/projects/project5_2022.png"
+        "image": "/main-site/Projects/2022/project5_2022.png"
       },
       {
         "title": "CPI Modeling",
         "description": "Model the consumer price index to study inflation trends.",
-        "image": "/main-site/projects/project7_2022.png"
+        "image": "/main-site/Projects/2022/project7_2022.png"
       },
       {
         "title": "Fake Amazon Reviews Classification",
         "description": "Identify fake reviews using text classification techniques.",
-        "image": "/main-site/projects/project8_2022.png"
+        "image": "/main-site/Projects/2022/project8_2022.png"
       },
       {
         "title": "Facebook Ads Data Analysis",
         "description": "Analyze engagement and reach patterns from Facebook ads.",
-        "image": "/main-site/projects/project9_2022.png"
+        "image": "/main-site/Projects/2022/project9_2022.png"
       },
       {
         "title": "Reinforcement Learning Based Poker Robot",
         "description": "Create a poker bot using reinforcement learning.",
-        "image": "/main-site/projects/project10_2022.png"
+        "image": "/main-site/Projects/2022/project10_2022.png"
       }
     ],
     "2021": [
       {
         "title": "Spotify Recommender System",
         "description": "Recommend music on Spotify using user behavior analytics.",
-        "image": "/main-site/projects/project1_2021.png"
+        "image": "/main-site/Projects/images/project1_2021.png"
       },
       {
         "title": "Movie Recommendation System",
         "description": "Suggest movies using collaborative filtering.",
-        "image": "/main-site/projects/project2_2021.png"
+        "image": "/main-site/Projects/images/project2_2021.png"
       },
       {
         "title": "Human Activity Prediction",
         "description": "Predict physical activities based on wearable sensor data.",
-        "image": "/main-site/projects/project3_2021.png"
+        "image": "/main-site/Projects/images/project3_2021.png"
       },
       {
         "title": "Analyzing NFT Transaction Legitimacy",
         "description": "Detect suspicious NFT transactions using graph theory.",
-        "image": "/main-site/projects/project4_2021.png"
+        "image": "/main-site/Projects/2021/project4_2021.png"
       },
       {
         "title": "USGS Wildfires Dashboard",
         "description": "Create a dashboard for wildfire tracking and visualization.",
-        "image": "/main-site/projects/project5_2021.png"
+        "image": "/main-site/Projects/2021/project5_2021.png"
       },
       {
         "title": "Celebrity Speech Recognition",
         "description": "Build a system to recognize celebrity voices from clips.",
-        "image": "/main-site/projects/project6_2021.png"
+        "image": "/main-site/Projects/2021/project6_2021.png"
       },
       {
         "title": "Rotten Tomatoes Data Analysis",
         "description": "Analyze reviews and ratings on Rotten Tomatoes.",
-        "image": "/main-site/projects/project7_2021.png"
+        "image": "/main-site/Projects/2021/project7_2021.png"
       },
       {
         "title": "NASA Mars Image Classification",
         "description": "Classify Martian images from NASA's datasets using ML.",
-        "image": "/main-site/projects/project8_2021.png"
+        "image": "/main-site/Projects/2021/project8_2021.png"
       }
     ]
   }
