@@ -2,7 +2,7 @@ import { useState } from "react";
 import Section from "../../Components/Section";
 import { capitalize, formatMemberLinks, newArray } from "../../Utils/functions.tsx";
 import HoverCard from "../../Components/HoverCard";
-import projectsData from "../../Assets/Data/projects.json";
+import projectsData from "../../Assets/Data/consulting-projects.json";
 import consulting from "../../Assets/Data/consulting.json";
 import { MemberType } from "../../Utils/types";
 import { twMerge } from "tailwind-merge";
