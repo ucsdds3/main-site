@@ -173,17 +173,17 @@
       {
         "title": "Spotify Recommender System",
         "description": "Recommend music on Spotify using user behavior analytics.",
-        "image": "/main-site/Projects/images/project1_2021.png"
+        "image": "/main-site/Projects/2021/project1_2021.png"
       },
       {
         "title": "Movie Recommendation System",
         "description": "Suggest movies using collaborative filtering.",
-        "image": "/main-site/Projects/images/project2_2021.png"
+        "image": "/main-site/Projects/2021/project2_2021.png"
       },
       {
         "title": "Human Activity Prediction",
         "description": "Predict physical activities based on wearable sensor data.",
-        "image": "/main-site/Projects/images/project3_2021.png"
+        "image": "/main-site/Projects/2021/project3_2021.png"
       },
       {
         "title": "Analyzing NFT Transaction Legitimacy",
@@ -199,16 +199,6 @@
         "title": "Celebrity Speech Recognition",
         "description": "Build a system to recognize celebrity voices from clips.",
         "image": "/main-site/Projects/2021/project6_2021.png"
-      },
-      {
-        "title": "Rotten Tomatoes Data Analysis",
-        "description": "Analyze reviews and ratings on Rotten Tomatoes.",
-        "image": "/main-site/Projects/2021/project7_2021.png"
-      },
-      {
-        "title": "NASA Mars Image Classification",
-        "description": "Classify Martian images from NASA's datasets using ML.",
-        "image": "/main-site/Projects/2021/project8_2021.png"
       }
     ]
   }
