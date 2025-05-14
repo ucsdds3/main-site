@@ -19,7 +19,7 @@ const Countdown = () => {
         ))}
       </div>
 
-      <p className="text-[clamp(1rem,3vw,1.5rem)] text-center">
+      <p className="text-[clamp(2rem,3vw,2.5rem)] text-center">
         {deadline ? (
           <>
             {deadline.split(" ").slice(0, -1).join(" ")}{" "}

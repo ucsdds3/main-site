@@ -33,7 +33,7 @@ const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
                 defaultChecked={index === 0}
                 onClick={() => setCommittee(committee as CommitteeType)}
               />
-              <label htmlFor={`committee-${index}`} className="cursor-pointer text-lg">
+              <label htmlFor={`committee-${index}`} className="cursor-pointer text-2xl">
                 {unbreakable(committee)}
               </label>
             </li>
