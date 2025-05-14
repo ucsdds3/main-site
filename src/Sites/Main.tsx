@@ -7,7 +7,7 @@ import Projects from "../Pages/Projects/Projects";
 import DataHacks from "../Pages/DataHacks/DataHacks";
 import JoinUs from "../Pages/JoinUs/JoinUs";
 import Partners from "../Pages/Partners/Partners";
-import workshopData from "../Assets/Data/Workshops.json";
+import workshopData from "../Assets/Data/workshops.json";
 const Main = () => {
   const { upcoming, workshops, social, professional } = events;
 
