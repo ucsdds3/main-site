@@ -33,7 +33,7 @@ const EventsShowCase = ({ images }: { images: { title: string; image: string }[]
   };
 
   return (
-    <Section className="gap-8 " title="Notable Workshops">
+    <Section className="gap-8 " title="Notable Events">
       <div className="w-[80vw] h-[30vw] flex items-center">
         <button onClick={handlePrev} className={btnClass} aria-label="Previous">
           <IoIosArrowBack />
