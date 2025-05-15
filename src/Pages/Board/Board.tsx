@@ -16,7 +16,7 @@ const Board = () => {
 
   return (
     <Page>
-      <div className="flex flex-col lg:flex-row items-center lg:items-start pt-20 pb-10 px-[clamp(1.5rem,10vw,12rem)] gap-[clamp(2rem,5vw,8rem)] relative">
+      <div className="flex flex-col w-full lg:flex-row items-center lg:items-start pt-20 pb-10 px-[clamp(1.5rem,10vw,12rem)] gap-[clamp(2rem,5vw,8rem)] relative">
         <Star size={0.9} className="absolute top-8 right-8" />
         <Star size={1.1} className="absolute top-10 right-14" />
 
