@@ -1,8 +1,8 @@
 [
   { "image": "/main-site/Events/Workshops/Personal_Site.webp", "title": "Personal website Workshop" },
-  { "image": "/main-site/Workshops/IntroScikit.webp", "title": "Intro to Sci Kit Workshop" },
+  { "image": "/main-site/Events/Workshops/Intro_Scikit.webp", "title": "Intro to Sci Kit Workshop" },
   {
-    "image": "/main-site/Events/Workshops/Intro to GenAI.webp",
+    "image": "/main-site/Events/Workshops/Intro_GenAI.webp",
     "title": "Intro to Gen AI Workshop"
   },
   {
