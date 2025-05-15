@@ -1,8 +1,16 @@
 [
-  { "image": "/main-site/Workshops/Personal_Site.webp", "title": "Personal website" },
-  { "image": "/main-site/Workshops/IntroScikit.webp", "title": "Intro to Sci Kit" },
+  { "image": "/main-site/Events/Workshops/Personal_Site.webp", "title": "Personal website Workshop" },
+  { "image": "/main-site/Workshops/IntroScikit.webp", "title": "Intro to Sci Kit Workshop" },
   {
-    "image": "/main-site/Workshops/Blizzard_Games_Technical_Talk.webp",
-    "title": "Blizzard Games Technical Talk"
+    "image": "/main-site/Events/Workshops/Intro to GenAI.webp",
+    "title": "Intro to Gen AI Workshop"
+  },
+  {
+    "image": "/main-site/Events/Workshops/EDA.webp",
+    "title": "EDA Workshop"
+  },
+  {
+    "image": "/main-site/Events/Workshops/Palantir.webp",
+    "title": "Palantir Workshop"
   }
 ]

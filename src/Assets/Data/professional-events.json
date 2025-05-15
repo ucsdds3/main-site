@@ -1,0 +1,30 @@
+[
+    {
+        "image": "/main-site/Events/Professional/Blizzard_Games_Technical_Talk.webp",
+        "title": "Blizzard Games Technical Talk"
+      },
+    {
+      "image": "/main-site/Events/Professional/Intro_GloVe_NLP.webp",
+      "title": "Intro to GloVE and NLP"
+    },
+    {
+        "image": "/main-site/Events/Professional/Mini_Talent_day.webp",
+        "title": "Mini Talent Day ASML & SDx Mixer"
+      },
+      {
+        "image": "/main-site/Events/Professional/Online_Content.webp",
+        "title": "Online Content Expo"
+      },
+    {
+        "image": "/main-site/Events/Professional/Professional_Panel.webp",
+        "title": "Professional Panel"
+    },
+    {
+        "image": "/main-site/Events/Professional/Speed_Networking.webp",
+        "title": "Speed Networking"
+    },
+    {
+        "image": "/main-site/Events/Professional/Digging_into_Data_Science.webp",
+        "title": "Digging into Data Science"
+    }
+  ]
