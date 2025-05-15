@@ -16,19 +16,26 @@ const OurPartners = () => {
         </SafeLink>
         {" or view our sponsor package "}
         {/* TODO: add link to sponsor package */}
-        <SafeLink href="https://drive.google.com/file/d/1bMJLw3mid90WxVuFgFaFNUPnX2FJknbW/view?usp=sharing" className="underline">
+        <SafeLink
+          href="https://drive.google.com/file/d/1bMJLw3mid90WxVuFgFaFNUPnX2FJknbW/view?usp=sharing"
+          className="underline"
+        >
           here
         </SafeLink>
         .
       </p>
 
-      <div className="flex flex-wrap justify-center mt-16 gap-[clamp(1rem,5vw,5rem)] sm:w-[80%]">
+      <div className="flex flex-wrap justify-center mt-16 gap-12 sm:w-[90%]">
         {Object.entries(logos).map(([name, path], index) => (
           <div
             key={index}
-            className="flex items-center justify-center max-w-[clamp(150px,20vw,500px)] h-[clamp(50px,5vw,200px)]"
+            className="w-[200px] h-[100px] flex items-center justify-center"
           >
-            <img src={path} alt={name} className="w-full h-full object-contain" />
+            <img
+              src={path}
+              alt={name}
+              className="max-w-full max-h-full object-contain"
+            />
           </div>
         ))}
       </div>
