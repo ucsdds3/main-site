@@ -37,7 +37,7 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
           {Object.entries(points ?? {}).map(([point, description], index) => (
               <div key={index} className="flex gap-4">
                 <Star
-                  className="mt-1"
+                  className="mt-3"
                   style={{ width: "30px", height: "30px" }}
                 />
                 <div className="flex flex-col gap-2">
