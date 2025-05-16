@@ -21,7 +21,7 @@ const EventPage = ({
 
   return (
     <Page scrollRef={scrollRef}>
-      <Landing title={team.title.toUpperCase()} subtitle={team.subtitle} />
+      <Landing title={team.title.toUpperCase()} subtitle={team.subtitle}  headerImg={team.headerImg}/>
       <div className="flex flex-col items-center" ref={scrollRef}>
         <About {...team} />
         {images && <EventsShowCase images={images} />}
