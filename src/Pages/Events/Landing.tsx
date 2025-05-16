@@ -4,9 +4,11 @@ import Section from "../../Components/Section";
 interface LandingProps {
   title: string;
   subtitle: string;
+  headerImg?: string;
 }
 
-const Landing = ({ title, subtitle }: LandingProps) => {
+const Landing = ({ title, subtitle, headerImg }: LandingProps) => {
+  const imageToShow = headerImg || workshopImage;
   return (
     <Section className="md:flex-row justify-center md:justify-between gap-[10vh] md:gap-[5vw] w-[80vw] max-w-[1300px] min-h-[60vh] md:min-h-[85vh] py-[clamp(2rem,3vw,5rem)]">
       <div className="flex flex-col text-center md:text-left">
@@ -18,7 +20,7 @@ const Landing = ({ title, subtitle }: LandingProps) => {
 
       <img
         className="w-[clamp(20rem,40%,40rem)]"
-        src={workshopImage}
+        src={imageToShow}
         alt={`Logo Image`}
       />
     </Section>
