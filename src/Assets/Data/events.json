@@ -2,15 +2,15 @@
   "upcoming": {
     "title": "Upcoming Events",
     "subtitle": "Want to see what's next?",
-    "headerImg": "/main-site/Events/Upcoming/upcoming-arrows.png"
+    "headerImg": "/Events/Upcoming/upcoming-arrows.png"
     
   },
   "workshops": {
     "title": "Workshops",
     "subtitle": "Python. GitHub. Web Dev. Generative AI.",
     "name": "Workshops",
-    "headerImg": "/main-site/Events/Workshops/workshops-arrows.png",
-    "image": "/main-site/GetInvolved/workshop-img.webp",
+    "headerImg": "/Events/Workshops/workshops-arrows.png",
+    "image": "/GetInvolved/workshop-img.webp",
     "points": {
       "Accessible for All": "Our workshops are designed for every skill level — whether you're brand new to data science or diving into advanced topics.",
       "Experience Through Practice": "We focus on helping students build practical skills and confidence to grow as capable data scientists.",
@@ -21,8 +21,8 @@
     "title": "Social Events",
     "subtitle": "Mentorship. Building community. Having fun.",
     "name": "Social Events",
-    "image": "/main-site/GetInvolved/social-img.webp",
-    "headerImg": "/main-site/Events/Social/social-arrows.png",
+    "image": "/GetInvolved/social-img.webp",
+    "headerImg": "/Events/Social/social-arrows.png",
     "points": {
       "Mentorship": "Through our Big-Little mentorship program, members are matched for guidance, friendship, and support—building strong connections across experience levels.",
       "Community Beyond Coding": "From beach bonfires to game nights, we host events that bring members together for fun, relaxation, and real community.",
@@ -33,8 +33,8 @@
     "title": "Professional Events",
     "subtitle": "Networking. Career Growth. Industry Insights.",
     "name": "Professional Events",
-    "image": "/main-site/GetInvolved/pf-events-img.webp",
-    "headerImg": "/main-site/Events/Professional/professional-arrows.png",
+    "image": "/GetInvolved/pf-events-img.webp",
+    "headerImg": "/Events/Professional/professional-arrows.png",
     "points": {
       "Grow Your Network": "Connect with professionals, alumni, and recruiters through speaker panels, career nights, and exclusive networking events.",
       "Build Your Career Toolkit": "Strengthen your resume, portfolio, and LinkedIn through interactive workshops on personal branding and professional storytelling.",

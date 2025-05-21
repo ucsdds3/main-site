@@ -15,7 +15,7 @@ const WhereWeBeen = () => {
       </div>
       <div className="flex-3 min-w-[320px] grid grid-cols-3 grid-rows-3 gap-10 place-items-center md:py-24">
         {newArray(9).map((_, index) => (
-          <img src="/main-site/WhereWeBeen/google.webp" key={index} className="w-full" />
+          <img src="/WhereWeBeen/google.webp" key={index} className="w-full" />
         ))}
       </div>
     </Section>
