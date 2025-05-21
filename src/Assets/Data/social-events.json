@@ -1,9 +1,9 @@
 [
-    { "image": "/main-site/Events/Social/Bonfire.webp", "title": "Bonfire" },
-    { "image": "/main-site/Events/Social/Hot_Ones.webp", "title": "Hot Ones" },
-    { "image": "/main-site/Events/Social/Ice_Skating.webp", "title": "Ice Skating" },
-    { "image": "/main-site/Events/Social/Tabling.webp", "title": "Tabling" },
-    { "image": "/main-site/Events/Social/Study_Jam.webp", "title": "Winter 2025 Study Jam" },
-    { "image": "/main-site/Events/Social/UTC_Dinner.webp", "title": "UTC Dinner" }
+    { "image": "/Events/Social/Bonfire.webp", "title": "Bonfire" },
+    { "image": "/Events/Social/Hot_Ones.webp", "title": "Hot Ones" },
+    { "image": "/Events/Social/Ice_Skating.webp", "title": "Ice Skating" },
+    { "image": "/Events/Social/Tabling.webp", "title": "Tabling" },
+    { "image": "/Events/Social/Study_Jam.webp", "title": "Winter 2025 Study Jam" },
+    { "image": "/Events/Social/UTC_Dinner.webp", "title": "UTC Dinner" }
   ]
   

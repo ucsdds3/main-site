@@ -1,7 +1,7 @@
 {
     "about": {
       "name": "Projects",
-      "image": "/main-site/GetInvolved/projects-img.jpeg",
+      "image": "/GetInvolved/projects-img.jpeg",
       "points": {
         "Gain First-hand Experience": "Build real, product-focused projects—from language models to applied ML systems—that result in tangible outcomes you can showcase.",
         "Build Your Portfolio": "Create impactful deliverables that strengthen your resume and demonstrate your proficiency with in-demand tools and technologies.",
@@ -9,30 +9,30 @@
       }
     },
     "images": [
-      "/main-site/Projects/P1.webp",
-      "/main-site/Projects/P2.webp",
-      "/main-site/Projects/P3.webp",
-      "/main-site/Projects/P4.webp",
-      "/main-site/Projects/P5.webp",
-      "/main-site/Projects/P6.webp",
-      "/main-site/Projects/P7.webp"
+      "/Projects/P1.webp",
+      "/Projects/P2.webp",
+      "/Projects/P3.webp",
+      "/Projects/P4.webp",
+      "/Projects/P5.webp",
+      "/Projects/P6.webp",
+      "/Projects/P7.webp"
     ],
     "projects": {
       "2024": [
         {
           "title": "Automated Face Recognition System",
           "description": "A robust system for accurate and efficient facial identification and verification.",
-          "image": "/main-site/WhereWeBeen/face-recog.png"
+          "image": "/WhereWeBeen/face-recog.png"
         },
         {
           "title": "Interpretable Scoring Algorithm for Predictive Analysis",
           "description": "An algorithm providing clear, interpretable scores for data-driven decision-making.",
-          "image": "/main-site/WhereWeBeen/isa.png"
+          "image": "/WhereWeBeen/isa.png"
         },
         {
           "title": "Conversational AI with Large Language Models",
           "description": "A chatbot leveraging LLMs for natural, human-like interactions.",
-          "image": "/main-site/WhereWeBeen/llm.png"
+          "image": "/WhereWeBeen/llm.png"
         }
       ]
     }
