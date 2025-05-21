@@ -1,11 +1,11 @@
+# .github/workflows/deploy.yml
 name: Deploy to Vercel
 
 on:
   push:
     branches:
-      - main       # trigger Preview deploy on push to main
-    tags:
-      - 'v*'       # trigger Production deploy on tags like v1.0.0
+      - main         # auto Preview deploys
+  workflow_dispatch:  # manual trigger for Production
 
 jobs:
   deploy:
@@ -16,7 +16,7 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel
 
-      - name: Pull Vercel project info
+      - name: Pull Vercel project config
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
@@ -32,10 +32,10 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            echo "🚀 Production deploy"
+          if [[ $GITHUB_EVENT_NAME == 'workflow_dispatch' ]]; then
+            echo "🚀 Manual Production Deploy"
             vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
           else
-            echo "👀 Preview deploy"
+            echo "👀 Auto Preview Deploy"
             vercel deploy --prebuilt --token=$VERCEL_TOKEN
           fi
