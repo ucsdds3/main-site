@@ -16,6 +16,7 @@ export type TeamType = {
   subtitle?: string;
   name?: string;
   image?: string;
+  headerImg?: string;
   points?: Record<string, React.ReactNode>;
 };
 
