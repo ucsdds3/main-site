@@ -34,6 +34,7 @@ const OurPartners = () => {
             <img
               src={path}
               alt={name}
+              title={name}
               className="max-w-full max-h-full object-contain"
             />
           </div>
