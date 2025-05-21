@@ -22,7 +22,7 @@ const HoverCard = ({ title, description, size, image, links }: HoverCardProps) =
       <div className="skeleton relative group" style={{ width: size, height: size }}>
         {ImagePreloader.imagesPreloaded && (
           <img
-            src={image || "/main-site/"}
+            src={image || "/"}
             className="size-full object-cover rounded-2xl"
             onError={hideImage}
             onLoad={(e) => (e.currentTarget.style.display = "block")}

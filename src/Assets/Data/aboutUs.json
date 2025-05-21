@@ -5,7 +5,7 @@
     "content": "We're a diverse community of students passionate about data, technology, and solving real-world problems.",
     "button": "OUR TEAM",
     "link": "/board",
-    "image": "/main-site/AboutUs/who.webp"
+    "image": "/AboutUs/who.webp"
   },
   {
     "section": "WHAT WE DO",
@@ -13,7 +13,7 @@
     "content": "We provide opportunities to build technical skills, gain real-world experience, and network with industry & peers.",
     "button": "EVENTS",
     "link": "/events/upcoming",
-    "image": "/main-site/AboutUs/what.webp"
+    "image": "/AboutUs/what.webp"
   }
   ,
   {
@@ -22,6 +22,6 @@
     "content": "Explore weekly professional & social events, quarterly projects, and real-world consulting open for all majors & skill levels.",
     "button": "GET INVOLVED",
     "link": "/join-us",
-    "image": "/main-site/AboutUs/how.webp"
+    "image": "/AboutUs/how.webp"
   }
 ]

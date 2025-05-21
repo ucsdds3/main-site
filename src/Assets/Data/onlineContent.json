@@ -1,20 +1,20 @@
 [
   {
-    "image": "/main-site/OnlineContent/Stocks.webp",
+    "image": "/OnlineContent/Stocks.webp",
     "title": "Mastering the Markets",
     "description": "In the stock day trading world, millions of decisions must be made every second. Now imagine an AI that could perform the same tasks, eliminating exhaustive time spent.",
     "author": "Srinivas Sriram",
     "link": "https://medium.com/ds3ucsd/mastering-the-markets-reinforcement-learning-about-the-stock-market-1679f1bfd760"
   },
   {
-    "image": "/main-site/OnlineContent/AIHistory.webp",
+    "image": "/OnlineContent/AIHistory.webp",
     "title": "AI-Solving CAPTCHAs",
     "description": "How many times have you had to fill out a CAPTCHA while signing up for anything? Bots nowadays can solve these puzzles better, on average, than human users. So what's the point?",
     "author": "Jeffery Kang",
     "link": "https://medium.com/ds3ucsd/how-ai-went-from-solving-captchas-to-painting-masterpieces-5477f1ab8832"
   },
   {
-    "image": "/main-site/OnlineContent/Matrix.webp",
+    "image": "/OnlineContent/Matrix.webp",
     "title": "Matrices for Speech",
     "description": "Services like Google Translate seem to amazingly understand the meaning behind thousands of languages, contexts, and accents. But how? Through matrices.",
     "author": "Anisha Kalgi",

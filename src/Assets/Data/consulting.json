@@ -3,22 +3,22 @@
     {
       "title": "Model Design",
       "description": "We design and implement custom models—specializing in NLP and Computer Vision—tailored to your data and business goals through deep collaboration.",
-      "image": "/main-site/Consulting/Model_Design.webp"
+      "image": "/Consulting/Model_Design.webp"
     },
     {
       "title": "MLOPS",
       "description": "We deploy, monitor, and continually optimize ML models in production to maximize performance and extract business value at scale.",
-      "image": "/main-site/Consulting/MLOPS.webp"
+      "image": "/Consulting/MLOPS.webp"
     },
     {
       "title": "Data Analytics",
       "description": "We transform your data into actionable insights—building efficient data models and compelling dashboards that drive decision-making.",
-      "image": "/main-site/Consulting/Data_Analytics.webp"
+      "image": "/Consulting/Data_Analytics.webp"
     },
     {
       "title": "Infrastructure",
       "description": "We design scalable, end-to-end cloud systems tailored to your industry—helping you choose the right tools and track data effectively.",
-      "image": "/main-site/Consulting/Solutions_Architecture.webp"
+      "image": "/Consulting/Solutions_Architecture.webp"
     }
   ],
   "members": [
@@ -27,7 +27,7 @@
       "committees": ["Software"],
       "role": "Software Developer",
       "email": "issacroy05@gmail.com",
-      "image": "/main-site/Board/Issac-Roy.webp",
+      "image": "/Board/Issac-Roy.webp",
       "website": "https://www.issacroy.com/",
       "resume": "https://drive.google.com/file/d/1FkvdyGzJHi-MHh5v0CJpzZgfwSx8yrbc/view?usp=sharing",
       "linkedIn": "https://www.linkedin.com/in/issacroy/"
@@ -37,7 +37,7 @@
       "committees": ["Software", "Projects"],
       "role": "Software Developer",
       "email": "vannabathula@ucsd.edu",
-      "image": "/main-site/Board/Anirudh-Annabathula.webp",
+      "image": "/Board/Anirudh-Annabathula.webp",
       "website": "https://anirudhannabathula.com/",
       "resume": "https://drive.google.com/file/d/1RtempyMgEcMIrgh04Sujv-QnMA3att8M/view?usp=sharing",
       "linkedIn": "https://www.linkedin.com/in/anirudha9/"
@@ -47,7 +47,7 @@
       "committees": ["Software"],
       "role": "Software Developer",
       "email": "krishkankure6@gmail.com",
-      "image": "/main-site/Board/Krish-Kankure.webp",
+      "image": "/Board/Krish-Kankure.webp",
       "website": "https://www.krishkankure.com/",
       "resume": "https://drive.google.com/file/d/1-ppkqcQvorP7m6NMpEIA0DCK8oYk4GEr/view?usp=sharing",
       "linkedIn": "https://www.linkedin.com/in/krishkankure/"
@@ -57,7 +57,7 @@
       "committees": ["Software"],
       "role": "Software Developer",
       "email": "ighosh@ucsd.edu",
-      "image": "/main-site/Board/Ishayu-Ghosh.webp",
+      "image": "/Board/Ishayu-Ghosh.webp",
       "website": "https://ishayu1.github.io/portfolio_website/",
       "resume": "https://drive.google.com/file/d/1xZ7tO7iYJRYOvQMDGwLcs_y4Be4xmhdg/view?usp=share_link",
       "linkedIn": "www.linkedin.com/in/ishayughosh"
@@ -67,7 +67,7 @@
       "committees": ["Software"],
       "role": "UI Designer & Software Developer",
       "email": "ankamath@ucsd.edu",
-      "image": "/main-site/Board/Anagha-Kamath.webp",
+      "image": "/Board/Anagha-Kamath.webp",
       "website": "https://anagha166.github.io/PersonalWebsite/",
       "resume": "https://drive.google.com/file/d/1QHOUvLNwAW4csYLMs1CEKMIfp9Hi4EZB/view?usp=drivesdk",
       "linkedIn": "https://www.linkedin.com/in/anagha-k-b00117266"
@@ -76,15 +76,15 @@
   "clients": [
     {
       "name": "Promo Drone",
-      "image": "/main-site/WhereWeBeen/promodrone_logo.webp"
+      "image": "/WhereWeBeen/promodrone_logo.webp"
     },
     {
       "name": "Alama AI",
-      "image": "/main-site/WhereWeBeen/alama-ai.webp"
+      "image": "/WhereWeBeen/alama-ai.webp"
     },
     {
       "name": "7sherpas",
-      "image": "/main-site/WhereWeBeen/7sherpas.webp"
+      "image": "/WhereWeBeen/7sherpas.webp"
     }
   ]
 }
