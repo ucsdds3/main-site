@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Get commit message
+        id: commit
+        run: echo "message=$(git log -1 --pretty=%B)" >> "$GITHUB_OUTPUT"
+
       - name: Install Vercel CLI
         run: npm install -g vercel
 
@@ -25,7 +29,7 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          if [[ $GITHUB_EVENT_NAME == 'workflow_dispatch' ]]; then
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" || "${{ steps.commit.outputs.message }}" == *"#prod"* ]]; then
             echo "🏗️ Building for Production"
             vercel build --prod --token=$VERCEL_TOKEN
           else
@@ -37,8 +41,8 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          if [[ $GITHUB_EVENT_NAME == 'workflow_dispatch' ]]; then
-            echo "🚀 Manual Production Deploy"
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" || "${{ steps.commit.outputs.message }}" == *"#prod"* ]]; then
+            echo "🚀 Auto Production Deploy (from commit)"
             vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
           else
             echo "👀 Preview Deploy"
