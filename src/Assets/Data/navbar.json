@@ -6,7 +6,10 @@
       "Social": "/events/social",
       "Professional": "/events/professional"
     },
-    "Board": "/board",
+    "Board": {
+      "Board": "/board",
+      "Alumni": "/board/alumni"
+    },
     "Partners": "/partners",
     "DataHacks": "/datahacks",
     "Projects": "/projects",
