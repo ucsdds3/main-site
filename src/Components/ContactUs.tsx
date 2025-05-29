@@ -48,7 +48,6 @@ const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
         target="_blank"
         action="https://formsubmit.co/0e21a47db5d2ad62468688ddd884a595"
         method="POST"
-        onSubmit={(e) => e.preventDefault()}
       >
         {["Name", "Email", "Subject"].map((label, index) => (
           <label className="flex flex-col gap-2" key={index}>
