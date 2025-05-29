@@ -14,7 +14,9 @@ jobs:
 
       - name: Get commit message
         id: commit
-        run: echo "message=$(git log -1 --pretty=%B)" >> "$GITHUB_OUTPUT"
+        run: |
+          msg=$(git log -1 --pretty=%B | tr -d '\n')
+          echo "message=$msg" >> "$GITHUB_OUTPUT"
 
       - name: Install Vercel CLI
         run: npm install -g vercel
