@@ -1,4 +1,4 @@
-import dino from "/src/Assets/Images/dino.webp";
+import dino from "/src/Assets/Images/projects_dino.webp";
 import Section from "../../Components/Section";
 import Star from "../../Components/Star";
 
@@ -20,12 +20,11 @@ const Landing = () => {
 
       <div className="w-[clamp(20rem,40vw,30rem)] lg:w-[clamp(18rem,32vw,40rem)] relative">
         <img src={dino} className="px-16 rotate-15" />
-        <Star size={2} className="absolute -top-1/4 right-5/8" />
-        <Star size={2.5} className="absolute -top-1/8 right-3/8" />
-        <Star size={1.5} className="absolute top-3/16 right-5/16" />
+        <Star size={2} className="absolute top-1 right-5/8" />
+        <Star size={2.5} className="absolute -top-1/12 right-3/8" />
+        <Star size={1.5} className="absolute top-3/16 right-5/24" />
         
-        <Star size={2} className="absolute top-3/8 left-1/8" />
-        <Star size={3} className="absolute top-1/2 left-3/16" />
+        <Star size={2} className="absolute top-2/8 left-2/8" />
       </div>
     </Section>
   );
