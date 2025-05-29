@@ -16,7 +16,7 @@ const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
   return (
     <>
       {/* Desktop */}
-      <div className="hidden lg:flex flex-col lg:sticky top-40 gap-6 h-fit mb-10">
+      <div className="hidden lg:flex flex-col top-40 gap-6 h-fit mb-10">
         <div className="flex flex-col gap-2 w-fit">
           <h2 className="text-2xl font-medium w-fit mx-2">Committees:</h2>
           <div className="h-[1px] bg-(--color-primary) glow" />
