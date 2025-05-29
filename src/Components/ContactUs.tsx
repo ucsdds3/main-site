@@ -10,9 +10,10 @@ type ContactUsProps = {
 
 const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
   const greeting = "Want to Learn More?";
-  const description = type === "partners" 
-    ? "We're always excited to connect with industry partners. Whether you're looking to collaborate on real-world projects, host technical workshops, or support data-driven education, we'd love to hear from you."
-    : "Have questions about joining DS3? Curious about our projects, workshops, or how to get more involved on campus? Whether you're new to data science or looking to deepen your experience, we’re here to help.";
+  const description =
+    type === "partners"
+      ? "We're always excited to connect with industry partners. Whether you're looking to collaborate on real-world projects, host technical workshops, or support data-driven education, we'd love to hear from you."
+      : "Have questions about joining DS3? Curious about our projects, workshops, or how to get more involved on campus? Whether you're new to data science or looking to deepen your experience, we’re here to help.";
 
   return (
     <Section
@@ -42,12 +43,18 @@ const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
         />
       </div>
 
-      <form className="flex-1 w-[clamp(300px,70vw,400px)] flex flex-col gap-6">
+      <form
+        className="flex-1 w-[clamp(300px,70vw,400px)] flex flex-col gap-6"
+        target="_blank"
+        action="https://formsubmit.co/0e21a47db5d2ad62468688ddd884a595"
+        method="POST"
+      >
         {["Name", "Email", "Subject"].map((label, index) => (
           <label className="flex flex-col gap-2" key={index}>
             <span className="text-2xl font-semibold">{label}</span>
             <input
               type="text"
+              name={label}
               required
               placeholder={label}
               className="input input-primary input-lg w-full"
@@ -57,6 +64,7 @@ const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
         <label className="flex flex-col gap-2">
           <span className="text-2xl font-semibold">Message</span>
           <textarea
+            name="Message"
             required
             placeholder="Message"
             className="textarea textarea-primary textarea-lg w-full h-[8rem]"
