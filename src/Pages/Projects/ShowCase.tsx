@@ -2,7 +2,8 @@ import { useState } from "react";
 import HoverCard from "../../Components/HoverCard";
 import Section from "../../Components/Section";
 import projectsData from "../../Assets/Data/projects.json";
-import { newArray } from "../../Utils/functions";
+import Paginate from "../../Components/Paginate";
+import { usePaginate } from "../../Hooks/usePaginate";
 
 const ShowCase = () => {
   const projects = projectsData.projects;
@@ -10,11 +11,11 @@ const ShowCase = () => {
   const years = Object.keys(projects).reverse() as YearType[];
   const [year, setYear] = useState<YearType>(years[0]);
 
-  const cardsPerPage = 3;
-  const numPages = projects[year].length / cardsPerPage;
-  const [page, setPage] = useState(1);
-  const endPage = page * cardsPerPage;
-  const startPage = (page - 1) * cardsPerPage;
+  const { page, setPage, numPages, start, end } = usePaginate({
+    totalItems: projects[year].length,
+    numRows: 1,
+  });
+  console.log(numPages);
 
   return (
     <Section>
@@ -41,25 +42,12 @@ const ShowCase = () => {
       </div>
 
       <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(clamp(300px,40vw,350px),1fr))] justify-center gap-y-8">
-        {projects[year].slice(startPage, endPage).map((project, index) => (
+        {projects[year].slice(start, end).map((project, index) => (
           <HoverCard key={index} {...project} size="clamp(300px, 40vw, 350px)" />
         ))}
       </div>
 
-      {numPages > 1 && (
-        <div className="join">
-          {newArray(numPages).map((_, index) => (
-            <button
-              key={index}
-            className="join-item btn data-[active=true]:btn-active btn-lg text-2xl"
-            onClick={() => setPage(index + 1)}
-            data-active={page == index + 1}
-          >
-            {index + 1}
-          </button>
-          ))}
-        </div>
-      )}
+      <Paginate numPages={numPages} page={page} setPage={setPage} />
     </Section>
   );
 };
