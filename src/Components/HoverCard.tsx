@@ -1,5 +1,4 @@
 import useImagePreloader from "../Hooks/useImagepreload.tsx";
-import { hideImage } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
 
 interface HoverCardProps {
@@ -24,7 +23,7 @@ const HoverCard = ({ title, description, size, image, links }: HoverCardProps) =
           <img
             src={image || "/"}
             className="size-full object-cover rounded-2xl"
-            onError={hideImage}
+            onError={(e) => (e.currentTarget.style.display = "none")}
             onLoad={(e) => (e.currentTarget.style.display = "block")}
           />
         )}

@@ -1,6 +1,5 @@
 import Button from "../../Components/Button";
 import Section from "../../Components/Section";
-import { hideImage } from "../../Utils/functions.tsx";
 
 const Landing = () => {
   return (
@@ -30,7 +29,7 @@ const Landing = () => {
         <img
           className="w-full h-full object-cover hover:scale-105 duration-300"
           src="/GetInvolved/pf-events-img.webp"
-          onError={hideImage}
+          onError={(e) => (e.currentTarget.style.display = "none")}
         />
       </div>
     </Section>

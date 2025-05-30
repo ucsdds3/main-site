@@ -95,18 +95,20 @@ const OurWork = () => {
         ))}
       </div>
 
-      <div className="join">
-        {newArray(numPages).map((_, index) => (
-          <button
-            key={index}
-            className="join-item btn data-[active=true]:btn-active"
-            onClick={() => setPage(index + 1)}
-            data-active={page == index + 1}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
+      {numPages > 1 && (
+        <div className="join">
+          {newArray(numPages).map((_, index) => (
+            <button
+              key={index}
+              className="join-item btn data-[active=true]:btn-active btn-lg text-2xl"
+              onClick={() => setPage(index + 1)}
+              data-active={page == index + 1}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </Section>
   );
 };

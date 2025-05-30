@@ -14,11 +14,8 @@ export const setIndex = <T,>(arr: T[], idx: number, value: T) => [
   ...arr.slice(idx + 1),
 ];
 
-export const unbreakable = (str: string) => str.replace(" ", "\u00A0"); // Non breaking space
-
-export const hideImage = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-  e.currentTarget.style.display = "none";
-};
+export const unbreakable = (str: string) =>
+  str.replace(/[ -]/g, (match) => (match === " " ? "\u00A0" : "\u2011")); // Non breaking space and hyphen
 
 export const parseToPST = (dateString: string) => {
   return new Date(
@@ -28,6 +25,7 @@ export const parseToPST = (dateString: string) => {
 
 export const getNextDeadline = (deadlines: Record<string, string>) =>
   Object.entries(deadlines)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .filter(([_, value]) => parseToPST(value) > new Date())
     .sort((a, b) => parseToPST(a[1]).getTime() - parseToPST(b[1]).getTime())[0];
 

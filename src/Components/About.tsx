@@ -1,7 +1,6 @@
 import Section from "./Section";
 import { TeamType } from "../Utils/types";
 import Star from "./Star";
-import { hideImage } from "../Utils/functions.tsx";
 import { twMerge } from "tailwind-merge";
 
 export interface AboutProps extends TeamType {
@@ -29,7 +28,7 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
             <img
               src={image}
               className="w-full h-full object-cover group-hover:scale-105 duration-300"
-              onError={hideImage}
+              onError={(e) => (e.currentTarget.style.display = "none")}
             />
           </div>
 
