@@ -2,14 +2,14 @@
   "upcoming": {
     "title": "Upcoming Events",
     "subtitle": "Want to see what's next?",
-    "headerImg": "/Events/Upcoming/upcoming-arrows.png"
+    "headerImg": "/Events/Upcoming/upcoming-arrows.webp"
     
   },
   "workshops": {
     "title": "Workshops",
     "subtitle": "Python. GitHub. Web Dev. Generative AI.",
     "name": "Workshops",
-    "headerImg": "/Events/Workshops/workshops-arrows.png",
+    "headerImg": "/Events/Workshops/workshops-arrows.webp",
     "image": "/GetInvolved/workshop-img.webp",
     "points": {
       "Accessible for All": "Our workshops are designed for every skill level — whether you're brand new to data science or diving into advanced topics.",
@@ -22,7 +22,7 @@
     "subtitle": "Mentorship. Building community. Having fun.",
     "name": "Social Events",
     "image": "/GetInvolved/social-img.webp",
-    "headerImg": "/Events/Social/social-arrows.png",
+    "headerImg": "/Events/Social/social-arrows.webp",
     "points": {
       "Mentorship": "Through our Big-Little mentorship program, members are matched for guidance, friendship, and support—building strong connections across experience levels.",
       "Community Beyond Coding": "From beach bonfires to game nights, we host events that bring members together for fun, relaxation, and real community.",
@@ -34,7 +34,7 @@
     "subtitle": "Networking. Career Growth. Industry Insights.",
     "name": "Professional Events",
     "image": "/GetInvolved/pf-events-img.webp",
-    "headerImg": "/Events/Professional/professional-arrows.png",
+    "headerImg": "/Events/Professional/professional-arrows.webp",
     "points": {
       "Grow Your Network": "Connect with professionals, alumni, and recruiters through speaker panels, career nights, and exclusive networking events.",
       "Build Your Career Toolkit": "Strengthen your resume, portfolio, and LinkedIn through interactive workshops on personal branding and professional storytelling.",
