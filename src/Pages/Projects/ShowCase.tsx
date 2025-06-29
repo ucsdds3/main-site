@@ -9,7 +9,7 @@ const ShowCase = () => {
   const projects = projectsData.projects;
   type YearType = keyof typeof projects;
   const years = Object.keys(projects).reverse() as YearType[];
-  const [year, setYear] = useState<YearType>(years[0]);
+  const [year, setYear] = useState<YearType>(years[1]);
 
   const { page, setPage, numPages, start, end } = usePaginate({
     totalItems: projects[year].length,
@@ -25,11 +25,11 @@ const ShowCase = () => {
           <p className="text-2xl"> Here are some projects from previous years.</p>
         </div>
 
-        <fieldset className="fieldset w-[clamp(10rem,15vw,15rem)] flex flex-col items-center">
-          <span className="text-base font-semibold">Year</span>
+        <fieldset className="fieldset w-[clamp(10rem,15vw,15rem)] flex flex-col items-center gap-2">
+          <span className="text-2xl font-semibold">Year</span>
           <select
             value={year}
-            className="select select-primary"
+            className="select select-primary select-lg"
             onChange={(e) => {
               setYear(e.target.value as YearType);
             }}
