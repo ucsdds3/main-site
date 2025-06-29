@@ -22,17 +22,17 @@
         {
           "title": "Automated Face Recognition System",
           "description": "A robust system for accurate and efficient facial identification and verification.",
-          "image": "/WhereWeBeen/face-recog.png"
+          "image": "/Consulting/face-recog.webp"
         },
         {
           "title": "Interpretable Scoring Algorithm for Predictive Analysis",
           "description": "An algorithm providing clear, interpretable scores for data-driven decision-making.",
-          "image": "/WhereWeBeen/isa.png"
+          "image": "/Consulting/isa.webp"
         },
         {
           "title": "Conversational AI with Large Language Models",
           "description": "A chatbot leveraging LLMs for natural, human-like interactions.",
-          "image": "/WhereWeBeen/llm.png"
+          "image": "/Consulting/llm.webp"
         }
       ]
     }
