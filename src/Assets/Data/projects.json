@@ -18,6 +18,43 @@
     "/Projects/P7.webp"
   ],
   "projects": {
+    "2025": [
+      {
+        "title": "Breast Cancer Detection via Image Classification",
+        "description": "Classified tumor images with deep learning on BreakHis dataset.",
+        "image": "/Projects/2025/project1_2025.webp"
+      },
+      {
+        "title": "Mood-Based Music Recommendation System",
+        "description": "Recommended songs with text and transformer-based emotion analysis.",
+        "image": "/Projects/2025/project2_2025.webp"
+      },
+      {
+        "title": "Prompting the Bard: Shakespearean Text Generation with Mistral:7b",
+        "description": "Generated Shakespearean text with prompt-engineered outputs from Mistral 7B model.",
+        "image": "/Projects/2025/project3_2025.webp"
+      },
+      {
+        "title": "Modeling Economic Trajectories of World Powers",
+        "description": "Predicted GDP, inflation, and unemployment trends worldwide with time series models.",
+        "image": "/Projects/2025/project4_2025.webp"
+      },
+      {
+        "title": "Natural Disasters Analysis",
+        "description": "Predicted storm types with climate data and models like Random Forest and Boosting.",
+        "image": "/Projects/2025/project5_2025.webp"
+      },
+      {
+        "title": "Diabetes Diagnosis: A Multi-Model Evaluation",
+        "description": "Predicted diabetes risk with up to 96% accuracy with CDC health survey data.",
+        "image": "/Projects/2025/project6_2025.webp"
+      },
+      {
+        "title": "Business Acquisition Evaluation",
+        "description": "Predicted acquisition potential with classification on financial and market data.",
+        "image": "/Projects/2025/project7_2025.webp"
+      }
+    ],
     "2024": [
       {
         "title": "Augmented Reality: Food Nutrition Finder",
@@ -121,7 +158,7 @@
         "description": "Build a system to recommend music based on listener behavior.",
         "image": "/Projects/2023/project15_2023.webp"
       }
-      ],
+    ],
     "2022": [
       {
         "title": "Soccer Team Success Predictors",
