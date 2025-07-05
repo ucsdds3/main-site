@@ -20,29 +20,32 @@
   "projects": {
     "2025": [
       {
+        "title": "Mood-Based Music Recommendation System",
+        "description": "Recommended songs with text and transformer-based emotion analysis.",
+        "image": "/Projects/2025/project2_2025.webp",
+        "placement": 1
+      },
+      {
+        "title": "Modeling Economic Trajectories of World Powers",
+        "description": "Predicted GDP, inflation, and unemployment trends worldwide with time series models.",
+        "image": "/Projects/2025/project4_2025.webp",
+        "placement": 2
+      },
+      {
+        "title": "Natural Disasters Analysis",
+        "description": "Predicted storm types with climate data and models like Random Forest and Boosting.",
+        "image": "/Projects/2025/project5_2025.webp",
+        "placement": 3
+      },
+      {
         "title": "Breast Cancer Detection via Image Classification",
         "description": "Classified tumor images with deep learning on BreakHis dataset.",
         "image": "/Projects/2025/project1_2025.webp"
       },
       {
-        "title": "Mood-Based Music Recommendation System",
-        "description": "Recommended songs with text and transformer-based emotion analysis.",
-        "image": "/Projects/2025/project2_2025.webp"
-      },
-      {
         "title": "Prompting the Bard: Shakespearean Text Generation with Mistral:7b",
         "description": "Generated Shakespearean text with prompt-engineered outputs from Mistral 7B model.",
         "image": "/Projects/2025/project3_2025.webp"
-      },
-      {
-        "title": "Modeling Economic Trajectories of World Powers",
-        "description": "Predicted GDP, inflation, and unemployment trends worldwide with time series models.",
-        "image": "/Projects/2025/project4_2025.webp"
-      },
-      {
-        "title": "Natural Disasters Analysis",
-        "description": "Predicted storm types with climate data and models like Random Forest and Boosting.",
-        "image": "/Projects/2025/project5_2025.webp"
       },
       {
         "title": "Diabetes Diagnosis: A Multi-Model Evaluation",
