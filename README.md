@@ -1,13 +1,13 @@
-# DS3 Main Site Documentation 🚀
+# 🚀 DS3 Main Site Documentation 
 
-## Getting Started 🎯
+## 🎯 Getting Started 
 
 1. Clone the repo with `git clone https://github.com/ucsdds3/main-site.git`
 2. Open the repo in your preferred code editor (For VSCode, use the command `code main-site`)
 3. Run `npm install` to install dependencies
 4. Run `npm run dev` to start the development server
 
-## Contribution Guidelines 🤝
+## 🤝 Contribution Guidelines 
 
 To make contributions to the DS3 Main Site, please follow these guidelines:
 
@@ -17,7 +17,7 @@ To make contributions to the DS3 Main Site, please follow these guidelines:
 4. Create a pull request from your branch to the main branch. Write a summary of your changes in the pull request description.
 5. Once the pull request is merged, you can safely delete your branch using the command `git branch -d <branch-name>`.
 
-## Project Structure 📁
+## 📁 Project Structure 
 
 Stick to the project structure shown below to keep things organized:
 
@@ -39,7 +39,7 @@ main-site/
 │   │   └── types.ts      # Utility types  
 ```
 
-## Dependencies 📦
+## 📦 Dependencies 
 
 Check the depencencies listed below for this project before starting. Use these to your advantage so you don't have to do more work! There are more dependencies that you can find in the `package.json` file, but these are the ones you should be familiar with.
 
