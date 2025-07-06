@@ -6,6 +6,8 @@ interface HoverCardProps {
   description?: string;
   size: string;
   image?: string;
+  imgClassName?: string;
+  placement?: number;
   links?: {
     title: string;
     href: string;
@@ -14,11 +16,39 @@ interface HoverCardProps {
   }[];
 }
 
-const HoverCard = ({ title, description, size, image, links }: HoverCardProps) => {
+const HoverCard = ({
+  title,
+  description,
+  size,
+  image,
+  links,
+  imgClassName,
+  placement,
+}: HoverCardProps) => {
   const ImagePreloader = useImagePreloader([image ? image : ""]);
+
+  const placementConfig = {
+    1: { color: "bg-yellow-500", text: "1st" },
+    2: { color: "bg-gray-400", text: "2nd" },
+    3: { color: "bg-amber-600", text: "3rd" },
+  };
+
+  const placementBand = placementConfig[placement as keyof typeof placementConfig];
+
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <div className="skeleton relative group" style={{ width: size, height: size }}>
+      <div
+        className={`skeleton relative group ${imgClassName}`}
+        style={{ width: size, height: size }}
+      >
+        {placement && placement <= 3 && (
+          <div
+            className={`absolute top-2 left-2 text-white font-bold px-4 py-1 rounded-full z-10 ${placementBand.color}`}
+          >
+            {placementBand.text}
+          </div>
+        )}
+
         {ImagePreloader.imagesPreloaded && (
           <img
             src={image || "/"}
@@ -28,7 +58,6 @@ const HoverCard = ({ title, description, size, image, links }: HoverCardProps) =
           />
         )}
 
-        {/* TODO: Animate on hover */}
         {links && (
           <div className="hidden group-hover:flex absolute bottom-0 w-full pb-2 gap-2 justify-center animate-[hoverCardAnimate_0.2s]">
             {links.map(({ title, href, icon, color }, index) => (
