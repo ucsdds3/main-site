@@ -15,7 +15,6 @@ const ShowCase = () => {
     totalItems: projects[year].length,
     numRows: 1,
   });
-  console.log(numPages);
 
   return (
     <Section>
@@ -31,6 +30,7 @@ const ShowCase = () => {
             value={year}
             className="select select-primary select-lg"
             onChange={(e) => {
+              setPage(1);
               setYear(e.target.value as YearType);
             }}
           >
@@ -43,7 +43,12 @@ const ShowCase = () => {
 
       <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(clamp(300px,40vw,350px),1fr))] justify-center gap-y-8">
         {projects[year].slice(start, end).map((project, index) => (
-          <HoverCard key={index} {...project} size="clamp(300px, 40vw, 350px)" />
+          <HoverCard
+            key={index}
+            {...project}
+            size="clamp(300px, 40vw, 350px)"
+            imgClassName="border-2 border-primary"
+          />
         ))}
       </div>
 
