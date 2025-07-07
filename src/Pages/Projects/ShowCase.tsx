@@ -9,7 +9,7 @@ const ShowCase = () => {
   const projects = projectsData.projects;
   type YearType = keyof typeof projects;
   const years = Object.keys(projects).reverse() as YearType[];
-  const [year, setYear] = useState<YearType>(years[1]);
+  const [year, setYear] = useState<YearType>(years[0]);
 
   const { page, setPage, numPages, start, end } = usePaginate({
     totalItems: projects[year].length,
