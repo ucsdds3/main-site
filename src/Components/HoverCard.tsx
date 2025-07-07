@@ -1,3 +1,4 @@
+import { FaExternalLinkAlt } from "react-icons/fa";
 import useImagePreloader from "../Hooks/useImagepreload.tsx";
 import SafeLink from "./SafeLink";
 
@@ -8,6 +9,7 @@ interface HoverCardProps {
   image?: string;
   imgClassName?: string;
   placement?: number;
+  link?: string;
   links?: {
     title: string;
     href: string;
@@ -21,6 +23,7 @@ const HoverCard = ({
   description,
   size,
   image,
+  link,
   links,
   imgClassName,
   placement,
@@ -38,7 +41,8 @@ const HoverCard = ({
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <div
-        className={`skeleton relative group ${imgClassName}`}
+        className={`skeleton relative group ${imgClassName} ${link ? "cursor-pointer" : ""}`}
+        onClick={() => link && window.open(link, "_blank")}
         style={{ width: size, height: size }}
       >
         {placement && placement <= 3 && (
@@ -56,6 +60,14 @@ const HoverCard = ({
             onError={(e) => (e.currentTarget.style.display = "none")}
             onLoad={(e) => (e.currentTarget.style.display = "block")}
           />
+        )}
+
+        {link && (
+          <div className="hidden group-hover:flex absolute top-2 right-2 animate-[hoverCardAnimate_0.2s]">
+            <SafeLink href={link} title="View Project" className="btn p-3 text-lg text-(--color-primary-content)">
+              <FaExternalLinkAlt />
+            </SafeLink>
+          </div>
         )}
 
         {links && (
