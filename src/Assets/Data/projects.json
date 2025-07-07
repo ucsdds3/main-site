@@ -23,39 +23,46 @@
         "title": "Mood-Based Music Recommendation System",
         "description": "Recommended songs with text and transformer-based emotion analysis.",
         "image": "/Projects/2025/project2_2025.webp",
+        "link": "https://drive.google.com/file/d/1GwLeoeaLW1CxclGMlNlM4iNVC1VdXrku/view",
         "placement": 1
       },
       {
         "title": "Modeling Economic Trajectories of World Powers",
         "description": "Predicted GDP, inflation, and unemployment trends worldwide with time series models.",
         "image": "/Projects/2025/project4_2025.webp",
+        "link": "https://drive.google.com/file/d/1jha5OXCc_YO7yQe8rqZEKlb0RDdhpxOR/view",
         "placement": 2
       },
       {
         "title": "Natural Disasters Analysis",
         "description": "Predicted storm types with climate data and models like Random Forest and Boosting.",
         "image": "/Projects/2025/project5_2025.webp",
+        "link": "https://drive.google.com/file/d/1xmpYh2evE6ByRdiic8oCzjhMk1p_ebE5/view",
         "placement": 3
       },
       {
         "title": "Breast Cancer Detection via Image Classification",
         "description": "Classified tumor images with deep learning on BreakHis dataset.",
-        "image": "/Projects/2025/project1_2025.webp"
+        "image": "/Projects/2025/project1_2025.webp",
+        "link": "https://drive.google.com/file/d/1-qaClJv0qLDm9P5oJxnyBRfho8ghFlPQ/view"
       },
       {
         "title": "Prompting the Bard: Shakespearean Text Generation with Mistral:7b",
         "description": "Generated Shakespearean text with prompt-engineered outputs from Mistral 7B model.",
-        "image": "/Projects/2025/project3_2025.webp"
+        "image": "/Projects/2025/project3_2025.webp",
+        "link": "https://drive.google.com/file/d/1QjAsczT_co3WKrKkvsm6xgbgdaBsAlgV/view"
       },
       {
         "title": "Diabetes Diagnosis: A Multi-Model Evaluation",
         "description": "Predicted diabetes risk with up to 96% accuracy with CDC health survey data.",
-        "image": "/Projects/2025/project6_2025.webp"
+        "image": "/Projects/2025/project6_2025.webp",
+        "link": "https://drive.google.com/file/d/1SPolNIrtks7pLuULr7Vxbsf_RDbcgdIQ/view"
       },
       {
         "title": "Business Acquisition Evaluation",
         "description": "Predicted acquisition potential with classification on financial and market data.",
-        "image": "/Projects/2025/project7_2025.webp"
+        "image": "/Projects/2025/project7_2025.webp",
+        "link": "https://drive.google.com/file/d/1Q2Y4WllFyhQzG9-ghAd7p5eo0nbcjA8I/view"
       }
     ],
     "2024": [
