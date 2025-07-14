@@ -65,3 +65,11 @@ export type datahacksWinner =
       devpost: string;
       github?: undefined;
     };
+
+export type ProjectType = {
+  title: string;
+  description: string;
+  image: string;
+  link?: string;
+  placement?: 1 | 2 | 3;
+};

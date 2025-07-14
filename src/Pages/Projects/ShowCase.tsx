@@ -9,7 +9,7 @@ const ShowCase = () => {
   const projects = projectsData.projects;
   type YearType = keyof typeof projects;
   const years = Object.keys(projects).reverse() as YearType[];
-  const [year, setYear] = useState<YearType>(years[1]);
+  const [year, setYear] = useState<YearType>(years[0]);
 
   const { page, setPage, numPages, start, end } = usePaginate({
     totalItems: projects[year].length,
@@ -46,6 +46,7 @@ const ShowCase = () => {
           <HoverCard
             key={index}
             {...project}
+            link={('link' in project && project.link) ? project.link as string : undefined}
             size="clamp(300px, 40vw, 350px)"
             imgClassName="border-2 border-primary"
           />
