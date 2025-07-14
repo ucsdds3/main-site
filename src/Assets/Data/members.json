@@ -14,7 +14,7 @@
     "committees": ["Executive", "Internal"],
     "role": "Vice President Internal",
     "email": "camillesicatwork@gmail.com",
-    "image": "/Board/Camille_Sicat.webp",
+    "image": "/Board/Camille-Sicat.webp",
     "website": "https://iris-hep.org/fellows/couchsnail.html",
     "resume": "https://docs.google.com/document/d/1LGcSgXJ9vzXLBio_4G5_c6AjLBx32SjOOUtJPA3-9r4/edit?usp=sharing",
     "linkedIn": "www.linkedin.com/in/camille-sicat-8b3267256"
@@ -115,7 +115,7 @@
   {
     "name": "Aarshia Gupta",
     "committees": ["Executive", "Social Events"],
-    "role": "Social Events Co-Director",
+    "role": "Social Events Director",
     "email": "aag022@ucsd.edu",
     "image": "/Board/Aarshia-Gupta.webp",
     "resume": "https://drive.google.com/file/d/16ayPzFZ7Aif2HTTaGUv8thSh9xZgG4II/view?usp=sharing",
@@ -124,7 +124,7 @@
   {
     "name": "Kavya Shah",
     "committees": ["Executive", "Social Events"],
-    "role": "Social Events Co-Director",
+    "role": "Big-Little Director",
     "email": "kashah@ucsd.edu",
     "image": "/Board/Kavya-Shah.webp",
     "website": "https://sites.google.com/view/kavya-shah/home",
@@ -134,7 +134,7 @@
   {
     "name": "Jiahe Qin",
     "committees": ["Executive", "Social Events"],
-    "role": "Social Events Co-Director",
+    "role": "Fundraising Director",
     "email": "jiq004@ucsd.edu",
     "image": "/Board/Jiahe-Qin.webp",
     "website": "https://jassyq.github.io/portfolio/index.html",
@@ -333,6 +333,36 @@
     "website": "nguyenvietminhhieu.work",
     "resume": "https://drive.google.com/file/d/1j6M3Wpq5BGn9nL79Dm7Yumo3pnugbMfT/view",
     "linkedIn": "https://www.linkedin.com/in/vietminhhieunguyen/"
+  },
+  {
+    "name": "Charles Rivera",
+    "committees": ["Workshops"],
+    "role": "Workshops",
+    "email": "c9rivera@ucsd.edu",
+    "image": "/Board/Charles-Rivera.webp",
+    "website": "https://www.linkedin.com/in/charlesfrivera/",
+    "resume": "https://drive.google.com/file/d/1-d9wkL7YQOpECOH3bR9aOR99P7zyqOrU/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/charlesfrivera/"
+  },
+  {
+    "name": "Vivian Zhu",
+    "committees": ["Finance"],
+    "role": "Procurement Chair",
+    "email": "v1zhu@ucsd.edu",
+    "image": "/Board/Vivian-Zhu.webp",
+    "website": "https://github.com/v1zhu",
+    "resume": "https://drive.google.com/file/d/1kIuGaqBpXsoP1GaWCfFuL6YUhiYg3x53/view?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/v-zhu"
+  },
+  {
+    "name": "Elizaveta Beltyukova ",
+    "committees": ["External"],
+    "role": "Startup Outreach Lead",
+    "email": "elizabeltyukova@gmail.com",
+    "image": "/Board/Elizaveta-Beltyukova.webp",
+    "website": "https://www.linkedin.com/in/elizaveta-beltyukova-2a011b236?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+    "resume": "https://docs.google.com/document/d/1M4m-TVGtF7AEtXi6DZZqwEkz30_84HlA5nd5lY_ke6o/edit?usp=drivesdk",
+    "linkedIn": "https://www.linkedin.com/in/elizaveta-beltyukova-2a011b236?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
   },
   {
     "name": "Nao Song",
