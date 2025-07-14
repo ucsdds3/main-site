@@ -84,7 +84,7 @@
     "committees": ["Executive", "Workshops"],
     "role": "Workshops Director",
     "email": "camillesicatwork@gmail.com",
-    "image": "/Board/Camille_Sicat.webp",
+    "image": "/Board/Camille-Sicat.webp",
     "website": "https://iris-hep.org/fellows/couchsnail.html",
     "resume": "https://docs.google.com/document/d/1LGcSgXJ9vzXLBio_4G5_c6AjLBx32SjOOUtJPA3-9r4/edit?usp=sharing",
     "linkedIn": "www.linkedin.com/in/camille-sicat-8b3267256"
@@ -229,16 +229,6 @@
     "website": "nguyenvietminhhieu.work",
     "resume": "https://drive.google.com/file/d/1j6M3Wpq5BGn9nL79Dm7Yumo3pnugbMfT/view",
     "linkedIn": "https://www.linkedin.com/in/vietminhhieunguyen/"
-  },
-  {
-    "name": "April Huang",
-    "committees": ["Software"],
-    "role": "Software Developer",
-    "email": "aphuang@ucsd.edu",
-    "image": "/Board/April-Huang.webp",
-    "website": "aprilrhuang.netlify.app/",
-    "resume": "https://docs.google.com/document/d/1pXW007M0dxccoeBevx-QCfH7SFwx3c8eCcd6FnSgZSk/edit?usp=drivesdk",
-    "linkedIn": "https://www.linkedin.com/in/april\u2014huang"
   },
   {
     "name": "Priya Iyer",
