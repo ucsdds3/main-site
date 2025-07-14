@@ -115,7 +115,7 @@
   {
     "name": "Aarshia Gupta",
     "committees": ["Executive", "Social Events"],
-    "role": "Social Events Co-Director",
+    "role": "Social Events Director",
     "email": "aag022@ucsd.edu",
     "image": "/Board/Aarshia-Gupta.webp",
     "resume": "https://drive.google.com/file/d/16ayPzFZ7Aif2HTTaGUv8thSh9xZgG4II/view?usp=sharing",
@@ -124,7 +124,7 @@
   {
     "name": "Kavya Shah",
     "committees": ["Executive", "Social Events"],
-    "role": "Social Events Co-Director",
+    "role": "Big-Little Director",
     "email": "kashah@ucsd.edu",
     "image": "/Board/Kavya-Shah.webp",
     "website": "https://sites.google.com/view/kavya-shah/home",
@@ -134,7 +134,7 @@
   {
     "name": "Jiahe Qin",
     "committees": ["Executive", "Social Events"],
-    "role": "Social Events Co-Director",
+    "role": "Fundraising Director",
     "email": "jiq004@ucsd.edu",
     "image": "/Board/Jiahe-Qin.webp",
     "website": "https://jassyq.github.io/portfolio/index.html",
@@ -335,26 +335,6 @@
     "linkedIn": "https://www.linkedin.com/in/vietminhhieunguyen/"
   },
   {
-    "name": "April Huang",
-    "committees": ["Software"],
-    "role": "Software Developer",
-    "email": "aphuang@ucsd.edu",
-    "image": "/Board/April-Huang.webp",
-    "website": "aprilrhuang.netlify.app/",
-    "resume": "https://docs.google.com/document/d/1pXW007M0dxccoeBevx-QCfH7SFwx3c8eCcd6FnSgZSk/edit?usp=drivesdk",
-    "linkedIn": "https://www.linkedin.com/in/april\u2014huang"
-  },
-  {
-    "name": "Priya Iyer",
-    "committees": ["Design"],
-    "role": "Designer",
-    "email": "pliyer@ucsd.edu",
-    "image": "/Board/Priya_Iyer.webp",
-    "website": "https://www.priyaiyerdesign.com/",
-    "resume": "https://docs.google.com/document/d/1E4EXi_ZqW5GGgmmHzF-mCeOI5CED7gua_UsDJbtrSvg/edit?usp=sharing",
-    "linkedIn": "www.linkedin.com/in/pliyer"
-  },
-  {
     "name": "Charles Rivera",
     "committees": ["Workshops"],
     "role": "Workshops",
@@ -383,16 +363,6 @@
     "website": "https://www.linkedin.com/in/elizaveta-beltyukova-2a011b236?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     "resume": "https://docs.google.com/document/d/1M4m-TVGtF7AEtXi6DZZqwEkz30_84HlA5nd5lY_ke6o/edit?usp=drivesdk",
     "linkedIn": "https://www.linkedin.com/in/elizaveta-beltyukova-2a011b236?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
-  },
-  {
-    "name": "Viki Shi",
-    "committees": ["Design"],
-    "role": "Designer",
-    "email": "vikichenshi@gmail.com",
-    "image": "/Board/Viki-Shi.webp",
-    "website": "www.linkedin.com/in/viki-shi",
-    "resume": "https://docs.google.com/document/d/1-guJZ1p3TDEie5N6xPQjc57nlDRHrc9VPaFOGNkwOcc/edit?usp=sharing",
-    "linkedIn": "www.linkedin.com/in/viki-shi"
   },
   {
     "name": "Nao Song",
