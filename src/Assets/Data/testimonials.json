@@ -1,33 +1,9 @@
 [
   {
     "image": "/Board/Ansh-Bhatnagar.webp",
-    "title": "SDE Intern | Amazon '25",
+    "title": "SDE Intern | Amazon (AWS) '25",
     "description": "Class of 2027",
-    "author": "Ansh Bhatnagar - President (Prior Software Director)"
-  },
-  {
-    "image": "/Board/Advaith-Ravishankar.webp",
-    "title": "Master of CSE | Harvard University",
-    "description": "Class of 2025",
-    "author": "Advaith Ravishankar - President (Prior Projects Director)"
-  },
-  {
-    "image": "/Board/Krish-Kankure.webp",
-    "title": "SWE Intern | Atlassian '25",
-    "description": "Class of 2028",
-    "author": "Krish Kankure - Software Team"
-  },
-  {
-    "image": "/Board/Hieu-Nguyen.webp",
-    "title": "SWE Intern | Google '25",
-    "description": "Class of 2027",
-    "author": "Nguyen Viet Minh Hieu - Software Team"
-  },
-  {
-    "image": "/Board/April-Huang.webp",
-    "title": "SWE Intern | GoFundMe '25",
-    "description": "Class of 2027",
-    "author": "April Huang - Software Team"
+    "author": "Ansh Bhatnagar - President"
   },
   {
     "image": "/Board/Charles-Rivera.webp",
@@ -36,22 +12,10 @@
     "author": "Charles Rivera - Workshops Team"
   },
   {
-    "image": "/Board/Anika-Thatavarthy.webp",
-    "title": "Google '25",
+    "image": "/Board/Vrisan-Dubey.webp",
+    "title": "Data Science Intern | IBM '25",
     "description": "Alumni",
-    "author": "Anika Thatavarthy - Advisor"
-  },
-  {
-    "image": "/Board/Viki-Shi.webp",
-    "title": "Intern | Walt Disney Studios '25",
-    "description": "Class of 2026",
-    "author": "Viki Shi - Design Team"
-  },
-  {
-    "image": "/Board/So-Hirota.webp",
-    "title": "Exoplanet Sciences | NASA/JPL '25",
-    "description": "Class of 2025",
-    "author": "So Hirota - DataHacks Director"
+    "author": "Vrisan Dubey - Online Content Director"
   },
   {
     "image": "/Board/Kaii-Bijlani.webp",
@@ -60,33 +24,129 @@
     "author": "Kaii Bijlani - Projects Director"
   },
   {
-    "image": "/Board/Issac-Roy.jpeg",
-    "title": "NeuroCrine Biosciences",
+    "image": "/Board/Issac-Roy.webp",
+    "title": "Data Engineer Intern | NeuroCrine Biosciences '25",
     "description": "Class of 2027",
     "author": "Issac Roy - Software Director"
   },
   {
+    "image": "/Board/Tanvi-Vidyala.webp",
+    "title": "Data Science Intern | Kaiser Permanente '25",
+    "description": "Class of 2026",
+    "author": "Tanvi Vidyala - Online Content Director"
+  },
+  {
+    "image": "/Board/Viki-Shi.webp",
+    "title": "Intern | Walt Disney Studios '25",
+    "description": "Class of 2026",
+    "author": "Viki Shi - Design Director"
+  },
+  {
     "image": "/Board/Anirudh-Annabathula.webp",
-    "title": "Data Engineer Intern | EVgo",
+    "title": "Data Engineer Intern | EVgo '25",
     "description": "Class of 2027",
-    "author": "Anirudh Annabathula - Projects Team"
+    "author": "Anirudh Annabathula - Projects Mentor"
   },
   {
     "image": "/Board/Ishayu-Ghosh.webp",
-    "title": "Virginia de Sa Lab",
+    "title": "Machine Learning Researcher | Virginia de Sa Lab '25",
     "description": "Class of 2028",
-    "author": "Ishayu Ghosh - Software Team"
+    "author": "Ishayu Ghosh - Software Developer"
   },
   {
     "image": "/Board/Shamita-Goyal.webp",
-    "title": "SWE Research Intern | Foundation Interface Lab",
+    "title": "SWE Research Intern | Foundation Interface Lab '25",
     "description": "Class of 2026",
-    "author": "Shamita Goyal - Software Team"
+    "author": "Shamita Goyal - Software Developer + UI Designer"
+  },
+  {
+    "image": "/Board/Jeronimo-AdamesBaena.webp",
+    "title": "Data Science + IoT Researcher | Chiba Lab '25",
+    "description": "Class of 2027",
+    "author": "Jeronimo Adames-Baena - Software Developer"
+  },
+  {
+    "image": "/Board/Srinivas-Sriram.webp",
+    "title": "Intern | Algorithmical.ai '25",
+    "description": "Class of 2028",
+    "author": "Srinivas Sriram - Online Content Writer"
+  },
+  {
+    "image": "/Board/Annabelle-Guiditta.webp",
+    "title": "System Performance & Engineering Intern | Southern California Edison '25",
+    "description": "Class of 2028",
+    "author": "Annabelle Guiditta - Professional Events Director"
+  },
+  {
+    "image": "/Board/Huize-Mao.webp",
+    "title": "Data Science Intern | Plants without Borders '25",
+    "description": "Class of 2026",
+    "author": "Huize Mao - External Team"
+  },
+  {
+    "image": "/Board/Aryan-Agarwal.webp",
+    "title": "Cloud Data Engineering Intern | Ally '25",
+    "description": "Class of 2027",
+    "author": "Aryan Agarwal - Projects Mentor"
+  },
+  {
+    "image": "/Board/Ketan-Mittal.webp",
+    "title": "SWE Intern | Resmed '25",
+    "description": "Class of 2027",
+    "author": "Rocio Saez-Aguirra - Projects Director"
+  },
+  {
+    "image": "/Board/Rocio-Saez.webp",
+    "title": "Data Analyst Research Intern | Dolphin Cognition Lab '25",
+    "description": "Class of 2027",
+    "author": "Rocio Saez-Aguirra - Projects Director"
+  },
+  {
+    "image": "/Board/Vaidehi-Karve.webp",
+    "title": "Data Science + Machine Learning Intern | SDGE '25",
+    "description": "Class of 2027",
+    "author": "Vaidehi Karve - Events Coordinator"
+  },
+  {
+    "image": "/Board/Vani-Sahjwani.webp",
+    "title": "IDX Exchange Summer '25",
+    "description": "Class of 2027",
+    "author": "Vani Sahjwani - Online Content Writer"
+  },
+  {
+    "image": "/Board/Camille-Sicat.webp",
+    "title": "IRIS-HEP Fellow Summer '25",
+    "description": "Class of 2026",
+    "author": "Camille Sicat - VP Internal"
+  },
+  {
+    "image": "/Board/Krish-Kankure.webp",
+    "title": "SWE Intern | Atlassian '25",
+    "description": "Class of 2028",
+    "author": "Krish Kankure - Software Team"
+  },
+  {
+    "image": "/Board/Anika-Thatavarthy.webp",
+    "title": "SWE Intern | Google '25",
+    "description": "Alumni",
+    "author": "Anika Thatavarthy - Advisor"
+  },
+  {
+    "image": "/Board/So-Hirota.webp",
+    "title": "Exoplanet Sciences Intern | NASA/JPL '25",
+    "description": "Alumni",
+    "author": "So Hirota - DataHacks Director"
+  },
+  {
+    "image": "/Board/Advaith-Ravishankar.webp",
+    "title": "Master of CSE | Harvard University '25; Machine Learning Intern | Qualcomm '24",
+    "description": "Alumni",
+    "author": "Advaith Ravishankar - President"
   },
   {
     "image": "/Board/Kai-ChesterNi.webp",
-    "title": "M.S in Business Analytics | Rady School of Management",
-    "description": "Class of 2025",
+    "title": "Master of Business Analytics | Rady School of Management '25",
+    "description": "Alumni",
     "author": "Kai Chester Ni - VP External"
   }
 ]
