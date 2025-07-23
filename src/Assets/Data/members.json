@@ -89,7 +89,7 @@
     "committees": ["Executive", "Projects"],
     "role": "Projects Co-Director",
     "email": "rsaezaguirre@ucsd.edu",
-    "image": "/Board/Rocio-Saez-Aguirre.webp",
+    "image": "/Board/Rocio-Saez.webp",
     "website": "https://www.linkedin.com/in/rocio-saez-aguirre-0000000000/",
     "resume": "https://drive.google.com/file/d/1pEyPpEttfk4_S9G4QX0iflvRPxxb_QmA/view?usp=drive_link",
     "linkedIn": "https://www.linkedin.com/in/rocio-saez-aguirre-0000000000/"
@@ -155,7 +155,7 @@
     "committees": ["Executive", "Design"],
     "role": "Design Co-Director",
     "email": "pliyer@ucsd.edu",
-    "image": "/Board/Priya_Iyer.webp",
+    "image": "/Board/Priya-Iyer.webp",
     "website": "https://www.priyaiyerdesign.com/",
     "resume": "https://docs.google.com/document/d/1E4EXi_ZqW5GGgmmHzF-mCeOI5CED7gua_UsDJbtrSvg/edit?usp=sharing",
     "linkedIn": "www.linkedin.com/in/pliyer"
@@ -169,6 +169,14 @@
     "website": "www.linkedin.com/in/viki-shi",
     "resume": "https://docs.google.com/document/d/1-guJZ1p3TDEie5N6xPQjc57nlDRHrc9VPaFOGNkwOcc/edit?usp=sharing",
     "linkedIn": "www.linkedin.com/in/viki-shi"
+  },
+  {
+    "name": "Tijil Chhabra",
+    "committees": ["Executive", "DataHacks"],
+    "role": "DataHacks Director",
+    "email": "tchhabra@ucsd.edu",
+    "image": "/Board/Tijil-Chhabra.webp",
+    "linkedIn": "https://www.linkedin.com/in/tijil-chhabra/"
   },
   {
     "name": "Vaidehi Karve",
@@ -230,6 +238,15 @@
     "linkedIn": "https://www.linkedin.com/in/anirudha9/"
   },
   {
+    "name": "Aryan Agarwal",
+    "committees": ["Projects"],
+    "role": "Projects Mentor",
+    "email": "ara030@ucsd.edu",
+    "image": "/Board/Aryan-Agarwal.webp",
+    "resume": "https://docs.google.com/document/d/1ZYprBzuGCSbidY1HotWJnVfsSB2tw5a5/edit?usp=drivesdk&ouid=109621460235094900203&rtpof=true&sd=true",
+    "linkedIn": "https://www.linkedin.com/in/aryan-agarwal-324513237"
+  },
+  {
     "name": "Minyoung Kim",
     "committees": ["Social Events"],
     "role": "Social Chair",
@@ -263,6 +280,15 @@
     "image": "/Board/Dylan-Dsouza.webp",
     "linkedIn": "https://www.linkedin.com/in/dsouza-dylan/",
     "resume": "https://drive.google.com/file/d/11m3fuE9bCHD4lqfSFbj_AASgHShV9o4-/view?usp=sharing"
+  },
+  {
+    "name": "Jeffrey Kang",
+    "committees": ["Online Content"],
+    "role": "Writer",
+    "email": "jak053@ucsd.edu",
+    "image": "/Board/Jeffrey-Kang.webp",
+    "linkedIn": "https://www.linkedin.com/in/jeffrey-kang",
+    "resume": "https://drive.google.com/file/d/1xg_4t0_ODUjN0RswgIp1hftG-XSKhIFE/view?usp=sharing"
   },
   {
     "name": "Shamita Goyal",
@@ -345,16 +371,6 @@
     "linkedIn": "https://www.linkedin.com/in/charlesfrivera/"
   },
   {
-    "name": "Vivian Zhu",
-    "committees": ["Finance"],
-    "role": "Procurement Chair",
-    "email": "v1zhu@ucsd.edu",
-    "image": "/Board/Vivian-Zhu.webp",
-    "website": "https://github.com/v1zhu",
-    "resume": "https://drive.google.com/file/d/1kIuGaqBpXsoP1GaWCfFuL6YUhiYg3x53/view?usp=sharing",
-    "linkedIn": "www.linkedin.com/in/v-zhu"
-  },
-  {
     "name": "Elizaveta Beltyukova ",
     "committees": ["External"],
     "role": "Startup Outreach Lead",
@@ -396,13 +412,22 @@
   },
   {
     "name": "Gahn Wuwong",
-    "committees": ["Datahacks"],
+    "committees": ["DataHacks"],
     "role": "Event Crew",
     "email": "gwuwong@ucsd.edu",
     "image": "/Board/Gahn-Wuwong.webp",
     "website": "https://gahnxd.github.io/",
     "resume": "https://drive.google.com/file/d/1JuqmBQUoQwACatTx47lpD1yZ6ndR0WZL/view?usp=sharing",
     "linkedIn": "https://www.linkedin.com/in/gahn-wuwong/"
+  },
+  {
+    "name": "Ishita Takkar",
+    "committees": ["DataHacks"],
+    "role": "Event Crew",
+    "email": "itakkar@ucsd.edu",
+    "image": "/Board/Ishita-Takkar.webp",
+    "resume": "https://drive.google.com/file/d/1EvCFBwY2NY_xJC4XphkLUQXU_PxCZNMB/view?usp=sharing",
+    "linkedIn": "www.linkedin.com/in/ishita-takkar"
   },
   {
     "name": "Lydia Chin",
@@ -414,44 +439,24 @@
     "linkedIn": "www.linkedin.com/in/lydia-chin-652240333"
   },
   {
-    "name": "Advaith Ravishankar",
+    "name": "Alex Cloninger",
     "committees": ["Advisors"],
-    "role": "President 2024-2025",
-    "email": "aravishankar@ucsd.edu",
-    "image": "/Board/Advaith-Ravishankar.webp",
-    "website": "https://www.linkedin.com/in/advaith-ravishankar-232b601b8/",
-    "resume": "https://drive.google.com/file/d/1zdM78iLGaMf5jhRTN6xDzhvIonF2jP_d/view?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/advaith-ravishankar-232b601b8/"
+    "role": "HDSI Faculty Advisor",
+    "email": "acloninger@ucsd.edu",
+    "image": "/Board/Alex-Cloninger.webp",
+    "website": "https://sites.google.com/ucsd.edu/alexandercloninger/home",
+    "resume": "https://www.linkedin.com/in/alexander-cloninger-9b5877133/",
+    "linkedIn": "https://www.linkedin.com/in/alexander-cloninger-9b5877133/"
   },
   {
-    "name": "Trey Scheid",
+    "name": "Kyle Shannon",
     "committees": ["Advisors"],
-    "role": "VP Internal 2024-2025",
-    "email": "tscheid@ucsd.edu",
-    "image": "/Board/Trey-Scheid.webp",
-    "website": "https://www.linkedin.com/in/treyscheid/",
-    "resume": "https://drive.google.com/file/d/1dj36nMJSk6cBbvSKW6uQ1K7K4EZ6gMEY/view",
-    "linkedIn": "https://www.linkedin.com/in/treyscheid/"
-  },
-  {
-    "name": "Jared Simpauco",
-    "committees": ["Advisors"],
-    "role": "VP Finance 2024-2025",
-    "email": "jsimpauco@ucsd.edu",
-    "image": "/Board/Jared-Simpauco.webp",
-    "website": "https://www.linkedin.com/in/jared-simpauco-6a0731223/",
-    "resume": "https://www.linkedin.com/in/jared-simpauco-6a0731223/",
-    "linkedIn": "https://www.linkedin.com/in/jared-simpauco-6a0731223/"
-  },
-  {
-    "name": "So Hirota",
-    "committees": ["Advisors"],
-    "role": "DataHacks Director 2024-2025",
-    "email": "hirotaso92602@gmail.com",
-    "image": "/Board/So-Hirota.webp",
-    "website": "https://soh09.github.io/",
-    "resume": "https://soh09.github.io/assets/so_hirota_resume.pdf",
-    "linkedIn": "https://www.linkedin.com/in/so-hirota/"
+    "role": "Volunteer Faculty Advisor",
+    "email": "kshannon@ucsd.edu",
+    "image": "/Board/Kyle-Shannon.webp",
+    "website": "https://www.kmshannon.com/about/",
+    "resume": "https://s3.us-west-2.amazonaws.com/kmshannon.com/documents/kshannon_cv_web.pdf",
+    "linkedIn": "https://www.linkedin.com/in/kmshannon/"
   },
   {
     "name": "Anika Thatavarthy",
