@@ -6,7 +6,7 @@
     "email": "abhatnagar@ucsd.edu",
     "image": "/Board/Ansh-Bhatnagar.webp",
     "website": "https://anshu-b.github.io/ansh/",
-    "resume": "https://docs.google.com/document/d/11ZPtdhCpwdMsf9HBRh65btXKlkbkT533/edit?usp=sharing&ouid=113914661221302710293&rtpof=true&sd=true",
+    "resume": "https://www.overleaf.com/read/hrfwvpcczrqh#e75fd0",
     "linkedIn": "https://www.linkedin.com/in/ansh-bhatnagar-721286234/"
   },
   {
@@ -59,7 +59,7 @@
   {
     "name": "Nolan Chu",
     "committees": ["Executive", "Workshops"],
-    "role": "Workshops Co-Director",
+    "role": "Workshops Director",
     "email": "ncchu@ucsd.edu",
     "image": "/Board/Nolan_Chu.webp",
     "website": "https://nolancchu.vercel.app/",
@@ -144,11 +144,21 @@
   {
     "name": "Heidi Tam",
     "committees": ["Executive", "Marketing"],
-    "role": "Marketing Director",
+    "role": "Marketing Co-Director",
     "email": "hetam@ucsd.edu",
     "image": "/Board/Heidi-Tam.webp",
     "resume": "https://drive.google.com/file/d/1lDiImjNe28tr4Jk78HylMMfz3s7xPGOs/view?usp=sharing",
     "linkedIn": "https://www.linkedin.com/in/heiditam/"
+  },
+  {
+    "name": "Anagha Kamath",
+    "committees": ["Executive", "Marketing"],
+    "role": "Marketing Co-Director",
+    "email": "ankamath@ucsd.edu",
+    "image": "/Board/Anagha-Kamath.webp",
+    "website": "https://anagha166.github.io/PersonalWebsite/",
+    "resume": "https://drive.google.com/file/d/1QHOUvLNwAW4csYLMs1CEKMIfp9Hi4EZB/view?usp=drivesdk",
+    "linkedIn": "https://www.linkedin.com/in/anagha-k-b00117266"
   },
   {
     "name": "Priya Iyer",
@@ -173,10 +183,20 @@
   {
     "name": "Tijil Chhabra",
     "committees": ["Executive", "DataHacks"],
-    "role": "DataHacks Director",
+    "role": "DataHacks Co-Director",
     "email": "tchhabra@ucsd.edu",
     "image": "/Board/Tijil-Chhabra.webp",
+    "resume": "https://www.linkedin.com/in/tijil-chhabra/",
     "linkedIn": "https://www.linkedin.com/in/tijil-chhabra/"
+  },
+  {
+    "name": "Varick Janiro Hasim",
+    "committees": ["Executive", "DataHacks"],
+    "role": "DataHacks Co-Director",
+    "email": "vhasim@ucsd.edu",
+    "image": "/Board/Varick-Hasim.webp",
+    "resume": "https://www.linkedin.com/in/varickjaniro/",
+    "linkedIn": "https://www.linkedin.com/in/varickjaniro/"
   },
   {
     "name": "Vaidehi Karve",
@@ -189,8 +209,17 @@
     "linkedIn": "https://www.linkedin.com/in/vaidehi-karve/"
   },
   {
+    "name": "Kendall Underwood",
+    "committees": ["Internal"],
+    "role": "Events Coordinator",
+    "email": "keunderwood@ucsd.edu",
+    "image": "/Board/Kendall-Underwood.webp",
+    "resume": "https://www.linkedin.com/in/kendall-underwood-a316232a9/",
+    "linkedIn": "https://www.linkedin.com/in/kendall-underwood-a316232a9/"
+  },
+  {
     "name": "Joy Liu",
-    "committees": ["Professional Events", "External"],
+    "committees": ["External"],
     "role": "Startup Outreach Lead",
     "email": "jol127@ucsd.edu",
     "image": "/Board/Joy-Liu.webp",
@@ -245,6 +274,34 @@
     "image": "/Board/Aryan-Agarwal.webp",
     "resume": "https://docs.google.com/document/d/1ZYprBzuGCSbidY1HotWJnVfsSB2tw5a5/edit?usp=drivesdk&ouid=109621460235094900203&rtpof=true&sd=true",
     "linkedIn": "https://www.linkedin.com/in/aryan-agarwal-324513237"
+  },
+  {
+    "name": "Jeronimo Adames-Baena",
+    "committees": ["Projects"],
+    "role": "Projects Mentor",
+    "email": "jadamesbaena@ucsd.edu",
+    "image": "/Board/Jeronimo-AdamesBaena.webp",
+    "website": "https://jeronimo-adames.github.io/portfolio/",
+    "resume": "https://www.linkedin.com/in/jeronimo-adames-baena-8b76812b9/",
+    "linkedIn": "https://www.linkedin.com/in/jeronimo-adames-baena-8b76812b9/"
+  },
+  {
+    "name": "Vedant Vardhaan",
+    "committees": ["Projects"],
+    "role": "Projects Mentor",
+    "email": "vvardhaan@ucsd.edu",
+    "image": "/Board/Vedant-Vardhaan.webp",
+    "resume": "https://drive.google.com/file/d/11Y9h1J9X7k7FLU-Ut46ZA2jLX0hlvAXq/view",
+    "linkedIn": "https://www.linkedin.com/in/vedant-vardhaan-152280256/"
+  },
+  {
+    "name": "Mehul Verma",
+    "committees": ["Social Events"],
+    "role": "Social Chair",
+    "email": "meverma@ucsd.edu",
+    "image": "/Board/Mehul-Verma.webp",
+    "resume": "https://www.overleaf.com/read/yfdpdbkrmmkc#cdd086",
+    "linkedIn": "https://www.linkedin.com/in/mehul-verma-328500237/"
   },
   {
     "name": "Minyoung Kim",
@@ -311,16 +368,6 @@
     "linkedIn": "https://www.linkedin.com/in/palinavolskaya"
   },
   {
-    "name": "Anagha Kamath",
-    "committees": ["Software"],
-    "role": "UI Designer & Software Developer",
-    "email": "ankamath@ucsd.edu",
-    "image": "/Board/Anagha-Kamath.webp",
-    "website": "https://anagha166.github.io/PersonalWebsite/",
-    "resume": "https://drive.google.com/file/d/1QHOUvLNwAW4csYLMs1CEKMIfp9Hi4EZB/view?usp=drivesdk",
-    "linkedIn": "https://www.linkedin.com/in/anagha-k-b00117266"
-  },
-  {
     "name": "Krish Kankure",
     "committees": ["Software"],
     "role": "Software Developer",
@@ -339,16 +386,6 @@
     "website": "https://ishayu1.github.io/portfolio_website/",
     "resume": "https://drive.google.com/file/d/1xZ7tO7iYJRYOvQMDGwLcs_y4Be4xmhdg/view?usp=share_link",
     "linkedIn": "https://www.linkedin.com/in/ishayughosh"
-  },
-  {
-    "name": "Jeronimo Adames-Baena",
-    "committees": ["Software"],
-    "role": "Software Developer",
-    "email": "jadamesbaena@ucsd.edu",
-    "image": "/Board/Jeronimo-AdamesBaena.webp",
-    "website": "https://jeronimo-adames.github.io/portfolio/",
-    "resume": "https://www.linkedin.com/in/jeronimo-adames-baena-8b76812b9/",
-    "linkedIn": "https://www.linkedin.com/in/jeronimo-adames-baena-8b76812b9/"
   },
   {
     "name": "Nguyen Viet Minh Hieu",
@@ -411,6 +448,24 @@
     "linkedIn": "https://www.linkedin.com/in/essiecheng"
   },
   {
+    "name": "Dhruv Sehgal",
+    "committees": ["DataHacks"],
+    "role": "Event Crew",
+    "email": "dsehgal@ucsd.edu",
+    "image": "/Board/Dhruv-Sehgal.webp",
+    "resume": "https://drive.google.com/file/d/1ZT2_fXxgvc6z93viIXMOL6xps-t2Sv2W/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/dhruv-sehgal-955222238"
+  },
+  {
+    "name": "Adrian Kong",
+    "committees": ["DataHacks"],
+    "role": "Event Crew",
+    "email": "ahkong@ucsd.edu",
+    "image": "/Board/Adrian-Kong.webp",
+    "resume": "https://drive.google.com/file/d/1tCw-goZbTlbCaJQZHzMXcgZbGCgfb1g3/view?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/adrian-kong-4201652a3/"
+  },
+  {
     "name": "Gahn Wuwong",
     "committees": ["DataHacks"],
     "role": "Event Crew",
@@ -461,7 +516,7 @@
   {
     "name": "Anika Thatavarthy",
     "committees": ["Advisors"],
-    "role": "Advisor",
+    "role": "Graduate Advisor",
     "email": "athatavarthy@ucsd.edu",
     "image": "/Board/Anika-Thatavarthy.webp",
     "website": "https://www.linkedin.com/in/anika-thatavarthy/",
