@@ -57,8 +57,8 @@ const Landing = () => {
 
       <img
         src={dino}
-        className="w-[clamp(20rem,40vw,30rem)] absolute right-0 bottom-0 lg:w-[clamp(18rem,28vw,40rem)] mt-[clamp(5rem,10vw,10rem)] lg:mt-auto p-16 mb-10 mx-auto lg:mx-0 rotate-15"
-      />
+        className="w-[70vw] max-w-[30rem] mx-auto mb-6 md:w-[clamp(20rem,40vw,30rem)] md:absolute md:right-0 md:bottom-0 md:mb-10 md:mx-0 lg:w-[clamp(18rem,28vw,40rem)] lg:mt-auto p-16 rotate-15"/>
+
       {/* <img
         src={dino}
         className="dino-img"
