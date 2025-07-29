@@ -9,12 +9,10 @@ const HoverCard = lazy(() => {
 
 const MemberCards = ({ committee }: { committee: CommitteeType }) => {
   const typedMembers = members as MemberType[];
-  const filteredMembers = typedMembers.filter((member) =>
-    member.committees?.includes(committee)
-  );
+  const filteredMembers = typedMembers.filter((member) => member.committees?.includes(committee));
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-[60vw] flex flex-col gap-4">
       <h1 className="text-[clamp(1.8rem,5vw,2.5rem)] font-medium text-center lg:text-left">
         {"Meet our "}
         <span className="text-(--color-primary) text-glow">{committee}</span>
@@ -25,7 +23,7 @@ const MemberCards = ({ committee }: { committee: CommitteeType }) => {
         {committees[committee]}
       </p>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-y-8 py-12">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-y-8 py-12">
         {filteredMembers.map((member, index) => (
           <Suspense fallback={<div className="w-full" />}>
             <HoverCard
