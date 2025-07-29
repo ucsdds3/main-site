@@ -12,12 +12,7 @@
     },
     "Partners": "/partners",
     "DataHacks": "/datahacks",
-    "Projects": "/projects",
-    "Consulting": {
-      "target": "_blank",
-      "pathname": "/",
-      "search": "site=consulting"
-    }
+    "Projects": "/projects"
   },
   "consulting": {
     "About Us": {
