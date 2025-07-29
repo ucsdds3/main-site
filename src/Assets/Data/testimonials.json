@@ -126,6 +126,18 @@
     "author": "Krish Kankure - Software Team"
   },
   {
+    "image": "/Board/Varick-Hasim.webp",
+    "title": "AI Intern | Quantum Teknologi '25",
+    "description": "Class of 2027",
+    "author": "Varick Janiro Hasim - DataHacks Director"
+  },
+  {
+    "image": "/Board/Vedant-Vardhaan.webp",
+    "title": "Technology Consultant Intern | PwC India '25",
+    "description": "Class of 2027",
+    "author": "Vedant Vardhaan - Projects Mentor"
+  },
+  {
     "image": "/Board/Anika-Thatavarthy.webp",
     "title": "SWE Intern | Google '25",
     "description": "Alumni",
@@ -148,5 +160,42 @@
     "title": "Master of Business Analytics | Rady School of Management '25",
     "description": "Alumni",
     "author": "Kai Chester Ni - VP External"
+  },
+  {
+    "image": "https://media.licdn.com/dms/image/v2/D5603AQEXcqSa7fKPzQ/profile-displayphoto-shrink_200_200/B56ZNNU8FOGgAY-/0/1732169155330?e=1756339200&v=beta&t=wQVGwxox8geiUhqLZ-3MRcWdO_pisi7nfc42-Q4Heqc",
+    "title": "Data Scientist | BitTorrent",
+    "description": "Alumni",
+    "author": "Victor Thai - Projects Director"
+  },
+  {
+    "image": "https://media.licdn.com/dms/image/v2/D5603AQESHOPbwEV0IQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1720204140769?e=1756339200&v=beta&t=5xGLrnBB5JunnXIiRnhJ-OW9GBQjfCBITyaHvQxvKjY",
+    "title": "Data Analyst | Applied Materials",
+    "description": "Alumni",
+    "author": "Shivangi Gupta - Online Content Director"
+  },
+  {
+    "image": "https://media.licdn.com/dms/image/v2/C5603AQG43RQHpj1i1Q/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1657588349436?e=1756339200&v=beta&t=Ds7hMkiM2l9bqsKt1ABxP-xH3bhrSB4koBxOf-m_Pis",
+    "title": "Data Scientist | SANDAG",
+    "description": "Alumni",
+    "author": "Neil Sharma - Workshops Director"
+  },
+  {
+    "image": "https://media.licdn.com/dms/image/v2/D4D03AQGgIc-QWURY8g/profile-displayphoto-shrink_200_200/B4DZOQCA0tHQAY-/0/1733288267928?e=1756339200&v=beta&t=I2E68wkodURdcF7AZVdzh9kKL5ZlHYGqYw3hl3GrzXM",
+    "title": "AI/ML Developer | Amazon (Sagemaker)",
+    "description": "Alumni",
+    "author": "Arunav Gupta - President"
+  },
+  {
+    "image": "https://media.licdn.com/dms/image/v2/D5603AQEUvcpoifuFjg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1674452874311?e=1756339200&v=beta&t=z-y1llEEmUjdWiMcoMBTpisNM566PgL2n9mG-fWaWgI",
+    "title": "SDE | Amazon",
+    "description": "Alumni",
+    "author": "Gauri Samith - Projects Director"
+  },
+  {
+    "image": "https://media.licdn.com/dms/image/v2/D5603AQH4OV606rYSNg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1666647043554?e=1756339200&v=beta&t=LlXkEo3Ov_HcqMSWgDua-v7mh3Qt5ZHoc5WR8piRWY0",
+    "title": "AI/ML Engineer | IBM",
+    "description": "Alumni",
+    "author": "Ayush More - President"
   }
+  
 ]
