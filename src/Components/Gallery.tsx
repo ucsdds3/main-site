@@ -14,14 +14,14 @@ const Gallery = ({ images, link }: { images: string[], link?: string }) => {
     "col-span-3 row-span-4 order-7 md:order-7",
   ];
 
-  const ImagePreloader = useImagePreloader(images);
+  const { imageStates } = useImagePreloader(images);
 
   return (
     <Section className="gap-0">
       <div className="grid grid-cols-7 grid-rows-13 md:grid-rows-10 md:grid-cols-10 gap-2 max-w-[1200px] h-[clamp(300px,80vh,600px)] mt-10">
         {sizes.map((size, index) => (
           <div className={twMerge("skeleton rounded-sm", size)} key={index}>
-            {ImagePreloader.imagesPreloaded && (
+            {images[index] && imageStates[images[index]] && (
               <img
                 src={images[index] || "#"}
                 className="size-full object-cover rounded-sm"
