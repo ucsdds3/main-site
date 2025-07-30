@@ -10,10 +10,23 @@ export function useCalendarEvents() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
+        // Debug: Log environment variables
+        console.log("Environment variables:", {
+          VITE_GOOGLE_CALENDAR_ID: import.meta.env.VITE_GOOGLE_CALENDAR_ID,
+          VITE_GOOGLE_CALENDAR_API_KEY: import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY,
+        });
+
+        const calendarId = import.meta.env.VITE_GOOGLE_CALENDAR_ID;
+        const apiKey = import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY;
+
+        if (!calendarId || !apiKey) {
+          console.warn("Missing environment variables for Google Calendar API");
+          setError("Calendar configuration not available");
+          return;
+        }
+
         const res = await fetch(
-          `https://www.googleapis.com/calendar/v3/calendars/${
-            import.meta.env.VITE_GOOGLE_CALENDAR_ID
-          }/events?key=${import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY}`
+          `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
@@ -78,6 +91,7 @@ export function useCalendarEvents() {
 
         setEvents(mappedEvents);
       } catch (err: any) {
+        console.error("Calendar fetch error:", err);
         setError(err.message);
       } finally {
         setLoading(false);

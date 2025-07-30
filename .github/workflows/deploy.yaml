@@ -30,6 +30,8 @@ jobs:
       - name: Build
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VITE_GOOGLE_CALENDAR_ID: ${{ secrets.VITE_GOOGLE_CALENDAR_ID }}
+          VITE_GOOGLE_CALENDAR_API_KEY: ${{ secrets.VITE_GOOGLE_CALENDAR_API_KEY }}
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" || "${{ steps.commit.outputs.message }}" == *"#prod"* ]]; then
             echo "🏗️ Building for Production"
