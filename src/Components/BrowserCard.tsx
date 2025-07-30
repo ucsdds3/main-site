@@ -18,7 +18,7 @@ const BrowserCard = memo(function BrowserCard({
 }: EventType & { delay?: number; linkText?: string }) {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3ucsd.com");
-  const ImagePreloader = useImagePreloader([image ? image : ""]);
+  const { imageStates } = useImagePreloader([image ? image : ""]);
   const [imageError, setImageError] = useState(false);
   return (
     <motion.div
@@ -57,7 +57,7 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       <div className="group overflow-hidden relative rounded-lg inline-block">
-        {image && ImagePreloader.imagesPreloaded && !imageError ? (
+        {image && imageStates[image] && !imageError ? (
           <img
             src={image}
             alt={title}
