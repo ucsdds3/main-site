@@ -5,7 +5,8 @@ import { cardData } from "../Utils/types";
 
 const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  const ImagePreloader = useImagePreloader(images.map((daton) => daton.image));
+  const { imageStates } = useImagePreloader(images.map((daton) => daton.image));
+
   const btnClass =
     "rounded-full hover:text-(--color-primary) p-3 hover:bg-base-300 transition-colors duration-300 cursor-pointer text-2xl md:mx-8 z-100";
 
@@ -35,7 +36,7 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
                 className="flex-shrink-0 flex flex-col md:flex-row items-center justify-center w-full gap-[clamp(1rem,6vw,6rem)] z-100 embla__slides"
               >
                 <div className="md:w-auto w-full flex justify-center mb-6 md:mb-0">
-                  {ImagePreloader.imagesPreloaded ? (
+                  {imageStates[data.image] || false ? (
                     <img
                       src={data.image}
                       alt={data.title}

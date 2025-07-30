@@ -53,9 +53,8 @@ const Alumni = () => {
 
         <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-y-8 py-12">
           {alumni.slice(start, end).map((member, index) => (
-            <Suspense fallback={<div className="w-full" />}>
+            <Suspense key={index} fallback={<div className="w-full" />}>
               <HoverCard
-                key={index}
                 title={member.name}
                 description={`${member.role} ${unbreakable(member.year)}`}
                 image={member.image}
