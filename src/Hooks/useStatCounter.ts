@@ -8,7 +8,7 @@ export const useStatCounter = (values: number[]) => {
   useEffect(() => {
     // Update interval and increment speed for smoother and faster animation
     const startCounting = (index: number) => {
-      let interval = setInterval(() => {
+      const interval = setInterval(() => {
         setStatValues((prev) =>
           setIndex(prev, index, Math.min(prev[index] + values[index] / 30, values[index])) // Faster counting, divided by 30 for quicker increments
         );
@@ -19,7 +19,7 @@ export const useStatCounter = (values: number[]) => {
 
     const refs = itemRefs.current;
     const observers: IntersectionObserver[] = [];
-    const intervals: (number | null)[] = newArray(values.length, null);
+    const intervals: (NodeJS.Timeout | null)[] = newArray(values.length, null);
 
     refs.forEach((ref, index) => {
       if (!ref) return;
