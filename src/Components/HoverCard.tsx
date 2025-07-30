@@ -28,7 +28,7 @@ const HoverCard = ({
   imgClassName,
   placement,
 }: HoverCardProps) => {
-  const ImagePreloader = useImagePreloader([image ? image : ""]);
+  const { imageStates } = useImagePreloader([image ? image : ""]);
 
   const placementConfig = {
     1: { color: "bg-yellow-500", text: "1st" },
@@ -53,7 +53,7 @@ const HoverCard = ({
           </div>
         )}
 
-        {ImagePreloader.imagesPreloaded && (
+        {image && imageStates[image] && (
           <img
             src={image || "/"}
             className="size-full object-cover rounded-2xl"

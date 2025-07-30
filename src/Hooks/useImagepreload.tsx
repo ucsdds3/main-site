@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function preloadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -14,36 +14,45 @@ function preloadImage(src: string): Promise<HTMLImageElement> {
 }
 
 export default function useImagePreloader(imageList: string[]) {
-  const [imagesPreloaded, setImagesPreloaded] = useState<boolean>(false);
+  const [imageStates, setImageStates] = useState<Record<string, boolean>>({});
+  const processedListRef = useRef<string[]>([]);
 
   useEffect(() => {
-    let isCancelled = false;
+    const validImages = imageList.filter(Boolean);
+    
+    if (validImages.length === 0) return;
 
-    async function effect() {
-      if (isCancelled) {
-        return;
-      }
-
-      const imagesPromiseList: Promise<HTMLImageElement>[] = [];
-      for (const i of imageList) {
-        if (i) imagesPromiseList.push(preloadImage(i));
-      }
-
-      await Promise.all(imagesPromiseList);
-
-      if (isCancelled) {
-        return;
-      }
-
-      setImagesPreloaded(true);
+    // Check if we've already processed this exact list
+    const currentListString = JSON.stringify(validImages);
+    if (currentListString === JSON.stringify(processedListRef.current)) {
+      return;
     }
 
-    effect();
+    processedListRef.current = validImages;
 
-    return () => {
-      isCancelled = true;
+    const processImages = async () => {
+      const promises = validImages.map(async (imageUrl) => {
+        try {
+          await preloadImage(imageUrl);
+          return { imageUrl, success: true };
+        } catch {
+          console.warn('Failed to preload image:', imageUrl);
+          return { imageUrl, success: false };
+        }
+      });
+
+      const results = await Promise.all(promises);
+      
+      const newStates: Record<string, boolean> = {};
+      results.forEach(({ imageUrl, success }) => {
+        newStates[imageUrl] = success;
+      });
+
+      setImageStates(newStates);
     };
+
+    processImages();
   }, [imageList]);
 
-  return { imagesPreloaded };
+  return { imageStates };
 }

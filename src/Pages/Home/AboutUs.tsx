@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import useImagePreloader from "../../Hooks/useImagepreload";
 
 const AboutUs = () => {
-  const ImagePreloader = useImagePreloader(data.map((daton) => daton.image));
+  const { imageStates } = useImagePreloader(data.map((daton) => daton.image));
   return (
     <Section title="About Us">
       <div className="mt-10 flex flex-col gap-25">
@@ -23,7 +23,9 @@ const AboutUs = () => {
             <div className="flex-1 flex flex-col justify-between gap-6">
               <div className="flex flex-col gap-2">
                 <h3 className="text-[clamp(1.2rem,2vw,2rem)] brightness-75">{section.section}</h3>
-                <h2 className="text-[clamp(2rem,3vw,2.3rem)] font-[550] leading-tight">{section.title}</h2>
+                <h2 className="text-[clamp(2rem,3vw,2.3rem)] font-[550] leading-tight">
+                  {section.title}
+                </h2>
                 <p className="text-[clamp(1.5rem,1.7vw,3rem)] mt-2 brightness-75">
                   {section.content}
                 </p>
@@ -38,7 +40,7 @@ const AboutUs = () => {
 
             <div className="flex-1 flex items-center">
               <div className="aspect-video w-full rounded-lg overflow-hidden ">
-                {ImagePreloader.imagesPreloaded ? (
+                {imageStates[section.image] || false ? (
                   <img
                     className="w-full h-full object-cover"
                     src={section.image}
