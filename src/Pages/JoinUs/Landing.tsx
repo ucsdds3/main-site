@@ -18,7 +18,7 @@ const Landing = () => {
         </div>
         <Button
           onClick={() => {
-            window.open("https://discord.gg/K3g6qKkx", "_blank");
+            window.open("https://discord.gg/q3HbpaJYsQ", "_blank");
           }}
         >
           JOIN OUR DISCORD
