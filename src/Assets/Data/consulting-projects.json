@@ -1,40 +1,39 @@
 {
-    "about": {
-      "name": "Projects",
-      "image": "/GetInvolved/projects-img.jpeg",
-      "points": {
-        "Gain First-hand Experience": "Build real, product-focused projects—from language models to applied ML systems—that result in tangible outcomes you can showcase.",
-        "Build Your Portfolio": "Create impactful deliverables that strengthen your resume and demonstrate your proficiency with in-demand tools and technologies.",
-        "Collaborate With Your Peers": "Work alongside a team of data enthusiasts & an experienced DS3 mentor to brainstorm, develop, and launch projects that reflect real-world challenges and solutions."
-      }
-    },
-    "images": [
-      "/Projects/P1.webp",
-      "/Projects/P2.webp",
-      "/Projects/P3.webp",
-      "/Projects/P4.webp",
-      "/Projects/P5.webp",
-      "/Projects/P6.webp",
-      "/Projects/P7.webp"
-    ],
-    "projects": {
-      "2024": [
-        {
-          "title": "Automated Face Recognition System",
-          "description": "A robust system for accurate and efficient facial identification and verification.",
-          "image": "/Consulting/face-recog.webp"
-        },
-        {
-          "title": "Interpretable Scoring Algorithm for Predictive Analysis",
-          "description": "An algorithm providing clear, interpretable scores for data-driven decision-making.",
-          "image": "/Consulting/isa.webp"
-        },
-        {
-          "title": "Conversational AI with Large Language Models",
-          "description": "A chatbot leveraging LLMs for natural, human-like interactions.",
-          "image": "/Consulting/llm.webp"
-        }
-      ]
+  "about": {
+    "name": "Projects",
+    "image": "/GetInvolved/projects-img.jpeg",
+    "points": {
+      "Gain First-hand Experience": "Build real, product-focused projects—from language models to applied ML systems—that result in tangible outcomes you can showcase.",
+      "Build Your Portfolio": "Create impactful deliverables that strengthen your resume and demonstrate your proficiency with in-demand tools and technologies.",
+      "Collaborate With Your Peers": "Work alongside a team of data enthusiasts & an experienced DS3 mentor to brainstorm, develop, and launch projects that reflect real-world challenges and solutions."
     }
+  },
+  "images": [
+    "/Projects/P1.webp",
+    "/Projects/P2.webp",
+    "/Projects/P3.webp",
+    "/Projects/P4.webp",
+    "/Projects/P5.webp",
+    "/Projects/P6.webp",
+    "/Projects/P7.webp"
+  ],
+  "projects": {
+    "2024": [
+      {
+        "title": "Automated Face Recognition System",
+        "description": "A robust system for accurate and efficient facial identification and verification.",
+        "image": "/Consulting/face-recog.webp"
+      },
+      {
+        "title": "Interpretable Scoring Algorithm for Predictive Analysis",
+        "description": "An algorithm providing clear, interpretable scores for data-driven decision-making.",
+        "image": "/Consulting/isa.webp"
+      },
+      {
+        "title": "Conversational AI with Large Language Models",
+        "description": "A chatbot leveraging LLMs for natural, human-like interactions.",
+        "image": "/Consulting/llm.webp"
+      }
+    ]
   }
-  
+}
