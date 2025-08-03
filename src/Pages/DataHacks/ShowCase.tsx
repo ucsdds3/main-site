@@ -33,7 +33,7 @@ const ShowCase = () => {
             </SafeLink>
           )}
         </>
-      )
+      ),
     };
   };
 
@@ -60,20 +60,17 @@ const ShowCase = () => {
           </button>
           <section className="w-full flex h-fit p-0 overflow-x-hidden" ref={emblaRef}>
             <div className="w-full flex flex-row gap-2 md:px-4 ">
-              {winners.map((winner, i) => {
-                return (
-                  <div className="flex-shrink-0 flex w-full h-full">
-                    <About
-                      key={i}
-                      noAbout
-                      name={`${winner.category}: ${winner.title}`}
-                      image={winner.image}
-                      points={getPoints(winner)}
-                      className="w-full h-full"
-                    />
-                  </div>
-                );
-              })}
+              {winners.map((winner, i) => (
+                <div className="flex-shrink-0 flex w-full h-full" key={i}>
+                  <About
+                    noAbout
+                    name={`${winner.category}: ${winner.title}`}
+                    image={winner.image}
+                    points={getPoints(winner)}
+                    className="w-full h-full"
+                  />
+                </div>
+              ))}
             </div>
           </section>
           <button onClick={handleNext} className={btnClass} aria-label="Next">

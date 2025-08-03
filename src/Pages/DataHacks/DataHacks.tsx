@@ -18,7 +18,7 @@ const DataHacks = () => {
   return (
     <Page scrollRef={scrollRef}>
       <Landing />
-      <div ref={scrollRef}>
+      <div className="w-full flex flex-col items-center" ref={scrollRef}>
         <Suspense>
           <About {...datahacks.about} />
           <ShowCase />
