@@ -1,7 +1,7 @@
 [
   {
     "name": "Ansh Bhatnagar",
-    "committees": ["Executive"],
+    "teams": ["Executive"],
     "role": "President",
     "email": "abhatnagar@ucsd.edu",
     "image": "/Board/Ansh-Bhatnagar.webp",
@@ -11,7 +11,7 @@
   },
   {
     "name": "Camille Sicat",
-    "committees": ["Executive", "Internal"],
+    "teams": ["Executive", "Internal"],
     "role": "Vice President Internal",
     "email": "camillesicatwork@gmail.com",
     "image": "/Board/Camille-Sicat.webp",
@@ -21,7 +21,7 @@
   },
   {
     "name": "Praveen Sharma",
-    "committees": ["Executive", "External"],
+    "teams": ["Executive", "External"],
     "role": "Vice President External",
     "email": "p4sharma@ucsd.edu",
     "image": "/Board/Praveen-Sharma.webp",
@@ -30,7 +30,7 @@
   },
   {
     "name": "Emily Cai",
-    "committees": ["Executive", "Finance"],
+    "teams": ["Executive", "Finance"],
     "role": "Vice President Finance",
     "email": "emcai@ucsd.edu",
     "image": "/Board/Emily-Cai.webp",
@@ -39,7 +39,7 @@
   },
   {
     "name": "Issac Roy",
-    "committees": ["Executive", "Software"],
+    "teams": ["Executive", "Software"],
     "role": "Software Director",
     "email": "issacroy05@gmail.com",
     "image": "/Board/Issac-Roy.webp",
@@ -49,7 +49,7 @@
   },
   {
     "name": "Tanvi Vidyala",
-    "committees": ["Executive", "Online Content"],
+    "teams": ["Executive", "Online Content"],
     "role": "Online Content Director",
     "email": "tvidyala@ucsd.edu",
     "image": "/Board/Tanvi-Vidyala.webp",
@@ -58,7 +58,7 @@
   },
   {
     "name": "Nolan Chu",
-    "committees": ["Executive", "Workshops"],
+    "teams": ["Executive", "Workshops"],
     "role": "Workshops Director",
     "email": "ncchu@ucsd.edu",
     "image": "/Board/Nolan_Chu.webp",
@@ -68,7 +68,7 @@
   },
   {
     "name": "Kaii Bijlani",
-    "committees": ["Executive", "Projects"],
+    "teams": ["Executive", "Projects"],
     "role": "Projects Co-Director",
     "email": "bijlanikaii@gmail.com",
     "image": "/Board/Kaii-Bijlani.webp",
@@ -77,7 +77,7 @@
   },
   {
     "name": "Ketan Mittal",
-    "committees": ["Executive", "Projects"],
+    "teams": ["Executive", "Projects"],
     "role": "Projects Co-Director",
     "email": "k1mittal@ucsd.edu",
     "image": "/Board/Ketan-Mittal.webp",
@@ -86,7 +86,7 @@
   },
   {
     "name": "Rocio Saez Aguirre",
-    "committees": ["Executive", "Projects"],
+    "teams": ["Executive", "Projects"],
     "role": "Projects Co-Director",
     "email": "rsaezaguirre@ucsd.edu",
     "image": "/Board/Rocio-Saez.webp",
@@ -96,7 +96,7 @@
   },
   {
     "name": "Coleman Clougherty",
-    "committees": ["Executive", "Professional Events"],
+    "teams": ["Executive", "Professional Events"],
     "role": "Professional Events Co-Director",
     "email": "cclougherty@ucsd.edu",
     "image": "/Board/Coleman-Clougherty.webp",
@@ -105,7 +105,7 @@
   },
   {
     "name": "Annabelle Guiditta",
-    "committees": ["Executive", "Professional Events"],
+    "teams": ["Executive", "Professional Events"],
     "role": "Professional Events Co-Director",
     "email": "aguiditta@ucsd.edu",
     "image": "/Board/Annabelle-Guiditta.webp",
@@ -114,7 +114,7 @@
   },
   {
     "name": "Aarshia Gupta",
-    "committees": ["Executive", "Social Events"],
+    "teams": ["Executive", "Social Events"],
     "role": "Social Events Director",
     "email": "aag022@ucsd.edu",
     "image": "/Board/Aarshia-Gupta.webp",
@@ -123,7 +123,7 @@
   },
   {
     "name": "Kavya Shah",
-    "committees": ["Executive", "Social Events"],
+    "teams": ["Executive", "Social Events"],
     "role": "Big-Little Director",
     "email": "kashah@ucsd.edu",
     "image": "/Board/Kavya-Shah.webp",
@@ -133,7 +133,7 @@
   },
   {
     "name": "Jiahe Qin",
-    "committees": ["Executive", "Social Events"],
+    "teams": ["Executive", "Social Events"],
     "role": "Fundraising Director",
     "email": "jiq004@ucsd.edu",
     "image": "/Board/Jiahe-Qin.webp",
@@ -143,7 +143,7 @@
   },
   {
     "name": "Heidi Tam",
-    "committees": ["Executive", "Marketing"],
+    "teams": ["Executive", "Marketing"],
     "role": "Marketing Co-Director",
     "email": "hetam@ucsd.edu",
     "image": "/Board/Heidi-Tam.webp",
@@ -152,7 +152,7 @@
   },
   {
     "name": "Anagha Kamath",
-    "committees": ["Executive", "Marketing"],
+    "teams": ["Executive", "Marketing"],
     "role": "Marketing Co-Director",
     "email": "ankamath@ucsd.edu",
     "image": "/Board/Anagha-Kamath.webp",
@@ -162,7 +162,7 @@
   },
   {
     "name": "Priya Iyer",
-    "committees": ["Executive", "Design"],
+    "teams": ["Executive", "Design"],
     "role": "Design Co-Director",
     "email": "pliyer@ucsd.edu",
     "image": "/Board/Priya-Iyer.webp",
@@ -172,7 +172,7 @@
   },
   {
     "name": "Viki Shi",
-    "committees": ["Executive", "Design"],
+    "teams": ["Executive", "Design"],
     "role": "Design Co-Director",
     "email": "vikichenshi@gmail.com",
     "image": "/Board/Viki-Shi.webp",
@@ -182,7 +182,7 @@
   },
   {
     "name": "Tijil Chhabra",
-    "committees": ["Executive", "DataHacks"],
+    "teams": ["Executive", "DataHacks"],
     "role": "DataHacks Co-Director",
     "email": "tchhabra@ucsd.edu",
     "image": "/Board/Tijil-Chhabra.webp",
@@ -191,7 +191,7 @@
   },
   {
     "name": "Varick Janiro Hasim",
-    "committees": ["Executive", "DataHacks"],
+    "teams": ["Executive", "DataHacks"],
     "role": "DataHacks Co-Director",
     "email": "vhasim@ucsd.edu",
     "image": "/Board/Varick-Hasim.webp",
@@ -200,7 +200,7 @@
   },
   {
     "name": "Vaidehi Karve",
-    "committees": ["Internal"],
+    "teams": ["Internal"],
     "role": "Events Coordinator",
     "email": "vkarve@ucsd.edu",
     "image": "/Board/Vaidehi-Karve.webp",
@@ -210,7 +210,7 @@
   },
   {
     "name": "Kendall Underwood",
-    "committees": ["Internal"],
+    "teams": ["Internal"],
     "role": "Events Coordinator",
     "email": "keunderwood@ucsd.edu",
     "image": "/Board/Kendall-Underwood.webp",
@@ -219,7 +219,7 @@
   },
   {
     "name": "Joy Liu",
-    "committees": ["External"],
+    "teams": ["External"],
     "role": "Startup Outreach Lead",
     "email": "jol127@ucsd.edu",
     "image": "/Board/Joy-Liu.webp",
@@ -229,7 +229,7 @@
   },
   {
     "name": "Vivian Zhu",
-    "committees": ["External", "Finance"],
+    "teams": ["External", "Finance"],
     "role": "Campus Collaborations Lead & Procurement Chair",
     "email": "v1zhu@ucsd.edu",
     "image": "/Board/Vivian-Zhu.webp",
@@ -239,7 +239,7 @@
   },
   {
     "name": "Jamera Mellyn Fernando",
-    "committees": ["External"],
+    "teams": ["External"],
     "role": "Corporate Outreach Lead",
     "email": "jmfernando@ucsd.edu",
     "image": "/Board/Jamera-Fernando.webp",
@@ -248,7 +248,7 @@
   },
   {
     "name": "Yohan Kwon",
-    "committees": ["Finance"],
+    "teams": ["Finance"],
     "role": "Procurement Chair",
     "email": "y8kwon@ucsd.edu",
     "image": "/Board/Yohan-Kwon.webp",
@@ -258,7 +258,7 @@
   },
   {
     "name": "Anirudh Annabathula",
-    "committees": ["Projects"],
+    "teams": ["Projects"],
     "role": "Projects Mentor",
     "email": "vannabathula@ucsd.edu",
     "image": "/Board/Anirudh-Annabathula.webp",
@@ -268,7 +268,7 @@
   },
   {
     "name": "Aryan Agarwal",
-    "committees": ["Projects"],
+    "teams": ["Projects"],
     "role": "Projects Mentor",
     "email": "ara030@ucsd.edu",
     "image": "/Board/Aryan-Agarwal.webp",
@@ -277,7 +277,7 @@
   },
   {
     "name": "Jeronimo Adames-Baena",
-    "committees": ["Projects"],
+    "teams": ["Projects"],
     "role": "Projects Mentor",
     "email": "jadamesbaena@ucsd.edu",
     "image": "/Board/Jeronimo-AdamesBaena.webp",
@@ -287,7 +287,7 @@
   },
   {
     "name": "Vedant Vardhaan",
-    "committees": ["Projects"],
+    "teams": ["Projects"],
     "role": "Projects Mentor",
     "email": "vvardhaan@ucsd.edu",
     "image": "/Board/Vedant-Vardhaan.webp",
@@ -296,7 +296,7 @@
   },
   {
     "name": "Mehul Verma",
-    "committees": ["Social Events"],
+    "teams": ["Social Events"],
     "role": "Social Chair",
     "email": "meverma@ucsd.edu",
     "image": "/Board/Mehul-Verma.webp",
@@ -305,7 +305,7 @@
   },
   {
     "name": "Minyoung Kim",
-    "committees": ["Social Events"],
+    "teams": ["Social Events"],
     "role": "Social Chair",
     "email": "mik061@ucsd.edu",
     "image": "/Board/Minyoung-Kim.webp",
@@ -314,7 +314,7 @@
   },
   {
     "name": "Yagnasri Chilukuri",
-    "committees": ["Social Events"],
+    "teams": ["Social Events"],
     "role": "Social Team Member",
     "email": "yagnasrichilukuri@gmail.com",
     "image": "/Board/Yagnasri-Chilukuri.webp",
@@ -323,7 +323,7 @@
   },
   {
     "name": "Vani Sahjwani",
-    "committees": ["Online Content"],
+    "teams": ["Online Content"],
     "role": "Applications Writer",
     "email": "vsahjwani@ucsd.edu",
     "image": "/Board/Vani-Sahjwani.webp",
@@ -331,7 +331,7 @@
   },
   {
     "name": "Dylan Dsouza",
-    "committees": ["Online Content"],
+    "teams": ["Online Content"],
     "role": "Writer",
     "email": "dydsouza@ucsd.edu",
     "image": "/Board/Dylan-Dsouza.webp",
@@ -340,7 +340,7 @@
   },
   {
     "name": "Jeffrey Kang",
-    "committees": ["Online Content"],
+    "teams": ["Online Content"],
     "role": "Writer",
     "email": "jak053@ucsd.edu",
     "image": "/Board/Jeffrey-Kang.webp",
@@ -349,7 +349,7 @@
   },
   {
     "name": "Shamita Goyal",
-    "committees": ["Software"],
+    "teams": ["Software"],
     "role": "UI Designer & Software Developer",
     "email": "goyal.shamita4@gmail.com",
     "image": "/Board/Shamita-Goyal.webp",
@@ -359,7 +359,7 @@
   },
   {
     "name": "Palina Volskaya",
-    "committees": ["Software"],
+    "teams": ["Software"],
     "role": "UI Designer & Software Developer",
     "email": "pvolskaya@ucsd.edu",
     "image": "/Board/Palina-Volskaya.webp",
@@ -369,7 +369,7 @@
   },
   {
     "name": "Krish Kankure",
-    "committees": ["Software"],
+    "teams": ["Software"],
     "role": "Software Developer",
     "email": "krishkankure6@gmail.com",
     "image": "/Board/Krish-Kankure.webp",
@@ -379,7 +379,7 @@
   },
   {
     "name": "Ishayu Ghosh",
-    "committees": ["Software"],
+    "teams": ["Software"],
     "role": "Software Developer",
     "email": "ighosh@ucsd.edu",
     "image": "/Board/Ishayu-Ghosh.webp",
@@ -389,7 +389,7 @@
   },
   {
     "name": "Nguyen Viet Minh Hieu",
-    "committees": ["Software"],
+    "teams": ["Software"],
     "role": "Software Developer",
     "email": "vin028@ucsd.edu",
     "image": "/Board/Hieu-Nguyen.webp",
@@ -399,7 +399,7 @@
   },
   {
     "name": "Charles Rivera",
-    "committees": ["Workshops"],
+    "teams": ["Workshops"],
     "role": "Workshops",
     "email": "c9rivera@ucsd.edu",
     "image": "/Board/Charles-Rivera.webp",
@@ -409,7 +409,7 @@
   },
   {
     "name": "Elizaveta Beltyukova ",
-    "committees": ["External"],
+    "teams": ["External"],
     "role": "Startup Outreach Lead",
     "email": "elizabeltyukova@gmail.com",
     "image": "/Board/Elizaveta-Beltyukova.webp",
@@ -419,7 +419,7 @@
   },
   {
     "name": "Nao Song",
-    "committees": ["Design"],
+    "teams": ["Design"],
     "role": "Designer",
     "email": "natalie.g.song@gmail.com",
     "image": "/Board/Nao-Song.webp",
@@ -429,7 +429,7 @@
   },
   {
     "name": "Sunny Sun",
-    "committees": ["Design"],
+    "teams": ["Design"],
     "role": "Designer",
     "email": "sunnychingsun@gmail.com",
     "image": "/Board/Sunny-Sun.webp",
@@ -439,7 +439,7 @@
   },
   {
     "name": "Essie Cheng",
-    "committees": ["Marketing"],
+    "teams": ["Marketing"],
     "role": "Marketing Chair",
     "email": "e3cheng@ucsd.edu",
     "image": "/Board/Essie-Cheng.webp",
@@ -449,7 +449,7 @@
   },
   {
     "name": "Dhruv Sehgal",
-    "committees": ["DataHacks"],
+    "teams": ["DataHacks"],
     "role": "Event Crew",
     "email": "dsehgal@ucsd.edu",
     "image": "/Board/Dhruv-Sehgal.webp",
@@ -458,7 +458,7 @@
   },
   {
     "name": "Adrian Kong",
-    "committees": ["DataHacks"],
+    "teams": ["DataHacks"],
     "role": "Event Crew",
     "email": "ahkong@ucsd.edu",
     "image": "/Board/Adrian-Kong.webp",
@@ -467,7 +467,7 @@
   },
   {
     "name": "Gahn Wuwong",
-    "committees": ["DataHacks"],
+    "teams": ["DataHacks"],
     "role": "Event Crew",
     "email": "gwuwong@ucsd.edu",
     "image": "/Board/Gahn-Wuwong.webp",
@@ -477,7 +477,7 @@
   },
   {
     "name": "Ishita Takkar",
-    "committees": ["DataHacks"],
+    "teams": ["DataHacks"],
     "role": "Event Crew",
     "email": "itakkar@ucsd.edu",
     "image": "/Board/Ishita-Takkar.webp",
@@ -486,7 +486,7 @@
   },
   {
     "name": "Lydia Chin",
-    "committees": ["Marketing"],
+    "teams": ["Marketing"],
     "role": "Historian",
     "email": "lychin@ucsd.edu",
     "image": "/Board/Lydia-Chin.webp",
@@ -495,7 +495,7 @@
   },
   {
     "name": "Alex Cloninger",
-    "committees": ["Advisors"],
+    "teams": ["Advisors"],
     "role": "HDSI Faculty Advisor",
     "email": "acloninger@ucsd.edu",
     "image": "/Board/Alex-Cloninger.webp",
@@ -505,7 +505,7 @@
   },
   {
     "name": "Kyle Shannon",
-    "committees": ["Advisors"],
+    "teams": ["Advisors"],
     "role": "Volunteer Faculty Advisor",
     "email": "kshannon@ucsd.edu",
     "image": "/Board/Kyle-Shannon.webp",
@@ -515,7 +515,7 @@
   },
   {
     "name": "Anika Thatavarthy",
-    "committees": ["Advisors"],
+    "teams": ["Advisors"],
     "role": "Graduate Advisor",
     "email": "athatavarthy@ucsd.edu",
     "image": "/Board/Anika-Thatavarthy.webp",
