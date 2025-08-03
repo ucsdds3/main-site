@@ -1,16 +1,15 @@
-import { CommitteeType } from "../../Utils/types";
 import { unbreakable } from "../../Utils/functions.tsx";
-import committees from "../../Assets/Data/committees.json";
-import Button from "../../Components/Button";
-import Star from "../../Components/Star";
+import teams from "../../Assets/Data/teams.json";
+import Button from "../../Components/Button.tsx";
+import Star from "../../Components/Star.tsx";
 import { useNavigate } from "react-router";
 
-interface SelectCommitteeProps {
-  committee: CommitteeType;
-  setCommittee: (committee: CommitteeType) => void;
+interface SelectTeamProps {
+  team: string;
+  setTeam: (team: string) => void;
 }
 
-const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
+const SelectTeam = ({ team, setTeam }: SelectTeamProps) => {
   const navigate = useNavigate();
 
   return (
@@ -18,23 +17,23 @@ const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
       {/* Desktop */}
       <div className="hidden lg:flex flex-col top-40 gap-6 h-fit mb-10">
         <div className="flex flex-col gap-2 w-fit">
-          <h2 className="text-2xl font-medium w-fit mx-2">Committees:</h2>
+          <h2 className="text-2xl font-medium w-fit mx-2">Teams:</h2>
           <div className="h-[1px] bg-(--color-primary) glow" />
         </div>
 
         <ul className="flex flex-col gap-3">
-          {Object.keys(committees).map((committee, index) => (
+          {Object.keys(teams).map((team, index) => (
             <li key={index} className="flex items-center gap-3">
               <input
                 type="radio"
-                id={`committee-${index}`}
-                name="committeeSelector"
+                id={`team-${index}`}
+                name="teamSelector"
                 className="radio radio-primary"
                 defaultChecked={index === 0}
-                onClick={() => setCommittee(committee as CommitteeType)}
+                onClick={() => setTeam(team)}
               />
-              <label htmlFor={`committee-${index}`} className="cursor-pointer text-2xl">
-                {unbreakable(committee)}
+              <label htmlFor={`team-${index}`} className="cursor-pointer text-2xl">
+                {unbreakable(team)}
               </label>
             </li>
           ))}
@@ -56,14 +55,14 @@ const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
 
       {/* Mobile */}
       <fieldset className="lg:hidden fieldset w-[clamp(20rem,40vw,30rem)] flex flex-col items-center">
-        <span className="fieldset-legend text-lg">Committee</span>
+        <span className="fieldset-legend text-lg">Team</span>
         <select
-          value={committee}
+          value={team}
           className="select select-primary select-lg"
-          onChange={(e) => setCommittee(e.target.value as CommitteeType)}
+          onChange={(e) => setTeam(e.target.value)}
         >
-          {Object.keys(committees as object).map((committee, index) => (
-            <option key={index}>{committee}</option>
+          {Object.keys(teams as object).map((team, index) => (
+            <option key={index}>{team}</option>
           ))}
         </select>
       </fieldset>
@@ -71,4 +70,4 @@ const SelectCommittee = ({ committee, setCommittee }: SelectCommitteeProps) => {
   );
 };
 
-export default SelectCommittee;
+export default SelectTeam;
