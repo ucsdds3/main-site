@@ -1,7 +1,3 @@
-import committees from "../Assets/Data/committees.json";
-
-export type CommitteeType = keyof typeof committees;
-
 export type EventType = {
   title: string;
   date?: string;
@@ -23,7 +19,7 @@ export type TeamType = {
 export type MemberType = {
   name: string;
   role?: string;
-  committees?: CommitteeType[];
+  teams?: string[];
   image?: string;
   email?: string;
   website?: string;

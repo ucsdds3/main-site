@@ -1,26 +1,26 @@
 import { formatMemberLinks, unbreakable } from "../../Utils/functions.tsx";
-import { CommitteeType, MemberType } from "../../Utils/types";
-import committees from "../../Assets/Data/committees.json";
+import { MemberType } from "../../Utils/types";
+import teams from "../../Assets/Data/teams.json";
 import members from "../../Assets/Data/members.json";
 import { lazy, Suspense } from "react";
 const HoverCard = lazy(() => {
   return import("../../Components/HoverCard");
 });
 
-const MemberCards = ({ committee }: { committee: CommitteeType }) => {
+const MemberCards = ({ team }: { team: string }) => {
   const typedMembers = members as MemberType[];
-  const filteredMembers = typedMembers.filter((member) => member.committees?.includes(committee));
+  const filteredMembers = typedMembers.filter((member) => member.teams?.includes(team));
 
   return (
     <div className="w-[60vw] flex flex-col gap-4">
       <h1 className="text-[clamp(1.8rem,5vw,2.5rem)] font-medium text-center lg:text-left">
         {"Meet our "}
-        <span className="text-(--color-primary) text-glow">{committee}</span>
+        <span className="text-(--color-primary) text-glow">{team}</span>
         {/* {committee !== "Alumni" && unbreakable(" Team")}! */}
         {unbreakable(" Team")}!
       </h1>
       <p className="text-[clamp(1.1rem,1.5vw,1.4rem)] font-light px-[clamp(1rem,3vw,5rem)] lg:px-0 indent-8 lg:indent-0">
-        {committees[committee]}
+        {teams[team as keyof typeof teams]}
       </p>
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-y-8 py-12">
