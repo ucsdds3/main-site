@@ -33,13 +33,6 @@ export const scrollTo = (ref: React.RefObject<HTMLDivElement>) => {
   ref.current?.scrollIntoView({ behavior: "smooth" });
 };
 
-export const setSite = (site: "main" | "consulting") => {
-  const params = new URLSearchParams(window.location.search);
-  params.set("site", site);
-  const newUrl = `${window.location.pathname}?${params.toString()}`;
-  window.history.pushState({}, "", newUrl);
-};
-
 export const formatMemberLinks = ({ email, website, linkedIn, resume }: MemberType) =>
   [
     email && {

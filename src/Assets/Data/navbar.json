@@ -12,20 +12,19 @@
     },
     "Partners": "/partners",
     "DataHacks": "/datahacks",
-    "Projects": "/projects"
+    "Projects": "/projects",
+    "Consulting": {
+      "target": "_blank",
+      "pathname": "/",
+      "subdomain": "consulting"
+    }
   },
   "consulting": {
-    "About Us": {
-      "hash": "#about-us",
-      "search": "site=consulting"
-    },
-    "Our Work": {
-      "hash": "#our-work",
-      "search": "site=consulting"
-    },
-    "Contact Us": {
-      "hash": "#contact",
-      "search": "site=consulting"
-    }
+    "About Us": "about-us",
+    "Our Work": "our-work",
+    "Contact Us": "contact"
+  },
+  "members": {
+    "Store": "/store"
   }
 }
