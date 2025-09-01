@@ -1,0 +1,30 @@
+import { lazy, Suspense, useRef } from "react";
+import Page from "../../../Components/Page/Page";
+import Landing from "./Landing";
+import OnlineContent from "./OnlineContent";
+
+const AboutUs = lazy(() => import("./AboutUs"));
+const GetInvolved = lazy(() => import("./GetInvolved/GetInvolved"));
+const WhereWeBeen = lazy(() => import("./WhereWeBeen/WhereWeBeen"));
+const OurPartners = lazy(() => import("../../../Components/OurPartners"));
+
+const Home = () => {
+  const scrollRef = useRef<HTMLDivElement>(null!);
+
+  return (
+    <Page scrollRef={scrollRef}>
+      <Landing />
+      <div ref={scrollRef}>
+        <Suspense>
+          <AboutUs />
+          <GetInvolved />
+          <WhereWeBeen />
+          <OnlineContent />
+          <OurPartners />
+        </Suspense>
+      </div>
+    </Page>
+  );
+};
+
+export default Home;
