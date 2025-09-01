@@ -69,3 +69,10 @@ export type ProjectType = {
   link?: string;
   placement?: 1 | 2 | 3;
 };
+
+export type NavigateProps = {
+  pathname?: string;
+  subdomain?: string;
+  target?: string;
+  hash?: string;
+}

@@ -13,7 +13,7 @@ const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
   const description =
     type === "partners"
       ? "We're always excited to connect with industry partners. Whether you're looking to collaborate on real-world projects, host technical workshops, or support data-driven education, we'd love to hear from you."
-      : "Have questions about joining DS3? Curious about our projects, workshops, or how to get more involved on campus? Whether you're new to data science or looking to deepen your experience, we’re here to help.";
+      : "Have questions about joining DS3? Curious about our projects, workshops, or how to get more involved on campus? Whether you're new to data science or looking to deepen your experience, we're here to help.";
 
   return (
     <Section
