@@ -1,13 +1,49 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { NavigateProps } from "../Utils/types";
 
 export function useSiteHandler() {
   const { search } = useLocation();
-  const isConsulting = new URLSearchParams(search).get("site") === "consulting";
+  const navigate = useNavigate();
+  const hostname = window.location.hostname;
+  const parts = hostname.split(".");
+
+  let subdomain = new URLSearchParams(search).get("subdomain") || "main";
+
+  if (parts.length > 2 && parts[0] !== "www") {
+    subdomain = parts[0];
+  }
 
   useEffect(() => {
-    document.title = isConsulting ? "DS3 Consulting" : "DS3 @ UCSD";
-  }, [isConsulting]);
+    document.title =
+      subdomain == "consulting"
+        ? "DS3 Consulting"
+        : subdomain == "members"
+        ? "DS3 Members"
+        : "DS3 @ UCSD";
+  }, [subdomain]);
 
-  return isConsulting;
+  const navigateTo = ({ pathname, subdomain, hash }: NavigateProps) => {
+    const path = pathname || "/";
+    
+    if (subdomain) {
+      if (window.location.hostname === "localhost") {
+        navigate(`${path}?subdomain=${subdomain}`);
+      } else {
+        window.location.href = `https://${subdomain}.ds3ucsd.com${path}`;
+      }
+    } else {
+      const search = window.location.search;
+      navigate(`${path}${search ? search : ""}`);
+    }
+
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) element.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  };
+
+  return { subdomain, navigate: navigateTo };
 }
