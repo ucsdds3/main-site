@@ -1,12 +1,17 @@
+import { useAuthStore } from "../../../Hooks/useAuth";
+import ForgotPassword from "./ForgotPassword";
+import ResetPassword from "./ResetPassword";
 import Signin from "./Signin";
 import Signup from "./Signup";
-import { useState } from "react";
 
 const Auth = () => {
-  const [authState, setAuthState] = useState("signin");
-
-  if (authState == "signin") return <Signin setAuthState={setAuthState} />;
-  if (authState == "signup") return <Signup setAuthState={setAuthState} />;
+  const { authState } = useAuthStore();
+  
+  if (authState == "signin") return <Signin />;
+  if (authState == "signup") return <Signup />;
+  if (authState == "forgot-password") return <ForgotPassword />;
+  if (authState == "reset-password") return <ResetPassword />;
+  if (authState == "authenticated") return; 
 }
 
 export default Auth
