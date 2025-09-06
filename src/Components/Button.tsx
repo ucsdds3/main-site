@@ -11,9 +11,10 @@ interface ButtonProps {
   className?: string;
   btnClass?: string;
   children: React.ReactNode;
+  type?: "button" | "submit" | "reset";
 }
 
-const Button = ({ onClick, children, className, btnClass }: ButtonProps) => {
+const Button = ({ onClick, children, className, btnClass, type }: ButtonProps) => {
   return (
     <div className={twMerge("relative size-fit my-3", className)} onClick={onClick}>
       <motion.button
@@ -22,6 +23,7 @@ const Button = ({ onClick, children, className, btnClass }: ButtonProps) => {
         initial="initial"
         animate="initial"
         whileHover="hover"
+        type={type}
       >
         {children}
       </motion.button>

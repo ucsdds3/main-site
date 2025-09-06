@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom"
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
+import { useAuthStore } from "../../Hooks/useAuth";
 import Auth from "./Auth/Auth";
 
 const Members = () => {
-  const isAuth = false;
+  const { authState } = useAuthStore();
   const { navigate } = useSiteHandler();
   
   useEffect(() => {
-    if (!isAuth) navigate({ pathname: "/auth" });
-  }, [isAuth, navigate]);
+    if (authState != "authenticated") navigate({ pathname: "/auth" });
+  }, [authState, navigate]);
   
   return (
     <Routes>
