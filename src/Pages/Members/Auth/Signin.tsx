@@ -1,14 +1,45 @@
-import { FaLock, FaUser } from "react-icons/fa";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 
 import Button from "../../../Components/Button";
 import Input from "../../../Components/Input";
 import Page from "../../../Components/Page/Page";
+import { supabase } from "../../../Utils/supabase";
+import { useAuthStore } from "../../../Hooks/useAuth";
+import { useSiteHandler } from "../../../Hooks/useSiteHandler";
 
-const Signin = ({ setAuthState }: { setAuthState: (state: string) => void }) => {
+const Signin = () => {
+  const { setAuthState, setUser } = useAuthStore();
+  const { navigate } = useSiteHandler();
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { data: userData, error } = await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
+    });
+
+    if (error || !userData.user.user_metadata.email_verified) {
+      toast.error(error?.message || "Please verify your email to login");
+      return;
+    }
+
+    setUser(userData.user);
+    localStorage.setItem("user", JSON.stringify(userData.user));
+    setAuthState("authenticated");
+    navigate({ pathname: "/" });
+    toast.success("Login successful!");
+  };
 
   return (
     <Page>
-      <form className="flex flex-col items-center justify-center w-full flex-1 py-20">
+      <form className="flex flex-col items-center justify-center w-full flex-1 py-20" onSubmit={handleSignin}>
         <h1 className="text-center hero-text-shadow text-[clamp(2.5rem,14vw,4.5rem)]">
           Welcome Back!
         </h1>
@@ -19,13 +50,17 @@ const Signin = ({ setAuthState }: { setAuthState: (state: string) => void }) => 
               label="UCSD Email"
               type="email"
               placeholder="jdoe@ucsd.edu"
-              icon={<FaUser className="mr-2" />}
+              icon={<FaEnvelope className="mr-2" />}
+              value={data.email}
+              setValue={(value: string) => setData({ ...data, email: value })}
             />
             <Input
               label="Password"
               type="password"
               placeholder="***************"
               icon={<FaLock className="mr-2" />}
+              value={data.password}
+              setValue={(value: string) => setData({ ...data, password: value })}
             />
           </div>
 
@@ -45,7 +80,7 @@ const Signin = ({ setAuthState }: { setAuthState: (state: string) => void }) => 
           </div>
         </div>
 
-        <Button btnClass="text-[clamp(0.8rem,1vw,1.5rem)]" onClick={() => {}}>
+        <Button btnClass="text-[clamp(1rem,1vw,1.5rem)]" onClick={() => {}} type="submit">
           Login
         </Button>
       </form>
