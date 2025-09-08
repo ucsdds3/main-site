@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom"
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
-import { useAuthStore } from "../../Hooks/useAuth";
+import { useAuthStore } from "../../Hooks/Auth/useAuthStore";
 import Auth from "./Auth/Auth";
 
 const Members = () => {
