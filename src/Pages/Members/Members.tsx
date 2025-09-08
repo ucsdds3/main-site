@@ -10,7 +10,7 @@ const Members = () => {
   
   useEffect(() => {
     if (authState != "authenticated") navigate({ pathname: "/auth" });
-  }, [authState, navigate]);
+  }, [authState]);
   
   return (
     <Routes>
