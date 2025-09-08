@@ -18,6 +18,24 @@ const Signin = () => {
     password: "",
   });
 
+  const resendVerification = async () => {
+    const href = window.location.href;
+    const search = new URLSearchParams(window.location.search);
+
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: data.email,
+      options: { emailRedirectTo: `${href}${search && "&"}authState=signin` },
+    });
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    toast.success("Verification email resent!");
+  };
+
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { data: userData, error } = await supabase.auth.signInWithPassword({
@@ -25,21 +43,39 @@ const Signin = () => {
       password: data.password,
     });
 
-    if (error || !userData.user.user_metadata.email_verified) {
-      toast.error(error?.message || "Please verify your email to login");
+    if (!userData.user?.user_metadata.email_verified) {
+      toast(
+        <div>
+          <span>Please verify your email to login.</span>
+          <button
+            className="underline text-blue-500 cursor-pointer"
+            onClick={resendVerification}
+          >
+            Resend Verification Email
+          </button>
+        </div>
+      );
+      return;
+    }
+
+    if (error) {
+      toast.error(error?.message);
       return;
     }
 
     setUser(userData.user);
     localStorage.setItem("user", JSON.stringify(userData.user));
     setAuthState("authenticated");
-    navigate({ pathname: "/" });
+    navigate({ pathname: "/", subdomain: "members" });
     toast.success("Login successful!");
   };
 
   return (
     <Page>
-      <form className="flex flex-col items-center justify-center w-full flex-1 py-20" onSubmit={handleSignin}>
+      <form
+        className="flex flex-col items-center justify-center w-full flex-1 py-20"
+        onSubmit={handleSignin}
+      >
         <h1 className="text-center hero-text-shadow text-[clamp(2.5rem,14vw,4.5rem)]">
           Welcome Back!
         </h1>
@@ -60,7 +96,9 @@ const Signin = () => {
               placeholder="***************"
               icon={<FaLock className="mr-2" />}
               value={data.password}
-              setValue={(value: string) => setData({ ...data, password: value })}
+              setValue={(value: string) =>
+                setData({ ...data, password: value })
+              }
             />
           </div>
 
@@ -80,7 +118,11 @@ const Signin = () => {
           </div>
         </div>
 
-        <Button btnClass="text-[clamp(1rem,1vw,1.5rem)]" onClick={() => {}} type="submit">
+        <Button
+          btnClass="text-[clamp(1rem,1vw,1.5rem)]"
+          onClick={() => {}}
+          type="submit"
+        >
           Login
         </Button>
       </form>
