@@ -1,4 +1,4 @@
-import { useAuthStore } from "../../../Hooks/useAuth";
+import { useAuthStore } from "../../../Hooks/Auth/useAuthStore";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 import Signin from "./Signin";

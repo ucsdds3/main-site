@@ -75,4 +75,11 @@ export type NavigateProps = {
   subdomain?: string;
   target?: string;
   hash?: string;
-}
+};
+
+export type AuthState =
+  | "signin"
+  | "signup"
+  | "forgot-password"
+  | "reset-password"
+  | "authenticated";
