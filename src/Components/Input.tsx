@@ -15,7 +15,7 @@ interface InputProps {
 const Input = ({
   label,
   error,
-  required = true,
+  required,
   type,
   placeholder,
   icon,

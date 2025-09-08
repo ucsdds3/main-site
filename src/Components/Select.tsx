@@ -5,20 +5,44 @@ interface SelectProps {
   options: string[];
   error?: boolean;
   icon?: React.ReactNode;
+  required?: boolean;
   className?: string;
   value?: string;
   setValue?: (value: string) => void;
 }
 
-const Select = ({ label, error, icon, className, options, value, setValue }: SelectProps) => {
+const Select = ({
+  label,
+  error,
+  icon,
+  className,
+  required,
+  options,
+  value,
+  setValue,
+}: SelectProps) => {
   return (
-    <div className={twMerge(`flex flex-col gap-2 min-w-[300px] w-[300px]`, className)}>
+    <div
+      className={twMerge(
+        `flex flex-col gap-2 min-w-[300px] w-[300px]`,
+        className
+      )}
+    >
       <span className="text-lg">
-        {label}
+        {label} {required && <span className="text-red-500">*</span>}
       </span>
-      <label className={`select select-lg ${error ? "select-error" : "select-primary"}`}>
+      <label
+        className={`select select-lg ${
+          error ? "select-error" : "select-primary"
+        }`}
+      >
         {icon}
-        <select value={value} onChange={(e) => setValue && setValue(e.target.value)}>
+        <select
+          value={value}
+          defaultValue={`Select ${label}`}
+          onChange={(e) => setValue && setValue(e.target.value)}
+        >
+          <option disabled={true}>Select {label}</option>
           {options.map((option) => (
             <option key={option} value={option}>
               {option}
