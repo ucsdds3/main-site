@@ -1,32 +1,11 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
 import { FaEnvelope } from "react-icons/fa";
-
 import Page from "../../../Components/Page/Page";
 import Input from "../../../Components/Input";
 import Button from "../../../Components/Button";
-import { supabase } from "../../../Utils/supabase";
+import { useForgotPassword } from "../../../Hooks/Auth/useForgotPassword";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
-
-  const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const href = window.location.href;
-    const search = new URLSearchParams(window.location.search);
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${href}${search && "&"}authState=reset-password`,
-    });
-
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-
-    console.log(data);
-    toast.success("Reset link sent to email");
-  };
+  const { email, setEmail, handleForgotPassword } = useForgotPassword();
 
   return (
     <Page>

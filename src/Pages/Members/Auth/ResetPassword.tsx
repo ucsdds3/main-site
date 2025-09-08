@@ -1,63 +1,18 @@
-import z from "zod";
-import { useState } from "react";
-import toast from "react-hot-toast";
 import { FaLock } from "react-icons/fa";
-
 import Page from "../../../Components/Page/Page";
 import Input from "../../../Components/Input";
 import Button from "../../../Components/Button";
-import { supabase } from "../../../Utils/supabase";
-import { useAuthStore } from "../../../Hooks/useAuth";
-
-const resetPasswordSchema = z
-  .object({
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-        "Password must contain lowercase, uppercase, and number"
-      ),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+import { useResetPassword } from "../../../Hooks/Auth/useResetPassword";
 
 const ResetPassword = () => {
-  const [errors, setErrors] = useState<string>("");
-  const { setAuthState } = useAuthStore();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const result = resetPasswordSchema.safeParse({ password, confirmPassword });
-
-    if (!result.success) {
-      const errors = result.error.issues.map((issue) => issue.message).join("\n");
-      toast.error("Please fix the following errors:\n" + errors);
-      console.log(errors);
-      setErrors(errors);
-      return;
-    }
-
-    const tokenHash = new URLSearchParams(window.location.search).get("tokenHash");
-    if (!tokenHash) {
-      toast.error("Token hash not found");
-      return;
-    }
-
-    const { error } = await supabase.auth.updateUser({ password });
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-
-    setAuthState("signin");
-    toast.success("Password reset successful!");
-  };
+  const {
+    errors,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    handleResetPassword,
+  } = useResetPassword();
 
   return (
     <Page>
@@ -92,7 +47,11 @@ const ResetPassword = () => {
           />
         </div>
 
-        <Button btnClass="text-[clamp(1rem,1vw,1.5rem)]" onClick={() => {}} type="submit">
+        <Button
+          btnClass="text-[clamp(1rem,1vw,1.5rem)]"
+          onClick={() => {}}
+          type="submit"
+        >
           Reset Password
         </Button>
       </form>
