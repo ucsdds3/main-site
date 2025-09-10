@@ -37,6 +37,11 @@ export function useSignIn() {
       password: data.password,
     });
 
+    if (error) {
+      toast.error(error?.message);
+      return;
+    }
+
     if (!userData.user?.user_metadata.email_verified) {
       toast(
         <div>
@@ -52,14 +57,9 @@ export function useSignIn() {
       return;
     }
 
-    if (error) {
-      toast.error(error?.message);
-      return;
-    }
-
     setUser(userData.user);
-    localStorage.setItem("user", JSON.stringify(userData.user));
     setAuthState("authenticated");
+    localStorage.setItem("user", JSON.stringify(userData.user));
     navigate({ pathname: "/", subdomain: "members" });
     toast.success("Login successful!");
   };

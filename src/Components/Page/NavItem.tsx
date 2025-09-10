@@ -29,7 +29,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
       <div
         role="button"
         tabIndex={0}
-        className="flex justify-center items-center gap-2 cursor-pointer hover:text-(--color-primary) transition duration-150 focus:text-(--color-primary) duration-300"
+        className="flex justify-center items-center gap-2 cursor-pointer hover:text-(--color-primary) transition focus:text-(--color-primary) duration-300"
       >
         <span>{label}</span>
         <IoIosArrowUp className="transition-transform duration-300 group-focus-within:rotate-180" />
@@ -40,7 +40,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
           <li key={label}>
             <button
               onClick={() => navigate({ pathname })}
-              className="hover:text-(--color-primary) text-xl text-base"
+              className="hover:text-(--color-primary) text-base"
             >
               {label}
             </button>
