@@ -11,7 +11,7 @@ import Page from "../../../Components/Page/Page";
 import Select from "../../../Components/Select";
 import majors from "../../../Assets/Data/majors.json";
 import { useAuthStore } from "../../../Hooks/Auth/useAuthStore";
-import { useSignUp } from "../../../Hooks/Auth/useSignup";
+import { useSignUp } from "../../../Hooks/Auth/useSignUp";
 
 const Signup = () => {
   const { setAuthState } = useAuthStore();
@@ -26,12 +26,12 @@ const Signup = () => {
         <h1 className="text-center hero-text-shadow text-[clamp(2.5rem,14vw,4.5rem)]">
           Welcome to DS3!
         </h1>
-        <p className="text-center text-xl">
+        <p className="text-center text-xl px-4">
           Create an account to join the DS3 community!
         </p>
 
         <div className="flex flex-col items-center justify-center my-8">
-          <div className="flex gap-8">
+          <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1 flex flex-col items-start gap-6">
               <Input
                 label="UCSD Email"
@@ -127,7 +127,7 @@ const Signup = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between w-full text-lg mt-4">
+          <div className="flex flex-col md:flex-row items-center justify-between w-full text-lg mt-4">
             <p className="text-center">
               Already have an account?
               <a
@@ -139,7 +139,7 @@ const Signup = () => {
             </p>
 
             <p
-              className="text-center cursor-pointer"
+              className="text-center cursor-pointer hidden md:block"
               title="Because we're a Data Science club!"
             >
               Why do we collect so much data? (Hover)
