@@ -20,7 +20,7 @@ const BrowserCard = memo(function BrowserCard({ name, description, image, points
           type: "spring",
           stiffness: 100,
           damping: 20,
-          delay: 0.2,
+          delay: 0.2
         }}
         onClick={() => {
           if (!expanded) setExpanded(true);
@@ -70,12 +70,12 @@ const BrowserCard = memo(function BrowserCard({ name, description, image, points
             type: "spring",
             stiffness: 100,
             damping: 20,
-            delay: 0.2,
+            delay: 0.2
           }}
           onClick={() => {
             if (!expanded) setExpanded(true);
           }}
-          className={`fixed top-0 bottom-0 right-0 left-0 m-[auto_auto] w-[calc(100vw-100px)] h-[calc(100vh-100px)] z-100 pt-6 px-10 pb-6 rounded-2xl bg-base-400 border max-w-[800px] border-[var(--initial-border-color)]  hover:border-[var(--border-color)] duration-50 flex flex-col gap-2 group `}
+          className={`fixed overflow-y-scroll top-0 bottom-0 right-0 left-0 m-[auto_auto] w-[calc(100vw-100px)] h-[calc(100vh-100px)] z-100 pt-6 px-4 sm:px-10 pb-6 rounded-2xl bg-base-400 border max-w-[800px] border-[var(--initial-border-color)]  hover:border-[var(--border-color)] duration-50 flex flex-col gap-2 group `}
         >
           <div className="pl-2 flex items-end">
             <h4 className={`text-4xl font-bold line-clamp-3 capitalize`}>{name}</h4>
@@ -85,12 +85,12 @@ const BrowserCard = memo(function BrowserCard({ name, description, image, points
               className="ml-auto cursor-pointer text-[var(--initial-border-color)] hover:text-[var(--border-color)] duration-150 text-2xl"
             />
           </div>
-          <div className="group w-full overflow-hidden relative rounded-lg inline-block">
+          <div className="group w-full shrink-0 overflow-hidden relative rounded-lg inline-block">
             {image && imageStates[image] && !imageError ? (
               <img
                 src={image}
                 alt={name}
-                className=" object-cover aspect-[1.8/1] transition-transform duration-300 group-hover:scale-105"
+                className=" object-cover  aspect-[1.8/1] transition-transform duration-300 group-hover:scale-105"
                 onError={() => setImageError(true)}
                 style={{ display: "block" }}
               />
@@ -101,13 +101,15 @@ const BrowserCard = memo(function BrowserCard({ name, description, image, points
           <div className="text-sm bg-[var(--color-base-100)] w-fit px-2 rounded-lg border border-[var(--color-base-200)]">
             {points} point(s)
           </div>
-          <div className="flex justify-between items-start">
+          <div className="flex flex-wrap-reverse lg:flex-nowrap justify-between items-start">
             <div className="">
               <div className="">
                 <strong>Event Code: </strong> 123123
               </div>
               {description ? (
-                <p className={`text-xl font-light mt-2 text-[var(--card-textcolor)]`}>
+                <p
+                  className={`text-xl text-[clamp(1rem,1.1vw,1.25rem)] font-light mt-2 text-[var(--card-textcolor)]`}
+                >
                   {description}
                 </p>
               ) : (
