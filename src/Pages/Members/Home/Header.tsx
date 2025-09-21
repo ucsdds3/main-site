@@ -11,7 +11,7 @@ const Header = () => {
     Bronze: "text-yellow-700", // 1000 - 2000 xp
     Silver: "text-gray-400", // 2000 - 4000 xp
     Gold: "text-yellow-300", // 4000 - 8000 xp
-    Platinum: "text-secondary", // 8000 - 16000 xp
+    Platinum: "text-secondary" // 8000 - 16000 xp
   };
 
   const { user } = useAuthStore();
@@ -26,7 +26,7 @@ const Header = () => {
   const [tier, color] = Object.entries(tiers)[level];
 
   return (
-    <Section className="flex-row items-center justify-center">
+    <Section className="flex-row flex-wrap-reverse items-center justify-center">
       <div
         className={`size-60 p-8 bg-base-300 radial-progress ${color}`}
         style={{ "--value": progress * 100 } as React.CSSProperties}
@@ -35,21 +35,19 @@ const Header = () => {
       </div>
 
       <div className="flex-1 h-68 p-8 rounded-2xl bg-base-300 flex flex-col gap-8">
-        <h1 className="text-4xl font-bold">
-          Welcome Back,{" "}
-          <span className="text-primary">{user?.user_metadata.full_name}</span>
-          . Here are your stats:
+        <h1 className="text-[clamp(1.5rem,2vw,2.25rem)] font-bold">
+          Welcome Back, <span className="text-primary">{user?.user_metadata.full_name}</span>. Here
+          are your stats:
         </h1>
 
-        <div className="flex size-full justify-around items-center">
+        <div className="flex size-full justify-around items-center min-w-[min(50vw,400px)]">
           <div className="flex flex-col items-center">
-            <span className="text-primary text-5xl font-bold">
+            <span className="text-primary text-[clamp(1.2rem,2.5vw,3rem)] font-bold">
               {xp} / {xpNeeded}
             </span>
-            <span className="text-3xl">XP</span>
-            <span className="mt-4 text-lg">
-              You're <span className="text-primary">{progress * 100}%</span> of
-              the way to{" "}
+            <span className="text-[clamp(1rem,1.5vw,1.875rem)]">XP</span>
+            <span className="mt-4 text-[clamp(0.8rem,1.1vw,1.125rem)] text-balance text-center">
+              You're <span className="text-primary">{progress * 100}%</span> of the way to{" "}
               <span className={`${Object.values(tiers)[level + 1]}`}>
                 {Object.keys(tiers)[level + 1]}
               </span>{" "}
@@ -57,21 +55,20 @@ const Header = () => {
             </span>
           </div>
           <div className="flex flex-col items-center">
-            <span className={`${color} text-5xl font-bold`}>{tier}</span>
-            <span className="text-3xl">Member</span>
-            <span className="mt-4 text-lg">Level up to enjoy exclusive benefits!</span>
+            <span className={`${color} text-[clamp(1.2rem,2.5vw,3rem)] font-bold`}>{tier}</span>
+            <span className="text-[clamp(1rem,1.5vw,1.875rem)]">Member</span>
+            <span className="mt-4 text-[clamp(0.8rem,1.1vw,1.125rem)] text-balance text-center">
+              Level up to enjoy exclusive benefits!
+            </span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-primary text-5xl font-bold">
+            <span className="text-primary text-[clamp(1.2rem,2.5vw,3rem)] font-bold">
               {user?.user_metadata.points || 0}
             </span>
-            <span className="text-3xl">Points</span>
-            <span className="mt-4 text-lg">
+            <span className="text-[clamp(1rem,1.5vw,1.875rem)]">Points</span>
+            <span className="mt-4 text-[clamp(0.8rem,1.1vw,1.125rem)] text-balance text-center">
               Buy merch in the{" "}
-              <a
-                href="/store"
-                className="text-blue-400 cursor-pointer underline"
-              >
+              <a href="/store" className="text-blue-400 cursor-pointer underline">
                 Store
               </a>
               !
