@@ -34,7 +34,7 @@ const Header = () => {
         <img src={rand_dino} alt="Dino" />
       </div>
 
-      <div className="flex-1 h-68 p-8 rounded-2xl bg-base-300 flex flex-col gap-8">
+      <div className="flex-1 min-h-68 p-8 rounded-2xl bg-base-300 flex flex-col gap-8">
         <h1 className="text-[clamp(1.5rem,2vw,2.25rem)] font-bold">
           Welcome Back, <span className="text-primary">{user?.user_metadata.full_name}</span>. Here
           are your stats:
