@@ -3,7 +3,7 @@ import Section from "../../../Components/Section";
 
 const Events = () => {
   return (
-    <Section className="flex-row items-stretch justify-center pt-0">
+    <Section className="flex-row flex-wrap items-stretch justify-center pt-0">
       <div className="flex-5 flex flex-col bg-base-300 p-8 rounded-2xl">
         <h2 className="text-4xl font-bold">Attended Events</h2>
         <a
@@ -32,20 +32,12 @@ const Events = () => {
         <div className="flex flex-col justify-between bg-base-300 p-8 rounded-2xl gap-6">
           <h2 className="text-4xl font-bold text-center">Event Stats</h2>
           <div className="grid grid-cols-2 grid-rows-3 gap-6">
-            <span className="text-5xl text-center text-primary font-bold">
-              0
-            </span>
+            <span className="text-5xl text-center text-primary font-bold">0</span>
             <span className="text-xl text-center w-10">Events Attended</span>
-            <span className="text-5xl text-center text-primary font-bold">
-              100
-            </span>
+            <span className="text-5xl text-center text-primary font-bold">100</span>
             <span className="text-xl text-center w-10">Points Attainable</span>
-            <span className="text-5xl text-center text-primary font-bold">
-              1000
-            </span>
-            <span className="text-xl text-center w-10">
-              Experience Attainable
-            </span>
+            <span className="text-5xl text-center text-primary font-bold">1000</span>
+            <span className="text-xl text-center w-10">Experience Attainable</span>
           </div>
         </div>
       </div>
