@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import { EventType } from "../Utils/types";
 import { newArray } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
-import useImagePreloader from "../Hooks/useImagepreload.tsx";
 import { memo, useState } from "react";
 
 const BrowserCard = memo(function BrowserCard({
@@ -18,8 +17,8 @@ const BrowserCard = memo(function BrowserCard({
 }: EventType & { delay?: number; linkText?: string }) {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3ucsd.com");
-  const { imageStates } = useImagePreloader([image ? image : ""]);
   const [imageError, setImageError] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -57,12 +56,12 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       <div className="group overflow-hidden relative rounded-lg inline-block">
-        {image && imageStates[image] && !imageError ? (
+        {image && !imageError ? (
           <img
             src={image}
             alt={title}
             className="object-cover aspect-[1.4/1] transition-transform duration-300 group-hover:scale-105"
-            onError={() => setImageError(true)}
+            onError={(e) => { console.log("Image error", e); setImageError(true)}}
             style={{ display: "block" }}
           />
         ) : (
@@ -71,7 +70,7 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       {description ? (
-        <p className="text-2xl font-light mt-2 line-clamp-5 text-[var(--card-textcolor)]">
+        <p className="text-2xl font-light my-2 line-clamp-5 text-[var(--card-textcolor)]">
           {description}
         </p>
       ) : (
