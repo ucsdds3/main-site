@@ -1,11 +1,12 @@
 import { useState } from "react";
-import logo from "/src/Assets/Images/ds3_logo.webp";
-import { useTheme } from "../../Hooks/useTheme";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
+
 import Links from "./Links";
+import { useTheme } from "../../Hooks/useTheme"; 
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
+import logo from "/src/Assets/Images/ds3_logo.webp";
 
 const Navbar = () => {
   const { navigate } = useSiteHandler();
