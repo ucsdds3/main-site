@@ -25,6 +25,7 @@
     "Contact Us": "contact"
   },
   "members": {
-    "Store": "/store"
+    "Store": "/store",
+    "Events": "/events"
   }
 }
