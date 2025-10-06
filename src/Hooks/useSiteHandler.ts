@@ -30,7 +30,7 @@ export function useSiteHandler() {
       if (window.location.hostname === "localhost") {
         navigate(`${path}?subdomain=${subdomain}`);
       } else {
-        window.location.href = `https://${subdomain}.ds3ucsd.com${path}`;
+        window.location.href = `https://${subdomain}.ds3atucsd.com${path}`;
       }
     } else {
       const search = window.location.search;

@@ -16,7 +16,7 @@ const BrowserCard = memo(function BrowserCard({
   linkText = "View",
 }: EventType & { delay?: number; linkText?: string }) {
   const navigate = useNavigate();
-  const notEvent = link?.startsWith("www.ds3ucsd.com");
+  const notEvent = link?.startsWith("www.ds3atucsd.com");
   const [imageError, setImageError] = useState(false);
 
   return (
@@ -33,7 +33,7 @@ const BrowserCard = memo(function BrowserCard({
       className={`relative w-full h-full pt-6 px-10 pb-6 rounded-2xl bg-base-400 border border-[var(--initial-border-color)] hover:border-[var(--border-color)] duration-150 flex flex-col gap-2 group ${
         notEvent ? "cursor-pointer" : ""
       }`}
-      onClick={notEvent ? () => navigate(link.replace("www.ds3ucsd.com", "")) : undefined}
+      onClick={notEvent ? () => navigate(link.replace("www.ds3atucsd.com", "")) : undefined}
     >
       <div className="flex justify-between items-center gap-6 mb-2">
         <span className="w-[80%] h-6 px-4  truncate rounded-full text-[var(--link-textcolor)] bg-base-300 hover:underline">
