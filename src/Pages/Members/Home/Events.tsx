@@ -14,7 +14,7 @@ const Events = () => {
         <h2 className="text-4xl font-bold">Attended Events</h2>
         <a
           onClick={() => {
-            navigate({ pathname: "/events", subdomain: "www" });
+            navigate({ pathname: "/events", subdomain: "main" });
           }}
           className="text-blue-400 underline cursor-pointer flex items-center text-lg"
         >
