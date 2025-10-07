@@ -40,6 +40,9 @@ const Events = () => {
       case "event_not_started":
         toast.error("The event hasn't begun yet")
         break;
+      case "event_expired":
+          toast.error("The event has passed")
+        break;      
       case "not_authenticated":
         toast.error("Please log in first.");
         break;
