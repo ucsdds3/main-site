@@ -28,6 +28,7 @@ export function useSiteHandler() {
     
     if (subdomain) {
       if (window.location.hostname === "localhost") {
+        subdomain = subdomain == "www" ? "main" : subdomain;
         navigate(`${path}?subdomain=${subdomain}`);
       } else {
         window.location.href = `https://${subdomain}.ds3ucsd.com${path}`;
