@@ -26,7 +26,7 @@ const Header = () => {
   const [tier, color] = Object.entries(tiers)[level];
 
   return (
-    <Section className="flex-row flex-wrap-reverse items-center justify-center">
+    <Section className="flex-row flex-wrap items-center justify-center">
       <div
         className={`size-60 p-8 bg-base-300 radial-progress ${color}`}
         style={{ "--value": progress * 100 } as React.CSSProperties}
@@ -42,11 +42,11 @@ const Header = () => {
 
         <div className="flex size-full justify-around items-center min-w-[min(50vw,400px)]">
           <div className="flex flex-col items-center">
-            <span className="text-primary text-[clamp(1.2rem,2.5vw,3rem)] font-bold">
+            <span className="text-primary text-[clamp(1.5rem,2.5vw,3rem)] font-bold">
               {xp} / {xpNeeded}
             </span>
-            <span className="text-[clamp(1rem,1.5vw,1.875rem)]">XP</span>
-            <span className="mt-4 text-[clamp(0.8rem,1.1vw,1.125rem)] text-balance text-center">
+            <span className="text-[clamp(1.25rem,2vw,1.875rem)]">XP</span>
+            <span className="mt-4 text-[clamp(0.7rem,1.1vw,1.125rem)] text-balance text-center">
               You're <span className="text-primary">{progress * 100}%</span> of the way to{" "}
               <span className={`${Object.values(tiers)[level + 1]}`}>
                 {Object.keys(tiers)[level + 1]}
@@ -55,18 +55,18 @@ const Header = () => {
             </span>
           </div>
           <div className="flex flex-col items-center">
-            <span className={`${color} text-[clamp(1.2rem,2.5vw,3rem)] font-bold`}>{tier}</span>
-            <span className="text-[clamp(1rem,1.5vw,1.875rem)]">Member</span>
-            <span className="mt-4 text-[clamp(0.8rem,1.1vw,1.125rem)] text-balance text-center">
+            <span className={`${color} text-[clamp(1.5rem,2.5vw,3rem)] font-bold`}>{tier}</span>
+            <span className="text-[clamp(1.25rem,2vw,1.875rem)]">Member</span>
+            <span className="mt-4 text-[clamp(0.7rem,1.1vw,1.125rem)] text-balance text-center">
               Level up to enjoy exclusive benefits!
             </span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-primary text-[clamp(1.2rem,2.5vw,3rem)] font-bold">
+            <span className="text-primary text-[clamp(1.5rem,2.5vw,3rem)] font-bold">
               {user?.user_metadata.points || 0}
             </span>
-            <span className="text-[clamp(1rem,1.5vw,1.875rem)]">Points</span>
-            <span className="mt-4 text-[clamp(0.8rem,1.1vw,1.125rem)] text-balance text-center">
+            <span className="text-[clamp(1.25rem,2vw,1.875rem)]">Points</span>
+            <span className="mt-4 text-[clamp(0.7rem,1.1vw,1.125rem)] text-balance text-center">
               Buy merch in the{" "}
               <a href="/store" className="text-blue-400 cursor-pointer underline">
                 Store
