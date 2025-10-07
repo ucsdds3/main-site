@@ -9,7 +9,7 @@ export const useStatCounter = (values: number[]) => {
     // Update interval and increment speed for smoother and faster animation
     const startCounting = (index: number) => {
       const interval = setInterval(() => {
-        setStatValues((prev) =>s
+        setStatValues((prev) =>
           setIndex(prev, index, Math.min(prev[index] + values[index] / 30, values[index])) // Faster counting, divided by 30 for quicker increments
         );
       }, 50); // Shorter interval for smoother transitions, 50ms instead of 100ms
