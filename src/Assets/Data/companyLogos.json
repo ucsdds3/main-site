@@ -14,7 +14,8 @@
     "/WhereWeBeen/FICO_logo.webp",
     "/WhereWeBeen/goldman-sachs.webp",
     "/WhereWeBeen/google.webp",
-    "/WhereWeBeen/intel.webp"
+    "/WhereWeBeen/intel.webp",
+    "/WhereWeBeen/asml.webp"
   ],
   "dark": [
     "/WhereWeBeen/amazon_darkmode.webp",
@@ -31,6 +32,7 @@
     "/WhereWeBeen/FICO_logo.webp",
     "/WhereWeBeen/goldman-sachs.webp",
     "/WhereWeBeen/google.webp",
-    "/WhereWeBeen/intel.webp"
+    "/WhereWeBeen/intel.webp",
+    "/WhereWeBeen/asml.webp"
   ]
 }
