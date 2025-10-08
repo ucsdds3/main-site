@@ -7,18 +7,23 @@ import AttendedCard from "../Events/AttendedCard";
 
 type AttendedRow = {
   attendance_id: number;
-  attended_at: string;
+  attended_at: string;            // ISO
   points: number | null;
   event_id: number;
   event_name: string;
   event_description: string | null;
+  event_datetime: string;         // ISO
 };
+
 type AttendedCardProps = {
   id: number;
   name: string;
   description?: string | null;
   points?: number | null;
+  eventDate?: string;             // ISO
+  attendedAt?: string;            // ISO
 };
+
 
 
 const Events = () => {
@@ -51,24 +56,28 @@ const Events = () => {
   // fetch attended, map to AttendedCard shape
   const fetchAttended = async () => {
     try {
-      // Call the RPC
       const { data, error } = await supabase.rpc("get_my_attendance");
       if (error) throw error;
-
+  
       const rows = (data ?? []) as AttendedRow[];
+  
       const mapped: AttendedCardProps[] = rows.map((r) => ({
-        id: r.attendance_id,     
+        id: r.attendance_id,
         name: r.event_name,
         description: r.event_description,
         points: r.points ?? 0,
+        eventDate: r.event_datetime,   // 🆕
+        attendedAt: r.attended_at,     // 🆕
       }));
-
+      
+  
       setAttendedEvents(mapped);
     } catch (err) {
       console.error("[fetchAttended] RPC error:", err);
       setAttendedEvents([]);
     }
   };
+  
 
   
 
@@ -131,7 +140,7 @@ const Events = () => {
         <h2 className="text-4xl font-bold">Attended Events</h2>
         <a
           onClick={() => {}}
-          className="text-blue-400 underline cursor-pointer flex items-center text-lg"
+          className="text-blue-400 underline cursor-pointer flex items-center text-lg py-2"
         >
           Find Upcoming Events <MdOpenInNew />
         </a>
