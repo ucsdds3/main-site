@@ -1,45 +1,66 @@
-import { memo } from "react";
+import React from "react";
 
-type AttendedEvent = {
-  id?: string | number;
+type AttendedCardProps = {
+  id: number;
   name: string;
   description?: string | null;
   points?: number | null;
+  eventDate?: string;      // event datetime from Events table
+  attendedAt?: string;     // when the user attended (Attendance.created_at)
 };
 
-const AttendedCard = memo(function AttendedCard({
+const AttendedCard: React.FC<AttendedCardProps> = ({
   name,
   description,
-  points = 0,
-}: AttendedEvent) {
+  points,
+  eventDate,
+  attendedAt,
+}) => {
+  const formattedEventDate = eventDate
+    ? new Date(eventDate).toLocaleString(undefined, {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : "Unknown Date";
+
+  const formattedAttended = attendedAt
+    ? new Date(attendedAt).toLocaleString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : "";
+
+  // AttendedCard.tsx
   return (
-    <div
-      className="w-full max-w-[800px] rounded-2xl bg-base-400 border border-[var(--initial-border-color)]
-                 hover:border-[var(--border-color)] duration-150 px-6 py-5
-                 flex flex-col gap-2"
-    >
-      {/* Header row */}
-      <div className="flex items-start justify-between gap-3">
-        <h4 className="text-2xl font-bold capitalize">{name}</h4>
-        <div className="shrink-0 text-sm bg-[var(--color-base-100)] px-2 py-0.5 rounded-lg border border-[var(--color-base-200)]">
-          {points ?? 0} point(s)
-        </div>
+    <div className="flex flex-col bg-base-200 p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-base">
+      {/* name + date (inline) */}
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="text-2xl font-semibold text-primary">{name}</h3>
+        <div className="text-sm text-gray-400">{formattedEventDate}</div>
       </div>
 
-      {/* Description */}
-      {description ? (
-        <p className="text-[var(--card-textcolor)] text-base md:text-lg font-light line-clamp-3">
+      {/* description — explicitly base-sized */}
+      {description && (
+        <p className="text-base text-gray-300 mb-3 leading-snug break-words">
           {description}
         </p>
-      ) : (
-        <div className="w-full">
-          <div className="h-4 my-1 w-3/4 skeleton" />
-          <div className="h-4 my-1 w-2/3 skeleton" />
-          <div className="h-4 my-1 w-1/2 skeleton" />
-        </div>
       )}
+
+      {/* footer */}
+      <div className="flex justify-between text-sm text-gray-400 mt-auto">
+        <span>{points ?? 0} pts</span>
+        {formattedAttended && <span>Checked in: {formattedAttended}</span>}
+      </div>
     </div>
   );
-});
+
+};
 
 export default AttendedCard;
