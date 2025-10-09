@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import z from "zod";
-import { supabase } from "../../Utils/supabase";
+import { supabase } from "../../../Utils/supabase";
 import { useAuthStore } from "./useAuthStore";
 
 export function useSignUp() {
@@ -48,12 +48,6 @@ export function useSignUp() {
         .min(
           defaultSchema.graduationYear,
           `Graduation year must be ${defaultSchema.graduationYear} or later`
-        )
-        .max(
-          defaultSchema.graduationYear + 6,
-          `Graduation year must be ${
-            defaultSchema.graduationYear + 6
-          } or earlier`
         ),
 
       gender: z.string().refine((val) => val !== defaultSchema.gender, {
@@ -92,6 +86,7 @@ export function useSignUp() {
       password: data.password,
       options: {
         data: {
+          email: data.email,
           full_name: data.fullName,
           major: data.major,
           date_of_birth: data.dateOfBirth,
