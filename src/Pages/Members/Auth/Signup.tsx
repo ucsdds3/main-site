@@ -10,8 +10,8 @@ import Input from "../../../Components/Input";
 import Page from "../../../Components/Page/Page";
 import Select from "../../../Components/Select";
 import majors from "../../../Assets/Data/majors.json";
-import { useAuthStore } from "../../../Hooks/Auth/useAuthStore";
-import { useSignUp } from "../../../Hooks/Auth/useSignUp";
+import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";
+import { useSignUp } from "../../../Hooks/Members/Auth/useSignUp";
 
 const Signup = () => {
   const { setAuthState } = useAuthStore();
