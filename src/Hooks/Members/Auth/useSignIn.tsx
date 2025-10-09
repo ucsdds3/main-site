@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useSiteHandler } from "../useSiteHandler";
+import { useSiteHandler } from "../../useSiteHandler";
 import { useAuthStore } from "./useAuthStore";
-import { supabase } from "../../Utils/supabase";
+import { supabase } from "../../../Utils/supabase";
 import toast from "react-hot-toast";
 
 export function useSignIn() {

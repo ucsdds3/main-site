@@ -24,18 +24,19 @@ export function useSiteHandler() {
   }, [subdomain]);
 
   const navigateTo = ({ pathname, subdomain, hash }: NavigateProps) => {
-    const path = pathname || "/";
+    const path = pathname || window.location.pathname;
+    const search = window.location.search || "";
     
     if (subdomain) {
       if (window.location.hostname === "localhost") {
-        subdomain = subdomain == "www" ? "main" : subdomain;
-        navigate(`${path}?subdomain=${subdomain}`);
+        const searchParams = new URLSearchParams(search);
+        searchParams.set("subdomain", subdomain);
+        navigate(`${path}?${searchParams.toString()}`);
       } else {
-        window.location.href = `https://${subdomain}.ds3ucsd.com${path}`;
+        window.location.href = `https://${subdomain}.ds3ucsd.com${path}${search}`;
       }
     } else {
-      const search = window.location.search;
-      navigate(`${path}${search ? search : ""}`);
+      navigate(`${path}${search}`);
     }
 
     if (hash) {
