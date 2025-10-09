@@ -16,10 +16,10 @@ const NavItem = ({ label, data }: NavItemProps) => {
     return data as NavigateProps;
   };
 
-  return typeof data === "string" || data?.hash || data?.target ? (
+  return typeof data === "string" || data?.hash || data?.subdomain ? (
     <button
       onClick={() => navigate(parseData(data))}
-      className="hover:text-(--color-primary) relative flex items-center gap-1 group cursor-pointer"
+      className="hover:text-(--color-primary) relative flex items-center gap-1 cursor-pointer"
     >
       {label}
       {/* {label == "Consulting" && <FaLink className="opacity-0 group-hover:opacity-100 " />} */}

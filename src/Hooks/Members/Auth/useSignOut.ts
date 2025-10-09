@@ -1,5 +1,5 @@
 import { toast } from "react-hot-toast";
-import { supabase } from "../../Utils/supabase";
+import { supabase } from "../../../Utils/supabase";
 import { useAuthStore } from "./useAuthStore";
 
 export function useSignOut() {

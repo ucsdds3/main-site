@@ -2,8 +2,8 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 import Button from "../../../Components/Button";
 import Input from "../../../Components/Input";
 import Page from "../../../Components/Page/Page";
-import { useAuthStore } from "../../../Hooks/Auth/useAuthStore";
-import { useSignIn } from "../../../Hooks/Auth/useSignIn";
+import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";
+import { useSignIn } from "../../../Hooks/Members/Auth/useSignIn";
 
 const Signin = () => {
   const { setAuthState } = useAuthStore();
