@@ -24,12 +24,7 @@ type AttendedCardProps = {
   attendedAt?: string;            // ISO
 };
 
-
-
 const Events = () => {
-  // (Optional) remove if unused
-  const [events, setEvents] = useState<any[]>([]);
-
   const [attendedEvents, setAttendedEvents] = useState<AttendedCardProps[]>([]);
   const [eventCode, setEventCode] = useState("");
 
@@ -44,11 +39,10 @@ const Events = () => {
   // (Optional) remove if unused
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("Events")
         .select("id,name,description,image,points");
       if (error) console.error(error);
-      if (data) setEvents(data);
     };
     fetchData();
   }, []);
@@ -78,9 +72,6 @@ const Events = () => {
     }
   };
   
-
-  
-
   //load attended on mount
   useEffect(() => {
     fetchAttended();
