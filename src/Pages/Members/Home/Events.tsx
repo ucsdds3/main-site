@@ -135,7 +135,7 @@ const Events = () => {
   };
 
   return (
-    <Section className="flex-row flex-wrap items-stretch justify-center pt-0">
+    <Section className="flex flex-col lg:flex-row items-stretch justify-center pt-0">
       <div className="flex-5 flex flex-col bg-base-300 p-8 rounded-2xl">
         <h2 className="text-4xl font-bold">Attended Events</h2>
         <a

@@ -1,15 +1,11 @@
 [
   {
     "image": "/Events/Professional/Blizzard_Games_Technical_Talk.webp",
-    "title": "Blizzard Games Technical Talk"
-  },
-  {
-    "image": "/Events/Professional/Intro_GloVe_NLP.webp",
-    "title": "Intro to GloVE and NLP"
+    "title": "Technical Talk: Blizzard Games"
   },
   {
     "image": "/Events/Professional/Mini_Talent_day.webp",
-    "title": "Mini Talent Day ASML & SDx Mixer"
+    "title": "Mini Talent Day: ASML & SDx"
   },
   {
     "image": "/Events/Professional/Online_Content.webp",
@@ -17,14 +13,26 @@
   },
   {
     "image": "/Events/Professional/Professional_Panel.webp",
-    "title": "Professional Panel"
+    "title": "Industry Partner Panel"
   },
   {
     "image": "/Events/Professional/Speed_Networking.webp",
     "title": "Speed Networking"
   },
   {
-    "image": "/Events/Professional/Digging_into_Data_Science.webp",
-    "title": "Digging into Data Science"
+    "image": "/Events/Professional/First_Impressions_Workshop.webp",
+    "title": "First Impressions Workshop"
+  },
+  {
+    "image": "/Events/Professional/Careers_In_Data_Science.webp",
+    "title": "Careers in Data Science"
+  },
+  {
+    "image": "/Events/Professional/San_Diego_Supercomputer_Center_Tour.webp",
+    "title": "San Diego Supercomputer Center Tour"
+  },
+  {
+    "image": "/Events/Professional/Faculty_Mixer.webp",
+    "title": "Faculty Mixer" 
   }
 ]

@@ -1,7 +1,7 @@
 import { formatMemberLinks, unbreakable } from "../../../Utils/functions.tsx";
 import { MemberType } from "../../../Utils/types.ts";
 import teams from "../../../Assets/Data/teams.json";
-import members from "../../../Assets/Data/members.json";
+import members from "../../../Assets/Data/board.json";
 import { lazy, Suspense } from "react";
 const HoverCard = lazy(() => {
   return import("../../../Components/HoverCard.tsx");
