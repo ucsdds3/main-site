@@ -13,10 +13,9 @@
     "Partners": "/partners",
     "DataHacks": "/datahacks",
     "Projects": "/projects",
-    "Consulting": {
-      "target": "_blank",
+    "Members": {
       "pathname": "/",
-      "subdomain": "consulting"
+      "subdomain": "members"
     }
   },
   "consulting": {

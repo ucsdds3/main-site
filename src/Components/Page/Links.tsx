@@ -1,4 +1,4 @@
-import { useAuthStore } from "../../Hooks/Auth/useAuthStore";
+import { useAuthStore } from "../../Hooks/Members/Auth/useAuthStore";
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
 import navData from "../../Assets/Data/navbar.json";
 import NavItem from "./NavItem";
