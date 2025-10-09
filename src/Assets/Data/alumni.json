@@ -170,5 +170,14 @@
     "company": "Amazon",
     "masters": "Columbia",
     "image": "/Board/alumni_webp_imgs/Gauri-Samith.webp"
+  },
+  {
+    "name": "Jonathan Lo",
+    "year": "2023-2024",
+    "role": "Infrastructure Director",
+    "linkedIn": "https://www.linkedin.com/in/jonathanlo411/",
+    "occupation": "Cloud Engineer",
+    "company": "ASML",
+    "image": "/Board/alumni_webp_imgs/Jonathan_Lo.webp"
   }
 ]
