@@ -1,10 +1,13 @@
+import { useAuthStore } from "../../Hooks/Members/Auth/useAuthStore";
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
 import navData from "../../Assets/Data/navbar.json";
 import NavItem from "./NavItem";
+import Avatar from "./Avatar";
 
 const Links = ({ menuOpen }: { menuOpen: boolean }) => {
+  const { authState } = useAuthStore();
   const { subdomain, navigate } = useSiteHandler();
-  const links = (navData[subdomain as keyof typeof navData]);
+  const links = navData[subdomain as keyof typeof navData];
   const typographyClasses = "font-quicksand font-normal tracking-[0px]";
 
   return (
@@ -16,12 +19,16 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       {Object.entries(links).map(([label, data], index) => (
         <NavItem key={index} label={label} data={data} />
       ))}
-      <button
-        onClick={subdomain !== "main" ? () => navigate({ subdomain: "main" }) : () => navigate({ pathname: "/join-us" })}
-        className={`bg-(--color-primary) px-4 pb-2 pt-1 hover:brightness-110 cursor-pointer rounded-full text-center ${typographyClasses} font-medium w-full sm:w-auto min-w-[120px] uppercase`}
-      >
-        {subdomain !== "main" ? "Main Site" : "Join Us"}
-      </button>
+      {subdomain == "main" || authState == "signin" ? (
+        <button
+          onClick={authState != "signin" ? () => navigate({ pathname: "/join-us" }) : () => navigate({ pathname: "/", subdomain: "main" })}
+          className={`bg-(--color-primary) px-4 pb-2 pt-1 hover:brightness-110 cursor-pointer rounded-full text-center ${typographyClasses} font-medium w-full sm:w-auto min-w-[120px] uppercase`}
+        >
+          {authState != "signin" ? "Join Us" : "Main Site"}
+        </button>
+      ) : (
+        <Avatar />
+      )}
     </div>
   );
 };

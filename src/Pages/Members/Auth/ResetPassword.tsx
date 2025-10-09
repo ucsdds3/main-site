@@ -2,7 +2,7 @@ import { FaLock } from "react-icons/fa";
 import Page from "../../../Components/Page/Page";
 import Input from "../../../Components/Input";
 import Button from "../../../Components/Button";
-import { useResetPassword } from "../../../Hooks/Auth/useResetPassword";
+import { useResetPassword } from "../../../Hooks/Members/Auth/useResetPassword";
 
 const ResetPassword = () => {
   const {

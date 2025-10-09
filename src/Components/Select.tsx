@@ -22,27 +22,17 @@ const Select = ({
   setValue,
 }: SelectProps) => {
   return (
-    <div
-      className={twMerge(
-        `flex flex-col gap-2 min-w-[300px] w-[300px]`,
-        className
-      )}
-    >
+    <div className={twMerge(`flex flex-col gap-2 min-w-[300px]`, className)}>
       <span className="text-lg">
         {label} {required && <span className="text-red-500">*</span>}
       </span>
-      <label
-        className={`select select-lg ${
-          error ? "select-error" : "select-primary"
-        }`}
-      >
+      <label className={`select w-full select-lg ${error ? "select-error" : "select-primary"}`}>
         {icon}
         <select
-          value={value}
-          defaultValue={`Select ${label}`}
+          value={value || ""}
           onChange={(e) => setValue && setValue(e.target.value)}
         >
-          <option disabled={true}>Select {label}</option>
+          <option value="" disabled={true}>Select {label}</option>
           {options.map((option) => (
             <option key={option} value={option}>
               {option}

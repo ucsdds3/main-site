@@ -2,7 +2,7 @@ import { useState } from "react";
 import z from "zod";
 import { useAuthStore } from "./useAuthStore";
 import toast from "react-hot-toast";
-import { supabase } from "../../Utils/supabase";
+import { supabase } from "../../../Utils/supabase";
 
 export function useResetPassword() {
   const [errors, setErrors] = useState<string>("");
@@ -37,14 +37,6 @@ export function useResetPassword() {
       toast.error("Please fix the following errors:\n" + errors);
       console.log(errors);
       setErrors(errors);
-      return;
-    }
-
-    const tokenHash = new URLSearchParams(window.location.search).get(
-      "tokenHash"
-    );
-    if (!tokenHash) {
-      toast.error("Token hash not found");
       return;
     }
 
