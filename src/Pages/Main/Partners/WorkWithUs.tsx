@@ -1,7 +1,10 @@
 import Button from "../../../Components/Button";
 import Section from "../../../Components/Section";
+import { useSiteHandler } from "../../../Hooks/useSiteHandler";
 
 const WorkWithUs = () => {
+  const { navigate } = useSiteHandler();
+
   return (
     <Section>
       <div className="flex flex-col items-center text-center">
@@ -12,8 +15,7 @@ const WorkWithUs = () => {
       </div>
       <Button
         onClick={() => {
-          console.log("clicked");
-          window.open("https://ds3ucsd.com/?site=consulting", "_blank");
+          navigate({ subdomain: "consulting" });
         }}
       >
         LEARN MORE
