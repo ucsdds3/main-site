@@ -1,16 +1,19 @@
 import toast from "react-hot-toast";
-import { supabase } from "../../Utils/supabase";
+import { supabase } from "../../../Utils/supabase";
 import { useState } from "react";
 
 export function useForgotPassword() {
   const [email, setEmail] = useState("");
 
-  const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleForgotPassword = async (
+    e?: React.FormEvent<HTMLFormElement>,
+    overrideEmail?: string
+  ) => {
+    e?.preventDefault();
 
     const href = window.location.href;
     const search = new URLSearchParams(window.location.search);
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    const { data, error } = await supabase.auth.resetPasswordForEmail(overrideEmail || email, {
       redirectTo: `${href}${search && "&"}authState=reset-password`,
     });
 
