@@ -11,10 +11,10 @@ export function useCalendarEvents() {
     const fetchEvents = async () => {
       try {
         // Debug: Log environment variables
-        console.log("Environment variables:", {
-          VITE_GOOGLE_CALENDAR_ID: import.meta.env.VITE_GOOGLE_CALENDAR_ID,
-          VITE_GOOGLE_CALENDAR_API_KEY: import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY,
-        });
+        // console.log("Environment variables:", {
+        //   VITE_GOOGLE_CALENDAR_ID: import.meta.env.VITE_GOOGLE_CALENDAR_ID,
+        //   VITE_GOOGLE_CALENDAR_API_KEY: import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY,
+        // });
 
         const calendarId = import.meta.env.VITE_GOOGLE_CALENDAR_ID;
         const apiKey = import.meta.env.VITE_GOOGLE_CALENDAR_API_KEY;
