@@ -14,6 +14,7 @@ const Auth = () => {
     if (authState == "authenticated") {
       navigate({ pathname: "/" });
     }
+    console.log(authState, "AUTH");
   }, [authState, navigate]);
 
   if (authState == "signin") return <Signin />;
