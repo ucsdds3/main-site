@@ -9,8 +9,7 @@ export function useSiteHandler() {
   const parts = hostname.split(".");
 
   let subdomain = new URLSearchParams(search).get("subdomain") || "main";
-
-  if (parts.length > 2 && parts[0] !== "www") {
+  if (!hostname.includes("vercel.app") && parts.length > 2 && parts[0] !== "www") {
     subdomain = parts[0];
   }
 
