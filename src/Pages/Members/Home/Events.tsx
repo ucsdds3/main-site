@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../../Utils/supabase";
 import toast from "react-hot-toast";
 import AttendedCard from "../Events/AttendedCard";
+import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";
 
 type AttendedRow = {
   attendance_id: number;
@@ -27,17 +28,12 @@ type AttendedCardProps = {
 const Events = () => {
   const [attendedEvents, setAttendedEvents] = useState<AttendedCardProps[]>([]);
   const [eventCode, setEventCode] = useState("");
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      console.log("Auth user info:", data?.user);
-    };
-    checkUser();
-  }, []);
+  const { user } = useAuthStore();
 
   // (Optional) remove if unused
   useEffect(() => {
+    console.log(user);
+    
     const fetchData = async () => {
       const { error } = await supabase
         .from("Events")
