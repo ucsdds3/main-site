@@ -60,32 +60,6 @@ export function useSignIn() {
     setUser(userData.user);
     setAuthState("authenticated");
     localStorage.setItem("user", JSON.stringify(userData.user));
-    // 4Immediately ensure user has a Members profile (via RPC)
-    try {
-      const full_name = userData.user.user_metadata?.full_name || "";
-      const year = String(userData.user.user_metadata?.graduation_year || new Date().getFullYear());
-      const major = userData.user.user_metadata?.major || "Undeclared";
-      const date_of_birth = userData.user.user_metadata?.date_of_birth || "2000-01-01";
-      const gender = userData.user.user_metadata?.gender || null;
-
-      const { data: rpcData, error: rpcError } = await supabase.rpc("create_member_profile", {
-        full_name,
-        year,
-        major,
-        date_of_birth,
-        gender,
-      });
-
-      if (rpcError) {
-        console.error("Member RPC error:", rpcError.message);
-      } else if (rpcData === "created") {
-        console.log("✅ Member profile created successfully");
-      } else if (rpcData === "exists") {
-        console.log("ℹ️ Member already exists");
-      }
-    } catch (err) {
-      console.error("RPC failed:", err);
-    }
     navigate({ pathname: "/", subdomain: "members" });
     toast.success("Login successful!");
   };

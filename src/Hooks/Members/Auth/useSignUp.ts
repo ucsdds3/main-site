@@ -104,6 +104,19 @@ export function useSignUp() {
       return;
     }
 
+    const { error: rpcError } = await supabase.rpc("create_member_profile", {
+      full_name: data.fullName,
+      year: data.graduationYear,
+      major: data.major,
+      date_of_birth: data.dateOfBirth,
+      gender: data.gender,
+    });
+
+    if (rpcError) {
+      toast.error(rpcError.message);
+      return;
+    }
+
     console.log(userData);
     setUser(userData.user);
     setAuthState("signin");
