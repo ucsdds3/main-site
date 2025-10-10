@@ -10,10 +10,10 @@ export function useSignUp() {
     fullName: "",
     password: "",
     confirmPassword: "",
-    major: "Select Major",
+    major: "",
     dateOfBirth: "",
     graduationYear: new Date().getFullYear(),
-    gender: "Select Gender",
+    gender: "",
   };
 
   const signupSchema = z
