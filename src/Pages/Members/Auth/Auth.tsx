@@ -8,12 +8,15 @@ import Signup from "./Signup";
 const Auth = () => {
   const { authState } = useAuthStore();
   const { navigate } = useSiteHandler();
-  if (authState == "authenticated") return navigate({ pathname: "/" }); 
-  
+  if (authState == "authenticated") {
+    navigate({ pathname: "/" });
+    return;
+  }
+
   if (authState == "signin") return <Signin />;
   if (authState == "signup") return <Signup />;
   if (authState == "forgot-password") return <ForgotPassword />;
   if (authState == "reset-password") return <ResetPassword />;
-}
+};
 
-export default Auth
+export default Auth;
