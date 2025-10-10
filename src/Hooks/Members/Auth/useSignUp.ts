@@ -107,7 +107,7 @@ export function useSignUp() {
     console.log(userData);
     setUser(userData.user);
     setAuthState("signin");
-    toast.success("Please check your email for verification!");
+    // toast.success("Please check your email for verification!");
   };
 
   return {
