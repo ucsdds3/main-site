@@ -55,11 +55,12 @@ const BrowserCard = memo(function BrowserCard({
         </p>
       </div>
 
-      <div className="group overflow-hidden relative rounded-lg inline-block skeleton w-full aspect-[1.4/1] rounded-lg">
+      <div className="group overflow-hidden relative inline-block skeleton w-full aspect-[1.4/1] rounded-lg">
         {image && !imageError ? (
           <img
             src={image}
             alt={title}
+            crossOrigin="anonymous"
             referrerPolicy="no-referrer"
             className="object-cover aspect-[1.4/1] transition-transform duration-300 group-hover:scale-105"
             onError={(e) => { console.log("Image error", e); setImageError(true)}}
