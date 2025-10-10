@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../../Utils/supabase";
 import toast from "react-hot-toast";
 import AttendedCard from "../Events/AttendedCard";
-import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";
 import { FaArrowRight } from "react-icons/fa";
 
 type AttendedRow = {
@@ -29,18 +28,6 @@ type AttendedCardProps = {
 const Events = () => {
   const [attendedEvents, setAttendedEvents] = useState<AttendedCardProps[]>([]);
   const [eventCode, setEventCode] = useState("");
-  const { user } = useAuthStore();
-
-  // (Optional) remove if unused
-  useEffect(() => {
-    console.log(user);
-
-    const fetchData = async () => {
-      const { error } = await supabase.from("Events").select("id,name,description,image,points");
-      if (error) console.error(error);
-    };
-    fetchData();
-  }, []);
 
   // fetch attended, map to AttendedCard shape
   const fetchAttended = async () => {

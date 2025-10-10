@@ -2,12 +2,9 @@ import { useEffect } from "react";
 import { AuthState } from "../../../Utils/types";
 import { useAuthStore } from "./useAuthStore";
 import { supabase } from "../../../Utils/supabase";
-import { useSiteHandler } from "../../useSiteHandler";
 import { User } from "@supabase/supabase-js";
 
 export function useAuth() {
-  const { subdomain, navigate } = useSiteHandler();
-
   useEffect(() => {
     const getUser = async () => {
       const authState = new URLSearchParams(window.location.search).get("authState") as AuthState;
@@ -15,7 +12,6 @@ export function useAuth() {
 
       const foundUser = (user: User) => {
         useAuthStore.setState({ user, authState: authState || "authenticated" });
-        if (subdomain == "members") navigate({ subdomain: "members" });
       };
 
       const tokenHash = new URLSearchParams(window.location.search).get("tokenHash");
