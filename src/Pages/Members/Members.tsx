@@ -6,6 +6,7 @@ import Auth from "./Auth/Auth";
 import Home from "./Home/Home";
 import EventsList from "./Events/EventsList";
 import Profile from "./Profile/Profile";
+import Store from "./Store/Store";
 
 const Members = () => {
   const { authState } = useAuthStore();
@@ -21,6 +22,7 @@ const Members = () => {
       <Route path="/auth" element={<Auth />} />
       <Route path="/events" element={<EventsList />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/store" element={<Store />} />
     </Routes>
   );
 };
