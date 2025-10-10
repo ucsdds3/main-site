@@ -103,9 +103,6 @@ const BrowserCard = memo(function BrowserCard({ name, description, image, points
           </div>
           <div className="flex flex-wrap-reverse lg:flex-nowrap justify-between items-start">
             <div className="">
-              <div className="">
-                <strong>Event Code: </strong> 123123
-              </div>
               {description ? (
                 <p
                   className={`text-xl text-[clamp(1rem,1.1vw,1.25rem)] font-light mt-2 text-[var(--card-textcolor)]`}
