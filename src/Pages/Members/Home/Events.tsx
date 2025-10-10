@@ -138,7 +138,6 @@ const Events = () => {
                 required
                 value={eventCode}
                 onChange={(e) => setEventCode(e.target.value)}
-                className="input input-primary input-lg"
                 placeholder="Enter event code"
               />
               <button className="btn btn-primary btn-sm text-base" type="submit">
