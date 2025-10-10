@@ -5,15 +5,16 @@ import { supabase } from "../../../Utils/supabase";
 import toast from "react-hot-toast";
 import AttendedCard from "../Events/AttendedCard";
 import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";
+import { FaArrowRight } from "react-icons/fa";
 
 type AttendedRow = {
   attendance_id: number;
-  attended_at: string;            // ISO
+  attended_at: string; // ISO
   points: number | null;
   event_id: number;
   event_name: string;
   event_description: string | null;
-  event_datetime: string;         // ISO
+  event_datetime: string; // ISO
 };
 
 type AttendedCardProps = {
@@ -21,8 +22,8 @@ type AttendedCardProps = {
   name: string;
   description?: string | null;
   points?: number | null;
-  eventDate?: string;             // ISO
-  attendedAt?: string;            // ISO
+  eventDate?: string; // ISO
+  attendedAt?: string; // ISO
 };
 
 const Events = () => {
@@ -33,11 +34,9 @@ const Events = () => {
   // (Optional) remove if unused
   useEffect(() => {
     console.log(user);
-    
+
     const fetchData = async () => {
-      const { error } = await supabase
-        .from("Events")
-        .select("id,name,description,image,points");
+      const { error } = await supabase.from("Events").select("id,name,description,image,points");
       if (error) console.error(error);
     };
     fetchData();
@@ -48,26 +47,25 @@ const Events = () => {
     try {
       const { data, error } = await supabase.rpc("get_my_attendance");
       if (error) throw error;
-  
+
       const rows = (data ?? []) as AttendedRow[];
-  
+
       const mapped: AttendedCardProps[] = rows.map((r) => ({
         id: r.attendance_id,
         name: r.event_name,
         description: r.event_description,
         points: r.points ?? 0,
-        eventDate: r.event_datetime,   // 🆕
-        attendedAt: r.attended_at,     // 🆕
+        eventDate: r.event_datetime, // 🆕
+        attendedAt: r.attended_at, // 🆕
       }));
-      
-  
+
       setAttendedEvents(mapped);
     } catch (err) {
       console.error("[fetchAttended] RPC error:", err);
       setAttendedEvents([]);
     }
   };
-  
+
   //load attended on mount
   useEffect(() => {
     fetchAttended();
@@ -135,13 +133,9 @@ const Events = () => {
         <div className="flex size-full justify-center items-start gap-8">
           <div className="w-full flex flex-col gap-5 mt-10 max-w-[800px]">
             {attendedEvents.length === 0 ? (
-              <span className="text-2xl opacity-70">
-                You haven't attended any events yet
-              </span>
+              <span className="text-2xl opacity-70">You haven't attended any events yet</span>
             ) : (
-              attendedEvents.map((ev) => (
-                <AttendedCard key={ev.id} {...ev} />
-              ))
+              attendedEvents.map((ev) => <AttendedCard key={ev.id} {...ev} />)
             )}
           </div>
         </div>
@@ -151,20 +145,19 @@ const Events = () => {
         <div className="flex flex-col bg-base-300 rounded-2xl p-8 gap-6 items-center">
           <h2 className="text-4xl font-bold">Event Check In</h2>
           <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 w-full">
-            <input
-              type="text"
-              required
-              value={eventCode}
-              onChange={(e) => setEventCode(e.target.value)}
-              className="input input-primary input-lg"
-              placeholder="Enter event code"
-            />
-            <button
-              type="submit"
-              className="hover:bg-accent-content border-2 rounded-full py-3 px-10 whitespace-nowrap cursor-pointer text-[clamp(1rem,1.2vw,2rem)] min-w-[clamp(8rem,12vw,15rem)] bg-[var(--color)] border-[var(--color-primary)] uppercase font-semibold"
-            >
-              Submit
-            </button>
+            <label className="input input-primary input-lg flex items-center justify-end">
+              <input
+                type="text"
+                required
+                value={eventCode}
+                onChange={(e) => setEventCode(e.target.value)}
+                className="input input-primary input-lg"
+                placeholder="Enter event code"
+              />
+              <button className="btn btn-primary btn-sm text-base" type="submit">
+                <FaArrowRight />
+              </button>
+            </label>
           </form>
         </div>
 
