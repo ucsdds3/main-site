@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";
 import { useSiteHandler } from "../../../Hooks/useSiteHandler";
 import ForgotPassword from "./ForgotPassword";
@@ -8,10 +9,12 @@ import Signup from "./Signup";
 const Auth = () => {
   const { authState } = useAuthStore();
   const { navigate } = useSiteHandler();
-  if (authState == "authenticated") {
-    navigate({ pathname: "/" });
-    return;
-  }
+  
+  useEffect(() => {
+    if (authState == "authenticated") {
+      navigate({ pathname: "/" });
+    }
+  }, [authState, navigate]);
 
   if (authState == "signin") return <Signin />;
   if (authState == "signup") return <Signup />;
