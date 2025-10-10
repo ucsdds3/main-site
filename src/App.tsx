@@ -10,6 +10,7 @@ const App = () => {
   useAuth();
   useThemeHandler();
   const { subdomain } = useSiteHandler();
+  console.log(subdomain);
 
   return subdomain == "consulting" ? (
     <Consulting />
