@@ -19,7 +19,8 @@ const Avatar = () => {
         tabIndex={0}
         className="flex justify-center items-center gap-2 cursor-pointer hover:text-(--color-primary) transition focus:text-(--color-primary) duration-300"
       >
-        <FaUser />
+        <FaUser className="hidden lg:block" />
+        <span className="hover:text-(--color-primary) relative cursor-pointer lg:hidden">Profile</span>
       </div>
 
       <ul className="hidden group-focus-within:flex group-hover:flex flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm group-focus-within:border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center">
