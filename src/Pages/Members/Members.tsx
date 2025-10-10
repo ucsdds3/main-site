@@ -14,6 +14,7 @@ const Members = () => {
 
   useEffect(() => {
     if (authState != "authenticated") navigate({ pathname: "/auth" });
+    console.log(authState, "MEMBERS");
   }, [authState]);
 
   return (
