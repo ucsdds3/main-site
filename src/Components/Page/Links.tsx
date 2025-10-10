@@ -7,7 +7,7 @@ import Avatar from "./Avatar";
 const Links = ({ menuOpen }: { menuOpen: boolean }) => {
   const { authState } = useAuthStore();
   const { subdomain, navigate } = useSiteHandler();
-  const links = navData[subdomain as keyof typeof navData];
+  const links = navData[subdomain as keyof typeof navData] || navData.main;
   const typographyClasses = "font-quicksand font-normal tracking-[0px]";
 
   return (
