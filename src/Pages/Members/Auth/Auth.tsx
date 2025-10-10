@@ -8,7 +8,7 @@ import Signup from "./Signup";
 const Auth = () => {
   const { authState } = useAuthStore();
   const { navigate } = useSiteHandler();
-  if (authState == "authenticated") navigate({ pathname: "/" }); 
+  if (authState == "authenticated") return navigate({ pathname: "/" }); 
   
   if (authState == "signin") return <Signin />;
   if (authState == "signup") return <Signup />;
