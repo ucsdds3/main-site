@@ -24,16 +24,17 @@ export function useSiteHandler() {
   }, [subdomain]);
 
   const navigateTo = ({ pathname, subdomain, hash }: NavigateProps) => {
+    const hostname = window.location.hostname;
     const path = pathname || window.location.pathname;
     const search = window.location.search || "";
     
     if (subdomain) {
-      if (window.location.hostname === "localhost") {
+      if (hostname === "localhost" || hostname.includes("vercel.app")) {
         const searchParams = new URLSearchParams(search);
         searchParams.set("subdomain", subdomain);
         navigate(`${path}?${searchParams.toString()}`);
       } else {
-        window.location.href = `https://${subdomain}.ds3ucsd.com${path}${search}`;
+        window.location.href = `https://${subdomain}.ds3atucsd.com${path}${search}`;
       }
     } else {
       navigate(`${path}${search}`);
