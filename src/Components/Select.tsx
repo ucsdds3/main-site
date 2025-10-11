@@ -22,7 +22,7 @@ const Select = ({
   setValue,
 }: SelectProps) => {
   return (
-    <div className={twMerge(`flex flex-col gap-2 min-w-[300px]`, className)}>
+    <div className={twMerge(`flex flex-col gap-2 min-w-[300px] w-[300px]`, className)}>
       <span className="text-lg">
         {label} {required && <span className="text-red-500">*</span>}
       </span>
