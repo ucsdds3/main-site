@@ -11,7 +11,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({ label, error, icon, className, value, setValue, ...props }: InputProps) => {
   return (
-    <div className={twMerge(`flex flex-col gap-2 min-w-[300px]`, className)}>
+    <div className={twMerge(`flex flex-col gap-2 min-w-[300px] w-[300px]`, className)}>
       <span className="text-lg">
         {label} {props.required && <span className="text-red-500">*</span>}
       </span>
