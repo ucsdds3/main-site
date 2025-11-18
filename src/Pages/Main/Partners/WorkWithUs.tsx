@@ -15,7 +15,7 @@ const WorkWithUs = () => {
       </div>
       <Button
         onClick={() => {
-          navigate({ subdomain: "consulting" });
+          navigate({ subdomain: "consulting", pathname: "/"});
         }}
       >
         LEARN MORE
