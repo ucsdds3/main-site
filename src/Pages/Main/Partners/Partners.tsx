@@ -15,11 +15,11 @@ import Page from "../../../Components/Page/Page";
 const Partners = () => {
   return (
     <Page>
+      <ContactUs type="partners" />
+      {/* <FAQ faq={faq.partners} /> */}
       <OurPartners />
       <Suspense>
         <WorkWithUs />
-        <ContactUs type="partners" />
-        {/* <FAQ faq={faq.partners} /> */}
       </Suspense>
     </Page>
   );
