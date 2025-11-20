@@ -15,9 +15,9 @@ import Page from "../../../Components/Page/Page";
 const Partners = () => {
   return (
     <Page>
+      <WorkWithUs />
       <OurPartners />
       <Suspense>
-        <WorkWithUs />
         <ContactUs type="partners" />
         {/* <FAQ faq={faq.partners} /> */}
       </Suspense>
