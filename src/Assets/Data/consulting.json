@@ -16,8 +16,8 @@
       "image": "/Consulting/Data_Analytics.webp"
     },
     {
-      "title": "Infrastructure",
-      "description": "We design scalable, end-to-end cloud systems tailored to your industry—helping you choose the right tools and track data effectively.",
+      "title": "Web Development",
+      "description": "We develop scalable, full-stack websites customized to your needs so that you can deliver a seamless user experience.",
       "image": "/Consulting/Solutions_Architecture.webp"
     }
   ],
@@ -76,15 +76,15 @@
   "clients": [
     {
       "name": "Promo Drone",
-      "image": "/WhereWeBeen/promodrone_logo.webp"
+      "image": "/WhereWeBeen/promodrone_logo.jpg"
     },
     {
       "name": "Alama AI",
-      "image": "/WhereWeBeen/alama-ai.webp"
+      "image": "/WhereWeBeen/alama-ai.jpg"
     },
     {
       "name": "7sherpas",
-      "image": "/WhereWeBeen/7sherpas.webp"
+      "image": "/WhereWeBeen/7sherpas.png"
     }
   ]
 }
