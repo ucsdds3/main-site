@@ -19,7 +19,7 @@ const OurWork = () => {
   const [year, setYear] = useState<YearType>(years[0]);
 
   const { page, setPage, numPages, setNumPages, cardsPerPage, start, end } = usePaginate({
-    totalItems: projects[year].length,
+    totalItems: projects.length,
     numRows: 3,
   });
 
@@ -57,7 +57,7 @@ const OurWork = () => {
           currSection == "projects" ? "" : "hidden"
         }`}
       >
-        <fieldset className="fieldset w-[clamp(20rem,25vw,25rem)] flex flex-col md:flex-row md:gap-4 items-center">
+        {/* <fieldset className="fieldset w-[clamp(20rem,25vw,25rem)] flex flex-col md:flex-row md:gap-4 items-center">
           <span className="text-[clamp(1rem,1.5vw,1.2rem)] font-semibold">Year: </span>
           <select
             value={year}
@@ -68,7 +68,7 @@ const OurWork = () => {
               <option key={index}>{year}</option>
             ))}
           </select>
-        </fieldset>
+        </fieldset> */}
 
         <div className={gridClass}>
           {projects[year].slice(start, end).map((project, index) => (
