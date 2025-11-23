@@ -85,6 +85,11 @@
     {
       "name": "7sherpas",
       "image": "/WhereWeBeen/7sherpas.png"
+    },
+    {
+      "name": "Triton Ball",
+      "image": "/WhereWeBeen/TritonBall.svg",
+      "url": "https://www.tritonball.org/"
     }
   ]
 }
