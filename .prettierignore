@@ -1,0 +1,6 @@
+node_modules
+dist
+build
+.vscode
+*.min.js
+package-lock.json
