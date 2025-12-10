@@ -10,14 +10,14 @@ const App = () => {
   useAuth();
   useThemeHandler();
   const { subdomain } = useSiteHandler();
+  
+  const sites = {
+    consulting: <Consulting />,
+    members: <Members />,
+    main: <Main />,
+  }
 
-  return subdomain == "consulting" ? (
-    <Consulting />
-  ) : subdomain == "members" ? (
-    <Members />
-  ) : (
-    <Main />
-  );
+  return sites[subdomain as keyof typeof sites];
 };
 
 export default App;
