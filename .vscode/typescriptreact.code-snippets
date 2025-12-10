@@ -1,0 +1,36 @@
+{
+	"cpg": {
+		"prefix": "cpg",
+		"body": [
+			"import Page from \"${1|../../Components/Page/Page,../../../Components/Page/Page,../../../../Components/Page/Page|}\"",
+			"",
+			"const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} = () => {",
+			"  return (",
+			"    <Page>",
+			"      $0",
+			"    </Page>",
+			"  )",
+			"}",
+			"",
+			"export default ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}"
+		],
+		"description": "Create a new page component with Page wrapper"
+	},
+	"csec": {
+		"prefix": "csec",
+		"body": [
+			"import Section from \"${1|../../Components/Section,../../../Components/Section,../../../../Components/Section|}\"",
+			"",
+			"const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} = () => {",
+			"  return (",
+			"    <Section>",
+			"      $0",
+			"    </Section>",
+			"  )",
+			"}",
+			"",
+			"export default ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}"
+		],
+		"description": "Create a new section component with Section wrapper"
+	}
+}
