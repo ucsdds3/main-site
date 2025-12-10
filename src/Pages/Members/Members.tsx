@@ -7,6 +7,7 @@ import Home from "./Home/Home";
 import EventsList from "./Events/EventsList";
 import Profile from "./Profile/Profile";
 import Store from "./Store/Store";
+import Admin from "./Admin/Admin";
 
 const Members = () => {
   const { authState } = useAuthStore();
@@ -20,6 +21,7 @@ const Members = () => {
   return (
     <Routes>
       <Route index element={<Home />} />
+      <Route path="/admin" element={<Admin />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/events" element={<EventsList />} />
       <Route path="/profile" element={<Profile />} />
