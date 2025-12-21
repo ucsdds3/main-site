@@ -13,10 +13,7 @@
     "Partners": "/partners",
     "DataHacks": "/datahacks",
     "Projects": "/projects",
-    "Members": {
-      "pathname": "/",
-      "subdomain": "members"
-    }
+    "Join Us": "/join-us"
   },
   "consulting": {
     "About Us": "#about-us",
