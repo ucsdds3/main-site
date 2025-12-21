@@ -44,7 +44,7 @@ const Landing = () => {
           <img src={logo} alt="Logo" className="h-[clamp(3rem,5vw,5rem)] hidden md:block caret" />
         </div>
         <p className="mt-2 text-[clamp(1rem,3.5vw,2rem)] pb-[clamp(1rem,3vw,2rem)] font-albert-sans text-center md:text-left">
-        Expanding the horizons of data science through community, curiosity, and collaboration.
+          Expanding the horizons of data science through community, curiosity, and collaboration.
         </p>
         <Button
           onClick={() => {
@@ -55,14 +55,19 @@ const Landing = () => {
         </Button>
       </div>
 
-      <img
+      <motion.img
         src={dino}
-        className="w-[70vw] max-w-[30rem] mx-auto mb-6 md:w-[clamp(20rem,40vw,30rem)] md:absolute md:right-0 md:bottom-0 md:mb-10 md:mx-0 lg:w-[clamp(18rem,28vw,40rem)] lg:mt-auto p-16 rotate-15"/>
-
-      {/* <img
-        src={dino}
-        className="dino-img"
-      /> */}
+        className="w-[70vw] max-w-[30rem] mx-auto mb-6 md:w-[clamp(20rem,40vw,30rem)] md:absolute md:right-0 md:bottom-0 md:mb-10 md:mx-0 lg:w-[clamp(18rem,28vw,40rem)] lg:mt-auto p-16"
+        animate={{
+          y: [0, -20, 0],
+          rotate: [15, 10, 15],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
     </div>
   );
 };
