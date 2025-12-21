@@ -18,6 +18,120 @@
     "/Projects/P7.webp"
   ],
   "projects": {
+    "Fall 2025": [
+      {
+        "title": "SayStroop",
+        "mentor": "Rocio & Aatyanth",
+        "design_document": "https://drive.google.com/file/d/15b5v1SHoFGfYm1B6auD1YsrEHeJ4vEyc/view?usp=drive_link",
+        "github_repository": "https://github.com/SeojunJaden/SayStroop:",
+        "code_documentation": "https://github.com/SeojunJaden/SayStroop/blob/main/README.md",
+        "meeting_logs": "https://docs.google.com/document/d/1eOGAQk68ugVH_jHuA6nGJAWO2ORK7JdSIl2sCkoxKDY/edit?tab=t.0",
+        "presentation_slides": "https://www.canva.com/design/DAG5XhsV3Lc/KloV86jW-DFQ8Qav4cJ2oQ/edit",
+        "website": "https://saystroop.streamlit.app/:",
+        "image": "/Projects/FALL2025/saystroop.webp"
+      },
+      {
+        "title": "TubeScope",
+        "mentor": "Vedant",
+        "design_document": "https://docs.google.com/document/d/1NQkWppti_-d88UD8n8ht7vf6pQ07zhQLbLCYWQWP6Qc/edit?usp=sharing",
+        "github_repository": "https://github.com/VedVar43789/TubeScope",
+        "code_documentation": "https://github.com/VedVar43789/TubeScope/blob/main/README.md",
+        "meeting_logs": "https://docs.google.com/document/u/1/d/1YXT6skFyQeCJyBkQOZgxYOghhZvmhQZmQd4p1zLvppM/edit?usp=sharing",
+        "presentation_slides": "https://www.canva.com/design/DAG5QYsPWSo/vucJJH6eihzNWZjZjPGWRA/edit",
+        "website": "https://tubescopeds3.streamlit.app/:",
+        "image": "/Projects/FALL2025/tubescope.webp"
+      },
+      {
+        "title": "PantryPal",
+        "mentor": "Vedant",
+        "design_document": "https://drive.google.com/file/d/1M_cK9Fjl0fPL84kiuXQ3SQuoJvlLAXVu/view?usp=sharing",
+        "github_repository": "https://github.com/Manan1406/PantryPalDemo",
+        "code_documentation": "https://github.com/Manan1406/PantryPalDemo/blob/improve-frontend/README.md",
+        "meeting_logs": "https://docs.google.com/document/d/1rH2bPO3A5vGiFrwYelVnCvqW9zlxAT7sE4Yu2gRJzbE/edit?usp=sharing",
+        "presentation_slides": "https://www.canva.com/design/DAG5usBBPis/qb4nqH0Onos6uCt9J1WNTQ/edit?utm_content=DAG5usBBPis&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+        "website": "https://pantrypalucsd.streamlit.app/:",
+        "image": "/Projects/FALL2025/pantrypal.webp"
+      },
+      {
+        "title": "Next-Up",
+        "mentor": "Anirudh & William",
+        "design_document": "https://drive.google.com/file/d/1oQ3oJmJWlzHrPYZalpBaHVQ7KbCV3KdQ/view?usp=sharing",
+        "github_repository": "https://github.com/anirudh9280/Next-Up.git:",
+        "code_documentation": "https://github.com/anirudh9280/Next-Up/blob/main/README.md:",
+        "meeting_logs": "https://docs.google.com/document/d/1P3TePxBe9fWlsFErBJvhv_zK4dcHwDD1XI0yjOKE-jI/edit?usp=sharing",
+        "presentation_slides": "https://docs.google.com/presentation/d/1drLnQUppXPWYn3jB2weG2bOVRdx_B7eGFKdzX0AmaEM/edit?usp=sharing",
+        "website": "https://next-up.streamlit.app/:",
+        "image": "/Projects/FALL2025/next_up.webp"
+      },
+      {
+        "title": "EvoCharge",
+        "mentor": "Anirudh",
+        "design_document": "https://drive.google.com/file/d/13_q36x-rtGmPeawt2XxiSMSlfIY6RcM0/view?usp=sharing",
+        "github_repository": "https://github.com/anirudh9280/EvoCharge.git:",
+        "code_documentation": "https://github.com/anirudh9280/EvoCharge/blob/main/README.md:",
+        "meeting_logs": "https://docs.google.com/document/d/1B6jlow_tcZ3hZY1ka9nPxpEL-P8OxOoN6JBojpLJHRI/edit?usp=sharing",
+        "presentation_slides": "https://docs.google.com/presentation/d/13ofSeKqhRlQyjkB4wWfB_gA-c43e3xcTPdqAdIQ6DYo/edit?usp=sharing",
+        "website": "https://evocharge.streamlit.app/:",
+        "image": "/Projects/FALL2025/evocharge.webp"
+      },
+      {
+        "title": "Sklearn Under the Hood",
+        "mentor": "Kaii & Matt",
+        "design_document": "https://lucid.app/lucidchart/f853bb93-43f9-45f9-b607-3e3d8f4afe6b/edit?viewport_loc=142%2C-255%2C3933%2C2076%2C0_0&invitationId=inv_24f2020a-9bb5-4015-a35f-5e25e63a9188",
+        "github_repository": "https://github.com/KaiiB/ml-under-the-hood-site.git:",
+        "code_documentation": "https://github.com/KaiiB/ml-under-the-hood-site.git:",
+        "meeting_logs": "https://docs.google.com/document/d/1bK4arkjI4FsP2Rf7pMT_nXObt1NskB6tHNA2sirZW9Q/edit?usp=drivesdk:",
+        "presentation_slides": "https://docs.google.com/presentation/d/1zCPfy3g6iWJortZ6ocB6fN08grg_6VP_mjCLkBiMZCQ/edit?usp=sharing",
+        "website": "https://ml-under-the-hood-site.vercel.app/:",
+        "image": "/Projects/FALL2025/sklearn_under_the_hood.webp"
+      },
+      {
+        "title": "StackBot",
+        "mentor": "Ketan",
+        "design_document": "https://docs.google.com/document/u/1/d/1dMHzfLEskjjDQVzXW3kx630jGWm6Syt5NNhmki8Tv-Y/edit?tab=t.0",
+        "github_repository": "https://github.com/v1zhu/Stackbot-DS3:",
+        "code_documentation": "https://github.com/v1zhu/Stackbot-DS3:",
+        "meeting_logs": "https://docs.google.com/document/d/1Sm5S9tAgtopevB1EyB0KUjyNrm8RHdjkMaxTubur1L4/edit?usp=sharing",
+        "presentation_slides": "https://www.canva.com/design/DAG6Jk-gxQ0/Gf9lvxsn7nEbi5Cb-iT8qA/edit:",
+        "website": "https://stackbot.streamlit.app/:",
+        "image": "/Projects/FALL2025/stackbot.webp"
+      },
+      {
+        "title": "TicketSync",
+        "mentor": "Aryan",
+        "design_document": "https://drive.google.com/file/d/1LGNeA9WCljYA4Wx_HVnVxdNkzd14a49g/view?usp=drivesdk",
+        "github_repository": "https://github.com/EugeneBertrand/TicketSync?fbclid=PAT01DUAORrh9leHRuA2FlbQIxMABzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAacw6Gjlc8H1fdaZRv7f-xQ9mcrhcfOaWGWuUbDBavxQl7r36nr1MLXxA1sZew_aem_vUtfP9OueSohrOQ-tZyRug",
+        "code_documentation": null,
+        "meeting_logs": "https://docs.google.com/document/d/1XlnnWBALPMcJOvmEGtaUF-YY7ThyTIb2_sE5C6sntuo/edit?usp=drivesdk",
+        "presentation_slides": "https://docs.google.com/presentation/d/1QMUSaZ6CCa9bTHEyxW380Dxt-zvdHvCLSJfY7wKlIZE/edit?usp=drivesdk",
+        "website": "https://ticketsync-1lgzkp3ws-eugenebertrands-projects.vercel.app/",
+        "image": "/Projects/FALL2025/ticketsync.webp"
+      },
+      {
+        "title": "CityPulse",
+        "mentor": "Aryan",
+        "design_document": "https://docs.google.com/document/d/1X5TWlvrMz9gTNRQvR2VtWBR9fVL6NOcY1kmH7lrNBbc/edit?usp=sharing",
+        "github_repository": "https://github.com/carstenpetey/citypulse",
+        "code_documentation": null,
+        "meeting_logs": "https://docs.google.com/document/d/1QI0F0ux7LdAF-v1atGyNUC4lRaYl7qNZxNlKOA-r9Hk/edit?usp=drivesdk",
+        "presentation_slides": "https://docs.google.com/presentation/d/12ZzhCYO6Jk0r5CUZT1KbxrrDWshIUs5whUi-yeqyBSU/edit?usp=drivesdk",
+        "website": "https://public.tableau.com/app/profile/cindy.chen2025/viz/ok_17635834606670/Dashboard1?publish=yes&fbclid=PAT01DUAOV-cFleHRuA2FlbQIxMABzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAafvff5zMUG-1lqRh0ss0bbywLQuYicQNjW18eoOdDQuwdDlkS_WM2xnG5WKJw_aem_88ZgeZc_9Uft7ARMhRhRRg",
+        "image": "/Projects/FALL2025/citypulse.webp"
+      },
+      {
+        "title": "Geisel IOT Project",
+        "mentor": "Jeronimo",
+        "design_document": "https://docs.google.com/document/d/1UjzcOZoSTq4bi2Dqqco59MdzG1SjvhX42C6TuxbY2NI/edit?tab=t.0",
+        "github_repository": "https://github.com/DylanBerry1/DS3-Geisel-Library-Project:",
+        "code_documentation": "https://docs.google.com/document/d/1ywZ4F5e9E5dSa0FRFMFzSdlbqfnCTMOG8z7uQJSuUaQ/edit?tab=t.0",
+        "meeting_logs": "https://docs.google.com/document/d/1632t2wxOdKhIe3Ys6ZBbo4cQtj7X4LefASyy_IcABnM/edit?tab=t.0#heading=h.k5wic4i8dq9j",
+        "presentation_slides": "https://www.canva.com/design/DAG6l-cBb2s/mLvroiEpmXPhzeR0I4jLcA/edit?utm_content=DAG6l-cBb2s&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+        "website": "https://dylanberry1.github.io/DS3-Geisel-Library-Project/:",
+        "image": "/Projects/FALL2025/geisel_iot_project.webp"
+      }
+    ]
+  },
+  "archive": {
     "2025": [
       {
         "title": "Mood-Based Music Recommendation System",
