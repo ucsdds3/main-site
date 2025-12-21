@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 interface PaginateProps {
   minCardsPerPage?: number;
@@ -17,11 +17,15 @@ export const usePaginate = ({ numRows, totalItems, minCardsPerPage = 3 }: Pagina
     const calculateCardsPerPage = () => {
       const grid = document.querySelector('.grid');
       if (!grid) return;
-      
+
       const computedStyle = window.getComputedStyle(grid);
       const gridTemplateColumns = computedStyle.gridTemplateColumns.split(' ');
       const cardsPerRow = gridTemplateColumns.length;
-      const cardsPerPage = Math.max(minCardsPerPage, cardsPerRow * numRows);
+
+      const cardsPerPage = Math.max(
+        minCardsPerPage,
+        Math.ceil(minCardsPerPage / cardsPerRow) * cardsPerRow
+      );
       setCardsPerPage(cardsPerPage);
       setNumPages(Math.ceil(totalItems / cardsPerPage));
     };
@@ -33,4 +37,4 @@ export const usePaginate = ({ numRows, totalItems, minCardsPerPage = 3 }: Pagina
   }, [numRows, totalItems, minCardsPerPage]);
 
   return { page, setPage, cardsPerPage, numPages, setNumPages, start, end };
-}
+};
