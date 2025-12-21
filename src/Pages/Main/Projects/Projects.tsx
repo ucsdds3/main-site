@@ -4,6 +4,9 @@ import Landing from './Landing.tsx'
 const About = lazy(() => {
   return import('../../../Components/About.tsx')
 })
+const ShowCase = lazy(() => {
+  return import('./ShowCase.tsx')
+})
 const Archive = lazy(() => {
   return import('./Archive.tsx')
 })
@@ -12,7 +15,6 @@ const Gallery = lazy(() => {
 })
 
 import projects from '../../../Assets/Data/projects.json'
-import ShowCase from './Showcase'
 
 const Projects = () => {
   const scrollRef = useRef<HTMLDivElement>(null!)
