@@ -10,10 +10,11 @@
       "Board": "/board",
       "Alumni": "/board/alumni"
     },
-    "Partners": "/partners",
+    "Consulting": { "subdomain": "consulting", "pathname": "/" },
     "DataHacks": "/datahacks",
     "Projects": "/projects",
-    "Join Us": "/join-us"
+    "Join Us": "/join-us",
+    "Partners": "/partners"
   },
   "consulting": {
     "About Us": "#about-us",
