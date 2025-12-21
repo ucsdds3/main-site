@@ -22,7 +22,7 @@ const Navbar = () => {
         <div className="flex items-center gap-5">
           <button
             className="space-x-2 cursor-pointer [&:hover>img]:-rotate-180"
-            onClick={() => navigate({ pathname: "/", hash: "home" })}
+            onClick={() => navigate({ subdomain: "main", pathname: "/", hash: "home" })}
           >
             <img src={logo} alt="Logo" className="w-10 transition-all duration-500" />
           </button>
