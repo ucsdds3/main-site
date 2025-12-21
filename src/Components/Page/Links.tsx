@@ -19,7 +19,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       {Object.entries(links).map(([label, data], index) => (
         <NavItem key={index} label={label} data={data} />
       ))}
-      {subdomain == 'main' || authState == 'signin' ? (
+      {subdomain == 'main' || authState != 'authenticated' ? (
         <button
           onClick={() =>
             navigate({ pathname: '/', subdomain: subdomain == 'main' ? 'members' : 'main' })
