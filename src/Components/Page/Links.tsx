@@ -21,10 +21,10 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       ))}
       {subdomain == "main" || authState == "signin" ? (
         <button
-          onClick={authState != "signin" ? () => navigate({ pathname: "/join-us" }) : () => navigate({ pathname: "/", subdomain: "main" })}
+          onClick={subdomain == "main" ? () => navigate({ pathname: "/join-us" }) : () => navigate({ pathname: "/", subdomain: "main" })}
           className={`bg-(--color-primary) px-4 pb-2 pt-1 hover:brightness-110 cursor-pointer rounded-full text-center ${typographyClasses} font-medium w-full sm:w-auto min-w-[120px] uppercase`}
         >
-          {authState != "signin" ? "Join Us" : "Main Site"}
+          {subdomain == "main" ? "Join Us" : "Main Site"}
         </button>
       ) : (
         <Avatar />
