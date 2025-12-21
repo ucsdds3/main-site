@@ -93,7 +93,7 @@ const ShowCase = () => {
           <HoverCard
             key={index}
             {...project}
-            placement={index + 1}
+            placement={page === 1 ? index + 1 : undefined}
             links={createLinks(project)}
             size="clamp(300px, 40vw, 350px)"
             imgClassName="border-2 border-primary"
