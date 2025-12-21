@@ -12,7 +12,8 @@ const Landing = () => {
       <div className="flex flex-col text-center lg:text-left px-10">
         <h2 className="text-[clamp(1.5rem,2vw,2rem)] font-medium">What Will You Create?</h2>
         <h1 className="text-[clamp(2.7rem,5vw,5rem)] font-medium leading-tight uppercase text-glow tracking-wider">
-          {`DataHacks ${new Date().getFullYear()}`}
+          {/* This school year*/}
+          {`DataHacks ${new Date().getFullYear() + (new Date().getMonth() > 9 ? 1 : 0)}`}
         </h1>
         <p className="text-[clamp(1.1rem,1.5vw,1.4rem)]">
           Analyze real-world data, build powerful insights, and create impactful solutions.
