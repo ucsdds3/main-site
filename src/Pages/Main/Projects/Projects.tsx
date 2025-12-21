@@ -4,14 +4,15 @@ import Landing from "./Landing.tsx";
 const About = lazy(() => {
   return import("../../../Components/About.tsx");
 });
-const ShowCase = lazy(() => {
-  return import("./ShowCase.tsx");
+const Archive = lazy(() => {
+  return import("./Archive.tsx");
 });
 const Gallery = lazy(() => {
   return import("../../../Components/Gallery.tsx");
 });
 
 import projects from "../../../Assets/Data/projects.json";
+import ShowCase from "./Showcase.tsx";
 
 const Projects = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
@@ -23,6 +24,7 @@ const Projects = () => {
         <Suspense>
           <About {...projects.about} />
           <ShowCase />
+          <Archive />
           <Gallery images={projects.images} />
         </Suspense>
       </div>
