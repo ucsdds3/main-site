@@ -9,7 +9,7 @@ interface SafeLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 const SafeLink = ({ href, glow, className, children, ...props }: SafeLinkProps) => {
   return (
     <a
-      href={href}
+      href={href.replace(/[:;,\s]+$/, "")} // Sanitize URL to remove invalid trailing characters
       target="_blank"
       rel="noopener noreferrer"
       className={twMerge(
