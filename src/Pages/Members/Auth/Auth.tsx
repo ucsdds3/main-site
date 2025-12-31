@@ -9,12 +9,13 @@ import Signup from "./Signup";
 const Auth = () => {
   const { authState } = useAuthStore();
   const { navigate } = useSiteHandler();
-  
+
   useEffect(() => {
     if (authState == "authenticated") {
       navigate({ pathname: "/" });
+    } else {
+      navigate({ pathname: "" });
     }
-    console.log(authState, "AUTH");
   }, [authState, navigate]);
 
   if (authState == "signin") return <Signin />;
