@@ -1,13 +1,13 @@
 {
   "services": [
     {
-      "title": "Cloud Solutions",
-      "description": "The cloud architecture landscape is complex, and it’s always difficult to choose which tools are best for your needs. We provide end-to-end design of useful systems for you to log and keep track of your organization’s data—specific to your business and industry requirements.",
+      "title": "Machine Learning",
+      "description": "Unlock intelligent automation with custom machine-learning pipelines that forecast outcomes, personalize experiences, and adapt in real time.",
       "image": "/Consulting/Model_Design.webp"
     },
     {
-      "title": "MLOPS",
-      "description": "We deploy, monitor, and continually optimize ML models in production to maximize performance and extract business value at scale.",
+      "title": "Data Engineering",
+      "description": "Build reliable data infrastructure and pipelines that collect, clean, and deliver high-quality data, powering analytics, machine learning, and insights.",
       "image": "/Consulting/MLOPS.webp"
     },
     {

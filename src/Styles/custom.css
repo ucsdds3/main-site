@@ -176,3 +176,39 @@
     transform: translateY(0);
   }
 }
+
+.infinite-carousel {
+  margin: 0 auto;
+  padding: 20px 0;
+  max-width: 1200px;
+  overflow: hidden;
+  display: flex;
+}
+
+.infinite-carousel > * {
+  flex: 0 0 100%;
+}
+
+.infinite-group {
+  display: flex;
+  gap: 20px;
+  padding-right: 20px;
+  will-change: transform;
+}
+
+.infinite-group.animated {
+  animation: infinite-scrolling 20s linear infinite;
+}
+
+@keyframes infinite-scrolling {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.infinite-carousel.animated:hover .infinite-group {
+  animation-play-state: paused;
+}
