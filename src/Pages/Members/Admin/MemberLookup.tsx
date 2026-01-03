@@ -1,10 +1,64 @@
+import { useEffect, useState } from "react";
 import Input from "../../../Components/Input";
 import Select from "../../../Components/Select";
 import { Badge, Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
+import { PortalMemberType } from "../../../Utils/types";
+import { supabase } from "../../../Utils/supabase";
 
+const defaultSelection: PortalMemberType = {
+  id: "0",
+  name: "John Doe",
+  points: 0,
+  xp: 0,
+  deleted: false,
+  created_at: "",
+  updated_at: "",
+  email: "JohnDoe@Hotmail.com",
+  admin_level: 0,
+};
 export default function MemberLookup() {
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [tierFilter, setTierFilter] = useState("");
+  const [members, setMembers] = useState<PortalMemberType[]>([]);
+  const [selected, setSelected] = useState<PortalMemberType>(defaultSelection);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      const { data } = await supabase
+        .from("Members")
+        .select("id,name:full_name,points,xp,deleted,created_at,updated_at,email,admin_level")
+        .order("points", { ascending: false });
+      if (data) {
+        setMembers(data);
+      }
+    };
+    fetchMembers();
+  }, []);
+
+  const submitForm = async () => {
+    const { data } = await supabase
+      .from("Members")
+      .select("id,name:full_name,points,xp,deleted,created_at,updated_at,email,admin_level")
+      .ilike("full_name", `%${search}%`);
+    if (data) {
+      setMembers(data);
+    }
+  };
+
+  const updateAdmin = async () => {
+    const { error } = await supabase
+      .from("Members")
+      .update({ admin_level: selected.admin_level ? null : 1 })
+      .eq("id", selected.id);
+    if (error) console.log(error);
+    else {
+      setSelected({ ...selected, admin_level: selected.admin_level ? null : 1 });
+    }
+  };
+
   return (
     <>
       <section className="lg:col-span-7">
@@ -12,39 +66,44 @@ export default function MemberLookup() {
           <DashboardSectionHeader
             title="Member Lookup"
             subtitle="Search by name, email, or member ID. Filter by tier and status."
-            actions={
-              <div className="flex gap-2">
-                <DashboardButton>Create Member</DashboardButton>
-                <DashboardButton variant="orange">View Selected</DashboardButton>
-              </div>
-            }
           />
 
-          <div className="grid gap-3 md:grid-cols-3">
-            <Input label="Search (name, email, ID)..." className="w-full min-w-0" />
+          <form
+            className="grid gap-3 md:grid-cols-3"
+            onSubmit={e => {
+              e.preventDefault();
+              submitForm();
+            }}
+          >
+            <Input
+              label="Search (name, email, ID)..."
+              className="w-full min-w-0"
+              value={search}
+              setValue={setSearch}
+            />
             <Select
               label="Status"
-              options={["Any", "Active", "Inactive", "Banned"]}
+              options={["Any", "Active", "Inactive"]}
               className="w-full min-w-0 h-min"
+              value={statusFilter}
+              setValue={setStatusFilter}
             />
             <Select
               label="Tier"
               options={["Any", "Rookie", "Bronze", "Silver", "Gold"]}
               className="w-full min-w-0 h-min"
+              value={tierFilter}
+              setValue={setTierFilter}
             />
-          </div>
+            <DashboardButton variant="orange" className="w-min">
+              submit
+            </DashboardButton>
+          </form>
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Badge>Verified</Badge>
-            <Badge tone="orange">High Points</Badge>
-            <Badge>Has Invoice</Badge>
-            <Badge>Recent Event</Badge>
-          </div>
-
-          <div className="mt-5 overflow-hidden rounded-2xl border border-white/10">
+          <div className="mt-5 overflow-y-auto overflow-x-hidden rounded-2xl border border-white/10 max-h-[520px]">
             <table className="w-full text-left text-sm">
               <thead className="bg-white/5 text-white/60">
-                <tr>
+                <tr className="">
                   <th className="px-4 py-3">Member</th>
                   <th className="px-4 py-3">Tier</th>
                   <th className="px-4 py-3">Status</th>
@@ -52,22 +111,32 @@ export default function MemberLookup() {
                   <th className="px-4 py-3"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/10">
-                {Array.from({ length: 8 }).map((_, i) => (
+              <tbody className="divide-y divide-white/10 max-h-[800px] overflow-y-auto ">
+                {members.map((member, i) => (
                   <tr key={i} className="hover:bg-white/5">
                     <td className="px-4 py-3">
-                      <div className="font-medium">Member Name {i + 1}</div>
-                      <div className="text-xs text-white/50">member{i + 1}@email.com</div>
+                      <div className="font-medium">{member.name}</div>
+                      <div className="text-xs text-white/50">{member.email}</div>
                     </td>
                     <td className="px-4 py-3">
                       <Badge>Rookie</Badge>
                     </td>
                     <td className="px-4 py-3">
-                      <Badge tone="good">Active</Badge>
+                      <Badge tone={member.deleted ? "bad" : "good"}>
+                        {member.deleted ? "Inactive" : "active"}
+                      </Badge>
                     </td>
-                    <td className="px-4 py-3">1,240</td>
+                    <td className="px-4 py-3">{member.points}</td>
                     <td className="px-4 py-3 text-right">
-                      <DashboardButton variant="ghost">Select</DashboardButton>
+                      <DashboardButton
+                        variant="ghost"
+                        onClick={() => {
+                          console.log(member);
+                          setSelected(member);
+                        }}
+                      >
+                        Select
+                      </DashboardButton>
                     </td>
                   </tr>
                 ))}
@@ -82,37 +151,44 @@ export default function MemberLookup() {
           <DashboardSectionHeader
             title="Selected Member"
             subtitle="Details panel (UI)."
-            actions={<Badge tone="good">Active</Badge>}
+            actions={
+              <Badge tone={selected?.deleted ? "bad" : "good"}>
+                {selected?.deleted ? "Inactive" : "active"}
+              </Badge>
+            }
           />
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="text-lg font-semibold">Viet Minh Hieu Nguyen</div>
-                <div className="mt-1 text-sm text-white/60">viet@email.com • ID: 000123</div>
+                <div className="text-lg font-semibold">{selected.name}</div>
+                <div className="mt-1 text-sm text-white/60">
+                  {selected.email} • ID: {selected.id}
+                </div>
               </div>
               <Badge tone="orange">Rookie</Badge>
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <Meta label="XP" value="240 / 1000" />
-              <Meta label="Points" value="0" />
-              <Meta label="Joined" value="2025-09-12" />
-              <Meta label="Last Seen" value="2025-12-30" />
+            <div className="mt-4 grid grid-cols-2 gap-3 ">
+              <Meta label="XP" value={`${selected.xp} / 1000`} />
+              <Meta label="Points" value={`${selected.points}`} />
+              <Meta label="Joined" value={selected.created_at.split("T")[0]} />
+              <Meta label="Last Updated" value={selected.updated_at.split("T")[0]} />
             </div>
           </div>
 
           <div className="mt-4 rounded-2xl border border-white/10 bg-[#0F1620] p-4">
             <div className="text-sm font-semibold">Member Controls (UI)</div>
             <div className="mt-3 space-y-2">
-              <ToggleRow label="Can check-in events" />
-              <ToggleRow label="Can redeem points" />
-              <ToggleRow label="Marketing emails" />
+              <ToggleRow
+                label="is admin"
+                checked={selected.admin_level != null}
+                onClick={updateAdmin}
+              />
             </div>
-            <div className="mt-4 flex gap-2">
+            {/* <div className="mt-4 flex gap-2">
               <DashboardButton>Reset Password</DashboardButton>
-              <DashboardButton variant="orange">Flag Account</DashboardButton>
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-4">
@@ -141,13 +217,28 @@ function Meta({ label, value }: { label: string; value: string }) {
   );
 }
 
-function ToggleRow({ label }: { label: string }) {
+function ToggleRow({
+  label,
+  checked,
+  onClick,
+}: {
+  label: string;
+  checked: boolean;
+  onClick: () => void;
+}) {
+  console.log(checked);
   return (
-    <div className="flex items-center justify-between rounded-xl border border-white/10 bg-[#0F1620] px-3 py-2">
-      <span className="text-sm text-white/75">{label}</span>
-      <div className="h-6 w-11 rounded-full bg-white/10 p-1">
-        <div className="h-4 w-4 rounded-full bg-white/40" />
-      </div>
-    </div>
+    <fieldset className="fieldset rounded-box w-64 ">
+      <label className="label">
+        <input
+          type="checkbox"
+          defaultChecked
+          className="toggle toggle-primary"
+          checked={checked}
+          onClick={onClick}
+        />
+        {label}
+      </label>
+    </fieldset>
   );
 }
