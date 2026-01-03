@@ -6,7 +6,7 @@ import DashboardSectionHeader from "./DashboardSectionHeader";
 import { supabase } from "../../../Utils/supabase";
 import { PortalMemberType } from "../../../Utils/types";
 import toast from "react-hot-toast";
-import { useTriggerFetchAdmin } from "./useTriggerFetchAdmin";
+import { useTriggerFetchAdmin } from "../../../Hooks/Members/Admin/useTriggerFetchAdmin";
 export default function DashboardAdmin() {
   const [admins, setAdmins] = useState<PortalMemberType[]>([]);
   const [filtered, setFiltered] = useState<PortalMemberType[]>([]);
