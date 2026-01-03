@@ -85,7 +85,7 @@ export type AuthState =
   | "authenticated";
 
 export type PortalMemberType = {
-  id: string;
+  id: number;
   name: string;
   points: number;
   xp: number;

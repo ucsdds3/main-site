@@ -6,9 +6,11 @@ import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
 import { PortalMemberType } from "../../../Utils/types";
 import { supabase } from "../../../Utils/supabase";
+import toast from "react-hot-toast";
+import { useTriggerFetchAdmin } from "./useTriggerFetchAdmin";
 
 const defaultSelection: PortalMemberType = {
-  id: "0",
+  id: 0,
   name: "John Doe",
   points: 0,
   xp: 0,
@@ -24,7 +26,7 @@ export default function MemberLookup() {
   const [tierFilter, setTierFilter] = useState("");
   const [members, setMembers] = useState<PortalMemberType[]>([]);
   const [selected, setSelected] = useState<PortalMemberType>(defaultSelection);
-
+  const { triggerFetchAdmin, triggerFetchAdminNow } = useTriggerFetchAdmin();
   useEffect(() => {
     const fetchMembers = async () => {
       const { data } = await supabase
@@ -36,13 +38,13 @@ export default function MemberLookup() {
       }
     };
     fetchMembers();
-  }, []);
+  }, [triggerFetchAdmin]);
 
   const submitForm = async () => {
     const { data } = await supabase
       .from("Members")
       .select("id,name:full_name,points,xp,deleted,created_at,updated_at,email,admin_level")
-      .ilike("full_name", `%${search}%`);
+      .or(`full_name.ilike.%${search}%,email.ilike.%${search}%`);
     if (data) {
       setMembers(data);
     }
@@ -53,9 +55,10 @@ export default function MemberLookup() {
       .from("Members")
       .update({ admin_level: selected.admin_level ? null : 1 })
       .eq("id", selected.id);
-    if (error) console.log(error);
+    if (error) toast.error(error.message);
     else {
       setSelected({ ...selected, admin_level: selected.admin_level ? null : 1 });
+      triggerFetchAdminNow();
     }
   };
 
@@ -65,7 +68,7 @@ export default function MemberLookup() {
         <Card>
           <DashboardSectionHeader
             title="Member Lookup"
-            subtitle="Search by name, email, or member ID. Filter by tier and status."
+            subtitle="Search by name or email Filter by tier and status."
           />
 
           <form
@@ -76,7 +79,7 @@ export default function MemberLookup() {
             }}
           >
             <Input
-              label="Search (name, email, ID)..."
+              label="Search (name, email)..."
               className="w-full min-w-0"
               value={search}
               setValue={setSearch}
