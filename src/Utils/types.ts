@@ -83,3 +83,15 @@ export type AuthState =
   | "forgot-password"
   | "reset-password"
   | "authenticated";
+
+export type PortalMemberType = {
+  id: string;
+  name: string;
+  points: number;
+  xp: number;
+  deleted: boolean;
+  created_at: string;
+  updated_at: string;
+  email: string;
+  admin_level: number | null;
+};
