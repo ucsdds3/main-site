@@ -1,32 +1,65 @@
+import { useEffect, useState } from "react";
 import Input from "../../../Components/Input";
-import Select from "../../../Components/Select";
 import { Badge, Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
-
+import { supabase } from "../../../Utils/supabase";
+import { PortalMemberType } from "../../../Utils/types";
+import toast from "react-hot-toast";
+import { useTriggerFetchAdmin } from "./useTriggerFetchAdmin";
 export default function DashboardAdmin() {
+  const [admins, setAdmins] = useState<PortalMemberType[]>([]);
+  const [filtered, setFiltered] = useState<PortalMemberType[]>([]);
+  const [search, setSearch] = useState("");
+  const { triggerFetchAdmin, triggerFetchAdminNow } = useTriggerFetchAdmin();
+  const removeAdmin = async (id: number) => {
+    const { error } = await supabase.from("Members").update({ admin_level: null }).eq("id", id);
+    if (error) toast.error(error.message);
+    else {
+      triggerFetchAdminNow();
+    }
+  };
+  useEffect(() => {
+    const fetchAdmins = async () => {
+      const { data } = await supabase
+        .from("Members")
+        .select("id,name:full_name,points,xp,deleted,created_at,updated_at,email,admin_level")
+        .not("admin_level", "is", null)
+        .order("points", { ascending: false });
+      if (data) {
+        setAdmins(data);
+        setFiltered(data);
+      }
+    };
+    fetchAdmins();
+  }, [triggerFetchAdmin]);
+  useEffect(() => {
+    if (!search) return;
+    const currAdmins = admins.filter(
+      admin =>
+        admin.name.toLowerCase().includes(search) || admin.email.toLowerCase().includes(search)
+    );
+    setFiltered(currAdmins);
+  }, [search, admins]);
+
   return (
     <section className="lg:col-span-6 relative">
       <Card>
         <DashboardSectionHeader
           title="Admin Management"
           subtitle="Invite admins, set roles, remove access (UI-only)."
-          actions={<DashboardButton variant="orange">Invite Admin</DashboardButton>}
         />
 
         <div className="grid gap-3 md:grid-cols-3">
-          <Input label="Admin email" className="w-full min-w-0" />
-          <Select
-            label="Role"
-            options={["Admin", "Super Admin", "Billing", "Events", "Read-only"]}
-            className="w-full min-w-0 h-min"
+          <Input
+            label="Admin (name,email)"
+            className="w-full min-w-0"
+            value={search}
+            setValue={setSearch}
           />
-          <DashboardButton variant="orange" className="h-12 mt-auto">
-            Send Invite
-          </DashboardButton>
         </div>
 
-        <div className="mt-5 overflow-hidden rounded-2xl border border-white/10">
+        <div className="mt-5 overflow-hidden overflow-y-auto rounded-2xl border border-white/10 max-h-[450px]">
           <table className="w-full text-left text-sm">
             <thead className="bg-white/5 text-white/60">
               <tr>
@@ -37,24 +70,25 @@ export default function DashboardAdmin() {
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10">
-              {["Alex", "Sam", "Jordan", "Riley"].map((name, i) => (
-                <tr key={name} className="hover:bg-white/5">
+              {filtered.map(admin => (
+                <tr key={admin.name} className="hover:bg-white/5">
                   <td className="px-4 py-3">
-                    <div className="font-medium">{name}</div>
-                    <div className="text-xs text-white/50">{name.toLowerCase()}@org.com</div>
+                    <div className="font-medium">{admin.name}</div>
+                    <div className="text-xs text-white/50">{admin.email}</div>
                   </td>
                   <td className="px-4 py-3">
-                    <Badge tone={i === 0 ? "orange" : "neutral"}>
-                      {i === 0 ? "Super Admin" : "Admin"}
+                    <Badge tone={"neutral"}>{"Admin"}</Badge>
+                  </td>
+                  <td className="px-4 py-3">
+                    <Badge tone={admin.deleted ? "bad" : "good"}>
+                      {admin.deleted ? "Inactive" : "active"}
                     </Badge>
-                  </td>
-                  <td className="px-4 py-3">
-                    <Badge tone="good">Active</Badge>
                   </td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex justify-end gap-2">
-                      <DashboardButton variant="ghost">Edit</DashboardButton>
-                      <DashboardButton variant="ghost">Remove</DashboardButton>
+                      <DashboardButton variant="ghost" onClick={() => removeAdmin(admin.id)}>
+                        Remove
+                      </DashboardButton>
                     </div>
                   </td>
                 </tr>
