@@ -7,7 +7,7 @@ import DashboardSectionHeader from "./DashboardSectionHeader";
 import { PortalMemberType } from "../../../Utils/types";
 import { supabase } from "../../../Utils/supabase";
 import toast from "react-hot-toast";
-import { useTriggerFetchAdmin } from "./useTriggerFetchAdmin";
+import { useTriggerFetchAdmin } from "../../../Hooks/Members/Admin/useTriggerFetchAdmin";
 
 const defaultSelection: PortalMemberType = {
   id: 0,
