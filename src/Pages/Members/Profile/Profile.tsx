@@ -1,4 +1,4 @@
-import { FaCalendar, FaEnvelope, FaGraduationCap, FaUser } from "react-icons/fa";
+import { FaCalendar, FaEnvelope, FaGraduationCap, FaUser, FaLink, FaGithub } from "react-icons/fa";
 import Page from "../../../Components/Page/Page";
 import Section from "../../../Components/Section";
 import { Input } from "../../../Components/Input";
@@ -13,24 +13,67 @@ const Profile = () => {
   const { errors, data, setData, handleUpdateProfile } = useProfile();
   const { handleForgotPassword } = useForgotPassword();
 
+  const getPdfPreviewUrl = (url?: string) => {
+    if (!url) return undefined;
+    if (url.toLowerCase().endsWith(".pdf")) return url;
+    const driveFileRegex = /https?:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
+    const match = url?.match(driveFileRegex);
+    if (match && match[1]) return `https://drive.google.com/file/d/${match[1]}/preview`;
+    return undefined;
+  };
+
+  const previewUrl = getPdfPreviewUrl(data?.resumeLink);
+
+  // Split full_name into first_name and last_name if not already split
+  const firstName = data?.first_name || data?.full_name?.split(" ")[0] || "";
+  const lastName = data?.last_name || data?.full_name?.split(" ").slice(1).join(" ") || "";
+
+  const setFirstName = (value: string) => {
+    setData({
+      ...data,
+      first_name: value,
+      full_name: `${value} ${lastName}`.trim(),
+    });
+  };
+
+  const setLastName = (value: string) => {
+    setData({
+      ...data,
+      last_name: value,
+      full_name: `${firstName} ${value}`.trim(),
+    });
+  };
+
   return (
     <Page>
       <Section className="flex-row flex-wrap items-center justify-center">
         <Avatar />
+
         <form
           className="flex-1 min-h-68 px-8 py-6 rounded-2xl bg-base-300 flex flex-col gap-4"
           onSubmit={handleUpdateProfile}
         >
+          {/* NAME & EMAIL */}
           <div className="w-full flex flex-wrap gap-8">
             <Input
               required
-              label="Full Name"
+              label="First Name"
               type="text"
               error={errors.toLowerCase().includes("name")}
               icon={<FaUser className="mr-2" />}
-              value={data?.full_name}
-              setValue={(value: string) => setData({ ...data, full_name: value })}
-              className="flex-1 w-full"
+              value={firstName}
+              setValue={setFirstName}
+              className="flex-1 w-full md:w-auto"
+            />
+            <Input
+              required
+              label="Last Name"
+              type="text"
+              error={errors.toLowerCase().includes("name")}
+              icon={<FaUser className="mr-2" />}
+              value={lastName}
+              setValue={setLastName}
+              className="flex-1 w-full md:w-auto"
             />
             <Input
               required
@@ -44,7 +87,9 @@ const Profile = () => {
               className="flex-1 w-full"
             />
           </div>
-          <div className="w-full flex flex-wrap gap-8">
+
+          {/* MAJOR & DOB */}
+          <div className="w-full flex flex-wrap gap-8 mt-4">
             <Select
               required
               label="Major"
@@ -53,7 +98,6 @@ const Profile = () => {
               setValue={(value: string) => setData({ ...data, major: value })}
               className="flex-1 w-full"
             />
-
             <Input
               required
               label="Date of Birth"
@@ -64,7 +108,9 @@ const Profile = () => {
               className="flex-1 w-full"
             />
           </div>
-          <div className="w-full flex flex-wrap gap-8">
+
+          {/* GENDER & GRADUATION YEAR */}
+          <div className="w-full flex flex-wrap gap-8 mt-4">
             <Select
               required
               label="Gender"
@@ -83,7 +129,80 @@ const Profile = () => {
               className="flex-1 w-full"
             />
           </div>
-          <div className="flex flex-wrap justify-around">
+
+          {/* GRAD STUDENT & TALENT POOL */}
+          <div className="w-full flex flex-wrap gap-8 mt-4">
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={data?.gradStudent || false}
+                onChange={e => setData({ ...data, gradStudent: e.target.checked })}
+                className="w-5 h-5 cursor-pointer"
+              />
+              <label className="text-lg cursor-pointer">Graduate Student?</label>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={data?.addLinks || false}
+                onChange={e => setData({ ...data, addLinks: e.target.checked })}
+                className="w-5 h-5 cursor-pointer"
+              />
+              <label className="text-lg cursor-pointer">Join Talent Pool (Optional)</label>
+            </div>
+          </div>
+
+          {/* CONDITIONAL LINKS */}
+          {data?.addLinks && (
+            <div className="w-full mt-4 flex flex-wrap gap-8">
+              <div className="flex-1 flex flex-col gap-4">
+                <Input
+                  label="Resume Link (PDF)"
+                  type="url"
+                  placeholder="https://example.com/resume.pdf"
+                  icon={<FaLink className="mr-2" />}
+                  value={data?.resumeLink || ""}
+                  setValue={(value: string) => setData({ ...data, resumeLink: value })}
+                />
+                <Input
+                  label="GitHub Profile"
+                  type="url"
+                  placeholder="https://github.com/username"
+                  icon={<FaGithub className="mr-2" />}
+                  value={data?.githubLink || ""}
+                  setValue={(value: string) => setData({ ...data, githubLink: value })}
+                />
+                <Input
+                  label="Other Link"
+                  type="url"
+                  placeholder="Portfolio, LinkedIn, personal site, etc."
+                  icon={<FaLink className="mr-2" />}
+                  value={data?.otherLink || ""}
+                  setValue={(value: string) => setData({ ...data, otherLink: value })}
+                />
+              </div>
+
+              <div className="flex-1 border rounded-lg overflow-hidden flex items-center justify-center">
+                {previewUrl ? (
+                  <iframe
+                    key={previewUrl}
+                    src={previewUrl}
+                    title="Resume Preview"
+                    className="w-[300px] h-[380px]"
+                    allow="autoplay"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-[380px] w-[300px] text-gray-400 text-center">
+                    <p>Paste a public Google Drive PDF link or a direct PDF URL.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* ACTION BUTTONS */}
+          <div className="flex flex-wrap justify-around mt-6">
             <Button
               btnClass="text-[clamp(1rem,1.2vw,1.5rem)]"
               type="button"
@@ -91,7 +210,6 @@ const Profile = () => {
             >
               Change Password
             </Button>
-
             <Button btnClass="text-[clamp(1rem,1.2vw,1.5rem)]" type="submit">
               Update Profile
             </Button>
