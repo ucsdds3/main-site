@@ -6,7 +6,7 @@ import {
   FaUser,
 } from "react-icons/fa";
 import Button from "../../../Components/Button";
-import Input from "../../../Components/Input";
+import {Input} from "../../../Components/Input";
 import Page from "../../../Components/Page/Page";
 import Select from "../../../Components/Select";
 import majors from "../../../Assets/Data/majors.json";

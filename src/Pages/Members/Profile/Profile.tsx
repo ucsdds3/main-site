@@ -1,7 +1,7 @@
 import { FaCalendar, FaEnvelope, FaGraduationCap, FaUser } from "react-icons/fa";
 import Page from "../../../Components/Page/Page";
 import Section from "../../../Components/Section";
-import Input from "../../../Components/Input";
+import { Input } from "../../../Components/Input";
 import Avatar from "../Avatar";
 import { useProfile } from "../../../Hooks/Members/useProfile";
 import Select from "../../../Components/Select";
@@ -92,10 +92,7 @@ const Profile = () => {
               Change Password
             </Button>
 
-            <Button
-              btnClass="text-[clamp(1rem,1.2vw,1.5rem)]"
-              type="submit"
-            >
+            <Button btnClass="text-[clamp(1rem,1.2vw,1.5rem)]" type="submit">
               Update Profile
             </Button>
           </div>

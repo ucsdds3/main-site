@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Input from "../../../Components/Input";
+import {Input} from "../../../Components/Input";
 import { Badge, Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
