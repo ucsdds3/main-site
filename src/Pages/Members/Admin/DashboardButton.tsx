@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 export default function DashboardButton({
   children,
   variant = "default",
@@ -7,7 +9,8 @@ export default function DashboardButton({
   children: React.ReactNode;
   variant?: "default" | "orange" | "ghost";
   className?: string;
-  onClick?: () => void;
+  type?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }) {
   const base =
     "inline-flex items-center justify-center rounded-xl px-3 py-2 text-sm font-medium transition border cursor-pointer bg-base-200  " +

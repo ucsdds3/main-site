@@ -14,7 +14,10 @@ export default function EventsList() {
   const [Events, setEvents] = useState<PortalEvent[]>([]);
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase.from("Events").select("name,description,image,points");
+      const { data, error } = await supabase
+        .from("Events")
+        .select("name,description,image,points")
+        .eq("deleted", false);
       if (data) {
         setEvents(data);
       }
