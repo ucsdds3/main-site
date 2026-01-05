@@ -4,16 +4,35 @@ import z from "zod";
 import { supabase } from "../../../Utils/supabase";
 import { useAuthStore } from "./useAuthStore";
 
+export type signUpForm = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  confirmPassword: string;
+  major: string;
+  dateOfBirth: string;
+  graduationYear: number;
+  gender: string;
+  resumeLink?: string;
+  githubLink?: string;
+  otherLink?: string;
+  addLinks?: boolean;
+  gradStudent: boolean;
+};
+
 export function useSignUp() {
   const defaultSchema = {
     email: "",
-    fullName: "",
+    firstName: "",
+    lastName: "",
     password: "",
     confirmPassword: "",
     major: "",
     dateOfBirth: "",
     graduationYear: new Date().getFullYear(),
     gender: "",
+    gradStudent: false,
   };
 
   const signupSchema = z
@@ -58,7 +77,7 @@ export function useSignUp() {
     });
 
   const [errors, setErrors] = useState<string>("");
-  const [data, setData] = useState<z.infer<typeof signupSchema>>(defaultSchema);
+  const [data, setData] = useState<signUpForm>(defaultSchema);
   const { setUser, setAuthState, setAdminLevel } = useAuthStore();
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -75,22 +94,25 @@ export function useSignUp() {
 
     const href = window.location.href;
     const search = new URLSearchParams(window.location.search);
-
+    const formData = {
+      email: data.email,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      major: data.major,
+      date_of_birth: data.dateOfBirth,
+      graduation_year: data.graduationYear,
+      gender: data.gender,
+      points: 0,
+      experience: 0,
+      grad_student: data.gradStudent,
+      
+    };
     setErrors("");
     const { data: userData, error } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
       options: {
-        data: {
-          email: data.email,
-          full_name: data.fullName,
-          major: data.major,
-          date_of_birth: data.dateOfBirth,
-          graduation_year: data.graduationYear,
-          gender: data.gender,
-          points: 0,
-          experience: 0,
-        },
+        data: formData,
         emailRedirectTo: `${href}${search && "&"}authState=signin`,
       },
     });
@@ -100,16 +122,16 @@ export function useSignUp() {
       return;
     }
 
-    const { error: rpcError } = await supabase.rpc("create_member_profile", {
-      full_name: data.fullName,
-      year: data.graduationYear,
-      major: data.major,
-      date_of_birth: data.dateOfBirth,
-      gender: data.gender,
-    });
-
-    if (rpcError) {
-      toast.error(rpcError.message);
+    // const { error: rpcError } = await supabase.rpc("create_member_profile", {
+    //   full_name: data.fullName,
+    //   year: data.graduationYear,
+    //   major: data.major,
+    //   date_of_birth: data.dateOfBirth,
+    //   gender: data.gender,
+    // });
+    const { error: createMemberProfileError } = await supabase.from("Members").insert(formData);
+    if (createMemberProfileError) {
+      toast.error(createMemberProfileError.message);
       return;
     }
 

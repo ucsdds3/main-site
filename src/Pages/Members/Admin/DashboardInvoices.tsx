@@ -1,4 +1,4 @@
-import {Input} from "../../../Components/Input";
+import { Input } from "../../../Components/Input";
 import Select from "../../../Components/Select";
 import { Badge, Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
@@ -6,7 +6,7 @@ import DashboardSectionHeader from "./DashboardSectionHeader";
 
 export default function DashboardInvoices() {
   return (
-    <section className="lg:col-span-12">
+    <section className="lg:col-span-12 opacity-10 ">
       <Card>
         <DashboardSectionHeader
           title="Invoices"
