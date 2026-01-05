@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Input from "../../../Components/Input";
+import { Input } from "../../../Components/Input";
 import Select from "../../../Components/Select";
 import { Badge, Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
@@ -99,7 +99,7 @@ export default function MemberLookup() {
               setValue={setTierFilter}
             />
             <DashboardButton variant="orange" className="w-min">
-              submit
+              Search
             </DashboardButton>
           </form>
 
@@ -229,7 +229,6 @@ function ToggleRow({
   checked: boolean;
   onClick: () => void;
 }) {
-  console.log(checked);
   return (
     <fieldset className="fieldset rounded-box w-64 ">
       <label className="label">
