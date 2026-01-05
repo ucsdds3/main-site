@@ -5,7 +5,7 @@ import { supabase } from "../../../Utils/supabase";
 import toast from "react-hot-toast";
 
 export function useSignIn() {
-  const { setAuthState, setUser } = useAuthStore();
+  const { setAuthState, setUser, setAdminLevel } = useAuthStore();
   const { navigate } = useSiteHandler();
   const [data, setData] = useState({
     email: "",
@@ -56,10 +56,25 @@ export function useSignIn() {
       toast.error(error.message);
       return;
     }
+    const { data: adminData, error: adminError } = await supabase
+      .from("Members")
+      .select("admin_level")
+      .eq("email", userData.user.email)
+      .limit(1)
+      .single();
 
+    if (adminError) {
+      toast.error(adminError.message);
+      return;
+    }
+    console.log("adminData: ", adminData);
+    setAdminLevel(adminData.admin_level);
     setUser(userData.user);
     setAuthState("authenticated");
-    localStorage.setItem("user", JSON.stringify(userData.user));
+    localStorage.setItem(
+      "user",
+      JSON.stringify(userData.user && { adminLevel: adminData.admin_level })
+    );
     navigate({ pathname: "/", subdomain: "members" });
     toast.success("Login successful!");
   };

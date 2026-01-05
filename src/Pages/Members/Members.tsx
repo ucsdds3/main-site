@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
 import { useAuthStore } from "../../Hooks/Members/Auth/useAuthStore";
 import Auth from "./Auth/Auth";
@@ -10,13 +10,15 @@ import Store from "./Store/Store";
 import Admin from "./Admin/Admin";
 
 const Members = () => {
-  const { authState } = useAuthStore();
+  const { authState, adminLevel } = useAuthStore();
   const { navigate } = useSiteHandler();
+  const location = useLocation();
 
   useEffect(() => {
     if (authState != "authenticated") navigate({ pathname: "/auth" });
+    else if (adminLevel == null && location.pathname.includes("admin")) navigate({ pathname: "/" });
     console.log(authState, "MEMBERS");
-  }, [authState]);
+  }, [authState, adminLevel]);
 
   return (
     <Routes>

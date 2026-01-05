@@ -23,7 +23,6 @@
   },
   "members": {
     "Store": "/store",
-    "Events": "/events",
-    "Admin": "/admin"
+    "Events": "/events"
   }
 }
