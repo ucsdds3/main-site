@@ -18,9 +18,7 @@ export function useSignUp() {
 
   const signupSchema = z
     .object({
-      email: z
-        .email("Invalid email format")
-        .regex(/@ucsd\.edu$/, "Must be a UCSD email address"),
+      email: z.email("Invalid email format").regex(/@ucsd\.edu$/, "Must be a UCSD email address"),
 
       fullName: z
         .string()
@@ -37,7 +35,7 @@ export function useSignUp() {
 
       confirmPassword: z.string(),
 
-      major: z.string().refine((val) => val !== defaultSchema.major, {
+      major: z.string().refine(val => val !== defaultSchema.major, {
         message: "Please select a major",
       }),
 
@@ -50,27 +48,25 @@ export function useSignUp() {
           `Graduation year must be ${defaultSchema.graduationYear} or later`
         ),
 
-      gender: z.string().refine((val) => val !== defaultSchema.gender, {
+      gender: z.string().refine(val => val !== defaultSchema.gender, {
         message: "Please select a gender",
       }),
     })
-    .refine((data) => data.password === data.confirmPassword, {
+    .refine(data => data.password === data.confirmPassword, {
       message: "Passwords don't match",
       path: ["confirmPassword"],
     });
 
   const [errors, setErrors] = useState<string>("");
   const [data, setData] = useState<z.infer<typeof signupSchema>>(defaultSchema);
-  const { setUser, setAuthState } = useAuthStore();
+  const { setUser, setAuthState, setAdminLevel } = useAuthStore();
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = signupSchema.safeParse(data);
 
     if (!result.success) {
-      const errors = result.error.issues
-        .map((issue) => issue.message)
-        .join("\n");
+      const errors = result.error.issues.map(issue => issue.message).join("\n");
       toast.error("Please fix the following errors:\n" + errors);
       console.log(errors);
       setErrors(errors);
@@ -119,6 +115,7 @@ export function useSignUp() {
 
     console.log(userData);
     setUser(userData.user);
+    setAdminLevel(0);
     setAuthState("signin");
     // toast.success("Please check your email for verification!");
   };
