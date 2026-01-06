@@ -129,7 +129,7 @@ export function useSignUp() {
       graduation_year: data.graduation_year,
       gender: data.gender,
       points: 0,
-      xp: 0,
+      experience: 0,
       is_grad_student: data.is_grad_student,
       in_talent_pool: data.in_talent_pool,
       on_mailing_list: data.on_mailing_list,

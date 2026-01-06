@@ -13,7 +13,7 @@ const defaultSelection: PortalMemberType = {
   id: 0,
   name: "John Doe",
   points: 0,
-  xp: 0,
+  experience: 0,
   deleted: false,
   created_at: "",
   updated_at: "",
@@ -31,7 +31,7 @@ export default function MemberLookup() {
     const fetchMembers = async () => {
       const { data } = await supabase
         .from("Members")
-        .select("id,name:full_name,points,xp,deleted,created_at,updated_at,email,admin_level")
+        .select("id,name:full_name,points,experience,deleted,created_at,updated_at,email,admin_level")
         .order("points", { ascending: false });
       if (data) {
         setMembers(data);
@@ -43,7 +43,7 @@ export default function MemberLookup() {
   const submitForm = async () => {
     const { data } = await supabase
       .from("Members")
-      .select("id,name:full_name,points,xp,deleted,created_at,updated_at,email,admin_level")
+      .select("id,name:full_name,points,experience,deleted,created_at,updated_at,email,admin_level")
       .or(`full_name.ilike.%${search}%,email.ilike.%${search}%`);
     if (data) {
       setMembers(data);
@@ -173,7 +173,7 @@ export default function MemberLookup() {
             </div>
 
             <div className="mt-4 grid grid-cols-2 gap-3 ">
-              <Meta label="XP" value={`${selected.xp} / 1000`} />
+              <Meta label="XP" value={`${selected.experience} / 1000`} />
               <Meta label="Points" value={`${selected.points}`} />
               <Meta label="Joined" value={selected.created_at.split("T")[0]} />
               <Meta label="Last Updated" value={selected.updated_at.split("T")[0]} />
