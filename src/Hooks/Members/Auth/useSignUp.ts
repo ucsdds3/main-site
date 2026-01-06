@@ -6,44 +6,46 @@ import { useAuthStore } from "./useAuthStore";
 
 export type signUpForm = {
   email: string;
-  fullName: string;
+  full_name: string;
   password: string;
-  confirmPassword: string;
+  confirm_password: string;
   major: string;
-  dateOfBirth: string;
-  graduationYear: number;
+  date_of_birth: string;
+  graduation_year: number;
   gender: string;
-  talentPool: boolean;
-  gradStudent: boolean;
-  resumeLink?: string;
-  githubLink?: string;
-  otherLink?: string;
-  linkedinLink?: string;
+  in_talent_pool: boolean;
+  on_mailing_list: boolean;
+  is_grad_student: boolean;
+  resume_link?: string;
+  github_link?: string;
+  other_link?: string;
+  linkedin_link?: string;
 };
 
 export function useSignUp() {
   const defaultSchema = {
     email: "",
-    fullName: "",
+    full_name: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
     major: "",
-    dateOfBirth: "",
-    graduationYear: new Date().getFullYear(),
+    date_of_birth: "",
+    graduation_year: new Date().getFullYear(),
     gender: "",
-    talentPool: false,
-    gradStudent: false,
-    resumeLink: "",
-    githubLink: "",
-    otherLink: "",
-    linkedinLink: "",
+    in_talent_pool: false,
+    on_mailing_list: false,
+    is_grad_student: false,
+    resume_link: "",
+    github_link: "",
+    other_link: "",
+    linkedin_link: "",
   };
 
   const signupSchema = z
     .object({
       email: z.email("Invalid email format").regex(/@ucsd\.edu$/, "Must be a UCSD email address"),
 
-      fullName: z
+      full_name: z
         .string()
         .min(2, "Name must be at least 2 characters")
         .max(100, "Name must be less than 100 characters"),
@@ -56,48 +58,49 @@ export function useSignUp() {
           "Password must contain lowercase, uppercase, and number"
         ),
 
-      confirmPassword: z.string(),
+      confirm_password: z.string(),
 
       major: z.string().refine(val => val !== defaultSchema.major, {
         message: "Please select a major",
       }),
 
-      dateOfBirth: z.string(),
+      date_of_birth: z.string(),
 
-      graduationYear: z
+      graduation_year: z
         .number()
         .min(
-          defaultSchema.graduationYear,
-          `Graduation year must be ${defaultSchema.graduationYear} or later`
+          defaultSchema.graduation_year,
+          `Graduation year must be ${defaultSchema.graduation_year} or later`
         ),
 
       gender: z.string().refine(val => val !== defaultSchema.gender, {
         message: "Please select a gender",
       }),
 
-      gradStudent: z.boolean(),
-      talentPool: z.boolean(),
+      on_mailing_list: z.boolean(),
+      is_grad_student: z.boolean(),
+      in_talent_pool: z.boolean(),
 
-      resumeLink: z.preprocess(
+      resume_link: z.preprocess(
         val => (val === "" ? undefined : val),
         z.url("Invalid resume link").optional()
       ),
-      githubLink: z.preprocess(
+      github_link: z.preprocess(
         val => (val === "" ? undefined : val),
         z.url("Invalid github link").optional()
       ),
-      linkedinLink: z.preprocess(
+      linkedin_link: z.preprocess(
         val => (val === "" ? undefined : val),
         z.url("Invalid linkedin link").optional()
       ),
-      otherLink: z.preprocess(
+      other_link: z.preprocess(
         val => (val === "" ? undefined : val),
         z.url("Invalid other link").optional()
       ),
     })
-    .refine(data => data.password === data.confirmPassword, {
+    .refine(data => data.password === data.confirm_password, {
       message: "Passwords don't match",
-      path: ["confirmPassword"],
+      path: ["confirm_password"],
     });
 
   const [errors, setErrors] = useState<string>("");
@@ -120,19 +123,20 @@ export function useSignUp() {
     const search = new URLSearchParams(window.location.search);
     const formData = {
       email: data.email,
-      full_name: data.fullName,
+      full_name: data.full_name,
       major: data.major,
-      date_of_birth: data.dateOfBirth,
-      graduation_year: data.graduationYear,
+      date_of_birth: data.date_of_birth,
+      graduation_year: data.graduation_year,
       gender: data.gender,
       points: 0,
       xp: 0,
-      is_grad_student: data.gradStudent,
-      in_talent_pool: data.talentPool,
-      resume_link: data.resumeLink,
-      github_link: data.githubLink,
-      linkedin_link: data.linkedinLink,
-      other_link: data.otherLink,
+      is_grad_student: data.is_grad_student,
+      in_talent_pool: data.in_talent_pool,
+      on_mailing_list: data.on_mailing_list,
+      resume_link: data.resume_link,
+      github_link: data.github_link,
+      linkedin_link: data.linkedin_link,
+      other_link: data.other_link,
     };
     setErrors("");
     const { data: userData, error } = await supabase.auth.signUp({
@@ -150,10 +154,10 @@ export function useSignUp() {
     }
 
     // const { error: rpcError } = await supabase.rpc("create_member_profile", {
-    //   full_name: data.fullName,
-    //   year: data.graduationYear,
+    //   full_name: data.full_name,
+    //   year: data.graduation_year,
     //   major: data.major,
-    //   date_of_birth: data.dateOfBirth,
+    //   date_of_birth: data.date_of_birth,
     //   gender: data.gender,
     // });
     const { error: createMemberProfileError } = await supabase.from("Members").insert(formData);
