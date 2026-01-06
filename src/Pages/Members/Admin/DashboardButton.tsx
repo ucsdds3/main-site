@@ -7,7 +7,7 @@ export default function DashboardButton({
   onClick,
 }: {
   children: React.ReactNode;
-  variant?: "default" | "orange" | "ghost";
+  variant?: "default" | "orange" | "ghost" | "error";
   className?: string;
   type?: string;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
@@ -19,6 +19,7 @@ export default function DashboardButton({
     default: "border-white/10 text-white/80 hover:bg-white/10",
     orange: "border-(--color-primary) text-white hover:bg-orange-500/20",
     ghost: "border-transparent bg-transparent text-white hover:bg-white/10",
+    error: "border-red-500/30 text-red-500 hover:bg-red-500/10",
   };
 
   return (
