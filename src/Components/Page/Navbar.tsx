@@ -3,12 +3,14 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import Links from "./Links";
-import { useTheme } from "../../Hooks/useTheme"; 
+import { useTheme } from "../../Hooks/useTheme";
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
 import logo from "/src/Assets/Images/ds3_logo.webp";
+import { useAuthStore } from "../../Hooks/Members/Auth/useAuthStore";
 
 const Navbar = () => {
-  const { navigate } = useSiteHandler();
+  const { authState } = useAuthStore();
+  const { subdomain, navigate } = useSiteHandler();
   const { isDark, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -22,7 +24,13 @@ const Navbar = () => {
         <div className="flex items-center gap-5">
           <button
             className="space-x-2 cursor-pointer [&:hover>img]:-rotate-180"
-            onClick={() => navigate({ subdomain: "main", pathname: "/", hash: "home" })}
+            onClick={() =>
+              navigate({
+                pathname: "/",
+                subdomain: authState == "authenticated" ? subdomain : "main",
+                hash: "home",
+              })
+            }
           >
             <img src={logo} alt="Logo" className="w-10 transition-all duration-500" />
           </button>
@@ -37,7 +45,7 @@ const Navbar = () => {
 
         {/* Mobile menu button */}
         <label className="swap swap-rotate lg:hidden">
-          <input type="checkbox" checked={menuOpen} onChange={() => setMenuOpen((prev) => !prev)} />
+          <input type="checkbox" checked={menuOpen} onChange={() => setMenuOpen(prev => !prev)} />
           <IoClose aria-label="enabled" className="swap-on text-2xl" />
           <GiHamburgerMenu aria-label="disabled" className="swap-off text-2xl" />
         </label>
