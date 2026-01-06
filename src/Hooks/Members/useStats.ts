@@ -10,6 +10,7 @@ const tiers = {
 
 export function useStats() {
   const { user } = useAuthStore();
+  console.log(user);
   const xp = user?.user_metadata.experience || 0;
 
   const level = Math.max(Math.floor(Math.log2(xp / 1000)) + 1, 0);
