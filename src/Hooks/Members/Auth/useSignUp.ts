@@ -18,6 +18,7 @@ export type signUpForm = {
   resumeLink?: string;
   githubLink?: string;
   otherLink?: string;
+  linkedinLink?: string;
 };
 
 export function useSignUp() {
@@ -35,6 +36,7 @@ export function useSignUp() {
     resumeLink: "",
     githubLink: "",
     otherLink: "",
+    linkedinLink: "",
   };
 
   const signupSchema = z
@@ -76,9 +78,22 @@ export function useSignUp() {
       gradStudent: z.boolean(),
       talentPool: z.boolean(),
 
-      resumeLink: z.url("Invalid resume link").optional(),
-      githubLink: z.url("Invalid GitHub link").optional(),
-      otherLink: z.url("Invalid other link").optional(),
+      resumeLink: z.preprocess(
+        val => (val === "" ? undefined : val),
+        z.url("Invalid resume link").optional()
+      ),
+      githubLink: z.preprocess(
+        val => (val === "" ? undefined : val),
+        z.url("Invalid github link").optional()
+      ),
+      linkedinLink: z.preprocess(
+        val => (val === "" ? undefined : val),
+        z.url("Invalid linkedin link").optional()
+      ),
+      otherLink: z.preprocess(
+        val => (val === "" ? undefined : val),
+        z.url("Invalid other link").optional()
+      ),
     })
     .refine(data => data.password === data.confirmPassword, {
       message: "Passwords don't match",
@@ -111,11 +126,12 @@ export function useSignUp() {
       graduation_year: data.graduationYear,
       gender: data.gender,
       points: 0,
-      experience: 0,
+      xp: 0,
       is_grad_student: data.gradStudent,
       in_talent_pool: data.talentPool,
       resume_link: data.resumeLink,
       github_link: data.githubLink,
+      linkedin_link: data.linkedinLink,
       other_link: data.otherLink,
     };
     setErrors("");

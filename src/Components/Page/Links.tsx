@@ -19,7 +19,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       {Object.entries(links).map(([label, data], index) => (
         <NavItem key={index} label={label} data={data} />
       ))}
-      {authState == "authenticated" && adminLevel != null && (
+      {subdomain == "members" && authState == "authenticated" && adminLevel != null && (
         <NavItem label={"Admin"} data={"/admin"} />
       )}
       {subdomain == "main" || authState != "authenticated" ? (

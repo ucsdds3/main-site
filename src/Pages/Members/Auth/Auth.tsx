@@ -16,7 +16,7 @@ const Auth = () => {
     } else {
       navigate({ pathname: "" });
     }
-  }, [authState, navigate]);
+  }, [authState]);
 
   if (authState == "signin") return <Signin />;
   if (authState == "signup") return <Signup />;
