@@ -1,4 +1,13 @@
-import { FaCalendar, FaEnvelope, FaGraduationCap, FaUser, FaLink, FaGithub } from "react-icons/fa";
+import {
+  FaCalendar,
+  FaEnvelope,
+  FaGraduationCap,
+  FaUser,
+  FaLink,
+  FaGithub,
+  FaLinkedin,
+  FaInfoCircle,
+} from "react-icons/fa";
 import Page from "../../../Components/Page/Page";
 import Section from "../../../Components/Section";
 import { Input } from "../../../Components/Input";
@@ -132,31 +141,38 @@ const Profile = () => {
 
           {/* GRAD STUDENT & TALENT POOL */}
           <div className="w-full flex flex-wrap gap-8 mt-4">
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={data?.gradStudent || false}
-                onChange={e => setData({ ...data, gradStudent: e.target.checked })}
-                className="w-5 h-5 cursor-pointer"
-              />
-              <label className="text-lg cursor-pointer">Graduate Student?</label>
-            </div>
-
-            <div className="flex items-center gap-2">
+            <div className="flex-1 flex items-center gap-2 ">
               <input
                 type="checkbox"
                 checked={data?.talentPool || false}
                 onChange={e => setData({ ...data, talentPool: e.target.checked })}
-                className="w-5 h-5 cursor-pointer"
+                className=" cursor-pointer toggle toggle-primary"
               />
-              <label className="text-lg cursor-pointer">Join Talent Pool (Optional)</label>
+              <label className="text-lg cursor-pointer gap-2 flex items-center">
+                <span
+                  className="tooltip tooltip-right"
+                  data-tip="By joining our Talent Pool, you will be added to our database for potential job opportunities and collaborations."
+                >
+                  <FaInfoCircle />
+                </span>
+                Join Talent Pool
+              </label>
+            </div>
+            <div className="flex-1 flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={data?.gradStudent || false}
+                onChange={e => setData({ ...data, gradStudent: e.target.checked })}
+                className="cursor-pointer toggle toggle-primary"
+              />
+              <label className="text-lg cursor-pointer">Graduate Student?</label>
             </div>
           </div>
 
           {/* CONDITIONAL LINKS */}
           {data?.talentPool && (
-            <div className="w-full mt-4 flex flex-wrap gap-8">
-              <div className="flex-1 flex flex-col gap-4">
+            <div className="w-full mt-4 flex flex-col md:flex-row gap-8">
+              <div className="flex-1  flex flex-col gap-4">
                 <Input
                   label="Resume Link (PDF)"
                   type="url"
@@ -164,6 +180,7 @@ const Profile = () => {
                   icon={<FaLink className="mr-2" />}
                   value={data?.resumeLink || ""}
                   setValue={(value: string) => setData({ ...data, resumeLink: value })}
+                  className="flex-1 w-full"
                 />
                 <Input
                   label="GitHub Profile"
@@ -172,6 +189,16 @@ const Profile = () => {
                   icon={<FaGithub className="mr-2" />}
                   value={data?.githubLink || ""}
                   setValue={(value: string) => setData({ ...data, githubLink: value })}
+                  className="flex-1 w-full"
+                />
+                <Input
+                  label="LinkedIn Profile"
+                  type="url"
+                  placeholder="https://linkedin.com/username"
+                  icon={<FaLinkedin className="mr-2" />}
+                  value={data?.linkedinLink || ""}
+                  setValue={(value: string) => setData({ ...data, linkedinLink: value })}
+                  className="flex-1 w-full"
                 />
                 <Input
                   label="Other Link"
@@ -180,21 +207,29 @@ const Profile = () => {
                   icon={<FaLink className="mr-2" />}
                   value={data?.otherLink || ""}
                   setValue={(value: string) => setData({ ...data, otherLink: value })}
+                  className="flex-1 w-full"
                 />
               </div>
 
-              <div className="flex-1 border rounded-lg overflow-hidden flex items-center justify-center">
+              <div className="flex-1 shrink-0 overflow-hidden flex items-center justify-center">
                 {previewUrl ? (
-                  <iframe
-                    key={previewUrl}
-                    src={previewUrl}
-                    title="Resume Preview"
-                    className="w-[300px] h-[380px]"
-                    allow="autoplay"
-                  />
+                  <div className="w-[330px] aspect-[1/1.414] border rounded-lg pt-6">
+                    <iframe
+                      key={previewUrl}
+                      src={previewUrl}
+                      title="Resume Preview"
+                      className=" size-full"
+                      allow="autoplay"
+                    />
+                  </div>
                 ) : (
                   <div className="flex items-center justify-center h-[380px] w-[300px] text-gray-400 text-center">
-                    <p>Paste a public Google Drive PDF link or a direct PDF URL.</p>
+                    <p>
+                      Paste a public Google Drive PDF link or a direct PDF URL.{" "}
+                      <div className="text-red-500 font-bold">
+                        Confirm you can see a preview here
+                      </div>
+                    </p>
                   </div>
                 )}
               </div>

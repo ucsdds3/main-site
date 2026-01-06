@@ -7,6 +7,7 @@ import {
   FaLink,
   FaGithub,
   FaInfoCircle,
+  FaLinkedin,
 } from "react-icons/fa";
 import Button from "../../../Components/Button";
 import { Input } from "../../../Components/Input";
@@ -40,7 +41,7 @@ const Signup = () => {
     return undefined;
   };
   const previewUrl = getPdfPreviewUrl(data.resumeLink);
-  
+
   return (
     <Page>
       <form
@@ -194,7 +195,14 @@ const Signup = () => {
                   value={data.githubLink || ""}
                   setValue={(value: string) => setData({ ...data, githubLink: value })}
                 />
-
+                <Input
+                  label="Linkedin Profile"
+                  type="url"
+                  placeholder="https://linkedin.com/username"
+                  icon={<FaLinkedin className="mr-2" />}
+                  value={data.linkedinLink || ""}
+                  setValue={(value: string) => setData({ ...data, linkedinLink: value })}
+                />
                 <Input
                   label="Other Link"
                   type="url"
@@ -212,7 +220,7 @@ const Signup = () => {
                     key={previewUrl} // IMPORTANT: forces reload when URL changes
                     src={previewUrl}
                     title="Resume Preview"
-                    className="w-[300px] h-[380px]"
+                    className="w-[300px] aspect-[1/1.414] pt-6"
                     allow="autoplay"
                   />
                 ) : (
