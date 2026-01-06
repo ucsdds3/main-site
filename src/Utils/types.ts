@@ -88,7 +88,7 @@ export type PortalMemberType = {
   id: number;
   name: string;
   points: number;
-  xp: number;
+  experience: number;
   deleted: boolean;
   created_at: string;
   updated_at: string;
