@@ -145,8 +145,8 @@ const Profile = () => {
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
-                checked={data?.addLinks || false}
-                onChange={e => setData({ ...data, addLinks: e.target.checked })}
+                checked={data?.talentPool || false}
+                onChange={e => setData({ ...data, talentPool: e.target.checked })}
                 className="w-5 h-5 cursor-pointer"
               />
               <label className="text-lg cursor-pointer">Join Talent Pool (Optional)</label>
@@ -154,7 +154,7 @@ const Profile = () => {
           </div>
 
           {/* CONDITIONAL LINKS */}
-          {data?.addLinks && (
+          {data?.talentPool && (
             <div className="w-full mt-4 flex flex-wrap gap-8">
               <div className="flex-1 flex flex-col gap-4">
                 <Input
