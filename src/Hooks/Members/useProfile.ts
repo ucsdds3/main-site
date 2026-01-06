@@ -20,6 +20,26 @@ export function useProfile() {
         `Graduation year must be ${new Date().getFullYear()} or later`
       ),
     gender: z.string(),
+    in_talent_pool: z.boolean(),
+    on_mailing_list: z.boolean(),
+    is_grad_student: z.boolean(),
+
+    resume_link: z.preprocess(
+      val => (val === "" ? undefined : val),
+      z.url("Invalid resume link").optional()
+    ),
+    linkedin_link: z.preprocess(
+      val => (val === "" ? undefined : val),
+      z.url("Invalid linkedin link").optional()
+    ),
+    github_link: z.preprocess(
+      val => (val === "" ? undefined : val),
+      z.url("Invalid github link").optional()
+    ),
+    other_link: z.preprocess(
+      val => (val === "" ? undefined : val),
+      z.url("Invalid other link").optional()
+    ),
   });
 
   const { user } = useAuthStore();
@@ -29,22 +49,11 @@ export function useProfile() {
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const memberData = {
-      email: data?.email,
-      full_name: data?.full_name,
-      major: data?.major,
-      date_of_birth: data?.date_of_birth,
-      graduation_year: data?.graduation_year,
-      gender: data?.gender,
-      in_talent_pool: data?.talentPool,
-      is_grad_student: data?.gradStudent,
-      resume_link: data?.resumeLink,
-      linkedin_link: data?.linkedin_link,
-      github_link: data?.github_link,
-      other_link: data?.other_link,
-    };
-
-    const result = signupSchema.safeParse(memberData);
+    if (!data) {
+      toast.error("No data to update");
+      return;
+    }
+    const result = signupSchema.safeParse(data);
 
     if (!result.success) {
       const errors = result.error.issues.map(issue => issue.message).join("\n");
@@ -56,7 +65,7 @@ export function useProfile() {
 
     const { error: memberError } = await supabase
       .from("Members")
-      .update(memberData)
+      .update(data)
       .eq("email", data?.email);
     if (memberError) {
       toast.error(memberError.message);
