@@ -40,7 +40,7 @@ const Signup = () => {
 
     return undefined;
   };
-  const previewUrl = getPdfPreviewUrl(data.resumeLink);
+  const previewUrl = getPdfPreviewUrl(data.resume_link);
 
   return (
     <Page>
@@ -73,8 +73,8 @@ const Signup = () => {
                 error={errors.toLowerCase().includes("name")}
                 placeholder="John Doe"
                 icon={<FaUser className="mr-2" />}
-                value={data.fullName}
-                setValue={(value: string) => setData({ ...data, fullName: value })}
+                value={data.full_name}
+                setValue={(value: string) => setData({ ...data, full_name: value })}
               />
               <Input
                 label="UCSD Email"
@@ -103,8 +103,8 @@ const Signup = () => {
                 error={errors.toLowerCase().includes("password")}
                 placeholder="***************"
                 icon={<FaLock className="mr-2" />}
-                value={data.confirmPassword}
-                setValue={(value: string) => setData({ ...data, confirmPassword: value })}
+                value={data.confirm_password}
+                setValue={(value: string) => setData({ ...data, confirm_password: value })}
               />
             </div>
 
@@ -115,8 +115,8 @@ const Signup = () => {
                 type="date"
                 required
                 icon={<FaCalendar className="mr-2" />}
-                value={data.dateOfBirth}
-                setValue={(value: string) => setData({ ...data, dateOfBirth: value })}
+                value={data.date_of_birth}
+                setValue={(value: string) => setData({ ...data, date_of_birth: value })}
               />
               <Select
                 label="Gender"
@@ -130,8 +130,8 @@ const Signup = () => {
                 type="number"
                 required
                 icon={<FaGraduationCap className="mr-2" />}
-                value={data.graduationYear?.toString()}
-                setValue={(value: string) => setData({ ...data, graduationYear: parseInt(value) })}
+                value={data.graduation_year?.toString()}
+                setValue={(value: string) => setData({ ...data, graduation_year: parseInt(value) })}
               />
               <Select
                 label="Major"
@@ -147,8 +147,8 @@ const Signup = () => {
             <div className="w-full mt-2 flex items-center gap-3 px-4">
               <input
                 type="checkbox"
-                checked={data.talentPool || false}
-                onChange={e => setData({ ...data, talentPool: e.target.checked })}
+                checked={data.in_talent_pool || false}
+                onChange={e => setData({ ...data, in_talent_pool: e.target.checked })}
                 className="w-5 h-5 cursor-pointer"
               />
               <label className="text-lg cursor-pointer flex items-center gap-2">
@@ -165,8 +165,8 @@ const Signup = () => {
             <div className="w-full mt-2 flex items-center gap-3 px-4">
               <input
                 type="checkbox"
-                checked={data.gradStudent || false}
-                onChange={e => setData({ ...data, gradStudent: e.target.checked })}
+                checked={data.is_grad_student || false}
+                onChange={e => setData({ ...data, is_grad_student: e.target.checked })}
                 className="w-5 h-5 cursor-pointer"
               />
               <label className="text-lg cursor-pointer">I am a Graduate Student</label>
@@ -174,7 +174,7 @@ const Signup = () => {
           </div>
 
           {/* CONDITIONAL LINK FIELDS */}
-          {data.talentPool && (
+          {data.in_talent_pool && (
             <div className="w-full mt-6 flex flex-col md:flex-row gap-8">
               {/* LEFT: LINK INPUTS */}
               <div className="flex-1 flex flex-col gap-6">
@@ -183,8 +183,8 @@ const Signup = () => {
                   type="url"
                   placeholder="https://example.com/resume.pdf"
                   icon={<FaLink className="mr-2" />}
-                  value={data.resumeLink || ""}
-                  setValue={(value: string) => setData({ ...data, resumeLink: value })}
+                  value={data.resume_link || ""}
+                  setValue={(value: string) => setData({ ...data, resume_link: value })}
                 />
 
                 <Input
@@ -192,24 +192,24 @@ const Signup = () => {
                   type="url"
                   placeholder="https://github.com/username"
                   icon={<FaGithub className="mr-2" />}
-                  value={data.githubLink || ""}
-                  setValue={(value: string) => setData({ ...data, githubLink: value })}
+                  value={data.github_link || ""}
+                  setValue={(value: string) => setData({ ...data, github_link: value })}
                 />
                 <Input
                   label="Linkedin Profile"
                   type="url"
                   placeholder="https://linkedin.com/username"
                   icon={<FaLinkedin className="mr-2" />}
-                  value={data.linkedinLink || ""}
-                  setValue={(value: string) => setData({ ...data, linkedinLink: value })}
+                  value={data.linkedin_link || ""}
+                  setValue={(value: string) => setData({ ...data, linkedin_link: value })}
                 />
                 <Input
                   label="Other Link"
                   type="url"
                   placeholder="Portfolio, LinkedIn, personal site, etc."
                   icon={<FaLink className="mr-2" />}
-                  value={data.otherLink || ""}
-                  setValue={(value: string) => setData({ ...data, otherLink: value })}
+                  value={data.other_link || ""}
+                  setValue={(value: string) => setData({ ...data, other_link: value })}
                 />
               </div>
 

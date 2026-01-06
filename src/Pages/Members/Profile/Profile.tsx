@@ -31,7 +31,7 @@ const Profile = () => {
     return undefined;
   };
 
-  const previewUrl = getPdfPreviewUrl(data?.resumeLink);
+  const previewUrl = getPdfPreviewUrl(data?.resume_link);
 
   // Split full_name into first_name and last_name if not already split
   const firstName = data?.first_name || data?.full_name?.split(" ")[0] || "";
@@ -144,8 +144,8 @@ const Profile = () => {
             <div className="flex-1 flex items-center gap-2 ">
               <input
                 type="checkbox"
-                checked={data?.talentPool || false}
-                onChange={e => setData({ ...data, talentPool: e.target.checked })}
+                checked={data?.in_talent_pool || false}
+                onChange={e => setData({ ...data, in_talent_pool: e.target.checked })}
                 className=" cursor-pointer toggle toggle-primary"
               />
               <label className="text-lg cursor-pointer gap-2 flex items-center">
@@ -158,19 +158,38 @@ const Profile = () => {
                 Join Talent Pool
               </label>
             </div>
+
             <div className="flex-1 flex items-center gap-2">
               <input
                 type="checkbox"
-                checked={data?.gradStudent || false}
-                onChange={e => setData({ ...data, gradStudent: e.target.checked })}
+                checked={data?.on_mailing_list || false}
+                onChange={e => setData({ ...data, on_mailing_list: e.target.checked })}
                 className="cursor-pointer toggle toggle-primary"
               />
-              <label className="text-lg cursor-pointer">Graduate Student?</label>
+              <label className="text-lg cursor-pointera flex items-center gap-2">
+                <span
+                  className="tooltip tooltip-right"
+                  data-tip="By enrolling in our mailing list, you will receive updates about our events and opportunities."
+                >
+                  <FaInfoCircle />
+                </span>{" "}
+                Enroll in Mailing List
+              </label>
+            </div>
+
+            <div className="flex-1 flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={data?.is_grad_student || false}
+                onChange={e => setData({ ...data, is_grad_student: e.target.checked })}
+                className="cursor-pointer toggle toggle-primary"
+              />
+              <label className="text-lg cursor-pointer">I am a Graduate Student</label>
             </div>
           </div>
 
           {/* CONDITIONAL LINKS */}
-          {data?.talentPool && (
+          {data?.in_talent_pool && (
             <div className="w-full mt-4 flex flex-col md:flex-row gap-8">
               <div className="flex-1  flex flex-col gap-4">
                 <Input
@@ -178,8 +197,8 @@ const Profile = () => {
                   type="url"
                   placeholder="https://example.com/resume.pdf"
                   icon={<FaLink className="mr-2" />}
-                  value={data?.resumeLink || ""}
-                  setValue={(value: string) => setData({ ...data, resumeLink: value })}
+                  value={data?.resume_link || ""}
+                  setValue={(value: string) => setData({ ...data, resume_link: value })}
                   className="flex-1 w-full"
                 />
                 <Input
@@ -187,8 +206,8 @@ const Profile = () => {
                   type="url"
                   placeholder="https://github.com/username"
                   icon={<FaGithub className="mr-2" />}
-                  value={data?.githubLink || ""}
-                  setValue={(value: string) => setData({ ...data, githubLink: value })}
+                  value={data?.github_link || ""}
+                  setValue={(value: string) => setData({ ...data, github_link: value })}
                   className="flex-1 w-full"
                 />
                 <Input
@@ -196,8 +215,8 @@ const Profile = () => {
                   type="url"
                   placeholder="https://linkedin.com/username"
                   icon={<FaLinkedin className="mr-2" />}
-                  value={data?.linkedinLink || ""}
-                  setValue={(value: string) => setData({ ...data, linkedinLink: value })}
+                  value={data?.linkedin_link || ""}
+                  setValue={(value: string) => setData({ ...data, linkedin_link: value })}
                   className="flex-1 w-full"
                 />
                 <Input
@@ -205,8 +224,8 @@ const Profile = () => {
                   type="url"
                   placeholder="Portfolio, LinkedIn, personal site, etc."
                   icon={<FaLink className="mr-2" />}
-                  value={data?.otherLink || ""}
-                  setValue={(value: string) => setData({ ...data, otherLink: value })}
+                  value={data?.other_link || ""}
+                  setValue={(value: string) => setData({ ...data, other_link: value })}
                   className="flex-1 w-full"
                 />
               </div>
