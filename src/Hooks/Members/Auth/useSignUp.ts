@@ -6,33 +6,35 @@ import { useAuthStore } from "./useAuthStore";
 
 export type signUpForm = {
   email: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   password: string;
   confirmPassword: string;
   major: string;
   dateOfBirth: string;
   graduationYear: number;
   gender: string;
+  talentPool: boolean;
+  gradStudent: boolean;
   resumeLink?: string;
   githubLink?: string;
   otherLink?: string;
-  addLinks?: boolean;
-  gradStudent: boolean;
 };
 
 export function useSignUp() {
   const defaultSchema = {
     email: "",
-    firstName: "",
-    lastName: "",
+    fullName: "",
     password: "",
     confirmPassword: "",
     major: "",
     dateOfBirth: "",
     graduationYear: new Date().getFullYear(),
     gender: "",
+    talentPool: false,
     gradStudent: false,
+    resumeLink: "",
+    githubLink: "",
+    otherLink: "",
   };
 
   const signupSchema = z
@@ -70,6 +72,13 @@ export function useSignUp() {
       gender: z.string().refine(val => val !== defaultSchema.gender, {
         message: "Please select a gender",
       }),
+
+      gradStudent: z.boolean(),
+      talentPool: z.boolean(),
+
+      resumeLink: z.url("Invalid resume link").optional(),
+      githubLink: z.url("Invalid GitHub link").optional(),
+      otherLink: z.url("Invalid other link").optional(),
     })
     .refine(data => data.password === data.confirmPassword, {
       message: "Passwords don't match",
@@ -96,16 +105,18 @@ export function useSignUp() {
     const search = new URLSearchParams(window.location.search);
     const formData = {
       email: data.email,
-      first_name: data.firstName,
-      last_name: data.lastName,
+      full_name: data.fullName,
       major: data.major,
       date_of_birth: data.dateOfBirth,
       graduation_year: data.graduationYear,
       gender: data.gender,
       points: 0,
       experience: 0,
-      grad_student: data.gradStudent,
-      
+      is_grad_student: data.gradStudent,
+      in_talent_pool: data.talentPool,
+      resume_link: data.resumeLink,
+      github_link: data.githubLink,
+      other_link: data.otherLink,
     };
     setErrors("");
     const { data: userData, error } = await supabase.auth.signUp({

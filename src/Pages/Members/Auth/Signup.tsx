@@ -6,6 +6,7 @@ import {
   FaUser,
   FaLink,
   FaGithub,
+  FaInfoCircle,
 } from "react-icons/fa";
 import Button from "../../../Components/Button";
 import { Input } from "../../../Components/Input";
@@ -18,6 +19,7 @@ import { useSignUp } from "../../../Hooks/Members/Auth/useSignUp";
 const Signup = () => {
   const { setAuthState } = useAuthStore();
   const { errors, data, setData, handleSignup } = useSignUp();
+
   const getPdfPreviewUrl = (url?: string) => {
     if (!url) return undefined;
 
@@ -38,6 +40,7 @@ const Signup = () => {
     return undefined;
   };
   const previewUrl = getPdfPreviewUrl(data.resumeLink);
+  
   return (
     <Page>
       <form
@@ -48,11 +51,30 @@ const Signup = () => {
           Welcome to DS3!
         </h1>
         <p className="text-center text-xl px-4">Create an account to join the DS3 community!</p>
+        <p className="text-center text-lg mt-1">
+          Already have an account?
+          <a
+            onClick={() => setAuthState("signin")}
+            className="text-blue-400 hover:underline cursor-pointer ml-2"
+          >
+            Sign In
+          </a>
+        </p>
 
         <div className="flex flex-col items-center justify-center my-8">
           <div className="flex flex-col md:flex-row gap-8">
             {/* LEFT COLUMN */}
             <div className="flex-1 flex flex-col items-start gap-6">
+              <Input
+                label="Full Name"
+                type="text"
+                required
+                error={errors.toLowerCase().includes("name")}
+                placeholder="John Doe"
+                icon={<FaUser className="mr-2" />}
+                value={data.fullName}
+                setValue={(value: string) => setData({ ...data, fullName: value })}
+              />
               <Input
                 label="UCSD Email"
                 type="email"
@@ -63,28 +85,6 @@ const Signup = () => {
                 value={data.email}
                 setValue={(value: string) => setData({ ...data, email: value })}
               />
-
-              <Input
-                label="First Name"
-                type="text"
-                required
-                error={errors.toLowerCase().includes("name")}
-                placeholder="John Doe"
-                icon={<FaUser className="mr-2" />}
-                value={data.firstName}
-                setValue={(value: string) => setData({ ...data, firstName: value })}
-              />
-              <Input
-                label="Last Name"
-                type="text"
-                required
-                error={errors.toLowerCase().includes("name")}
-                placeholder="John Doe"
-                icon={<FaUser className="mr-2" />}
-                value={data.lastName}
-                setValue={(value: string) => setData({ ...data, lastName: value })}
-              />
-
               <Input
                 label="Password"
                 type="password"
@@ -95,7 +95,6 @@ const Signup = () => {
                 value={data.password}
                 setValue={(value: string) => setData({ ...data, password: value })}
               />
-
               <Input
                 label="Confirm Password"
                 type="password"
@@ -118,7 +117,6 @@ const Signup = () => {
                 value={data.dateOfBirth}
                 setValue={(value: string) => setData({ ...data, dateOfBirth: value })}
               />
-
               <Select
                 label="Gender"
                 options={["Male", "Female", "Prefer not to say"]}
@@ -141,31 +139,41 @@ const Signup = () => {
                 value={data.major}
                 setValue={(value: string) => setData({ ...data, major: value })}
               />
-              <div className="w-full mt-8 flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={data.gradStudent || false}
-                  onChange={e => setData({ ...data, gradStudent: e.target.checked })}
-                  className="w-5 h-5 cursor-pointer"
-                />
-                <label className="text-lg cursor-pointer">Are you a Graduate student?</label>
-              </div>
             </div>
           </div>
 
-          {/* CHECKBOX */}
-          <div className="w-full mt-8 flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={data.addLinks || false}
-              onChange={e => setData({ ...data, addLinks: e.target.checked })}
-              className="w-5 h-5 cursor-pointer"
-            />
-            <label className="text-lg cursor-pointer">Join our Talent pool (Optional)</label>
+          <div className="w-full flex flex-col-reverse md:flex-row my-4">
+            <div className="w-full mt-2 flex items-center gap-3 px-4">
+              <input
+                type="checkbox"
+                checked={data.talentPool || false}
+                onChange={e => setData({ ...data, talentPool: e.target.checked })}
+                className="w-5 h-5 cursor-pointer"
+              />
+              <label className="text-lg cursor-pointer flex items-center gap-2">
+                <span
+                  className="tooltip tooltip-bottom"
+                  data-tip="By joining our Talent Pool, you will be added to our database for potential job opportunities and collaborations."
+                >
+                  <FaInfoCircle />
+                </span>
+                Join our Talent Pool (Optional)
+              </label>
+            </div>
+
+            <div className="w-full mt-2 flex items-center gap-3 px-4">
+              <input
+                type="checkbox"
+                checked={data.gradStudent || false}
+                onChange={e => setData({ ...data, gradStudent: e.target.checked })}
+                className="w-5 h-5 cursor-pointer"
+              />
+              <label className="text-lg cursor-pointer">I am a Graduate Student</label>
+            </div>
           </div>
 
           {/* CONDITIONAL LINK FIELDS */}
-          {data.addLinks && (
+          {data.talentPool && (
             <div className="w-full mt-6 flex flex-col md:flex-row gap-8">
               {/* LEFT: LINK INPUTS */}
               <div className="flex-1 flex flex-col gap-6">
@@ -215,18 +223,6 @@ const Signup = () => {
               </div>
             </div>
           )}
-
-          <div className="flex flex-col md:flex-row items-center justify-between w-full text-lg mt-6">
-            <p className="text-center">
-              Already have an account?
-              <a
-                onClick={() => setAuthState("signin")}
-                className="text-blue-400 hover:underline cursor-pointer ml-2"
-              >
-                Sign In
-              </a>
-            </p>
-          </div>
         </div>
 
         <Button btnClass="text-[clamp(1rem,1vw,1.5rem)]" type="submit">
