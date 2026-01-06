@@ -36,12 +36,18 @@ export function useProfile() {
       date_of_birth: data?.date_of_birth,
       graduation_year: data?.graduation_year,
       gender: data?.gender,
+      in_talent_pool: data?.talentPool,
+      is_grad_student: data?.gradStudent,
+      resume_link: data?.resumeLink,
+      linkedin_link: data?.linkedin_link,
+      github_link: data?.github_link,
+      other_link: data?.other_link,
     };
 
     const result = signupSchema.safeParse(memberData);
 
     if (!result.success) {
-      const errors = result.error.issues.map((issue) => issue.message).join("\n");
+      const errors = result.error.issues.map(issue => issue.message).join("\n");
       toast.error("Please fix the following errors:\n" + errors);
       console.log(errors);
       setErrors(errors);
