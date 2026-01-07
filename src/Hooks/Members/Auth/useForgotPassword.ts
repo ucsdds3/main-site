@@ -23,7 +23,6 @@ export function useForgotPassword() {
     }
 
     const href = window.location.href;
-    const search = new URLSearchParams(window.location.search);
     const { data, error } = await supabase.auth.resetPasswordForEmail(overrideEmail || email, {
       redirectTo: `${href}?authState=reset-password`,
     });
