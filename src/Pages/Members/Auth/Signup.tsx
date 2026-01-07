@@ -150,7 +150,6 @@ const Signup = () => {
                 checked={data.in_talent_pool || true}
                 onChange={e => setData({ ...data, in_talent_pool: e.target.checked })}
                 className="w-5 h-5 cursor-pointer"
-                disabled
               />
               <label className="text-lg cursor-pointer flex items-center gap-2">
                 <span
