@@ -33,7 +33,7 @@ export function useSignUp() {
     date_of_birth: "",
     graduation_year: new Date().getFullYear(),
     gender: "",
-    in_talent_pool: false,
+    in_talent_pool: true,
     on_mailing_list: false,
     is_grad_student: false,
     resume_link: "",
