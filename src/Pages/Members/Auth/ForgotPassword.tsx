@@ -1,6 +1,6 @@
 import { FaEnvelope } from "react-icons/fa";
 import Page from "../../../Components/Page/Page";
-import Input from "../../../Components/Input";
+import {Input} from "../../../Components/Input";
 import Button from "../../../Components/Button";
 import { useForgotPassword } from "../../../Hooks/Members/Auth/useForgotPassword";
 import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";

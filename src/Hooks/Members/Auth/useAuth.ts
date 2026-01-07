@@ -8,10 +8,22 @@ export function useAuth() {
   useEffect(() => {
     const getUser = async () => {
       const authState = new URLSearchParams(window.location.search).get("authState") as AuthState;
-      if (authState && authState != "authenticated") useAuthStore.setState({ authState });
+      if (authState && authState != "authenticated") {
+        useAuthStore.setState({ authState });
+      }
 
-      const foundUser = (user: User) => {
-        useAuthStore.setState({ user, authState: authState || "authenticated" });
+      const foundUser = async (user: User) => {
+        const { data: members } = await supabase
+          .from("Members")
+          .select("admin_level")
+          .eq("email", user.email)
+          .limit(1);
+
+        useAuthStore.setState({
+          user,
+          authState: authState || "authenticated",
+          adminLevel: members?.[0]?.admin_level ?? null,
+        });
       };
 
       const tokenHash = new URLSearchParams(window.location.search).get("tokenHash");
