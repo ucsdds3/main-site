@@ -185,6 +185,7 @@ const Signup = () => {
                   icon={<FaLink className="mr-2" />}
                   value={data.resume_link || ""}
                   setValue={(value: string) => setData({ ...data, resume_link: value })}
+                  required
                 />
 
                 <Input

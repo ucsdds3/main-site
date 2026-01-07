@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import z from "zod";
 import { supabase } from "../../../Utils/supabase";
+import { validateResumeLink } from "../../../Utils/functions";
 import { useAuthStore } from "./useAuthStore";
 
 export type signUpForm = {
@@ -101,6 +102,10 @@ export function useSignUp() {
     .refine(data => data.password === data.confirm_password, {
       message: "Passwords don't match",
       path: ["confirm_password"],
+    })
+    .refine(data => validateResumeLink(data.in_talent_pool, data.resume_link), {
+      message: "A valid resume link URL is required when joining the talent pool",
+      path: ["resume_link"],
     });
 
   const [errors, setErrors] = useState<string>("");
