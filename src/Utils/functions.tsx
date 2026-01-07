@@ -33,6 +33,17 @@ export const scrollTo = (ref: React.RefObject<HTMLDivElement>) => {
   ref.current?.scrollIntoView({ behavior: "smooth" });
 };
 
+export const validateResumeLink = (inTalentPool: boolean, resumeLink?: string): boolean => {
+  if (!inTalentPool) return true;
+  if (!resumeLink || typeof resumeLink !== "string") return false;
+  try {
+    new URL(resumeLink);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const formatMemberLinks = ({ email, website, linkedIn, resume }: MemberType) =>
   [
     email && {
