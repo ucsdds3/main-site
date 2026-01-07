@@ -73,7 +73,7 @@ export function useSignIn() {
     setAuthState("authenticated");
     localStorage.setItem(
       "user",
-      JSON.stringify(userData.user && { adminLevel: adminData.admin_level })
+      JSON.stringify({...userData.user, adminLevel: adminData.admin_level })
     );
     navigate({ pathname: "/", subdomain: "members" });
     toast.success("Login successful!");
