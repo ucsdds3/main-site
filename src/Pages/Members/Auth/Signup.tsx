@@ -147,9 +147,10 @@ const Signup = () => {
             <div className="w-full mt-2 flex items-center gap-3 px-4">
               <input
                 type="checkbox"
-                checked={data.in_talent_pool || false}
+                checked={data.in_talent_pool || true}
                 onChange={e => setData({ ...data, in_talent_pool: e.target.checked })}
                 className="w-5 h-5 cursor-pointer"
+                disabled
               />
               <label className="text-lg cursor-pointer flex items-center gap-2">
                 <span
