@@ -1,6 +1,11 @@
 import toast from "react-hot-toast";
 import { supabase } from "../../../Utils/supabase";
 import { useState } from "react";
+import { z } from "zod";
+
+const forgotPasswordSchema = z.object({
+  email: z.email("Invalid email format").regex(/@ucsd\.edu$/, "Must be a UCSD email address"),
+});
 
 export function useForgotPassword() {
   const [email, setEmail] = useState("");
@@ -11,8 +16,15 @@ export function useForgotPassword() {
   ) => {
     e?.preventDefault();
 
+    const result = forgotPasswordSchema.safeParse({ email: overrideEmail || email });
+      if (!result.success) {
+      toast.error(result.error.issues[0].message);
+      return;
+    }
+
     const href = window.location.href;
     const search = new URLSearchParams(window.location.search);
+    console.log(`${href}${search && "&"}authState=reset-password`);
     const { data, error } = await supabase.auth.resetPasswordForEmail(overrideEmail || email, {
       redirectTo: `${href}${search && "&"}authState=reset-password`,
     });
