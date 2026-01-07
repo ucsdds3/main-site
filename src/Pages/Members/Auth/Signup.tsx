@@ -227,7 +227,12 @@ const Signup = () => {
                   />
                 ) : (
                   <div className="flex items-center justify-center h-[380px] w-[300px] text-gray-400 text-center">
-                    <p>Paste a public Google Drive PDF link or a direct PDF URL.</p>
+                    <p>
+                      Paste a public Google Drive PDF link or a direct PDF URL.{" "}
+                      <div className="text-red-500 font-bold">
+                        Confirm you can see a preview here
+                      </div>
+                    </p>
                   </div>
                 )}
               </div>
