@@ -14,7 +14,10 @@ export default function EventsList() {
   const [Events, setEvents] = useState<PortalEvent[]>([]);
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await supabase.from("Events").select("name,description,image,points");
+      const { data, error } = await supabase
+        .from("Events")
+        .select("name,description,image,points")
+        .eq("deleted", false);
       if (data) {
         setEvents(data);
       }
@@ -24,8 +27,8 @@ export default function EventsList() {
   }, []);
   return (
     <Page>
-      <div className="w-full grid grid-cols-[repeat(auto-fit,clamp(100px,80vw,300px))] xl:grid-cols-[repeat(auto-fit,clamp(200px,37vw,400px))] justify-center items-center gap-5 2xl:gap-x-6 mt-10">
-        {Events.map((event) => {
+      <div className="w-full grid grid-cols-[repeat(auto-fit,clamp(100px,80vw,300px))] xl:grid-cols-[repeat(auto-fit,clamp(200px,37vw,400px))] justify-center items-center gap-5 2xl:gap-x-6 my-10">
+        {Events.map(event => {
           return <EventsCard {...event} />;
         })}
       </div>

@@ -3,7 +3,7 @@ import { supabase } from "../../../Utils/supabase";
 import { useAuthStore } from "./useAuthStore";
 
 export function useSignOut() {
-  const { setAuthState, setUser } = useAuthStore();
+  const { setAuthState, setUser, setAdminLevel } = useAuthStore();
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -14,6 +14,7 @@ export function useSignOut() {
 
     setAuthState("signin");
     setUser(null);
+    setAdminLevel(0);
     localStorage.removeItem("user");
     toast.success("Logged out successfully!");
   };
