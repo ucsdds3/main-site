@@ -149,7 +149,7 @@ export function useSignUp() {
       password: data.password,
       options: {
         data: formData,
-        emailRedirectTo: `${href}${search && "&"}authState=signin`,
+        emailRedirectTo: `${href}?${search && "&"}authState=signin`,
       },
     });
 
