@@ -22,9 +22,9 @@ export function useProfile() {
           `Graduation year must be ${new Date().getFullYear()} or later`
         ),
       gender: z.string(),
-      in_talent_pool: z.boolean(),
-      on_mailing_list: z.boolean(),
-      is_grad_student: z.boolean(),
+      in_talent_pool: z.boolean().optional().default(true),
+      on_mailing_list: z.boolean().optional().default(false),
+      is_grad_student: z.boolean().optional().default(false),
 
       resume_link: z.preprocess(
         val => (val === "" ? undefined : val),
@@ -69,9 +69,17 @@ export function useProfile() {
       return;
     }
 
+    // Filter data to only include Members table fields (exclude password fields)
+    const allowedFields = Object.keys(signupSchema.shape).filter(
+      key => key !== "password" && key !== "confirm_password"
+    );
+    const memberUpdateData = Object.fromEntries(
+      Object.entries(data).filter(([key]) => allowedFields.includes(key))
+    );
+
     const { error: memberError } = await supabase
       .from("Members")
-      .update(data)
+      .update(memberUpdateData)
       .eq("email", data?.email);
     if (memberError) {
       toast.error(memberError.message);
