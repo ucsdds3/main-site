@@ -31,27 +31,7 @@ const Profile = () => {
     return undefined;
   };
 
-  const previewUrl = getPdfPreviewUrl(data?.resume_link);
-
-  // Split full_name into first_name and last_name if not already split
-  const firstName = data?.first_name || data?.full_name?.split(" ")[0] || "";
-  const lastName = data?.last_name || data?.full_name?.split(" ").slice(1).join(" ") || "";
-
-  const setFirstName = (value: string) => {
-    setData({
-      ...data,
-      first_name: value,
-      full_name: `${value} ${lastName}`.trim(),
-    });
-  };
-
-  const setLastName = (value: string) => {
-    setData({
-      ...data,
-      last_name: value,
-      full_name: `${firstName} ${value}`.trim(),
-    });
-  };
+  const previewUrl = getPdfPreviewUrl(data?.resume_link); 
 
   return (
     <Page>
@@ -70,18 +50,8 @@ const Profile = () => {
               type="text"
               error={errors.toLowerCase().includes("name")}
               icon={<FaUser className="mr-2" />}
-              value={firstName}
-              setValue={setFirstName}
-              className="flex-1 w-full md:w-auto"
-            />
-            <Input
-              required
-              label="Last Name"
-              type="text"
-              error={errors.toLowerCase().includes("name")}
-              icon={<FaUser className="mr-2" />}
-              value={lastName}
-              setValue={setLastName}
+              value={data?.full_name}
+              setValue={(value: string) => setData({ ...data, full_name: value })}
               className="flex-1 w-full md:w-auto"
             />
             <Input
@@ -139,7 +109,7 @@ const Profile = () => {
             />
           </div>
 
-          {/* GRAD STUDENT & TALENT POOL */}
+          {/* TOGGLES */}
           <div className="w-full flex flex-wrap gap-8 mt-4">
             <div className="flex-1 flex items-center gap-2 ">
               <input
