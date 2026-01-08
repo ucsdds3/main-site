@@ -1,17 +1,21 @@
 import dino from "/src/Assets/Images/projects_dino.webp";
 import Section from "../../../Components/Section";
 import Star from "../../../Components/Star";
+import Button from "../../../Components/Button";
 
 const Landing = () => {
   return (
     <Section className="lg:flex-row justify-around px-[clamp(0.5rem,1vw,2.5rem)] lg:gap-[clamp(2rem,6vw,10rem)] min-h-[90vh]">
-      <div className="flex flex-col items-center lg:items-start text-center lg:text-left px-[clamp(1rem,1vw,3rem)]">
+      <div className="flex flex-col items-center text-center lg:text-left px-[clamp(1rem,1vw,3rem)]">
         <h3 className="text-[clamp(1rem,2.5vw,1.5rem)] lg:text-[clamp(1rem,1.7vw,1.5rem)] font-semibold uppercase">
           Want to Build Your Resume?
         </h3>
         <h2 className="text-[clamp(3rem,10vw,6rem)] lg:text-[clamp(3rem,6vw,5rem)]  font-semibold uppercase">
           Projects
         </h2>
+        <Button onClick={() => {
+          window.open("https://forms.gle/Ww918yDpTf44Xmq89", "_blank");
+        }}>Apply Now</Button>
         <div className="hidden lg:block relative w-full h-[80px]">
           <Star size={1.4} className="absolute top-3/8 left-1/8" />
           <Star size={2} className="absolute top-5/8 left-1/4" />
