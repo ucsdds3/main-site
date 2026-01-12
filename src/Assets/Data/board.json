@@ -404,8 +404,7 @@
     "role": "Writer",
     "email": "rchakraborty@ucsd.edu",
     "image": "/Board/Ratul-Chakraborty.webp",
-    "linkedIn": "https://www.linkedin.com/in/ratchak?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
-    "resume": "https://drive.google.com/open?id=1vQnZuuy0n02MCLoTP1mXS0nCijkGh-In"
+    "linkedIn": "https://www.linkedin.com/in/ratchak?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
   },
   {
     "name": "Bianca Grunbaum",
@@ -413,8 +412,7 @@
     "role": "Writer/Member",
     "email": "bgrunbaum@ucsd.edu",
     "image": "/Board/Bianca-Grunbaum.webp",
-    "linkedIn": "http://linkedin.com/in/biancagrunbaum",
-    "resume": "https://drive.google.com/open?id=1w8985QjFyU8jBxjqdsLXX_WtPuuFSm8y"
+    "linkedIn": "http://linkedin.com/in/biancagrunbaum"
   },
   {
     "name": "Shamita Goyal",
@@ -596,6 +594,26 @@
     "email": "rramrakhyani@ucsd.edu",
     "image": "/Board/Romy-Ramrakhyani.webp",
     "linkedIn": "https://www.linkedin.com/in/romy-ramrakhyani-a1787a314"
+  },
+  {
+    "name": "Max Ha",
+    "teams": ["Marketing"],
+    "role": "Video Editor",
+    "email": "maha@ucsd.edu",
+    "image": "/Board/Max-Ha.webp",
+    "linkedIn": "https://www.linkedin.com/in/max-ha-946a54395/",
+    "resume": "https://ucsdcloud-my.sharepoint.com/:w:/g/personal/maha_ucsd_edu/IQCE3WoWJx5NRpPAZCzwnJZ8Abt1H7U2Y3UDJtTAOPVyf68?rtime=7_7_9pFM3kg",
+    "github": "https://github.com/maxpha8-oss"
+  },
+  {
+    "name": "Alyssa Gong",
+    "teams": ["Marketing", "DataHacks"],
+    "role": "Marketing: Video Editor, DataHacks: Outreach",
+    "email": "a1gong@ucsd.edu",
+    "image": "/Board/Alyssa-Gong.webp",
+    "linkedIn": "https://www.linkedin.com/in/alyssa-gong/",
+    "resume": "https://drive.google.com/file/d/1oveHG1CKZLOT-n0MayzI2LCVL8LrNXCJ/view?usp=drive_link",
+    "github": "https://github.com/alyssalyssalysa"
   },
   {
     "name": "Dhruv Sehgal",
