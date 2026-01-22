@@ -35,27 +35,3 @@ export function Card({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
-export function Badge({
-  children,
-  tone = "neutral",
-}: {
-  children: React.ReactNode;
-  tone?: "neutral" | "good" | "warn" | "bad" | "orange";
-}) {
-  const map: Record<string, string> = {
-    neutral: "border-white/10 bg-white/5 text-white/70",
-    good: "border-emerald-500/30 bg-emerald-500/10 text-emerald-200",
-    warn: "border-yellow-500/30 bg-yellow-500/10 text-yellow-200",
-    bad: "border-red-500/30 bg-red-500/10 text-red-200",
-    orange: "border-orange-500/30 bg-orange-500/10 text-orange-200",
-  };
-
-  return (
-    <span
-      className={`inline-flex items-center rounded-full border px-2.5 py-1 text-xs ${map[tone]}`}
-    >
-      {children}
-    </span>
-  );
-}

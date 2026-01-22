@@ -7,12 +7,14 @@ import { useTheme } from "../../Hooks/useTheme";
 import { useSiteHandler } from "../../Hooks/useSiteHandler";
 import logo from "/src/Assets/Images/ds3_logo.webp";
 import { useAuthStore } from "../../Hooks/Members/Auth/useAuthStore";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const { authState } = useAuthStore();
   const { subdomain, navigate } = useSiteHandler();
   const { isDark, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = useLocation().pathname;
 
   return (
     <nav
@@ -36,11 +38,13 @@ const Navbar = () => {
           </button>
 
           {/* Theme Toggle */}
-          <label className="toggle text-base-content" id="theme-toggle">
-            <input type="checkbox" checked={isDark} onChange={toggleTheme} />
-            <MdLightMode aria-label="disabled" />
-            <MdDarkMode aria-label="enabled" />
-          </label>
+          {pathname !== "/admin" && (
+            <label className="toggle text-base-content" id="theme-toggle">
+              <input type="checkbox" checked={isDark} onChange={toggleTheme} />
+              <MdLightMode aria-label="disabled" />
+              <MdDarkMode aria-label="enabled" />
+            </label>
+          )}
         </div>
 
         {/* Mobile menu button */}

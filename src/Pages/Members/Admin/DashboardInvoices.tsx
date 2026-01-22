@@ -1,6 +1,6 @@
 import { Input } from "../../../Components/Input";
 import Select from "../../../Components/Select";
-import { Badge, Card } from "./Admin";
+import { Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
 
@@ -53,7 +53,6 @@ export default function DashboardInvoices() {
             <tbody className="divide-y divide-white/10">
               {Array.from({ length: 8 }).map((_, i) => {
                 const status = i % 3 === 0 ? "Overdue" : i % 3 === 1 ? "Unpaid" : "Paid";
-                const tone = status === "Paid" ? "good" : status === "Unpaid" ? "warn" : "bad";
                 return (
                   <tr key={i} className="hover:bg-white/5">
                     <td className="px-4 py-3">
@@ -63,11 +62,9 @@ export default function DashboardInvoices() {
                     <td className="px-4 py-3">Member {i + 1}</td>
                     <td className="px-4 py-3">${(49 + i * 10).toFixed(2)}</td>
                     <td className="px-4 py-3">
-                      <Badge
-                        tone={tone as "good" | "warn" | "bad" | "neutral" | "orange" | undefined}
-                      >
+                      <div className={`badge ${status === "Paid" ? "badge-success" : status === "Unpaid" ? "badge-warning" : "badge-error"}`}>
                         {status}
-                      </Badge>
+                      </div>
                     </td>
                     <td className="px-4 py-3">2026-02-{String(5 + i).padStart(2, "0")}</td>
                     <td className="px-4 py-3 text-right">
