@@ -6,7 +6,7 @@ import { EventTagType, EventType } from "../../Utils/types.ts";
 import SafeLink from "../SafeLink.tsx";
 
 const EventCard = ({ event, delay }: { event: EventType, delay: number }) => {
-  const { name, description, image, points, tags } = event;
+  const { name, description, image, points, start, end, location, tags } = event;
   const { imageStates } = useImagePreloader([image ? image : ""]);
   const [imageError, setImageError] = useState(false);
 
@@ -45,12 +45,26 @@ const EventCard = ({ event, delay }: { event: EventType, delay: number }) => {
       </figure>
       <div className="card-body">
         <h2 className="card-title text-2xl line-clamp-3 capitalize">{name}</h2>
+
+        <p>
+        {start && end && (
+            <span>
+            {new Date(start).toLocaleDateString()} {new Date(start).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true })} - {new Date(end).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true })}
+            </span>
+        )}
+        {location && (
+          <span>
+            {" | " + location}
+          </span>
+        )}
+        </p>
+        
         <div className="flex flex-wrap gap-2">
-          <div className="badge badge-primary w-fit">
+          <div className="badge badge-primary">
             {points} points
           </div>
           {tags?.map(tag => (
-            <div className={`badge ${tagColors[tag as EventTagType] || ""} w-fit`} key={tag}>
+            <div className={`badge ${tagColors[tag as EventTagType] || ""}`} key={tag}>
               {tag}
             </div>
           ))}
@@ -66,11 +80,11 @@ const EventCard = ({ event, delay }: { event: EventType, delay: number }) => {
             ))}
           </div>
         )}
-        {event.datetime && (
-          <div className="card-actions justify-start mt-auto">
+        {event.start && event.end && (
+          <div className="card-actions justify-start mt-auto pt-2">
             <SafeLink
               href={generateCalendarLink(event)}
-              className="btn btn-primary"
+              className="btn text-lg btn-primary"
             >
               Add to Calendar
             </SafeLink>
