@@ -1,5 +1,5 @@
 import Countdown from "../../../Components/Countdown";
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section.tsx";
 import datahacks from "../../../Assets/Data/datahacks.json";
 import { getNextDeadline } from "../../../Utils/functions.tsx";
 import Button from "../../../Components/Button";

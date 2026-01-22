@@ -1,4 +1,4 @@
-import Section from "./Section";
+import Section from "./Page/Section";
 
 const FAQ = ({ faq }: { faq: Record<string, string> }) => {
   return (

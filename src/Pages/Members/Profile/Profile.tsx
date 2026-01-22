@@ -9,7 +9,7 @@ import {
   FaInfoCircle,
 } from "react-icons/fa";
 import Page from "../../../Components/Page/Page";
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 import { Input } from "../../../Components/Input";
 import Avatar from "../Avatar";
 import { useProfile } from "../../../Hooks/Members/useProfile";
@@ -31,7 +31,7 @@ const Profile = () => {
     return undefined;
   };
 
-  const previewUrl = getPdfPreviewUrl(data?.resume_link); 
+  const previewUrl = getPdfPreviewUrl(data?.resume_link);
 
   return (
     <Page>

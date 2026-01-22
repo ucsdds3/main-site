@@ -4,7 +4,7 @@ import { useSiteHandler } from "../../Hooks/useSiteHandler";
 import { useAuthStore } from "../../Hooks/Members/Auth/useAuthStore";
 import Auth from "./Auth/Auth";
 import Home from "./Home/Home";
-import EventsList from "./Events/EventsList";
+import EventsList from "../../Components/Events/EventsList";
 import Profile from "./Profile/Profile";
 import Store from "./Store/Store";
 import Admin from "./Admin/Admin";

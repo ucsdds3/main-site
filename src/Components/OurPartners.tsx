@@ -1,6 +1,6 @@
 import partners from "../Assets/Data/partners.json";
 import SafeLink from "../Components/SafeLink";
-import Section from "../Components/Section";
+import Section from "./Page/Section";
 import { useTheme } from "../Hooks/useTheme";
 
 const OurPartners = () => {

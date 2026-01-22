@@ -1,5 +1,5 @@
 import Button from "../../../Components/Button";
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 import { useSiteHandler } from "../../../Hooks/useSiteHandler";
 
 const WorkWithUs = () => {
@@ -15,7 +15,7 @@ const WorkWithUs = () => {
       </div>
       <Button
         onClick={() => {
-          navigate({ subdomain: "consulting", pathname: "/"});
+          navigate({ subdomain: "consulting", pathname: "/" });
         }}
       >
         LEARN MORE

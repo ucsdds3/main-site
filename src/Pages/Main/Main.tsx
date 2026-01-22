@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router";
 import Home from "./Home/Home";
 import EventPage from "./Events/EventPage";
-import events from "../../Assets/Data/events.json";
+import eventsData from "../../Assets/Data/events.json";
 import Board from "./Board/Board";
 import Projects from "./Projects/Projects";
 import DataHacks from "./DataHacks/DataHacks";
@@ -13,17 +13,17 @@ import socialData from "../../Assets/Data/social-events.json";
 import Alumni from "./Board/Alumni";
 
 const Main = () => {
-  const { upcoming, workshops, social, professional } = events;
+  const { upcoming, workshops, social, professional } = eventsData;
 
   return (
     <Routes>
       <Route index element={<Home />} />
       <Route path="/events">
-        <Route index element={<EventPage events={upcoming} />} />
-        <Route path="upcoming" element={<EventPage events={upcoming} />} />
-        <Route path="workshops" element={<EventPage events={workshops} images={workshopData} />} />
-        <Route path="social" element={<EventPage events={social} images={socialData}/>} />
-        <Route path="professional" element={<EventPage events={professional} images={professionalData} />} />
+        <Route index element={<EventPage team={upcoming} />} />
+        <Route path="upcoming" element={<EventPage team={upcoming} />} />
+        <Route path="workshops" element={<EventPage team={workshops} images={workshopData} />} />
+        <Route path="social" element={<EventPage team={social} images={socialData} />} />
+        <Route path="professional" element={<EventPage team={professional} images={professionalData} />} />
       </Route>
       <Route path="/board">
         <Route index element={<Board />} />

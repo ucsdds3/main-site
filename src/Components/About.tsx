@@ -1,4 +1,4 @@
-import Section from "./Section";
+import Section from "./Page/Section";
 import { TeamType } from "../Utils/types";
 import Star from "./Star";
 import { twMerge } from "tailwind-merge";
@@ -33,7 +33,7 @@ const About = ({ name, image, points, noAbout, className }: AboutProps) => {
           </div>
 
           <div className="flex-[4] flex flex-col justify-center gap-8">
-          {Object.entries(points ?? {}).map(([point, description], index) => (
+            {Object.entries(points ?? {}).map(([point, description], index) => (
               <div key={index} className="flex gap-4">
                 <Star
                   className="mt-3"

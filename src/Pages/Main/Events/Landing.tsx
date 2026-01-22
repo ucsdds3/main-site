@@ -1,5 +1,5 @@
 import workshopImage from "../../../Assets/Images/event-landing.webp";
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 
 interface LandingProps {
   title: string;

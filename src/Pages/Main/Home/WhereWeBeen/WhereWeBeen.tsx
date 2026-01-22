@@ -1,4 +1,4 @@
-import Section from "../../../../Components/Section";
+import Section from "../../../../Components/Page/Section";
 import SlideshowCarousel from "../../../../Components/SlideshowCarousel";
 import Carousel from "./Carousel";
 import cardData from "../../../../Assets/Data/testimonials.json";

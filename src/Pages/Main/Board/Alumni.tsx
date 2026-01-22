@@ -1,5 +1,5 @@
 import Star from "../../../Components/Star";
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 import Page from "../../../Components/Page/Page";
 import { Suspense, useState, useEffect } from "react";
 import HoverCard from "../../../Components/HoverCard";

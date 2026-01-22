@@ -1,7 +1,7 @@
 import { scrollTo } from "../../../Utils/functions.tsx";
 import consulting from "../../../Assets/Data/consulting.json";
 import Button from "../../../Components/Button.tsx";
-import Section from "../../../Components/Section.tsx";
+import Section from "../../../Components/Page/Section.tsx";
 import FlipCard from "./FlipCard";
 
 const Landing = ({ contactRef }: { contactRef: React.RefObject<HTMLDivElement> }) => {
