@@ -5,7 +5,8 @@ export type EventType = {
   image?: string;
   deleted?: boolean;
   password?: string;
-  datetime?: string;
+  start?: string;
+  end?: string;
   tags?: string[];
   location?: string;
   description: string;
