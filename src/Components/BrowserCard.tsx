@@ -6,7 +6,7 @@ import SafeLink from "./SafeLink";
 import { memo, useState } from "react";
 
 const BrowserCard = memo(function BrowserCard({
-  title,
+  name,
   date,
   link,
   location,
@@ -14,7 +14,7 @@ const BrowserCard = memo(function BrowserCard({
   description,
   delay = 0,
   linkText = "View",
-}: EventType & { delay?: number; linkText?: string }) {
+}: EventType & { delay?: number; linkText?: string, link?: string }) {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3atucsd.com");
   const [imageError, setImageError] = useState(false);
@@ -33,7 +33,7 @@ const BrowserCard = memo(function BrowserCard({
       className={`relative w-full h-full pt-6 px-10 pb-6 rounded-2xl bg-base-400 border border-[var(--initial-border-color)] hover:border-[var(--border-color)] duration-150 flex flex-col gap-2 group ${
         notEvent ? "cursor-pointer" : ""
       }`}
-      onClick={notEvent ? () => navigate(link.replace("www.ds3atucsd.com", "")) : undefined}
+      onClick={notEvent ? () => navigate(link?.replace("www.ds3atucsd.com", "") || "") : undefined}
     >
       <div className="flex justify-between items-center gap-6 mb-2">
         <span className="w-[80%] h-6 px-4  truncate rounded-full text-[var(--link-textcolor)] bg-base-300 hover:underline">
@@ -47,7 +47,7 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       <div className="pl-2 flex flex-col">
-        <h4 className="text-4xl font-bold line-clamp-3">{title}</h4>
+        <h4 className="text-4xl font-bold line-clamp-3">{name}</h4>
         <p className="text-lg opacity-75">
           {date && <span>{date}</span>}
           {date && location && <span> | </span>}
@@ -59,7 +59,7 @@ const BrowserCard = memo(function BrowserCard({
         {image && !imageError ? (
           <img
             src={image}
-            alt={title}
+            alt={name}
             crossOrigin="anonymous"
             referrerPolicy="no-referrer"
             className="object-cover aspect-[1.4/1] transition-transform duration-300 group-hover:scale-105"

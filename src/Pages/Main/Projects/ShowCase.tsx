@@ -1,6 +1,6 @@
 import HoverCard from '../../../Components/HoverCard';
 import Paginate from '../../../Components/Paginate';
-import Section from '../../../Components/Section';
+import Section from '../../../Components/Page/Section';
 import projectsData from '../../../Assets/Data/projects.json';
 import { usePaginate } from '../../../Hooks/usePaginate';
 import { useState } from 'react';

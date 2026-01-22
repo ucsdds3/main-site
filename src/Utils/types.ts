@@ -1,8 +1,12 @@
 export type EventType = {
-  title: string;
+  name: string;
   date?: string;
-  link: string;
+  points: string;
   image?: string;
+  deleted?: boolean;
+  password?: string;
+  datetime?: string;
+  tags?: string[];
   location?: string;
   description: string;
 };
@@ -95,3 +99,9 @@ export type PortalMemberType = {
   email: string;
   admin_level: number | null;
 };
+
+export type EventTagType = 
+  | "Professional"
+  | "Workshop"
+  | "Social"
+  | "Other";

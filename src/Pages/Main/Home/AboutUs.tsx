@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 import data from "../../../Assets/Data/aboutUs.json";
 import { Link } from "react-router";
 import useImagePreloader from "../../../Hooks/useImagepreload";
@@ -16,9 +16,8 @@ const AboutUs = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className={`flex flex-col-reverse gap-6 lg:gap-[6vw] w-full ${
-              index % 2 === 0 ? "lg:flex-row-reverse" : "lg:flex-row"
-            }`}
+            className={`flex flex-col-reverse gap-6 lg:gap-[6vw] w-full ${index % 2 === 0 ? "lg:flex-row-reverse" : "lg:flex-row"
+              }`}
           >
             <div className="flex-1 flex flex-col justify-between gap-6">
               <div className="flex flex-col gap-2">
