@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {Input} from "../../../Components/Input";
-import { Badge, Card } from "./Admin";
+import { Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
 import { supabase } from "../../../Utils/supabase";
@@ -77,12 +77,12 @@ export default function DashboardAdmin() {
                     <div className="text-xs text-white/50">{admin.email}</div>
                   </td>
                   <td className="px-4 py-3">
-                    <Badge tone={"neutral"}>{"Admin"}</Badge>
+                    <div className="badge badge-primary">{"Admin"}</div>
                   </td>
                   <td className="px-4 py-3">
-                    <Badge tone={admin.deleted ? "bad" : "good"}>
+                    <div className={`badge ${admin.deleted ? "badge-error" : "badge-success"}`}>
                       {admin.deleted ? "Inactive" : "active"}
-                    </Badge>
+                    </div>
                   </td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex justify-end gap-2">
