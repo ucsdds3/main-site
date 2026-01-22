@@ -1,6 +1,6 @@
 import React from "react";
 import Page from "../../../Components/Page/Page";
-import MemberLookup from "./MemberLookup";
+import MemberLookup from "./Members/MemberLookup";
 import DashboardAdmin from "./DashboardAdmin";
 import DashboardEvents from "./DashboardEvents";
 import DashboardInvoices from "./DashboardInvoices";
@@ -8,10 +8,10 @@ import DashboardStatsStrip from "./DashboardStatsStrip";
 
 export default function AdminDashboardOnePage() {
   return (
-    <Page>
-      <div className="min-h-[calc(100vh-64px)]  text-white ">
+    <Page data-theme="dark">
+      <div className="min-h-[calc(100vh-64px)] text-white ">
         <div className="mx-auto max-w-[1400px] px-6 py-8">
-        <h1 className="text-4xl text-center font-semibold mb-4">Admin Dashboard</h1>
+          <h1 className="text-4xl text-center font-semibold mb-4">Admin Dashboard</h1>
 
           {/* Stats strip */}
           <DashboardStatsStrip />
