@@ -1,6 +1,5 @@
 import React from "react";
 import Page from "../../../Components/Page/Page";
-import DashboardHeader from "./DashboardHeader";
 import MemberLookup from "./MemberLookup";
 import DashboardAdmin from "./DashboardAdmin";
 import DashboardEvents from "./DashboardEvents";
@@ -12,7 +11,7 @@ export default function AdminDashboardOnePage() {
     <Page>
       <div className="min-h-[calc(100vh-64px)]  text-white ">
         <div className="mx-auto max-w-[1400px] px-6 py-8">
-          <DashboardHeader />
+        <h1 className="text-4xl text-center font-semibold mb-4">Admin Dashboard</h1>
 
           {/* Stats strip */}
           <DashboardStatsStrip />
