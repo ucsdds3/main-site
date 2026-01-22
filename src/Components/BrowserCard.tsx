@@ -1,20 +1,26 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
-import { EventType } from "../Utils/types";
 import { newArray } from "../Utils/functions.tsx";
 import SafeLink from "./SafeLink";
 import { memo, useState } from "react";
 
+interface BrowserCardProps {
+  title: string;
+  link?: string;
+  image?: string;
+  description?: string;
+  delay?: number;
+  linkText?: string;
+}
+
 const BrowserCard = memo(function BrowserCard({
-  name,
-  date,
+  title,
   link,
-  location,
   image,
   description,
   delay = 0,
   linkText = "View",
-}: EventType & { delay?: number; linkText?: string, link?: string }) {
+}: BrowserCardProps) {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3atucsd.com");
   const [imageError, setImageError] = useState(false);
@@ -47,19 +53,14 @@ const BrowserCard = memo(function BrowserCard({
       </div>
 
       <div className="pl-2 flex flex-col">
-        <h4 className="text-4xl font-bold line-clamp-3">{name}</h4>
-        <p className="text-lg opacity-75">
-          {date && <span>{date}</span>}
-          {date && location && <span> | </span>}
-          {location && <span>{location}</span>}
-        </p>
+        <h4 className="text-4xl font-bold line-clamp-3">{title}</h4>
       </div>
 
       <div className="group overflow-hidden relative inline-block skeleton w-full aspect-[1.4/1] rounded-lg">
         {image && !imageError ? (
           <img
             src={image}
-            alt={name}
+            alt={title}
             crossOrigin="anonymous"
             referrerPolicy="no-referrer"
             className="object-cover aspect-[1.4/1] transition-transform duration-300 group-hover:scale-105"
