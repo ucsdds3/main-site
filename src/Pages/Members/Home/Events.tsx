@@ -1,9 +1,9 @@
 import { MdOpenInNew } from "react-icons/md";
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 import { useState, useEffect } from "react";
 import { supabase } from "../../../Utils/supabase";
 import toast from "react-hot-toast";
-import AttendedCard from "../Events/AttendedCard";
+import AttendedCard from "./AttendedCard";
 import { FaArrowRight } from "react-icons/fa";
 
 type AttendedRow = {
@@ -111,7 +111,7 @@ const Events = () => {
       <div className="flex-5 flex flex-col bg-base-300 p-8 rounded-2xl">
         <h2 className="text-4xl font-bold">Attended Events</h2>
         <a
-          onClick={() => {}}
+          onClick={() => { }}
           className="text-blue-400 underline cursor-pointer flex items-center text-lg py-2"
         >
           Find Upcoming Events <MdOpenInNew />

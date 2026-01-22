@@ -5,7 +5,7 @@ import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
 import { supabase } from "../../../Utils/supabase";
 import toast from "react-hot-toast";
-import { PortalEvent } from "../Events/EventsList";
+import { PortalEvent } from "../../../Components/Events/EventsList";
 
 const initialForm = {
   Attendance: [{ count: 0 }],

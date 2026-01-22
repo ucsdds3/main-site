@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Section from "../../../Components/Section.tsx";
+import Section from "../../../Components/Page/Section.tsx";
 import { capitalize, formatMemberLinks } from "../../../Utils/functions.tsx";
 import HoverCard from "../../../Components/HoverCard.tsx";
 import projectsData from "../../../Assets/Data/consulting-projects.json";
@@ -58,9 +58,8 @@ const OurWork = () => {
       </div>
 
       <div
-        className={`w-full flex flex-col items-center gap-10 ${
-          currSection == "projects" ? "" : "hidden"
-        }`}
+        className={`w-full flex flex-col items-center gap-10 ${currSection == "projects" ? "" : "hidden"
+          }`}
       >
         <div className={gridClass}>
           {flatProjects.slice(start, end).map((project, index) => (
@@ -83,8 +82,8 @@ const OurWork = () => {
       </div>
 
       <div className={twMerge(gridClass, currSection == "clients" ? "" : "hidden")}>
-        {consulting.clients.slice(start, end).map(({ name, image, url}, index) => (
-          <HoverCard key={index} title={name} image={image} size="300px" link={url}/>
+        {consulting.clients.slice(start, end).map(({ name, image, url }, index) => (
+          <HoverCard key={index} title={name} image={image} size="300px" link={url} />
         ))}
       </div>
 
