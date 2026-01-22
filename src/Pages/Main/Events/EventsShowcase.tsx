@@ -13,11 +13,8 @@ const EventsShowCase = ({ images }: { images: { title: string; image: string }[]
     const autoScroll = emblaApi?.plugins()?.autoScroll;
     const isPhone = window.matchMedia("(max-width: 768px)");
     if (isPhone.matches) {
-      console.log("play");
-
       autoScroll?.play();
     } else {
-      console.log("stop");
       autoScroll?.stop();
     }
   }, [emblaApi]);

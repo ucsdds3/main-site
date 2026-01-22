@@ -74,18 +74,14 @@ export const formatMemberLinks = ({ email, website, linkedIn, resume }: MemberTy
 
 /**
  * Generates a Google Calendar add event URL from event data
- * @param event - Event data containing name, datetime, description, and optional location
- * @param durationHours - Duration of the event in hours (default: 1)
- * @returns Google Calendar URL or empty string if datetime is missing
+ * @param event - Event data containing name, start, end, description, and optional location
+ * @returns Google Calendar URL or empty string if start or end is missing
  */
-export const generateCalendarLink = (
-  event: EventType,
-  durationHours: number = 1
-): string => {
-  if (!event.datetime) return "";
+export const generateCalendarLink = (event: EventType): string => {
+  if (!event.start || !event.end) return "";
 
-  const startDate = new Date(event.datetime);
-  const endDate = new Date(startDate.getTime() + durationHours * 60 * 60 * 1000);
+  const startDate = new Date(event.start);
+  const endDate = new Date(event.end);
 
   // Format dates to ISO 8601 format (YYYYMMDDTHHmmssZ)
   const formatDate = (date: Date): string => {
