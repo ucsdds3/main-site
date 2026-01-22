@@ -12,9 +12,9 @@ function useEvents() {
     const fetchData = async () => {
       const { data, error } = await supabase
         .from("Events")
-        .select("name,description,image,points,deleted,password,datetime,tags")
+        .select("name,description,image,points,deleted,password,start,end,location,tags")
         .eq("deleted", false)
-        .order("datetime", { ascending: false });
+        .order("start", { ascending: false });
       if (data) setEvents(data);
 
       if (error) {
