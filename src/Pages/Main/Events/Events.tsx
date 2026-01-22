@@ -1,7 +1,7 @@
 import Error from "../../../Components/Error";
 import BrowserCard from "../../../Components/BrowserCard";
 import { newArray } from "../../../Utils/functions.tsx";
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section.tsx";
 import { useCalendarEvents } from "../../../Hooks/useCalendarEvents";
 import { EventType } from "../../../Utils/types";
 
@@ -17,11 +17,11 @@ const Events = () => {
         <div className="grid grid-cols-[repeat(auto-fit,clamp(350px,60vw,450px))] lg:grid-cols-[repeat(auto-fit,clamp(350px,40vw,450px))] justify-center lg:justify-start w-full lg:gap-10">
           {loading
             ? newArray(3).map((_, index) => (
-                <BrowserCard key={index} {...({} as EventType)} delay={0} />
-              ))
+              <BrowserCard key={index} {...({} as EventType)} delay={0} />
+            ))
             : events.map((event, index) => (
-                <BrowserCard key={index} {...event} delay={0} linkText="Add to Calendar" />
-              ))}
+              <BrowserCard key={index} {...event} delay={0} linkText="Add to Calendar" />
+            ))}
         </div>
       ) : (
         <span className="text-[clamp(20px,2vw,40px)] text-balance text-center p-20">

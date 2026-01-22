@@ -1,6 +1,6 @@
 import BrowserCard from "../../../Components/BrowserCard";
 import Button from "../../../Components/Button"
-import Section from "../../../Components/Section"
+import Section from "../../../Components/Page/Section"
 import onlineContent from "../../../Assets/Data/onlineContent.json"
 
 const OnlineContent = () => {

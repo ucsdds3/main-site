@@ -1,4 +1,4 @@
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";
 import { useStats } from "../../../Hooks/Members/useStats";
 import Avatar from "../Avatar";

@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import Section from "./Section";
+import Section from "./Page/Section";
 import Button from "./Button";
 import useImagePreloader from "../Hooks/useImagepreload";
 

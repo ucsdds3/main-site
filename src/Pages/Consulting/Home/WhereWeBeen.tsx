@@ -1,4 +1,4 @@
-import Section from "../../../Components/Section.tsx";
+import Section from "../../../Components/Page/Section.tsx";
 import { newArray } from "../../../Utils/functions.tsx";
 
 const WhereWeBeen = () => {

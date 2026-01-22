@@ -1,4 +1,4 @@
-import { LinkType, MemberType } from "./types";
+import { LinkType, MemberType, EventType } from "./types";
 import { IoMail } from "react-icons/io5";
 import { FaGlobe, FaLinkedin } from "react-icons/fa6";
 import { IoIosDocument } from "react-icons/io";
@@ -71,3 +71,34 @@ export const formatMemberLinks = ({ email, website, linkedIn, resume }: MemberTy
       color: "#222222",
     },
   ].filter(Boolean) as LinkType[];
+
+/**
+ * Generates a Google Calendar add event URL from event data
+ * @param event - Event data containing name, datetime, description, and optional location
+ * @param durationHours - Duration of the event in hours (default: 1)
+ * @returns Google Calendar URL or empty string if datetime is missing
+ */
+export const generateCalendarLink = (
+  event: EventType,
+  durationHours: number = 1
+): string => {
+  if (!event.datetime) return "";
+
+  const startDate = new Date(event.datetime);
+  const endDate = new Date(startDate.getTime() + durationHours * 60 * 60 * 1000);
+
+  // Format dates to ISO 8601 format (YYYYMMDDTHHmmssZ)
+  const formatDate = (date: Date): string => {
+    return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  };
+
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: event.name,
+    dates: `${formatDate(startDate)}/${formatDate(endDate)}`,
+    details: event.description || "",
+    ...(event.location && { location: event.location }),
+  });
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+};

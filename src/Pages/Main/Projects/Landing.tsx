@@ -1,5 +1,5 @@
 import dino from "/src/Assets/Images/projects_dino.webp";
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 import Star from "../../../Components/Star";
 import Button from "../../../Components/Button";
 
@@ -27,7 +27,7 @@ const Landing = () => {
         <Star size={2} className="absolute top-1 right-5/8" />
         <Star size={2.5} className="absolute -top-1/12 right-3/8" />
         <Star size={1.5} className="absolute top-3/16 right-5/24" />
-        
+
         <Star size={2} className="absolute top-2/8 left-2/8" />
       </div>
     </Section>

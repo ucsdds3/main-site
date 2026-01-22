@@ -1,4 +1,4 @@
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 import datahacks from "../../../Assets/Data/datahacks.json";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
@@ -82,9 +82,8 @@ const ShowCase = () => {
             <div
               key={i}
               onClick={() => onDotButtonClick(i)}
-              className={`w-3 h-3 rounded-full cursor-pointer ${
-                index == i ? "bg-(--color-primary)" : "bg-(--color-primary)/50"
-              }`}
+              className={`w-3 h-3 rounded-full cursor-pointer ${index == i ? "bg-(--color-primary)" : "bg-(--color-primary)/50"
+                }`}
             />
           ))}
         </div>

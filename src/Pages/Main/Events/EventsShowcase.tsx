@@ -1,4 +1,4 @@
-import Section from "../../../Components/Section";
+import Section from "../../../Components/Page/Section";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import useEmblaCarousel from "embla-carousel-react";

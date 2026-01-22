@@ -1,5 +1,5 @@
 import dino from "/src/Assets/Images/contact_dino.webp";
-import Section from "./Section";
+import Section from "./Page/Section";
 import Button from "./Button";
 import Star from "./Star";
 
@@ -70,7 +70,7 @@ const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
             className="textarea textarea-primary textarea-lg w-full h-[8rem]"
           />
         </label>
-        <Button onClick={() => {}}>SUBMIT</Button>
+        <Button onClick={() => { }}>SUBMIT</Button>
       </form>
     </Section>
   );
