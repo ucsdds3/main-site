@@ -5,21 +5,25 @@ import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
 import { supabase } from "../../../Utils/supabase";
 import toast from "react-hot-toast";
-import { PortalEvent } from "../../../Components/Events/EventsList";
+import { EventType } from "../../../Utils/types";
 
 const initialForm = {
   Attendance: [{ count: 0 }],
   name: "",
   points: 0,
-  startDate: "",
+  start: "",
+  end: "",
   password: "",
   description: "",
+  tags: [],
+  location: "",
 };
+
 export default function DashboardEvents() {
   const [imageUrl, setImageUrl] = useState("");
   const [formData, setFormData] = useState(initialForm);
   const [events, setEvents] = useState<
-    (PortalEvent & { Attendance: { count: number }[]; datetime: string; id: number })[]
+    (EventType & { Attendance: { count: number }[]; id: number })[]
   >([]);
 
   const handleChange = (name: string, value: string) => {
@@ -36,7 +40,8 @@ export default function DashboardEvents() {
       points: formData.points,
       image: imageUrl,
       password: formData.password,
-      datetime: formData.startDate,
+      start: formData.start,
+      end: formData.end,
     });
     if (error) toast.error(error.message);
     else {
@@ -60,10 +65,9 @@ export default function DashboardEvents() {
   const fetchEvents = async () => {
     const { data, error } = await supabase
       .from("Events")
-      .select("id,name, description,image,points,Attendance (count),datetime ")
+      .select("id,name, description,image,points,Attendance (count),start,end ")
       .eq("deleted", false)
-      // .gte("datetime", now)
-      .order("datetime", { ascending: true });
+      .order("start", { ascending: false });
     if (error) toast.error(error.message);
     else {
       setEvents(data);
@@ -109,8 +113,16 @@ export default function DashboardEvents() {
             label="Start date"
             className="w-full min-w-0"
             type="datetime-local"
-            value={formData.startDate}
+            value={formData.start}
             setValue={value => handleChange("startDate", value)}
+            required
+          />
+          <Input
+            label="End date"
+            className="w-full min-w-0"
+            type="datetime-local"
+            value={formData.end}
+            setValue={value => handleChange("end", value)}
             required
           />
           <Input
@@ -182,7 +194,7 @@ export default function DashboardEvents() {
                   <td className="px-4 py-3">
                     <div className="font-medium">{event.name}</div>
                   </td>
-                  <td className="px-4 py-3">{event.datetime.split("T")[0]}</td>
+                  <td className="px-4 py-3">{event.start?.split("T")[0]}</td>
 
                   <td className="px-4 py-3">{event.Attendance[0].count}</td>
                   <td className="px-4 py-3 text-right">
