@@ -1,7 +1,7 @@
 import useEvents from "./useEvents";
 import { newArray } from "../../Utils/functions";
 import { EventType } from "../../Utils/types";
-import Error from "../Error";
+import Error from "./Error";
 import EventCard from "./EventCard";
 import Section from "../Page/Section";
 import Page from "../Page/Page";

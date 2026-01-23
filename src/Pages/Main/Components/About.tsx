@@ -1,6 +1,6 @@
-import Section from "../../../Components/Page/Section";
-import { TeamType } from "../../../Utils/types";
-import Star from "../../../Components/Star";
+import Section from "src/Components/Page/Section";
+import { TeamType } from "src/Utils/types";
+import Star from "src/Components/Star";
 import { twMerge } from "tailwind-merge";
 
 export interface AboutProps extends TeamType {

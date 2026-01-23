@@ -1,17 +1,15 @@
 import { useState } from "react";
-import teams from "../../../Assets/Data/teams.json";
-import Page from "../../../Components/Page/Page";
-import Star from "../../../Components/Star";
-import SelectTeam from "./SelectTeam";
-import MemberCards from "./MemberCards";
+import teams from "./Data/teams.json";
+import Page from "src/Components/Page/Page";
+import Star from "src/Components/Star";
+import SelectTeam from "./Components/SelectTeam";
+import MemberCards from "./Components/MemberCards";
 
 // "Consulting": "Our consulting committee meets with external companies and faculty to create new DS3 events and opportunities. They build partnerships that enhance our offerings and connect our organization with the broader data science community.",
 //   "Alumni": "The alumni committee helps maintain a strong community of former DS3 members. They provide networking opportunities for alumni to connect with current members and share their experiences."
 
 const Board = () => {
-  const [team, setTeam] = useState<string>(
-    Object.keys(teams)[0]
-  );
+  const [team, setTeam] = useState<string>(Object.keys(teams)[0]);
 
   return (
     <Page>
