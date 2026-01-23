@@ -6,7 +6,7 @@ import OnlineContent from "./Sections/OnlineContent";
 const AboutUs = lazy(() => import("./Sections/AboutUs"));
 const GetInvolved = lazy(() => import("./Sections/GetInvolved"));
 const WhereWeBeen = lazy(() => import("./Sections/WhereWeBeen"));
-const OurPartners = lazy(() => import("src/Components/OurPartners"));
+const OurPartners = lazy(() => import("src/Pages/Main/Components/OurPartners"));
 
 const Home = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);

@@ -1,7 +1,7 @@
-import partners from "../Assets/Data/partners.json";
-import SafeLink from "../Components/SafeLink";
-import Section from "./Page/Section";
-import { useTheme } from "../Hooks/useTheme";
+import partners from "src/Assets/Data/partners.json";
+import SafeLink from "src/Components/SafeLink";
+import Section from "src/Components/Page/Section";
+import { useTheme } from "src/Hooks/useTheme";
 
 const OurPartners = () => {
   const { isDark } = useTheme();
@@ -27,10 +27,7 @@ const OurPartners = () => {
 
       <div className="flex flex-wrap justify-center mt-16 gap-12 sm:w-[90%]">
         {Object.entries(logos).map(([name, path], index) => (
-          <div
-            key={index}
-            className="w-[200px] h-[100px] flex items-center justify-center"
-          >
+          <div key={index} className="w-[200px] h-[100px] flex items-center justify-center">
             <img
               src={path}
               alt={name}

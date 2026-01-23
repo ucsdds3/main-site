@@ -1,5 +1,5 @@
 import Section from "src/Components/Page/Section";
-import SlideshowCarousel from "src/Components/SlideshowCarousel";
+import SlideshowCarousel from "src/Pages/Main/Home/Components/SlideshowCarousel";
 import Carousel from "../Components/Carousel";
 import cardData from "src/Assets/Data/testimonials.json";
 

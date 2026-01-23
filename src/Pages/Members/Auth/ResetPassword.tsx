@@ -1,6 +1,6 @@
 import { FaLock } from "react-icons/fa";
 import Page from "../../../Components/Page/Page";
-import {Input} from "../../../Components/Input";
+import { Input } from "../Components/Input";
 import Button from "../../../Components/Button";
 import { useResetPassword } from "../../../Hooks/Members/Auth/useResetPassword";
 
@@ -47,11 +47,7 @@ const ResetPassword = () => {
           />
         </div>
 
-        <Button
-          btnClass="text-[clamp(1rem,1vw,1.5rem)]"
-          onClick={() => {}}
-          type="submit"
-        >
+        <Button btnClass="text-[clamp(1rem,1vw,1.5rem)]" onClick={() => {}} type="submit">
           Reset Password
         </Button>
       </form>
