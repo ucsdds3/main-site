@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 
 import { useTheme } from "src/Hooks/useTheme";
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
-import { useAuthStore } from "src/Hooks/Members/Auth/useAuthStore";
+import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 
 import Links from "./Links";
 
