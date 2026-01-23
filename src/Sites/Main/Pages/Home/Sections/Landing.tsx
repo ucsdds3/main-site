@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 
 import dino from "/src/Assets/Images/dino.webp";
-import logo from "/src/Assets/Images/ds3_logo.webp";
 import Button from "src/Shared/Components/Button";
 import Star from "src/Shared/Components/Star";
 
@@ -43,7 +42,7 @@ const Landing = () => {
           <h1 className="text-[clamp(2.7rem,4.5vw,4rem)] font-semibold md:block hidden title-long md:overflow-hidden">
             DS3
           </h1>
-          <img src={logo} alt="Logo" className="h-[clamp(3rem,5vw,5rem)] hidden md:block caret" />
+          <img src="./logo.webp" alt="Logo" className="h-[clamp(3rem,5vw,5rem)] hidden md:block caret" />
         </div>
         <p className="mt-2 text-[clamp(1rem,3.5vw,2rem)] pb-[clamp(1rem,3vw,2rem)] font-albert-sans text-center md:text-left">
           Expanding the horizons of data science through community, curiosity, and collaboration.
