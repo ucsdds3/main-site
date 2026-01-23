@@ -45,10 +45,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
   ) : (
     <div
       ref={dropdownRef}
-      onClick={() => {
-        console.log(label, isOpen)
-        setIsOpen(!isOpen)
-      }}
+      onClick={() => { setIsOpen(!isOpen) }}
       className="relative group w-full lg:w-auto lg:dropdown"
     >
       <div

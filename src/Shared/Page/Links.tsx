@@ -23,7 +23,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       {subdomain == "members" && authState == "authenticated" && adminLevel != null && (
         <NavItem label={"Admin"} data={"/admin"} />
       )}
-      {subdomain == "main" || authState != "authenticated" ? (
+      {subdomain != "members" || authState != "authenticated" ? (
         <button
           onClick={() =>
             navigate({ pathname: "/", subdomain: subdomain == "main" ? "members" : "main" })
