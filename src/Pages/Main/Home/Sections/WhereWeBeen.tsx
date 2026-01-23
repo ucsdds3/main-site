@@ -1,6 +1,6 @@
 import Section from "../../../../Components/Page/Section";
 import SlideshowCarousel from "../../../../Components/SlideshowCarousel";
-import Carousel from "./Carousel";
+import Carousel from "../Components/Carousel";
 import cardData from "../../../../Assets/Data/testimonials.json";
 const WhereWeBeen = () => {
   return (

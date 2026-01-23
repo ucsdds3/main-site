@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import Section from "../../../Components/Page/Section";
-import data from "../../../Assets/Data/aboutUs.json";
+import Section from "../../../../Components/Page/Section";
+import data from "../../../../Assets/Data/aboutUs.json";
 import { Link } from "react-router";
-import useImagePreloader from "../../../Hooks/useImagepreload";
+import useImagePreloader from "../../../../Hooks/useImagepreload";
 
 const AboutUs = () => {
   const { imageStates } = useImagePreloader(data.map((daton) => daton.image));

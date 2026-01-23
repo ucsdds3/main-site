@@ -1,7 +1,7 @@
-import BrowserCard from "../../../../Components/BrowserCard";
+import BrowserCard from "../Components/BrowserCard";
 import cardData from "../../../../Assets/Data/getInvolved.json";
 import Section from "../../../../Components/Page/Section";
-import Stats from "./Stats";
+import Stats from "../Components/Stats";
 
 const GetInvolved = () => {
   return (
