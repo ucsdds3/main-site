@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import dino from "/src/Assets/Images/dino.webp";
 import logo from "/src/Assets/Images/ds3_logo.webp";
-import starData from "../../../../Assets/Data/stars.json";
-import Star from "../../../../Components/Star";
-import Button from "../../../../Components/Button";
+import starData from "src/Assets/Data/stars.json";
+import Star from "src/Components/Star";
+import Button from "src/Components/Button";
 
 const Landing = () => {
   const navigate = useNavigate();
