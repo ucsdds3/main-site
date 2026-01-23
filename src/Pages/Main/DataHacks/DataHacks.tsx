@@ -4,7 +4,7 @@ import datahacks from "../../../Assets/Data/datahacks.json";
 
 import Landing from "./Landing";
 const About = lazy(() => {
-  return import("../../../Components/About");
+  return import("../Components/About.tsx");
 });
 const ShowCase = lazy(() => {
   return import("./ShowCase.tsx");
