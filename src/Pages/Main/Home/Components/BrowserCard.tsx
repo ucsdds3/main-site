@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
-import { newArray } from "../../../../Utils/functions.tsx";
-import SafeLink from "../../../../Components/SafeLink.tsx";
+import { newArray } from "src/Utils/functions.tsx";
+import SafeLink from "src/Components/SafeLink.tsx";
 import { memo, useState } from "react";
 
 interface BrowserCardProps {
