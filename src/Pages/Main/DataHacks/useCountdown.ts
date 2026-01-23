@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getNextDeadline, parseToPST } from "../Utils/functions.tsx";
+import { getNextDeadline, parseToPST } from "../../../Utils/functions.tsx";
 
 export const useCountdown = (deadlines: Record<string, string>) => {
   const [time, setTime] = useState({ days: "00", hours: "00", mins: "00", secs: "00" });
@@ -8,7 +8,7 @@ export const useCountdown = (deadlines: Record<string, string>) => {
 
   useEffect(() => {
     if (!deadline) return;
-    
+
     const updateCountdown = () => {
       const now = new Date().getTime();
       const targetTime = parseToPST(deadline[1]).getTime();
@@ -31,7 +31,7 @@ export const useCountdown = (deadlines: Record<string, string>) => {
     return () => clearInterval(interval);
   }, [deadline]);
 
-  const isCountdownActive = Object.values(time).some((value) => value !== "X");
+  const isCountdownActive = Object.values(time).some(value => value !== "X");
 
   return { deadline: deadline?.[0], time, isCountdownActive };
 };

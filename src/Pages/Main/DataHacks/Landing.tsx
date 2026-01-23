@@ -1,4 +1,4 @@
-import Countdown from "../../../Components/Countdown";
+import Countdown from "./Countdown.tsx";
 import Section from "../../../Components/Page/Section.tsx";
 import datahacks from "../../../Assets/Data/datahacks.json";
 import { getNextDeadline } from "../../../Utils/functions.tsx";
