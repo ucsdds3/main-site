@@ -1,12 +1,13 @@
-import Star from "../../../Components/Star";
-import Section from "../../../Components/Page/Section";
-import Page from "../../../Components/Page/Page";
+import Star from "src/Components/Star";
+import Section from "src/Components/Page/Section";
+import Page from "src/Components/Page/Page";
+import HoverCard from "src/Components/HoverCard";
+import Paginate from "src/Components/Paginate";
+import { usePaginate } from "src/Hooks/usePaginate";
+import { unbreakable } from "src/Utils/functions";
+
 import { Suspense, useState, useEffect } from "react";
-import HoverCard from "../../../Components/HoverCard";
-import { unbreakable } from "../../../Utils/functions";
-import alumniData from "../../../Assets/Data/alumni.json";
-import Paginate from "../../../Components/Paginate";
-import { usePaginate } from "../../../Hooks/usePaginate";
+import alumniData from "./Data/alumni.json";
 
 const Alumni = () => {
   const [search, setSearch] = useState("");

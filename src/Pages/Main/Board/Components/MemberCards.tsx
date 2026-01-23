@@ -1,15 +1,16 @@
-import { formatMemberLinks, unbreakable } from "../../../Utils/functions.tsx";
-import { MemberType } from "../../../Utils/types.ts";
-import teams from "../../../Assets/Data/teams.json";
-import members from "../../../Assets/Data/board.json";
+import { formatMemberLinks, unbreakable } from "src/Utils/functions.tsx";
+import { MemberType } from "src/Utils/types.ts";
+import teams from "../Data/teams.json";
+import members from "../Data/board.json";
 import { lazy, Suspense } from "react";
+
 const HoverCard = lazy(() => {
-  return import("../../../Components/HoverCard.tsx");
+  return import("src/Components/HoverCard.tsx");
 });
 
 const MemberCards = ({ team }: { team: string }) => {
   const typedMembers = members as MemberType[];
-  const filteredMembers = typedMembers.filter((member) => member.teams?.includes(team));
+  const filteredMembers = typedMembers.filter(member => member.teams?.includes(team));
 
   return (
     <div className="w-[60vw] flex flex-col gap-4">

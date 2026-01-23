@@ -1,13 +1,15 @@
 import { useState } from "react";
-import Section from "src/Components/Page/Section.tsx";
-import { capitalize, formatMemberLinks } from "src/Utils/functions.tsx";
-import HoverCard from "src/Components/HoverCard.tsx";
-import projectsData from "src/Assets/Data/consulting-projects.json";
-import consulting from "src/Assets/Data/consulting.json";
-import { MemberType } from "src/Utils/types.ts";
 import { twMerge } from "tailwind-merge";
+
+import Section from "src/Components/Page/Section.tsx";
+import HoverCard from "src/Components/HoverCard.tsx";
 import Paginate from "src/Components/Paginate.tsx";
 import { usePaginate } from "src/Hooks/usePaginate.ts";
+import { capitalize, formatMemberLinks } from "src/Utils/functions.tsx";
+import { MemberType } from "src/Utils/types.ts";
+
+import projectsData from "../Data/projects.json";
+import consulting from "../Data/consulting.json";
 
 // Flatten if needed
 const flatProjects = Array.isArray(projectsData.projects)

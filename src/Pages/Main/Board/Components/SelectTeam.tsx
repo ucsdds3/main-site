@@ -1,7 +1,7 @@
-import { unbreakable } from "../../../Utils/functions.tsx";
-import teams from "../../../Assets/Data/teams.json";
-import Button from "../../../Components/Button.tsx";
-import Star from "../../../Components/Star.tsx";
+import { unbreakable } from "src/Utils/functions.tsx";
+import teams from "../Data/teams.json";
+import Button from "src/Components/Button.tsx";
+import Star from "src/Components/Star.tsx";
 import { useNavigate } from "react-router";
 
 interface SelectTeamProps {
@@ -59,7 +59,7 @@ const SelectTeam = ({ team, setTeam }: SelectTeamProps) => {
         <select
           value={team}
           className="select select-primary select-lg"
-          onChange={(e) => setTeam(e.target.value)}
+          onChange={e => setTeam(e.target.value)}
         >
           {Object.keys(teams as object).map((team, index) => (
             <option key={index}>{team}</option>

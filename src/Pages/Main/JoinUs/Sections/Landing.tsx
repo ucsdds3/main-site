@@ -1,5 +1,5 @@
-import Button from "../../../Components/Button";
-import Section from "../../../Components/Page/Section";
+import Button from "src/Components/Button";
+import Section from "src/Components/Page/Section";
 
 const Landing = () => {
   return (
@@ -29,7 +29,7 @@ const Landing = () => {
         <img
           className="w-full h-full object-cover hover:scale-105 duration-300"
           src="/GetInvolved/pf-events-img.webp"
-          onError={(e) => (e.currentTarget.style.display = "none")}
+          onError={e => (e.currentTarget.style.display = "none")}
         />
       </div>
     </Section>
