@@ -1,4 +1,4 @@
-import { useAuthStore } from "./Auth/useAuthStore";
+import { useAuthStore } from "../../../Hooks/useAuthStore";
 
 const tiers = {
   Rookie: "text-primary", // 0 - 1000 xp

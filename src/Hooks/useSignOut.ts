@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast";
 import { supabase } from "../../../Utils/supabase";
-import { useAuthStore } from "./useAuthStore";
+import { useAuthStore } from "../../../Sites/Members/Hooks/useAuthStore";
 
 export function useSignOut() {
   const { setAuthState, setUser, setAdminLevel } = useAuthStore();

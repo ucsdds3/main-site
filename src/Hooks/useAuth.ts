@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { AuthState } from "../../../Utils/types";
-import { useAuthStore } from "./useAuthStore";
-import { supabase } from "../../../Utils/supabase";
+import { AuthState } from "../Utils/types";
+import { useAuthStore } from "../Sites/Members/Hooks/useAuthStore";
+import { supabase } from "../Utils/supabase";
 import { User } from "@supabase/supabase-js";
 
 export function useAuth() {
