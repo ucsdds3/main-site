@@ -8,13 +8,13 @@ interface MemberTableHeaderProps {
   sortDirection: SortDirection;
   openDropdown: FilterColumn;
   dropdownRefs: {
-    name: RefObject<HTMLDivElement>;
-    tier: RefObject<HTMLDivElement>;
-    status: RefObject<HTMLDivElement>;
-    points: RefObject<HTMLDivElement>;
-    experience: RefObject<HTMLDivElement>;
-    major: RefObject<HTMLDivElement>;
-    graduation_year: RefObject<HTMLDivElement>;
+    name: RefObject<HTMLDivElement | null>;
+    tier: RefObject<HTMLDivElement | null>;
+    status: RefObject<HTMLDivElement | null>;
+    points: RefObject<HTMLDivElement | null>;
+    experience: RefObject<HTMLDivElement | null>;
+    major: RefObject<HTMLDivElement | null>;
+    graduation_year: RefObject<HTMLDivElement | null>;
   };
   nameFilter: NameFilter;
   tierFilter: TierFilter;
@@ -24,7 +24,7 @@ interface MemberTableHeaderProps {
   graduationYearFilter: NumericFilter;
   majorFilter: NameFilter;
   onHeaderClick: (column: FilterColumn) => void;
-  onSortClick: (column: SortColumn, e: React.MouseEvent) => void;
+  onSortClick: (column: SortColumn) => void;
   onNameFilterChange: (filter: NameFilter) => void;
   onTierFilterChange: (filter: TierFilter) => void;
   onStatusFilterChange: (filter: StatusFilter) => void;
@@ -68,10 +68,27 @@ export default function MemberTableHeader({
           isOpen={openDropdown === "name"}
           dropdownRef={dropdownRefs.name}
           onHeaderClick={() => onHeaderClick("name")}
-          onSortClick={(e) => onSortClick("name", e)}
         >
           <ul className="dropdown-content menu bg-base-100 border border-white/10 rounded-lg p-4 shadow-lg z-20 min-w-[280px] mt-1">
             <li className="mb-3">
+              <div className="text-lg font-semibold">Sort</div>
+            </li>
+            <li>
+              <button
+                className="w-full text-left hover:bg-white/10 p-2 rounded"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSortClick("name");
+                }}
+              >
+                <span className={sortColumn === "name" ? "text-primary" : ""}>
+                  {sortColumn === "name" && sortDirection === "asc" ? "↑ " : ""}
+                  {sortColumn === "name" && sortDirection === "desc" ? "↓ " : ""}
+                  Sort by Name {sortColumn === "name" ? `(${sortDirection === "asc" ? "A-Z" : "Z-A"})` : ""}
+                </span>
+              </button>
+            </li>
+            <li className="mb-3 mt-3 border-t border-white/10 pt-3">
               <div className="text-lg font-semibold">Filter by Name/Email</div>
             </li>
             <li>
@@ -133,10 +150,27 @@ export default function MemberTableHeader({
           isOpen={openDropdown === "tier"}
           dropdownRef={dropdownRefs.tier}
           onHeaderClick={() => onHeaderClick("tier")}
-          onSortClick={(e) => onSortClick("tier", e)}
         >
           <ul className="dropdown-content menu bg-base-100 border border-white/10 rounded-lg p-4 shadow-lg z-20 min-w-[200px] mt-1">
             <li className="mb-3">
+              <div className="text-lg font-semibold">Sort</div>
+            </li>
+            <li>
+              <button
+                className="w-full text-left hover:bg-white/10 p-2 rounded"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSortClick("tier");
+                }}
+              >
+                <span className={sortColumn === "tier" ? "text-primary" : ""}>
+                  {sortColumn === "tier" && sortDirection === "asc" ? "↑ " : ""}
+                  {sortColumn === "tier" && sortDirection === "desc" ? "↓ " : ""}
+                  Sort by Tier {sortColumn === "tier" ? `(${sortDirection === "asc" ? "A-Z" : "Z-A"})` : ""}
+                </span>
+              </button>
+            </li>
+            <li className="mb-3 mt-3 border-t border-white/10 pt-3">
               <div className="text-lg font-semibold">Filter by Tier</div>
             </li>
             {tiers.map(tier => (
@@ -171,10 +205,27 @@ export default function MemberTableHeader({
           isOpen={openDropdown === "status"}
           dropdownRef={dropdownRefs.status}
           onHeaderClick={() => onHeaderClick("status")}
-          onSortClick={(e) => onSortClick("status", e)}
         >
           <ul className="dropdown-content menu bg-base-100 border border-white/10 rounded-lg p-4 shadow-lg z-20 min-w-[200px] mt-1">
             <li className="mb-3">
+              <div className="text-lg font-semibold">Sort</div>
+            </li>
+            <li>
+              <button
+                className="w-full text-left hover:bg-white/10 p-2 rounded"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSortClick("status");
+                }}
+              >
+                <span className={sortColumn === "status" ? "text-primary" : ""}>
+                  {sortColumn === "status" && sortDirection === "asc" ? "↑ " : ""}
+                  {sortColumn === "status" && sortDirection === "desc" ? "↓ " : ""}
+                  Sort by Status {sortColumn === "status" ? `(${sortDirection === "asc" ? "Active first" : "Inactive first"})` : ""}
+                </span>
+              </button>
+            </li>
+            <li className="mb-3 mt-3 border-t border-white/10 pt-3">
               <div className="text-lg font-semibold">Filter by Status</div>
             </li>
             {["Active", "Inactive"].map(status => (
@@ -209,10 +260,27 @@ export default function MemberTableHeader({
           isOpen={openDropdown === "points"}
           dropdownRef={dropdownRefs.points}
           onHeaderClick={() => onHeaderClick("points")}
-          onSortClick={(e) => onSortClick("points", e)}
         >
           <ul className="dropdown-content menu bg-base-100 border border-white/10 rounded-lg p-4 shadow-lg z-20 min-w-[240px] mt-1">
             <li className="mb-3">
+              <div className="text-lg font-semibold">Sort</div>
+            </li>
+            <li>
+              <button
+                className="w-full text-left hover:bg-white/10 p-2 rounded"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSortClick("points");
+                }}
+              >
+                <span className={sortColumn === "points" ? "text-primary" : ""}>
+                  {sortColumn === "points" && sortDirection === "asc" ? "↑ " : ""}
+                  {sortColumn === "points" && sortDirection === "desc" ? "↓ " : ""}
+                  Sort by Points {sortColumn === "points" ? `(${sortDirection === "asc" ? "Low to High" : "High to Low"})` : ""}
+                </span>
+              </button>
+            </li>
+            <li className="mb-3 mt-3 border-t border-white/10 pt-3">
               <div className="text-lg font-semibold">Filter by Points</div>
             </li>
             <li>
@@ -274,10 +342,27 @@ export default function MemberTableHeader({
           isOpen={openDropdown === "experience"}
           dropdownRef={dropdownRefs.experience}
           onHeaderClick={() => onHeaderClick("experience")}
-          onSortClick={(e) => onSortClick("experience", e)}
         >
           <ul className="dropdown-content menu bg-base-100 border border-white/10 rounded-lg p-4 shadow-lg z-20 min-w-[240px] mt-1">
             <li className="mb-3">
+              <div className="text-lg font-semibold">Sort</div>
+            </li>
+            <li>
+              <button
+                className="w-full text-left hover:bg-white/10 p-2 rounded"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSortClick("experience");
+                }}
+              >
+                <span className={sortColumn === "experience" ? "text-primary" : ""}>
+                  {sortColumn === "experience" && sortDirection === "asc" ? "↑ " : ""}
+                  {sortColumn === "experience" && sortDirection === "desc" ? "↓ " : ""}
+                  Sort by Experience {sortColumn === "experience" ? `(${sortDirection === "asc" ? "Low to High" : "High to Low"})` : ""}
+                </span>
+              </button>
+            </li>
+            <li className="mb-3 mt-3 border-t border-white/10 pt-3">
               <div className="text-lg font-semibold">Filter by Experience</div>
             </li>
             <li>
@@ -340,7 +425,6 @@ export default function MemberTableHeader({
           dropdownRef={dropdownRefs.major}
           dropdownEnd
           onHeaderClick={() => onHeaderClick("major")}
-          onSortClick={(e) => e.stopPropagation()}
         >
           <ul className="dropdown-content menu bg-base-100 border border-white/10 rounded-lg p-4 shadow-lg z-20 min-w-[280px] mt-1">
             <li className="mb-3">
@@ -406,7 +490,6 @@ export default function MemberTableHeader({
           dropdownRef={dropdownRefs.graduation_year}
           dropdownEnd
           onHeaderClick={() => onHeaderClick("graduation_year")}
-          onSortClick={(e) => e.stopPropagation()}
         >
           <ul className="dropdown-content menu bg-base-100 border border-white/10 rounded-lg p-4 shadow-lg z-20 min-w-[240px] mt-1">
             <li className="mb-3">
