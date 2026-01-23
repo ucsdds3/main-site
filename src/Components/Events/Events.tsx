@@ -6,13 +6,13 @@ import EventCard from "./EventCard";
 import Section from "../Page/Section";
 import Page from "../Page/Page";
 
-type EventsListProps = {
+type EventsProps = {
   filter?: (event: EventType) => boolean;
   section?: boolean;
   ascending?: boolean;
 };
 
-export default function EventsList({ filter, section, ascending }: EventsListProps) {
+export default function Events({ filter, section, ascending }: EventsProps) {
   const { events, loading, error } = useEvents();
   const filteredEvents = filter ? events.filter(filter) : events;
   const sortedEvents = ascending

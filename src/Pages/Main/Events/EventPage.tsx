@@ -3,7 +3,7 @@ import { EventTagType, EventType, TeamType } from "../../../Utils/types";
 import About from "../Components/About";
 import Page from "../../../Components/Page/Page";
 import Landing from "./Landing";
-import EventsList from "../../../Components/Events/EventsList";
+import Events from "../../../Components/Events/Events";
 import EventsShowCase from "./EventsShowcase";
 
 type EventPageProps = {
@@ -43,7 +43,7 @@ const EventPage = ({ team, images }: EventPageProps) => {
       <div className="flex flex-col items-center w-full" ref={scrollRef}>
         <About {...team} />
         {images && <EventsShowCase images={images} />}
-        <EventsList filter={tagFilter} section ascending />
+        <Events filter={tagFilter} section ascending />
       </div>
     </Page>
   );

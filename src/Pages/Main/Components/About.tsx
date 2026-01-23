@@ -1,7 +1,9 @@
-import Section from "src/Components/Page/Section";
-import { TeamType } from "src/Utils/types";
-import Star from "src/Components/Star";
 import { twMerge } from "tailwind-merge";
+
+import Section from "src/Components/Page/Section";
+import { TeamType } from "src/Utils/types.ts";
+
+import Star from "src/Components/Star";
 
 export interface AboutProps extends TeamType {
   noAbout?: boolean;

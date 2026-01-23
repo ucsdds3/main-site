@@ -1,6 +1,6 @@
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import Button from "../../../Components/Button";
-import {Input} from "../../../Components/Input";
+import { Input } from "../Components/Input";
 import Page from "../../../Components/Page/Page";
 import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";
 import { useSignIn } from "../../../Hooks/Members/Auth/useSignIn";
@@ -35,9 +35,7 @@ const Signin = () => {
               placeholder="***************"
               icon={<FaLock className="mr-2" />}
               value={data.password}
-              setValue={(value: string) =>
-                setData({ ...data, password: value })
-              }
+              setValue={(value: string) => setData({ ...data, password: value })}
             />
           </div>
 
@@ -57,11 +55,7 @@ const Signin = () => {
           </div>
         </div>
 
-        <Button
-          btnClass="text-[clamp(1rem,1vw,1.5rem)]"
-          onClick={() => {}}
-          type="submit"
-        >
+        <Button btnClass="text-[clamp(1rem,1vw,1.5rem)]" onClick={() => {}} type="submit">
           Login
         </Button>
       </form>

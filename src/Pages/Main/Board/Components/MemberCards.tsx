@@ -1,12 +1,12 @@
-import { formatMemberLinks, unbreakable } from "src/Utils/functions.tsx";
-import { MemberType } from "src/Utils/types.ts";
-import teams from "../Data/teams.json";
-import members from "../Data/board.json";
 import { lazy, Suspense } from "react";
 
-const HoverCard = lazy(() => {
-  return import("src/Components/HoverCard.tsx");
-});
+import { formatMemberLinks, unbreakable } from "src/Utils/functions.tsx";
+import { MemberType } from "src/Utils/types.ts";
+
+import teams from "../Data/teams.json";
+import members from "../Data/board.json";
+
+const HoverCard = lazy(() => import("src/Components/HoverCard.tsx"));
 
 const MemberCards = ({ team }: { team: string }) => {
   const typedMembers = members as MemberType[];

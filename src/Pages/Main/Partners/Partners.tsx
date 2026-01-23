@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import OurPartners from "src/Components/OurPartners";
+import OurPartners from "src/Pages/Main/Components/OurPartners";
 import Page from "src/Components/Page/Page";
 
 const WorkWithUs = lazy(() => import("./WorkWithUs"));

@@ -1,9 +1,9 @@
 import { twMerge } from "tailwind-merge";
-import Section from "./Page/Section";
-import Button from "./Button";
-import useImagePreloader from "../Hooks/useImagepreload";
+import Section from "../../../Components/Page/Section";
+import Button from "../../../Components/Button";
+import useImagePreloader from "../../../Hooks/useImagepreload";
 
-const Gallery = ({ images, link }: { images: string[], link?: string }) => {
+const Gallery = ({ images, link }: { images: string[]; link?: string }) => {
   const sizes = [
     "col-span-4 row-span-5 order-3 md:order-1",
     "col-span-3 row-span-3 order-4 md:order-2",
@@ -25,7 +25,7 @@ const Gallery = ({ images, link }: { images: string[], link?: string }) => {
               <img
                 src={images[index] || "#"}
                 className="size-full object-cover rounded-sm"
-                onError={(e) => {
+                onError={e => {
                   e.currentTarget.style.display = "none";
                 }}
               />
@@ -33,7 +33,11 @@ const Gallery = ({ images, link }: { images: string[], link?: string }) => {
           </div>
         ))}
       </div>
-      {link && <Button onClick={() => window.open(link, "_blank")} className="mt-8">VIEW ALL</Button>}
+      {link && (
+        <Button onClick={() => window.open(link, "_blank")} className="mt-8">
+          VIEW ALL
+        </Button>
+      )}
     </Section>
   );
 };

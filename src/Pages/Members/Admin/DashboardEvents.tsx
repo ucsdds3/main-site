@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Input, TextArea } from "../../../Components/Input";
+import { Input, TextArea } from "../Components/Input";
 import { Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
