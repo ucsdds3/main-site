@@ -2,7 +2,7 @@ import { FaUser } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
 
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
-import { useSignOut } from "src/Hooks/Members/Auth/useSignOut";
+import { useSignOut } from "src/Hooks/useSignOut";
 
 const Avatar = () => {
   const { navigate } = useSiteHandler();

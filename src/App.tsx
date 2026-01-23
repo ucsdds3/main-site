@@ -1,6 +1,6 @@
 import { useThemeHandler } from "./Hooks/useThemeHandler";
 import { useSiteHandler } from "./Hooks/useSiteHandler";
-import { useAuth } from "./Hooks/Members/Auth/useAuth";
+import { useAuth } from "./Hooks/useAuth";
 
 import Consulting from "./Sites/Consulting/Consulting";
 import Members from "./Sites/Members/Members";
