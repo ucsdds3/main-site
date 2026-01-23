@@ -1,9 +1,11 @@
 import z from "zod";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { supabase } from "../../Utils/supabase";
-import { validateResumeLink } from "../../Utils/functions";
-import { useAuthStore } from "./Auth/useAuthStore";
+
+import { supabase } from "src/Utils/supabase";
+import { validateResumeLink } from "src/Utils/functions";
+
+import { useAuthStore } from "../../../Hooks/useAuthStore";
 
 export function useProfile() {
   const signupSchema = z

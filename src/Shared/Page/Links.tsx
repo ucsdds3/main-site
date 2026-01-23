@@ -1,4 +1,4 @@
-import { useAuthStore } from "src/Hooks/Members/Auth/useAuthStore";
+import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
 
 import navData from "./Data/navbar.json";
