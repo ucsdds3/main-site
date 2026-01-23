@@ -1,6 +1,6 @@
 import { FaEnvelope } from "react-icons/fa";
 import Page from "../../../Components/Page/Page";
-import {Input} from "../../../Components/Input";
+import { Input } from "../Components/Input";
 import Button from "../../../Components/Button";
 import { useForgotPassword } from "../../../Hooks/Members/Auth/useForgotPassword";
 import { useAuthStore } from "../../../Hooks/Members/Auth/useAuthStore";
@@ -18,9 +18,7 @@ const ForgotPassword = () => {
         <h1 className="text-center hero-text-shadow text-[clamp(2.5rem,14vw,4.5rem)]">
           Forgot Password?
         </h1>
-        <p className="text-center text-xl">
-          Enter your email to receive a reset link
-        </p>
+        <p className="text-center text-xl">Enter your email to receive a reset link</p>
 
         <div className="flex flex-col items-center justify-center my-4">
           <Input
@@ -33,11 +31,7 @@ const ForgotPassword = () => {
           />
         </div>
 
-        <Button
-          btnClass="text-[clamp(1rem,1vw,1.5rem)]"
-          onClick={() => {}}
-          type="submit"
-        >
+        <Button btnClass="text-[clamp(1rem,1vw,1.5rem)]" onClick={() => {}} type="submit">
           Send Reset Link
         </Button>
 

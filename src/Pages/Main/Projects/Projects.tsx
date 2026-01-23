@@ -11,7 +11,7 @@ const Archive = lazy(() => {
   return import("./Archive.tsx");
 });
 const Gallery = lazy(() => {
-  return import("../../../Components/Gallery.tsx");
+  return import("../Components/Gallery.tsx");
 });
 
 import projects from "../../../Assets/Data/projects.json";

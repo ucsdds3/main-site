@@ -10,7 +10,7 @@ const ShowCase = lazy(() => {
   return import("./ShowCase.tsx");
 });
 const Gallery = lazy(() => {
-  return import("../../../Components/Gallery");
+  return import("../Components/Gallery.tsx");
 });
 const DataHacks = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);

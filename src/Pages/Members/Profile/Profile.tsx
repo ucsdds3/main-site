@@ -10,10 +10,10 @@ import {
 } from "react-icons/fa";
 import Page from "../../../Components/Page/Page";
 import Section from "../../../Components/Page/Section";
-import { Input } from "../../../Components/Input";
+import { Input } from "../Components/Input";
 import Avatar from "../Avatar";
 import { useProfile } from "../../../Hooks/Members/useProfile";
-import Select from "../../../Components/Select";
+import Select from "../Components/Select";
 import majors from "../../../Assets/Data/majors.json";
 import Button from "../../../Components/Button";
 import { useForgotPassword } from "../../../Hooks/Members/Auth/useForgotPassword";

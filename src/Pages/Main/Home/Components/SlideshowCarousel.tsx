@@ -1,11 +1,12 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import useImagePreloader from "../Hooks/useImagepreload";
 import useEmblaCarousel from "embla-carousel-react";
-import { cardData } from "../Utils/types";
+
+import useImagePreloader from "src/Hooks/useImagepreload";
+import { cardData } from "src/Utils/types";
 
 const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  const { imageStates } = useImagePreloader(images.map((daton) => daton.image));
+  const { imageStates } = useImagePreloader(images.map(daton => daton.image));
 
   const btnClass =
     "rounded-full hover:text-(--color-primary) p-3 hover:bg-base-300 transition-colors duration-300 cursor-pointer text-2xl md:mx-8 z-100";
