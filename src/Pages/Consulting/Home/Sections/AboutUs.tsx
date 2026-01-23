@@ -1,4 +1,4 @@
-import Section from "../../../Components/Page/Section";
+import Section from "src/Components/Page/Section";
 
 const AboutUs = () => {
   return (

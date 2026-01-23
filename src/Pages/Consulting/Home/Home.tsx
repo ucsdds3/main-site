@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import Page from "../../../Components/Page/Page";
-import Landing from "./Landing";
-import ContactUs from "../../../Components/ContactUs";
-import AboutUs from "./AboutUs";
-import OurWork from "./OurWork";
+import Page from "src/Components/Page/Page";
+import Landing from "./Sections/Landing";
+import ContactUs from "src/Components/ContactUs";
+import AboutUs from "./Sections/AboutUs";
+import OurWork from "./Sections/OurWork";
 
 const Home = () => {
   const contactRef = useRef<HTMLDivElement>(null!);

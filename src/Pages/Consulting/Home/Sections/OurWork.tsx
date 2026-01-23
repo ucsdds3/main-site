@@ -1,13 +1,13 @@
 import { useState } from "react";
-import Section from "../../../Components/Page/Section.tsx";
-import { capitalize, formatMemberLinks } from "../../../Utils/functions.tsx";
-import HoverCard from "../../../Components/HoverCard.tsx";
-import projectsData from "../../../Assets/Data/consulting-projects.json";
-import consulting from "../../../Assets/Data/consulting.json";
-import { MemberType } from "../../../Utils/types.ts";
+import Section from "src/Components/Page/Section.tsx";
+import { capitalize, formatMemberLinks } from "src/Utils/functions.tsx";
+import HoverCard from "src/Components/HoverCard.tsx";
+import projectsData from "src/Assets/Data/consulting-projects.json";
+import consulting from "src/Assets/Data/consulting.json";
+import { MemberType } from "src/Utils/types.ts";
 import { twMerge } from "tailwind-merge";
-import Paginate from "../../../Components/Paginate.tsx";
-import { usePaginate } from "../../../Hooks/usePaginate.ts";
+import Paginate from "src/Components/Paginate.tsx";
+import { usePaginate } from "src/Hooks/usePaginate.ts";
 
 // Flatten if needed
 const flatProjects = Array.isArray(projectsData.projects)
@@ -45,9 +45,7 @@ const OurWork = () => {
             onClick={() => {
               setPage(1);
               setCurrSection(section);
-              setNumPages(
-                Math.ceil(getSectionItems().length / cardsPerPage)
-              );
+              setNumPages(Math.ceil(getSectionItems().length / cardsPerPage));
             }}
             className="flex-1 border-0 border-b-2 rounded-none bg-transparent text-[clamp(1rem,4vw,2rem)] pb-3 focus:border-(--color-primary) data-[active=true]:border-(--color-primary)"
             data-active={currSection === section}
@@ -58,8 +56,9 @@ const OurWork = () => {
       </div>
 
       <div
-        className={`w-full flex flex-col items-center gap-10 ${currSection == "projects" ? "" : "hidden"
-          }`}
+        className={`w-full flex flex-col items-center gap-10 ${
+          currSection == "projects" ? "" : "hidden"
+        }`}
       >
         <div className={gridClass}>
           {flatProjects.slice(start, end).map((project, index) => (
