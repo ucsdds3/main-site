@@ -1,0 +1,81 @@
+{
+  "deadlines": {
+    "Until Registration": "March 11, 2025 11:59 PM",
+    "Left to Apply": "April 1, 2025 11:59 PM",
+    "Until DataHacks Begins": "April 5, 2025 11:00 AM",
+    "Until DataHacks Ends": "April 6, 2025 2:30 PM"
+  },
+  "application": "",
+  "about": {
+    "name": "DataHacks",
+    "image": "/GetInvolved/datahacks_2.webp",
+    "points": {
+      "Event Overview": "DataHacks is an annual data science hackathon hosted by DS3 every Spring Quarter.",
+      "Community Engagement": "Over 200 attendees from diverse backgrounds participated in DataHacks 2025.",
+      "Opportunities for Growth": "Participate to build your portfolio, win exciting prizes, and gain invaluable experience!"
+    }
+  },
+  "winners": [
+    {
+      "title": "OnlyDance",
+      "description": "OnlyDance is an interactive dance app that uses real-time pose detection and scoring to teach choreography, giving users instant feedback and making learning dance fun.",
+      "members": ["Issac Roy", "Noah Golder", "Matthew Tokunaga", "Bryan Zhang"],
+      "category": "Advanced Winner",
+      "image": "/DataHacks/OnlyDance.webp",
+      "devpost": "https://devpost.com/software/onlydance",
+      "github": "https://github.com/Giraff-o-titans/OnlyDance"
+    },
+    {
+      "title": "AI Dance Battle",
+      "description": "Test your skills & get moving! AI Dance Battle is an interactive web app where you dance, get feedback, and challenge friends — no studio required.",
+      "members": ["Esther Chung", "Abhi Sathvika Goriparthy", "Preethi Manne", "Mythri Kishore"],
+      "category": "Intermediate Winner",
+      "image": "/DataHacks/DanceBattleAI.webp",
+      "devpost": "https://devpost.com/software/pose-jam"
+    },
+    {
+      "title": "Central or Centel",
+      "description": "Central or Centel? A real-time tweet verifier that helps fans separate NBA facts from fiction.",
+      "members": ["Krishang Khandelwal"],
+      "category": "Beginner Winner",
+      "image": "/DataHacks/CentralorCentel.webp",
+      "devpost": "https://devpost.com/software/central-or-centel",
+      "github": "https://github.com/krishang2006/Central-or-Centel"
+    },
+    {
+      "title": "Script2Screen",
+      "description": "Script2Screen predicts your movie's success and revenue using AI on its synopsis and key features—while generating a visual and interactive web app to bring your idea to life.",
+      "category": "Promising Prototype Award",
+      "members": ["Lakshmi Maddi", "Ritvik Mohindru", "Sai Yadlapati", "Rakshan Patnaik"],
+      "image": "/DataHacks/Script2Screen.webp",
+      "devpost": "https://devpost.com/software/script2screen",
+      "github": "https://manasamaddi05.github.io/Script2Screen/"
+    },
+    {
+      "title": "koreai",
+      "description": "Korean color analysis has been very popular recently. However, the service can be costly and inaccessible, so we created a tool that allows you to receive an analysis conveniently.",
+      "category": "Best Presentation",
+      "members": ["Snigdha Podugu", "Vaidehi Karve", "deepaldeleena", "Arya Verma"],
+      "image": "/DataHacks/Koreai.webp",
+      "devpost": "https://devpost.com/software/koreai",
+      "github": "https://github.com/snigdhapodugu/koreai/tree/main"
+    },
+    {
+      "title": "StatPilot",
+      "description": "We developed a web-based application that provides users with insightful information to make probability based decisions on NBA game stat lines.",
+      "category": "Innovation Launchpad Award",
+      "members": ["Alan Aquino", "Antony Munkhchuluun", "Keanu Ventura", "hasaam butt"],
+      "image": "/DataHacks/StatPilot.webp",
+      "devpost": "https://devpost.com/software/statpilot"
+    }
+  ],
+  "images": [
+    "/DataHacks/D1.webp",
+    "/DataHacks/D2.webp",
+    "/DataHacks/D3.webp",
+    "/DataHacks/D4.webp",
+    "/DataHacks/D5.webp",
+    "/DataHacks/D6.webp",
+    "/DataHacks/D7.webp"
+  ]
+}
