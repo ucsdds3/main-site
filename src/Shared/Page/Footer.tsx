@@ -1,5 +1,3 @@
-import logo from "/src/Assets/Images/ds3_logo.webp";
-
 import SafeLink from "../Components/SafeLink.tsx";
 import socialMedia from "./Data/socialMedia.tsx";
 
@@ -11,7 +9,7 @@ const Footer = () => {
     >
       <div className="flex px-6 flex-1 gap-3 ">
         <div className="flex items-center gap-3">
-          <img src={logo} alt="DS3 Logo" className="w-12" />
+          <img src="./logo.webp" alt="DS3 Logo" className="w-12" />
           <div className="flex flex-col">
             <span className="text-2xl font-semibold">DS3 @ UC SAN DIEGO</span>
             <span className="text-sm text-gray-400">© 2025 All Rights Reserved</span>

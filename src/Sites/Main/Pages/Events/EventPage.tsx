@@ -44,8 +44,8 @@ const EventPage = ({ team, images }: EventPageProps) => {
       />
       <div className="flex flex-col items-center w-full" ref={scrollRef}>
         <About {...team} />
-        {images && <EventsShowCase images={images} />}
         <Events filter={tagFilter} section ascending />
+        {images && <EventsShowCase images={images} />}
       </div>
     </Page>
   );
