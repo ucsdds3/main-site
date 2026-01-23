@@ -1,6 +1,5 @@
-import { unbreakable } from "../../../../Utils/functions.tsx";
-// import { useStatCounter } from "../../../Hooks/useStatCounter";
-import { useTheme } from "../../../../Hooks/useTheme.ts";
+import { unbreakable } from "src/Utils/functions.tsx";
+import { useTheme } from "src/Hooks/useTheme.ts";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 

@@ -1,7 +1,7 @@
 import BrowserCard from "../Components/BrowserCard";
-import Button from "../../../../Components/Button";
-import Section from "../../../../Components/Page/Section";
-import onlineContent from "../../../../Assets/Data/onlineContent.json";
+import Button from "src/Components/Button";
+import Section from "src/Components/Page/Section";
+import onlineContent from "src/Assets/Data/onlineContent.json";
 
 const OnlineContent = () => {
   return (
