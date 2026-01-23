@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
-import { newArray } from "../Utils/functions.tsx";
-import SafeLink from "./SafeLink";
+import { newArray } from "../../../../Utils/functions.tsx";
+import SafeLink from "../../../../Components/SafeLink.tsx";
 import { memo, useState } from "react";
 
 interface BrowserCardProps {
@@ -64,7 +64,10 @@ const BrowserCard = memo(function BrowserCard({
             crossOrigin="anonymous"
             referrerPolicy="no-referrer"
             className="object-cover aspect-[1.4/1] transition-transform duration-300 group-hover:scale-105"
-            onError={(e) => { console.log("Image error", e); setImageError(true)}}
+            onError={e => {
+              console.log("Image error", e);
+              setImageError(true);
+            }}
             style={{ display: "block" }}
           />
         ) : (

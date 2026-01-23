@@ -1,5 +1,5 @@
-import Section from "../../../Components/Page/Section.tsx";
-import { newArray } from "../../../Utils/functions.tsx";
+import Section from "src/Components/Page/Section.tsx";
+import { newArray } from "src/Utils/functions.tsx";
 
 const WhereWeBeen = () => {
   return (
