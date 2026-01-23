@@ -8,9 +8,8 @@ interface FilterHeaderProps {
   sortColumn: SortColumn;
   sortDirection: SortDirection;
   isOpen: boolean;
-  dropdownRef: RefObject<HTMLDivElement>;
+  dropdownRef: RefObject<HTMLDivElement | null>;
   onHeaderClick: () => void;
-  onSortClick: (e: React.MouseEvent) => void;
   dropdownEnd?: boolean;
   children: React.ReactNode;
 }
@@ -23,7 +22,6 @@ export default function FilterHeader({
   isOpen,
   dropdownRef,
   onHeaderClick,
-  onSortClick,
   dropdownEnd = false,
   children,
 }: FilterHeaderProps) {
@@ -47,12 +45,11 @@ export default function FilterHeader({
         >
           <span>{label}</span>
           <IoIosArrowUp
-            className={`duration-300 transition-transform cursor-pointer ${
+            className={`duration-300 transition-transform ${
               sortColumn === column
                 ? `text-primary ${sortDirection === "desc" ? "rotate-180" : ""}`
                 : "text-white/40"
             }`}
-            onClick={onSortClick}
           />
         </div>
         {children}

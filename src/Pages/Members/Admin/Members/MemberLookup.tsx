@@ -49,7 +49,7 @@ export default function MemberLookup() {
   const [selected, setSelected] = useState<PortalMemberType>(defaultSelection);
   const [sortColumn, setSortColumn] = useState<SortColumn>("points");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
-  const { triggerFetchAdmin, triggerFetchAdminNow } = useTriggerFetchAdmin();
+  const { triggerFetchAdmin } = useTriggerFetchAdmin();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -98,8 +98,7 @@ export default function MemberLookup() {
     sortDirection,
   });
 
-  const handleSort = (column: SortColumn, e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleSort = (column: SortColumn) => {
     if (sortColumn === column) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
