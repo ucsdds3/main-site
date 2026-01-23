@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../Utils/supabase";
-import { EventType } from "../Utils/types";
+import { supabase } from "../../Utils/supabase";
+import { EventType } from "../../Utils/types";
 import { toast } from "react-hot-toast";
 
 function useEvents() {
