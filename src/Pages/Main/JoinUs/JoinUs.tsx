@@ -1,12 +1,11 @@
 import { lazy, useRef } from "react";
-import faq from "../../../Assets/Data/FAQ.json";
+import faq from "./Data/FAQ.json";
 
-const ContactUs = lazy(() => {
-  return import("../../../Components/ContactUs");
-});
-import FAQ from "../../../Components/FAQ";
-import Page from "../../../Components/Page/Page";
-import Landing from "./Landing";
+import Page from "src/Components/Page/Page";
+import FAQ from "./Sections/FAQ";
+import Landing from "./Sections/Landing";
+
+const ContactUs = lazy(() => import("src/Components/Sections/ContactUs"));
 
 const JoinUs = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
@@ -16,7 +15,7 @@ const JoinUs = () => {
       <Landing />
       <div ref={scrollRef}>
         <ContactUs type="students" />
-        <FAQ faq={faq.joinUs} />
+        <FAQ faq={faq} />
       </div>
     </Page>
   );

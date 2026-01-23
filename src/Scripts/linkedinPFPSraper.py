@@ -82,7 +82,7 @@ def get_profile_picture_url(driver, linkedin_url: str, size: int = 400):
 
 def main():
     # Load alumni data
-    json_path = 'src/Assets/Data/alumni.json'
+    json_path = 'src/Pages/Main/Board/Data/alumni.json'
     with open(json_path, 'r') as f:
         alumni_data = json.load(f)
     

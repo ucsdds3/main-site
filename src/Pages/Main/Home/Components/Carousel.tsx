@@ -1,7 +1,7 @@
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useTheme } from "src/Hooks/useTheme";
-import companies from "src/Assets/Data/companyLogos.json";
+import companies from "../Data/companyLogos.json";
 
 export default function Carousel() {
   const { isDark } = useTheme();
