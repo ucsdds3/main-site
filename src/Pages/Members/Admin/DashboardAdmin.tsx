@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {Input} from "../../../Components/Input";
+import { Input } from "../Components/Input";
 import { Badge, Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
@@ -23,7 +23,9 @@ export default function DashboardAdmin() {
     const fetchAdmins = async () => {
       const { data } = await supabase
         .from("Members")
-        .select("id,name:full_name,points,experience,deleted,created_at,updated_at,email,admin_level")
+        .select(
+          "id,name:full_name,points,experience,deleted,created_at,updated_at,email,admin_level"
+        )
         .not("admin_level", "is", null)
         .order("points", { ascending: false });
       if (data) {

@@ -1,8 +1,10 @@
-import { unbreakable } from "src/Utils/functions.tsx";
-import teams from "../Data/teams.json";
-import Button from "src/Components/Button.tsx";
-import Star from "src/Components/Star.tsx";
 import { useNavigate } from "react-router";
+
+import { unbreakable } from "src/Utils/functions.tsx";
+import Button from "src/Components/Button.tsx";
+import Star from "src/Components/Star";
+
+import teams from "../Data/teams.json";
 
 interface SelectTeamProps {
   team: string;

@@ -1,12 +1,13 @@
-import Star from "src/Components/Star";
+import { Suspense, useState, useEffect } from "react";
+
 import Section from "src/Components/Page/Section";
 import Page from "src/Components/Page/Page";
 import HoverCard from "src/Components/HoverCard";
 import Paginate from "src/Components/Paginate";
 import { usePaginate } from "src/Hooks/usePaginate";
 import { unbreakable } from "src/Utils/functions";
+import Star from "src/Components/Star";
 
-import { Suspense, useState, useEffect } from "react";
 import alumniData from "./Data/alumni.json";
 
 const Alumni = () => {
@@ -20,7 +21,7 @@ const Alumni = () => {
 
   useEffect(() => {
     setPage(1);
-    const filteredAlumni = alumniData.filter((member) =>
+    const filteredAlumni = alumniData.filter(member =>
       member.name.toLowerCase().includes(search.toLowerCase())
     );
     setAlumni(filteredAlumni);
@@ -48,7 +49,7 @@ const Alumni = () => {
             placeholder="Search"
             className="input input-lg input-primary w-full max-w-xs"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={e => setSearch(e.target.value)}
           />
         </div>
 

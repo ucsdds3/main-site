@@ -1,7 +1,9 @@
 import { useState } from "react";
-import teams from "./Data/teams.json";
+
 import Page from "src/Components/Page/Page";
 import Star from "src/Components/Star";
+
+import teams from "./Data/teams.json";
 import SelectTeam from "./Components/SelectTeam";
 import MemberCards from "./Components/MemberCards";
 

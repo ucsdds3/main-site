@@ -1,5 +1,5 @@
-import { Input } from "../../../Components/Input";
-import Select from "../../../Components/Select";
+import { Input } from "../Components/Input";
+import Select from "../Components/Select";
 import { Badge, Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
