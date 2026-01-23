@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import Section from "../../../../Components/Page/Section";
-import data from "../../../../Assets/Data/aboutUs.json";
+import Section from "src/Components/Page/Section";
+import data from "src/Assets/Data/aboutUs.json";
 import { Link } from "react-router";
-import useImagePreloader from "../../../../Hooks/useImagepreload";
+import useImagePreloader from "src/Hooks/useImagepreload";
 
 const AboutUs = () => {
   const { imageStates } = useImagePreloader(data.map((daton) => daton.image));
+  
   return (
     <Section title="About Us">
       <div className="mt-10 flex flex-col gap-25">

@@ -1,7 +1,8 @@
-import Section from "../../../../Components/Page/Section";
-import SlideshowCarousel from "../../../../Components/SlideshowCarousel";
+import Section from "src/Components/Page/Section";
+import SlideshowCarousel from "src/Components/SlideshowCarousel";
 import Carousel from "../Components/Carousel";
-import cardData from "../../../../Assets/Data/testimonials.json";
+import cardData from "src/Assets/Data/testimonials.json";
+
 const WhereWeBeen = () => {
   return (
     <Section title="Where We Are">
