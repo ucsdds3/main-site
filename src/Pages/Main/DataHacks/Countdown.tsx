@@ -1,5 +1,5 @@
-import { useCountdown } from "../Hooks/useCountdown";
-import datahacks from "../Assets/Data/datahacks.json";
+import { useCountdown } from "./useCountdown";
+import datahacks from "../../../Assets/Data/datahacks.json";
 import React from "react";
 
 const Countdown = () => {
