@@ -1,7 +1,7 @@
 import dino from "/src/Assets/Images/contact_dino.webp";
-import Section from "./Page/Section";
-import Button from "./Button";
-import Star from "./Star";
+import Section from "src/Components/Page/Section";
+import Button from "src/Components/Button";
+import Star from "src/Components/Star";
 
 type ContactUsProps = {
   ref?: React.RefObject<HTMLDivElement>;
