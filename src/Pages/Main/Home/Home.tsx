@@ -1,11 +1,11 @@
 import { lazy, Suspense, useRef } from "react";
 import Page from "../../../Components/Page/Page";
-import Landing from "./Landing";
-import OnlineContent from "./OnlineContent";
+import Landing from "./Sections/Landing";
+import OnlineContent from "./Sections/OnlineContent";
 
-const AboutUs = lazy(() => import("./AboutUs"));
-const GetInvolved = lazy(() => import("./GetInvolved/GetInvolved"));
-const WhereWeBeen = lazy(() => import("./WhereWeBeen/WhereWeBeen"));
+const AboutUs = lazy(() => import("./Sections/AboutUs"));
+const GetInvolved = lazy(() => import("./Sections/GetInvolved"));
+const WhereWeBeen = lazy(() => import("./Sections/WhereWeBeen"));
 const OurPartners = lazy(() => import("../../../Components/OurPartners"));
 
 const Home = () => {
