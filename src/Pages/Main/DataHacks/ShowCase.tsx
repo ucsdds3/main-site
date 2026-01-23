@@ -2,7 +2,7 @@ import Section from "../../../Components/Page/Section";
 import datahacks from "../../../Assets/Data/datahacks.json";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-import About from "../../../Components/About";
+import About from "../Components/About";
 import SafeLink from "../../../Components/SafeLink";
 import Button from "../../../Components/Button";
 import useEmblaCarousel from "embla-carousel-react";
@@ -38,12 +38,12 @@ const ShowCase = () => {
   };
 
   const handlePrev = () => {
-    setIndex((prev) => (prev == 0 ? winners.length - 1 : prev - 1));
+    setIndex(prev => (prev == 0 ? winners.length - 1 : prev - 1));
     emblaApi?.scrollPrev();
   };
 
   const handleNext = () => {
-    setIndex((prev) => (prev == winners.length - 1 ? 0 : prev + 1));
+    setIndex(prev => (prev == winners.length - 1 ? 0 : prev + 1));
     emblaApi?.scrollNext();
   };
   const onDotButtonClick = (i: number) => {
@@ -82,8 +82,9 @@ const ShowCase = () => {
             <div
               key={i}
               onClick={() => onDotButtonClick(i)}
-              className={`w-3 h-3 rounded-full cursor-pointer ${index == i ? "bg-(--color-primary)" : "bg-(--color-primary)/50"
-                }`}
+              className={`w-3 h-3 rounded-full cursor-pointer ${
+                index == i ? "bg-(--color-primary)" : "bg-(--color-primary)/50"
+              }`}
             />
           ))}
         </div>
