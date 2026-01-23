@@ -1,6 +1,5 @@
 import toast from "react-hot-toast";
 import { useState, useEffect } from "react";
-import { MdOpenInNew } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa";
 
 import Section from "src/Shared/Page/Section";
@@ -112,12 +111,6 @@ const Events = () => {
     <Section className="flex flex-col lg:flex-row items-stretch justify-center pt-0">
       <div className="flex-5 flex flex-col bg-base-300 p-8 rounded-2xl">
         <h2 className="text-4xl font-bold">Attended Events</h2>
-        <a
-          onClick={() => {}}
-          className="text-blue-400 underline cursor-pointer flex items-center text-lg py-2"
-        >
-          Find Upcoming Events <MdOpenInNew />
-        </a>
 
         <div className="flex size-full justify-center items-start gap-8">
           <div className="w-full flex flex-col gap-5 mt-10 max-w-[800px]">
