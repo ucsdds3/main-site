@@ -1,23 +1,23 @@
-import { lazy, Suspense, useRef } from 'react'
-import Page from '../../../Components/Page/Page.tsx'
-import Landing from './Landing.tsx'
+import { lazy, Suspense, useRef } from "react";
+import Page from "../../../Components/Page/Page.tsx";
+import Landing from "./Landing.tsx";
 const About = lazy(() => {
-  return import('../../../Components/About.tsx')
-})
+  return import("../Components/About.tsx");
+});
 const ShowCase = lazy(() => {
-  return import('./ShowCase.tsx')
-})
+  return import("./ShowCase.tsx");
+});
 const Archive = lazy(() => {
-  return import('./Archive.tsx')
-})
+  return import("./Archive.tsx");
+});
 const Gallery = lazy(() => {
-  return import('../../../Components/Gallery.tsx')
-})
+  return import("../../../Components/Gallery.tsx");
+});
 
-import projects from '../../../Assets/Data/projects.json'
+import projects from "../../../Assets/Data/projects.json";
 
 const Projects = () => {
-  const scrollRef = useRef<HTMLDivElement>(null!)
+  const scrollRef = useRef<HTMLDivElement>(null!);
 
   return (
     <Page scrollRef={scrollRef}>
@@ -31,7 +31,7 @@ const Projects = () => {
         </Suspense>
       </div>
     </Page>
-  )
-}
+  );
+};
 
-export default Projects
+export default Projects;
