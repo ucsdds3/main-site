@@ -1,16 +1,14 @@
-import { toast } from "react-hot-toast";
-import { useState, useEffect } from "react";
-import { supabase } from "src/Utils/supabase";
-
-import { ColumnDefinition, ColumnType } from "../Utils/types";
-import { processFormValue } from "../Utils/functions";
+import { RefObject } from "react";
 import { TfiClose } from "react-icons/tfi";
+
+import { ColumnDefinition } from "../Utils/types";
+import useEditCard from "../Hooks/useEditCard";
 
 export interface EditCardProps<T = any> {
   tableName: string;
   columns: ColumnDefinition<T>[];
   selectedRow: T | null;
-  reloadRef?: React.MutableRefObject<{ reload: () => void; clearSelection: () => void } | null>;
+  reloadRef?: RefObject<{ reload: () => void; clearSelection: () => void } | null>;
 }
 
 export default function EditCard<T extends Record<string, any>>({
@@ -19,112 +17,64 @@ export default function EditCard<T extends Record<string, any>>({
   selectedRow,
   reloadRef,
 }: EditCardProps<T>) {
-  const [formData, setFormData] = useState<Partial<T>>({});
-  const [loading, setLoading] = useState(false);
-  const [isNew, setIsNew] = useState(false);
-
-  useEffect(() => {
-    if (selectedRow) {
-      setFormData(selectedRow);
-      setIsNew(false);
-    } else {
-      // Initialize with default values for new row
-      const defaults: Partial<T> = {};
-      columns.forEach(col => {
-        switch (col.type) {
-          case "boolean":
-            defaults[col.key] = false as any;
-            break;
-          case "number":
-            defaults[col.key] = 0 as any;
-            break;
-          case "array":
-            defaults[col.key] = [] as any;
-            break;
-          default:
-            defaults[col.key] = "" as any;
-        }
-      });
-      setFormData(defaults);
-      setIsNew(true);
-    }
-  }, [selectedRow, columns]);
-
-  const handleChange = (key: keyof T, value: any, type: ColumnType) => {
-    const processedValue = processFormValue(value, type);
-
-    setFormData(prev => ({
-      ...prev,
-      [key]: processedValue,
-    }));
-  };
-
-  const handleSave = async () => {
-    setLoading(true);
-    try {
-      // Validate required fields
-      const missingFields = columns
-        .filter(col => col.required && !formData[col.key])
-        .map(col => col.label);
-
-      if (missingFields.length > 0) {
-        toast.error(`Missing required fields: ${missingFields.join(", ")}`);
-        setLoading(false);
-        return;
-      }
-
-      // Exclude auto-generated fields
-      const fieldsToExclude = ["id", "created_at", "updated_at"];
-      const dataToSave = { ...formData };
-      fieldsToExclude.forEach(field => {
-        delete dataToSave[field as keyof T];
-      });
-
-      if (isNew) {
-        const { error } = await supabase.from(tableName).insert([dataToSave]);
-        if (error) throw error;
-        toast.success("Row created successfully");
-      } else {
-        const { error } = await supabase.from(tableName).update(dataToSave).eq("id", formData.id);
-        if (error) throw error;
-        toast.success("Row updated successfully");
-      }
-
-      // Reload table and clear selection
-      reloadRef?.current?.reload();
-      reloadRef?.current?.clearSelection();
-    } catch (error: any) {
-      toast.error(error.message || "Failed to save");
-      console.error("Error saving:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!selectedRow || isNew) return;
-
-    if (!confirm("Are you sure you want to delete this row?")) return;
-
-    setLoading(true);
-    try {
-      const { error } = await supabase.from(tableName).delete().eq("id", formData.id);
-      if (error) throw error;
-      toast.success("Row deleted successfully");
-
-      // Reload table and clear selection
-      reloadRef?.current?.reload();
-      reloadRef?.current?.clearSelection();
-    } catch (error: any) {
-      toast.error(error.message || "Failed to delete");
-      console.error("Error deleting:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    formData,
+    loading,
+    isNew,
+    handleChange,
+    handleFileUpload,
+    handleSave,
+    handleDelete,
+  } = useEditCard({
+    tableName,
+    columns,
+    selectedRow,
+    reloadRef,
+  });
 
   const renderInput = (col: ColumnDefinition<T>) => {
     const value = formData[col.key];
+
+    if (col.key === "image" && col.type === "text") {
+      const isBlobUrl = value && String(value).startsWith("blob:");
+      return (
+        <div className="space-y-2">
+          {value && (
+            <div>
+              <img
+                src={String(value)}
+                alt="Preview"
+                className="w-full aspect-[16/9] object-cover rounded-lg border border-base-content/20"
+                onError={e => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+                onLoad={e => {
+                  (e.target as HTMLImageElement).style.display = "block";
+                }}
+              />
+              {isBlobUrl ? (
+                <p className="text-sm text-success mt-1">File ready for upload</p>
+              ) : (
+                <p className="text-sm text-gray-400 mt-1 truncate">{String(value)}</p>
+              )}
+            </div>
+          )}
+          <input
+            key={selectedRow?.id || "new"}
+            type="file"
+            accept="image/*"
+            className="file-input file-input-bordered w-full"
+            onChange={e => {
+              const file = e.target.files?.[0];
+              if (file) {
+                handleFileUpload(col.key, file);
+              }
+            }}
+            disabled={loading}
+          />
+        </div>
+      );
+    }
 
     switch (col.type) {
       case "boolean":
@@ -155,6 +105,42 @@ export default function EditCard<T extends Record<string, any>>({
           />
         );
       case "array":
+        if (col.key === "tags") {
+          const tagOptions = ["Workshop", "Professional", "Social", "Other"];
+          const selectedTags = Array.isArray(value) ? value : [];
+          
+          const handleTagToggle = (tag: string) => {
+            const newTags = (selectedTags as string[]).includes(tag)
+              ? (selectedTags as string[]).filter((t: string) => t !== tag)
+              : [...selectedTags, tag];
+            handleChange(col.key, newTags, col.type);
+          };
+
+          return (
+            <div className="space-y-2">
+              {tagOptions.map(tag => (
+                <label key={tag} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                    checked={(selectedTags as string[]).includes(tag)}
+                    onChange={() => handleTagToggle(tag)}
+                  />
+                  <span>{tag}</span>
+                </label>
+              ))}
+            </div>
+          );
+        }
+        return (
+          <textarea
+            className="textarea textarea-bordered w-full"
+            rows={3}
+            value={JSON.stringify(value || [], null, 2)}
+            onChange={e => handleChange(col.key, e.target.value, col.type)}
+            placeholder='["item1", "item2"]'
+          />
+        );
       case "json":
         return (
           <textarea
@@ -166,6 +152,30 @@ export default function EditCard<T extends Record<string, any>>({
           />
         );
       default:
+        if (col.key === "description" && col.type === "text") {
+          const descValue = String(value || "");
+          const charCount = descValue.length;
+          const minChars = 100;
+          const isValid = charCount >= minChars;
+          
+          return (
+            <div>
+              <textarea
+                className={`textarea textarea-bordered w-full ${!isValid && descValue ? "textarea-error" : ""}`}
+                rows={4}
+                value={descValue}
+                onChange={e => handleChange(col.key, e.target.value, col.type)}
+                placeholder="Enter description (minimum 100 characters)"
+              />
+              <div className="label">
+                <span className={`label-text-alt ${isValid ? "text-success" : "text-error"}`}>
+                  {charCount} / {minChars} characters {isValid ? "✓" : ""}
+                </span>
+              </div>
+            </div>
+          );
+        }
+        
         return (
           <input
             type="text"
@@ -200,7 +210,7 @@ export default function EditCard<T extends Record<string, any>>({
                 <label className="label">
                   <span className="label-text">
                     {col.label}
-                    {col.required && <span className="text-error ml-1">*</span>}
+                    {col.optional !== true && <span className="text-error ml-1">*</span>}
                   </span>
                 </label>
                 {renderInput(col)}
