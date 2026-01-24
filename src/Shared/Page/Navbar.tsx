@@ -35,7 +35,7 @@ const Navbar = () => {
               })
             }
           >
-            <img src="./logo.webp" alt="Logo" className="w-10 transition-all duration-500" />
+            <img src="/logo.webp" alt="Logo" className="w-10 transition-all duration-500" />
           </button>
 
           {/* Theme Toggle */}
