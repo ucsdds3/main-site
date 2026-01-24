@@ -1,6 +1,6 @@
 import { useAuthStore } from "../../../Hooks/useAuthStore";
 
-const tiers = {
+export const tiers = {
   Rookie: "text-primary", // 0 - 1000 xp
   Bronze: "text-yellow-700", // 1000 - 2000 xp
   Silver: "text-gray-400", // 2000 - 4000 xp
