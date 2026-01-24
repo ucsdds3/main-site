@@ -3,8 +3,8 @@ import {Input} from "../../Components/Input";
 import { Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
-import { supabase } from "../../../../Utils/supabase";
-import { PortalMemberType } from "../../../../Utils/types";
+import { supabase } from "src/Utils/supabase";
+import { PortalMemberType } from "src/Utils/types";
 import toast from "react-hot-toast";
 
 export default function DashboardAdmin() {
@@ -14,8 +14,6 @@ export default function DashboardAdmin() {
   const removeAdmin = async (id: number) => {
     const { error } = await supabase.from("Members").update({ admin_level: null }).eq("id", id);
     if (error) toast.error(error.message);
-    else {
-    }
   };
   useEffect(() => {
     const fetchAdmins = async () => {
