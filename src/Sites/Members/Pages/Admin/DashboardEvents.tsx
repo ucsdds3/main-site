@@ -3,9 +3,9 @@ import { Input, TextArea } from "../../Components/Input";
 import { Card } from "./Admin";
 import DashboardButton from "./DashboardButton";
 import DashboardSectionHeader from "./DashboardSectionHeader";
-import { supabase } from "../../../../Utils/supabase";
+import { supabase } from "src/Utils/supabase";
 import toast from "react-hot-toast";
-import { EventType } from "../../../../Utils/types";
+import { EventType } from "src/Utils/types";
 
 const initialForm = {
   Attendance: [{ count: 0 }],

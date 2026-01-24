@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { PortalMemberType } from "../../../../Utils/types";
+import { PortalMemberType } from "src/Utils/types";
 import { SortColumn, SortDirection } from "../types";
 import { getTier } from "../utils";
 

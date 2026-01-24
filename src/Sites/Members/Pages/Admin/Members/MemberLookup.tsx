@@ -1,9 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { Card } from "../Admin";
 import DashboardSectionHeader from "../DashboardSectionHeader";
-import { PortalMemberType } from "../../../../Utils/types";
-import { supabase } from "../../../../Utils/supabase";
-import { useTriggerFetchAdmin } from "../../../../Hooks/Members/Admin/useTriggerFetchAdmin";
+import { PortalMemberType } from "src/Utils/types";
+import { supabase } from "src/Utils/supabase";
 import { useMemberFilters } from "./hooks/useMemberFilters";
 import { useMemberSorting } from "./hooks/useMemberSorting";
 import { SortColumn, SortDirection, FilterColumn, NameFilter, TierFilter, StatusFilter, NumericFilter } from "./types";
@@ -49,7 +48,6 @@ export default function MemberLookup() {
   const [selected, setSelected] = useState<PortalMemberType>(defaultSelection);
   const [sortColumn, setSortColumn] = useState<SortColumn>("points");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
-  const { triggerFetchAdmin } = useTriggerFetchAdmin();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -79,7 +77,7 @@ export default function MemberLookup() {
       }
     };
     fetchMembers();
-  }, [triggerFetchAdmin]);
+  }, []);
 
   const filteredMembers = useMemberFilters({
     allMembers,

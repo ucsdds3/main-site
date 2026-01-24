@@ -17,10 +17,10 @@ export default function AdminDashboardOnePage() {
           <DashboardStatsStrip />
           {/* Main grid */}
           <div className="mt-6 grid gap-6 lg:grid-cols-12">
-            <MemberLookup />
+            {/* <MemberLookup />
             <DashboardAdmin />
             <DashboardEvents />
-            <DashboardInvoices />
+            <DashboardInvoices /> */}
           </div>
         </div>
       </div>

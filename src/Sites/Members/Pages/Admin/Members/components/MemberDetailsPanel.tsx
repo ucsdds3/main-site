@@ -1,11 +1,10 @@
 import DashboardButton from "../../DashboardButton";
 import DashboardSectionHeader from "../../DashboardSectionHeader";
 import { Card } from "../../Admin";
-import { PortalMemberType } from "../../../../../Utils/types";
+import { PortalMemberType } from "src/Utils/types";
 import { getTier, Meta, ToggleRow } from "../utils";
-import { supabase } from "../../../../../Utils/supabase";
+import { supabase } from "src/Utils/supabase";
 import toast from "react-hot-toast";
-import { useTriggerFetchAdmin } from "../../../../../Hooks/Members/Admin/useTriggerFetchAdmin";
 
 interface MemberDetailsPanelProps {
   selected: PortalMemberType;
@@ -13,8 +12,6 @@ interface MemberDetailsPanelProps {
 }
 
 export default function MemberDetailsPanel({ selected, onUpdate }: MemberDetailsPanelProps) {
-  const { triggerFetchAdminNow } = useTriggerFetchAdmin();
-
   const updateAdmin = async () => {
     const { error } = await supabase
       .from("Members")
@@ -23,7 +20,6 @@ export default function MemberDetailsPanel({ selected, onUpdate }: MemberDetails
     if (error) toast.error(error.message);
     else {
       onUpdate({ ...selected, admin_level: selected.admin_level ? null : 1 });
-      triggerFetchAdminNow();
     }
   };
 
