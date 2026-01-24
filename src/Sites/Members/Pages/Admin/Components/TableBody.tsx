@@ -21,13 +21,13 @@ export default function TableBody<T extends Record<string, any>>({
     <tbody>
       {loading ? (
         <tr>
-          <td colSpan={columns.length} className="text-center py-8">
+          <td colSpan={columns.filter(col => !col.hide).length} className="text-center py-8">
             <span className="loading loading-spinner loading-lg" />
           </td>
         </tr>
       ) : data.length === 0 ? (
         <tr>
-          <td colSpan={columns.length} className="text-center py-8 text-gray-400">
+          <td colSpan={columns.filter(col => !col.hide).length} className="text-center py-8 text-gray-400">
             No data found
           </td>
         </tr>
@@ -36,16 +36,16 @@ export default function TableBody<T extends Record<string, any>>({
           <tr
             key={row.id || index}
             className={`cursor-pointer hover:opacity-90 ${
-              selectedRow?.id === row.id ? "bg-primary/50" : ""
+              selectedRow?.id === row.id ? "!bg-primary/50" : ""
             }`}
             onClick={() => onRowSelect?.(row)}
           >
-            {columns.map(col => {
+            {columns.filter(col => !col.hide).map(col => {
               const isDescription = col.key === "description" && col.type === "text";
               return (
                 <td
                   key={String(col.key)}
-                  className={isDescription ? "w-48 max-w-[200px] truncate" : ""}
+                  className={isDescription ? "w-48 max-w-[150px] truncate" : ""}
                   title={isDescription ? formatCellValue(row[col.key], col.type) : undefined}
                 >
                   {formatCellValue(row[col.key], col.type)}
