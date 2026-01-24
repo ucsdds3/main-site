@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useState, RefObject } from "react";
 import { TfiReload } from "react-icons/tfi";
 
 import { useTableData, ColumnSortFilter } from "../Hooks/useTableData";
+import { ColumnDefinition } from "../Utils/types";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
-import { ColumnDefinition } from "../Utils/types";
 
 export interface DataTableProps<T = any> {
   tableName: string;
   columns: ColumnDefinition<T>[];
   initialData?: T[];
   onRowSelect?: (row: T | null) => void;
-  reloadRef?: React.MutableRefObject<{ reload: () => void; clearSelection: () => void } | null>;
+  reloadRef?: RefObject<{ reload: () => void; clearSelection: () => void } | null>;
 }
 
 export default function DataTable<T extends Record<string, any>>({

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../../../../Utils/supabase";
-import { formatNumber } from "../../../../../Utils/functions";
+import { supabase } from "src/Utils/supabase";
+import { formatNumber } from "src/Utils/functions";
 
 interface StatData {
   value: string;
