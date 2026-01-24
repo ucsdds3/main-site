@@ -5,42 +5,71 @@ import Page from "src/Shared/Page/Page";
 import EditCard from "./Components/EditCard";
 import DataTable from "./Components/DataTable";
 import DashboardStatsStrip from "./Components/DashboardStatsStrip";
-import { ColumnDefinition, EventRow } from "./Utils/types";
+import { ColumnDefinition, AdminLevel } from "./Utils/types";
+import tablesData from "./Data/tables.json";
+import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 
-const eventColumns: ColumnDefinition<EventRow>[] = [
-  { key: "image", label: "Image", type: "text", editable: true, hide: true },
-  { key: "name", label: "Name", type: "text", editable: true },
-  { key: "description", label: "Description", type: "text", editable: true },
-  { key: "points", label: "Points", type: "number", editable: true },
-  { key: "password", label: "Password", type: "text", editable: true },
-  { key: "start", label: "Start", type: "date", editable: true },
-  { key: "end", label: "End", type: "date", editable: true },
-  { key: "location", label: "Location", type: "text", editable: true, optional: true },
-  { key: "tags", label: "Tags", type: "array", editable: true },
-];
+type TableType = "Events" | "Members" | "Items";
 
 export default function AdminDashboardOnePage() {
-  const [selectedEvent, setSelectedEvent] = useState<EventRow | null>(null);
+  const [currentTable, setCurrentTable] = useState<TableType>("Events");
+  const [selectedRow, setSelectedRow] = useState<any>(null);
   const reloadRef = useRef<{ reload: () => void; clearSelection: () => void } | null>(null);
+  const { adminLevel } = useAuthStore();
+
+  const getTableData = () => {
+    return tablesData[currentTable as keyof typeof tablesData];
+  };
+
+  const getColumns = (): ColumnDefinition<any>[] => {
+    const tableData = getTableData();
+    const columnsObj = tableData.columns;
+
+    return Object.entries(columnsObj).map(([key, col]) => ({
+      ...col,
+      key,
+    })) as ColumnDefinition<any>[];
+  };
+
+  const canAdd = (): boolean => {
+    const tableData = getTableData();
+    const allowedLevels = tableData.permissions.canAdd as AdminLevel[];
+    return adminLevel !== null && allowedLevels.includes(adminLevel);
+  };
+
+  const canEdit = (): boolean => {
+    const tableData = getTableData();
+    const allowedLevels = tableData.permissions.canEdit as AdminLevel[];
+    return adminLevel !== null && allowedLevels.includes(adminLevel);
+  };
+
+  const handleTableChange = (tableName: string) => {
+    setCurrentTable(tableName as TableType);
+    setSelectedRow(null);
+  };
 
   return (
     <Page data-theme="dark">
-      <div className="mx-auto max-w-[1800px] px-6 py-8">
+      <div className="mx-auto max-w-[1800px] px-6 py-8 w-full">
         <DashboardStatsStrip />
 
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
-          <DataTable<EventRow>
-            tableName="Events"
-            columns={eventColumns}
-            onRowSelect={setSelectedEvent}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 w-full">
+          <DataTable
+            tableName={currentTable}
+            columns={getColumns()}
+            onRowSelect={setSelectedRow}
             reloadRef={reloadRef}
+            onTableChange={handleTableChange}
+            canAdd={canAdd()}
           />
 
-          <EditCard<EventRow>
-            tableName="Events"
-            columns={eventColumns}
-            selectedRow={selectedEvent}
+          <EditCard
+            tableName={currentTable}
+            columns={getColumns()}
+            selectedRow={selectedRow}
             reloadRef={reloadRef}
+            canEdit={canEdit()}
+            canAdd={canAdd()}
           />
         </div>
       </div>

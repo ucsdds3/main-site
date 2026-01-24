@@ -1,6 +1,17 @@
 import { ColumnType } from "./types";
 
 /**
+ * Converts snake_case to Title Case
+ */
+export function formatColumnLabel(key: string | number | symbol): string {
+  const str = String(key);
+  return str
+    .split("_")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}
+
+/**
  * Formats a cell value for display based on its column type
  */
 export function formatCellValue(value: any, type: ColumnType): string {
