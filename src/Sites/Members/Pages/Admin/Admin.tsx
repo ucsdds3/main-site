@@ -8,13 +8,14 @@ import DashboardStatsStrip from "./Components/DashboardStatsStrip";
 import { ColumnDefinition, EventRow } from "./Utils/types";
 
 const eventColumns: ColumnDefinition<EventRow>[] = [
-  { key: "name", label: "Name", type: "text", editable: true, required: true },
+  { key: "image", label: "Image", type: "text", editable: true, hide: true },
+  { key: "name", label: "Name", type: "text", editable: true },
   { key: "description", label: "Description", type: "text", editable: true },
-  { key: "points", label: "Points", type: "number", editable: true, required: true },
-  { key: "password", label: "Password", type: "text", editable: true, required: true },
-  { key: "start", label: "Start", type: "date", editable: true, required: true },
-  { key: "end", label: "End", type: "date", editable: true, required: true },
-  { key: "location", label: "Location", type: "text", editable: true },
+  { key: "points", label: "Points", type: "number", editable: true },
+  { key: "password", label: "Password", type: "text", editable: true },
+  { key: "start", label: "Start", type: "date", editable: true },
+  { key: "end", label: "End", type: "date", editable: true },
+  { key: "location", label: "Location", type: "text", editable: true, optional: true },
   { key: "tags", label: "Tags", type: "array", editable: true },
 ];
 
