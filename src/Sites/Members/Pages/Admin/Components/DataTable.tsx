@@ -12,6 +12,8 @@ export interface DataTableProps<T = any> {
   initialData?: T[];
   onRowSelect?: (row: T | null) => void;
   reloadRef?: RefObject<{ reload: () => void; clearSelection: () => void } | null>;
+  onTableChange: (tableName: string) => void;
+  canAdd?: boolean;
 }
 
 export default function DataTable<T extends Record<string, any>>({
@@ -20,6 +22,8 @@ export default function DataTable<T extends Record<string, any>>({
   initialData,
   onRowSelect,
   reloadRef,
+  onTableChange,
+  canAdd = false,
 }: DataTableProps<T>) {
   const [columnStates, setColumnStates] = useState<Record<string, ColumnSortFilter>>({});
   const [reloadTrigger, setReloadTrigger] = useState(0);
@@ -39,6 +43,10 @@ export default function DataTable<T extends Record<string, any>>({
     onRowSelect?.(null);
   };
 
+  const resetFiltersAndSort = () => {
+    setColumnStates({});
+  };
+
   // Expose reload and clearSelection functions via ref
   if (reloadRef) {
     reloadRef.current = { reload, clearSelection };
@@ -53,16 +61,43 @@ export default function DataTable<T extends Record<string, any>>({
   );
 
   return (
-    <div className="w-full bg-base-300 rounded-xl p-6 min-w-0 h-fit">
-      <div className="flex justify-between mb-4 px-2">
-        <h2 className="text-3xl font-semibold capitalize">{tableName}</h2>
+    <div className="w-full bg-base-300 rounded-xl p-6 min-w-0 h-fit border border-base-content/50">
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex items-center gap-4">
+          <select
+            className="select select-bordered text-lg font-semibold py-2 max-w-[200px]"
+            value={tableName}
+            onChange={e => {
+              onTableChange(e.target.value);
+              clearSelection();
+            }}
+          >
+            <option value="Events">Events</option>
+            <option value="Members">Members</option>
+            <option value="Items">Items</option>
+          </select>
+          <span className="text-lg font-semibold w-60">
+            Found {data.filter(row => row.deleted !== true).length} rows
+          </span>
+        </div>
         <div className="flex gap-2">
-          <button onClick={clearSelection} className="btn btn-primary font-bold">
-            + Add New
+          <button
+            onClick={clearSelection}
+            className="btn btn-primary text-lg font-bold"
+            disabled={!canAdd}
+          >
+            Add New
+          </button>
+          <button
+            onClick={resetFiltersAndSort}
+            className="btn btn-outline text-lg font-bold"
+            title="Reset filters and sort"
+          >
+            Reset
           </button>
           <button
             onClick={reload}
-            className="btn btn-primary font-bold"
+            className="btn btn-outline text-lg font-bold"
             disabled={loading}
             title="Reload"
           >
@@ -71,7 +106,7 @@ export default function DataTable<T extends Record<string, any>>({
         </div>
       </div>
 
-      <div className="overflow-x-auto overflow-y-auto max-h-[70vh] rounded-lg border border-base-content/20">
+      <div className="overflow-x-auto overflow-y-auto max-h-[70vh] rounded-lg border border-base-content/30">
         <table className="table table-zebra w-full">
           <TableHeader
             columns={columns}
