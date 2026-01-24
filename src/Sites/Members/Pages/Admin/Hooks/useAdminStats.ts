@@ -50,12 +50,12 @@ export function useAdminStats() {
           supabase
             .from("Members")
             .select("*", { count: "exact", head: true })
-            .not("admin_level", "is", null),
+            .in("admin_level", ["Board", "Executive"]),
           // Admins - last month count
           supabase
             .from("Members")
             .select("*", { count: "exact", head: true })
-            .not("admin_level", "is", null)
+            .in("admin_level", ["Board", "Executive"])
             .lt("created_at", startOfCurrentMonth.toISOString()),
           // Upcoming events - current count
           supabase
@@ -244,7 +244,7 @@ export function useAdminStats() {
     "Active Members": members,
     "Admins": admins,
     "Upcoming Events": events,
-    "Event Attendance": eventAttendance,
+    "Monthly Attendance": eventAttendance,
     "Pending Orders": pendingOrders,
     "Total Orders": totalOrders,
   };

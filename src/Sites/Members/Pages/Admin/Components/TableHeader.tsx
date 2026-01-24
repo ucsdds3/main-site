@@ -1,8 +1,10 @@
 import { FaFilter } from "react-icons/fa";
+import { CiFilter } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 import { ColumnDefinition, FilterOperator, SortDirection } from "../Utils/types";
 import { ColumnSortFilter } from "../Hooks/useTableData";
+import { formatColumnLabel } from "../Utils/functions";
 
 interface TableHeaderProps<T = any> {
   columns: ColumnDefinition<T>[];
@@ -49,115 +51,119 @@ export default function TableHeader<T extends Record<string, any>>({
     }));
   };
 
-  const getSortIcon = (columnKey: string) => {
-    return columnStates[columnKey]?.sort === "asc" ? (
-      <IoIosArrowUp className="mt-1" />
-    ) : (
-      <IoIosArrowDown className="mt-1" />
-    );
-  };
   return (
     <thead>
       <tr>
-        {columns.filter(col => !col.hide).map((col, index) => {
-          const colState = columnStates[col.key as string];
-          const hasFilter = colState?.filter && colState?.filterValue;
-          const isDescription = col.key === "description" && col.type === "text";
+        {columns
+          .filter(col => !col.hide)
+          .map((col, index) => {
+            const colState = columnStates[col.key as string];
+            const hasFilter = colState?.filter && colState?.filterValue;
+            const isDescription = col.key === "description" && col.type === "text";
 
-          return (
-            <th
-              key={String(col.key)}
-              className={`relative ${isDescription ? "w-48 max-w-[150px]" : ""}`}
-            >
-              <div className="flex gap-2 items-center">
-                <button
-                  onClick={e => {
-                    e.stopPropagation();
-                    handleSort(String(col.key));
-                  }}
-                  className="flex items-center gap-2 hover:text-primary transition-colors text-lg"
-                >
-                  <span>{col.label}</span> {getSortIcon(String(col.key))}
-                </button>
-                <div className={`dropdown ${index <= 1 ? "dropdown-start" : "dropdown-end"}`}>
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    className={`btn p-0 ${hasFilter ? "btn-active" : "btn-ghost"}`}
-                    onClick={e => e.stopPropagation()}
+            return (
+              <th
+                key={String(col.key)}
+                className={`relative ${isDescription ? "w-48 max-w-[150px]" : ""}`}
+              >
+                <div className="flex gap-2 items-center">
+                  <button
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleSort(String(col.key));
+                    }}
+                    className="flex items-center gap-2 hover:text-primary transition-colors text-lg"
                   >
-                    <FaFilter className="mt-1" />
-                  </div>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content menu bg-base-200 rounded-box z-1 p-2 shadow-lg"
-                  >
-                    <div className="flex gap-2 items-center w-full">
-                      <select
-                        className="select select-ghost min-w-[150px]"
-                        value={colState?.filter || ""}
-                        onChange={e =>
-                          handleFilterChange(
-                            String(col.key),
-                            e.target.value as FilterOperator,
-                            colState?.filterValue || ""
-                          )
-                        }
-                      >
-                        <option value="">None</option>
-                        {col.type === "text" && (
-                          <>
-                            <option value="eq">Equals</option>
-                            <option value="neq">Not Equals</option>
-                            <option value="like">Like</option>
-                            <option value="ilike">ILike</option>
-                          </>
-                        )}
-                        {(col.type === "number" || col.type === "date") && (
-                          <>
-                            <option value="eq">Equals</option>
-                            <option value="neq">Not Equals</option>
-                            <option value="gt">Greater</option>
-                            <option value="gte">Greater/Equal</option>
-                            <option value="lt">Less</option>
-                            <option value="lte">Less/Equal</option>
-                          </>
-                        )}
-                        {col.type === "boolean" && (
-                          <>
-                            <option value="eq">Equals</option>
-                            <option value="neq">Not Equals</option>
-                          </>
-                        )}
-                      </select>
-                      {colState?.filter && (
-                        <input
-                          type={
-                            col.type === "number"
-                              ? "number"
-                              : col.type === "date"
-                                ? "datetime-local"
-                                : "text"
-                          }
-                          className="input input-bordered min-w-[150px]"
-                          value={colState?.filterValue || ""}
+                    <span>{formatColumnLabel(col.key)}</span>{" "}
+                    {columnStates[col.key as string]?.sort === "asc" ? (
+                      <IoIosArrowUp className="mt-1" />
+                    ) : (
+                      <IoIosArrowDown className="mt-1" />
+                    )}
+                  </button>
+                  <div className={`dropdown ${index <= 1 ? "dropdown-start" : "dropdown-end"}`}>
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="btn btn-ghost p-0"
+                      onClick={e => e.stopPropagation()}
+                    >
+                      {hasFilter ? (
+                        <FaFilter className="mt-1" />
+                      ) : (
+                        <CiFilter className="mt-1 text-lg" />
+                      )}
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content menu bg-base-200 rounded-box z-1 p-2 shadow-lg"
+                    >
+                      <div className="flex gap-2 items-center w-full">
+                        <select
+                          className="select select-ghost min-w-[150px]"
+                          value={colState?.filter || ""}
                           onChange={e =>
                             handleFilterChange(
                               String(col.key),
-                              colState?.filter || null,
-                              e.target.value
+                              e.target.value as FilterOperator,
+                              colState?.filterValue || ""
                             )
                           }
-                          placeholder="Filter value"
-                        />
-                      )}
-                    </div>
-                  </ul>
+                        >
+                          <option value="">None</option>
+                          {col.type === "text" && (
+                            <>
+                              <option value="eq">Equals</option>
+                              <option value="neq">Not Equals</option>
+                              <option value="like">Like</option>
+                              <option value="ilike">ILike</option>
+                            </>
+                          )}
+                          {(col.type === "number" || col.type === "date") && (
+                            <>
+                              <option value="eq">Equals</option>
+                              <option value="neq">Not Equals</option>
+                              <option value="gt">Greater</option>
+                              <option value="gte">Greater/Equal</option>
+                              <option value="lt">Less</option>
+                              <option value="lte">Less/Equal</option>
+                            </>
+                          )}
+                          {col.type === "boolean" && (
+                            <>
+                              <option value="eq">Equals</option>
+                              <option value="neq">Not Equals</option>
+                            </>
+                          )}
+                        </select>
+                        {colState?.filter && (
+                          <input
+                            type={
+                              col.type === "number"
+                                ? "number"
+                                : col.type === "date"
+                                  ? "datetime-local"
+                                  : "text"
+                            }
+                            className="input input-bordered min-w-[150px]"
+                            value={colState?.filterValue || ""}
+                            onChange={e =>
+                              handleFilterChange(
+                                String(col.key),
+                                colState?.filter || null,
+                                e.target.value
+                              )
+                            }
+                            placeholder="Filter value"
+                          />
+                        )}
+                      </div>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </th>
-          );
-        })}
+              </th>
+            );
+          })}
       </tr>
     </thead>
   );

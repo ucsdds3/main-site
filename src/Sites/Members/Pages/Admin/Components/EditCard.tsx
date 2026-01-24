@@ -3,12 +3,15 @@ import { TfiClose } from "react-icons/tfi";
 
 import { ColumnDefinition } from "../Utils/types";
 import useEditCard from "../Hooks/useEditCard";
+import { formatColumnLabel } from "../Utils/functions";
 
 export interface EditCardProps<T = any> {
   tableName: string;
   columns: ColumnDefinition<T>[];
   selectedRow: T | null;
   reloadRef?: RefObject<{ reload: () => void; clearSelection: () => void } | null>;
+  canEdit?: boolean;
+  canAdd?: boolean;
 }
 
 export default function EditCard<T extends Record<string, any>>({
@@ -16,6 +19,8 @@ export default function EditCard<T extends Record<string, any>>({
   columns,
   selectedRow,
   reloadRef,
+  canEdit = false,
+  canAdd = false,
 }: EditCardProps<T>) {
   const {
     formData,
@@ -31,6 +36,8 @@ export default function EditCard<T extends Record<string, any>>({
     selectedRow,
     reloadRef,
   });
+
+  const canModify = isNew ? canAdd : canEdit;
 
   const renderInput = (col: ColumnDefinition<T>) => {
     const value = formData[col.key];
@@ -70,7 +77,7 @@ export default function EditCard<T extends Record<string, any>>({
                 handleFileUpload(col.key, file);
               }
             }}
-            disabled={loading}
+            disabled={loading || !canModify}
           />
         </div>
       );
@@ -84,6 +91,7 @@ export default function EditCard<T extends Record<string, any>>({
             className="toggle toggle-primary"
             checked={Boolean(value)}
             onChange={e => handleChange(col.key, e.target.checked, col.type)}
+            disabled={!canModify}
           />
         );
       case "number":
@@ -93,6 +101,7 @@ export default function EditCard<T extends Record<string, any>>({
             className="input input-bordered w-full"
             value={(value as number) || 0}
             onChange={e => handleChange(col.key, e.target.value, col.type)}
+            disabled={!canModify}
           />
         );
       case "date":
@@ -102,6 +111,7 @@ export default function EditCard<T extends Record<string, any>>({
             className="input input-bordered w-full"
             value={value ? new Date(value as string).toISOString().slice(0, 16) : ""}
             onChange={e => handleChange(col.key, e.target.value, col.type)}
+            disabled={!canModify}
           />
         );
       case "array":
@@ -125,6 +135,7 @@ export default function EditCard<T extends Record<string, any>>({
                     className="checkbox checkbox-primary"
                     checked={(selectedTags as string[]).includes(tag)}
                     onChange={() => handleTagToggle(tag)}
+                    disabled={!canModify}
                   />
                   <span>{tag}</span>
                 </label>
@@ -139,6 +150,7 @@ export default function EditCard<T extends Record<string, any>>({
             value={JSON.stringify(value || [], null, 2)}
             onChange={e => handleChange(col.key, e.target.value, col.type)}
             placeholder='["item1", "item2"]'
+            disabled={!canModify}
           />
         );
       case "json":
@@ -149,9 +161,27 @@ export default function EditCard<T extends Record<string, any>>({
             value={JSON.stringify(value || [], null, 2)}
             onChange={e => handleChange(col.key, e.target.value, col.type)}
             placeholder='["item1", "item2"]'
+            disabled={!canModify}
           />
         );
       default:
+        if (col.key === "admin_level" && col.type === "text") {
+          const adminLevelOptions = ["Member", "Board", "Executive"];
+          return (
+            <select
+              className="select select-bordered w-full"
+              value={String(value || "")}
+              onChange={e => handleChange(col.key, e.target.value || null, col.type)}
+              disabled={!canModify}
+            >
+              {adminLevelOptions.map(level => (
+                <option key={level} value={level}>
+                  {level}
+                </option>
+              ))}
+            </select>
+          );
+        }
         if (col.key === "description" && col.type === "text") {
           const descValue = String(value || "");
           const charCount = descValue.length;
@@ -166,6 +196,7 @@ export default function EditCard<T extends Record<string, any>>({
                 value={descValue}
                 onChange={e => handleChange(col.key, e.target.value, col.type)}
                 placeholder="Enter description (minimum 100 characters)"
+                disabled={!canModify}
               />
               <div className="label">
                 <span className={`label-text-alt ${isValid ? "text-success" : "text-error"}`}>
@@ -182,13 +213,14 @@ export default function EditCard<T extends Record<string, any>>({
             className="input input-bordered w-full"
             value={String(value || "")}
             onChange={e => handleChange(col.key, e.target.value, col.type)}
+            disabled={!canModify}
           />
         );
     }
   };
 
   return (
-    <div className="rounded-2xl bg-base-300 p-6">
+    <div className={`rounded-2xl bg-base-300 p-6 border border-base-content/50 ${canModify || "opacity-50"}`}>
       <div className="flex justify-between items-center mb-4 px-2">
         <h3 className="font-semibold text-3xl">{isNew ? "Add New Row" : "Edit Row"}</h3>
         {selectedRow && (
@@ -202,14 +234,14 @@ export default function EditCard<T extends Record<string, any>>({
       </div>
 
       <div className="flex flex-col max-h-[70vh] gap-4">
-        <div className="space-y-4 overflow-y-auto rounded-lg border border-base-content/20 p-4">
+        <div className="space-y-4 overflow-y-auto rounded-lg border border-base-content/30 p-4">
           {columns
             .filter(col => col.key !== "id" && col.key !== "created_at" && col.key !== "updated_at")
             .map(col => (
-              <div key={String(col.key)} className="form-control">
+              <div key={String(col.key)} className="form-control flex flex-col gap-2">
                 <label className="label">
                   <span className="label-text">
-                    {col.label}
+                    {formatColumnLabel(col.key)}
                     {col.optional !== true && <span className="text-error ml-1">*</span>}
                   </span>
                 </label>
@@ -219,26 +251,28 @@ export default function EditCard<T extends Record<string, any>>({
         </div>
 
         <div className="flex gap-2">
-          <button className="btn btn-primary flex-1 btn-lg" onClick={handleSave} disabled={loading}>
-            {loading ? (
-              <span className="loading loading-spinner loading-sm" />
-            ) : isNew ? (
-              "Create"
-            ) : (
-              "Save"
-            )}
-          </button>
-          {!isNew && (
-            <button className="btn btn-error btn-lg" onClick={handleDelete} disabled={loading}>
-              {loading ? <span className="loading loading-spinner loading-sm" /> : "Delete"}
-            </button>
-          )}
+            <>
+              <button className="btn btn-primary flex-1 btn-lg" onClick={handleSave} disabled={loading || !canModify}>
+                {loading ? (
+                  <span className="loading loading-spinner loading-sm" />
+                ) : isNew ? (
+                  "Create"
+                ) : (
+                  "Save"
+                )}
+              </button>
+              {!isNew && (
+                <button className="btn btn-error btn-lg" onClick={handleDelete} disabled={loading || !canModify}>
+                  {loading ? <span className="loading loading-spinner loading-sm" /> : "Delete"}
+                </button>
+              )}
+            </>
           <button
             className="btn btn-outline btn-lg"
             onClick={() => reloadRef?.current?.clearSelection()}
             disabled={loading}
           >
-            Cancel
+            {canModify ? "Cancel" : "Close"}
           </button>
         </div>
       </div>

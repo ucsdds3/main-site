@@ -3,7 +3,7 @@ import { supabase } from "src/Utils/supabase";
 import { useState, useEffect, RefObject } from "react";
 
 import { ColumnDefinition, ColumnType } from "../Utils/types";
-import { processFormValue } from "../Utils/functions";
+import { processFormValue, formatColumnLabel } from "../Utils/functions";
 
 interface UseEditCardProps<T> {
   tableName: string;
@@ -227,20 +227,20 @@ export default function useEditCard<T extends Record<string, any>>({
         if (col.key === "description" && col.type === "text") {
           const descValue = String(value || "");
           if (!value || descValue.length < 100) {
-            missingFields.push(`${col.label} (minimum 100 characters)`);
+            missingFields.push(`${formatColumnLabel(col.key)} (minimum 100 characters)`);
             return;
           }
         }
 
         if (col.type === "array") {
           if (!value || (Array.isArray(value) && value.length === 0)) {
-            missingFields.push(col.label);
+            missingFields.push(formatColumnLabel(col.key));
           }
           return;
         }
 
         if (!value) {
-          missingFields.push(col.label);
+          missingFields.push(formatColumnLabel(col.key));
         }
       });
 
