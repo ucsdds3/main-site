@@ -19,7 +19,8 @@ export interface ColumnDefinition<T = any> {
   label: string;
   type: ColumnType;
   editable?: boolean;
-  required?: boolean;
+  optional?: boolean;
+  hide?: boolean;
 }
 
 export type EventRow = {

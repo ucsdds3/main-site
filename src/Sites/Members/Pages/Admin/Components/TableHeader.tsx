@@ -59,7 +59,7 @@ export default function TableHeader<T extends Record<string, any>>({
   return (
     <thead>
       <tr>
-        {columns.map((col, index) => {
+        {columns.filter(col => !col.hide).map((col, index) => {
           const colState = columnStates[col.key as string];
           const hasFilter = colState?.filter && colState?.filterValue;
           const isDescription = col.key === "description" && col.type === "text";
@@ -67,7 +67,7 @@ export default function TableHeader<T extends Record<string, any>>({
           return (
             <th
               key={String(col.key)}
-              className={`relative ${isDescription ? "w-48 max-w-[200px]" : ""}`}
+              className={`relative ${isDescription ? "w-48 max-w-[150px]" : ""}`}
             >
               <div className="flex gap-2 items-center">
                 <button
