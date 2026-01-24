@@ -86,7 +86,7 @@ def main():
             # Path from Scripts directory: go up one level to src, then Assets/Data/projects.json
             # __file__ is in projectsScraper/main.py, so we go: projectsScraper -> Scripts -> src -> Assets/Data
             projects_json_path = (
-                Path(__file__).parent.parent.parent / "Assets" / "Data" / "projects.json"
+                Path(__file__).parent.parent.parent / "Sites" / "Main" / "Pages" / "Projects" / "Data" / "projects.json"
             )
             try:
                 # Read existing file if it exists
