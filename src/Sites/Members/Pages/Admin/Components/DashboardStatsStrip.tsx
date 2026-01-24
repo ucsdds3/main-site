@@ -1,4 +1,4 @@
-import { useAdminStats } from "./Hooks/useAdminStats";
+import { useAdminStats } from "../Hooks/useAdminStats";
 
 export default function DashboardStatsStrip() {
   const stats = useAdminStats();
