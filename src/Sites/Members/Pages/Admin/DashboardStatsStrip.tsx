@@ -1,4 +1,4 @@
-import { useAdminStats } from "src/Sites/Members/Pages/Admin/Members/hooks/useAdminStats";
+import { useAdminStats } from "./Hooks/useAdminStats";
 
 export default function DashboardStatsStrip() {
   const stats = useAdminStats();
