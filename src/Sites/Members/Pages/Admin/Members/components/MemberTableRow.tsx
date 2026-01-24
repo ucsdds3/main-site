@@ -1,4 +1,4 @@
-import { PortalMemberType } from "../../../../../Utils/types";
+import { PortalMemberType } from "src/Utils/types";
 import { getTier } from "../utils";
 
 interface MemberTableRowProps {

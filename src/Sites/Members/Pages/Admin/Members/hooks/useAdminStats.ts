@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../../Utils/supabase";
-import { formatNumber } from "../../../Utils/functions";
-import { useTriggerFetchAdmin } from "./useTriggerFetchAdmin";
+import { supabase } from "../../../../../../Utils/supabase";
+import { formatNumber } from "../../../../../../Utils/functions";
 
 interface StatData {
   value: string;
@@ -16,7 +15,6 @@ export function useAdminStats() {
   const [pendingOrders, setPendingOrders] = useState<StatData>({ value: "0", hint: "", loading: true });
   const [totalOrders, setTotalOrders] = useState<StatData>({ value: "0", hint: "", loading: true });
   const [eventAttendance, setEventAttendance] = useState<StatData>({ value: "0", hint: "", loading: true });
-  const { triggerFetchAdmin } = useTriggerFetchAdmin();
 
   useEffect(() => {
     const fetchAllStats = async () => {
@@ -240,7 +238,7 @@ export function useAdminStats() {
     };
 
     fetchAllStats();
-  }, [triggerFetchAdmin]);
+  }, []);
 
   return {
     "Active Members": members,
