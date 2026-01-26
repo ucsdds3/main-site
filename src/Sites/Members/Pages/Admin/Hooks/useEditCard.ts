@@ -239,7 +239,7 @@ export default function useEditCard<T extends Record<string, any>>({
           return;
         }
 
-        if (!value) {
+        if (value === null || value === undefined || value === "") {
           missingFields.push(formatColumnLabel(col.key));
         }
       });
