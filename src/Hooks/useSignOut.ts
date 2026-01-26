@@ -14,7 +14,7 @@ export function useSignOut() {
 
     setAuthState("signin");
     setUser(null);
-    setAdminLevel(0);
+    setAdminLevel(null);
     localStorage.removeItem("user");
     toast.success("Logged out successfully!");
   };
