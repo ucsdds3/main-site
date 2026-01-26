@@ -20,7 +20,7 @@ interface StatCardProps {
 }
 function StatCard({ label, value, hint, loading }: StatCardProps) {
   return (
-    <div className="flex-1 min-w-[200px] rounded-2xl bg-[#0F1620] p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]">
+    <div className="flex-1 min-w-[200px] rounded-2xl bg-base-300 p-5 border border-base-content/50">
       <div className="text-lg font-semibold tracking-wide">{label}</div>
       <div className="mt-2 text-3xl font-semibold text-primary">
         {loading ? <span className="loading loading-dots loading-sm" /> : value}

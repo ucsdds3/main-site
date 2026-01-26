@@ -53,10 +53,10 @@ export function useTableData<T extends Record<string, any>>(
                   query = query.lte(col.key as string, value);
                   break;
                 case "like":
-                  query = query.like(col.key as string, `${value}`);
+                  query = query.like(col.key as string, value);
                   break;
                 case "ilike":
-                  query = query.ilike(col.key as string, `${value}`);
+                  query = query.ilike(col.key as string, value);
                   break;
                 case "in":
                   if (Array.isArray(value)) {
