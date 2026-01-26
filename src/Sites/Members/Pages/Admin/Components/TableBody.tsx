@@ -32,7 +32,7 @@ export default function TableBody<T extends Record<string, any>>({
           </td>
         </tr>
       ) : (
-        data.map((row, index) => (
+        data.filter(row => row.deleted !== true).map((row, index) => (
           <tr
             key={row.id || index}
             className={`cursor-pointer hover:opacity-90 ${

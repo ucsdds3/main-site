@@ -1,0 +1,51 @@
+{
+  "Events": {
+    "columns": {
+      "image": { "type": "text", "hide": true },
+      "name": { "type": "text" },
+      "description": { "type": "text" },
+      "points": { "type": "number" },
+      "password": { "type": "text" },
+      "start": { "type": "date" },
+      "end": { "type": "date" },
+      "location": { "type": "text", "optional": true },
+      "tags": { "type": "array" }
+    },
+    "permissions": {
+      "canAdd": ["Executive"],
+      "canEdit": ["Executive"],
+      "canView": ["Board", "Executive"]
+    }
+  },
+  "Members": {
+    "columns": {
+      "email": { "type": "text" },
+      "full_name": { "type": "text" },
+      "graduation_year": { "type": "number" },
+      "major": { "type": "text" },
+      "points": { "type": "number" },
+      "experience": { "type": "number" },
+      "gender": { "type": "text", "optional": true },
+      "admin_level": { "type": "text", "optional": true },
+      "is_grad_student": { "type": "boolean" }
+    },
+    "permissions": {
+      "canAdd": [],
+      "canEdit": ["Executive"],
+      "canView": ["Board", "Executive"]
+    }
+  },
+  "Items": {
+    "columns": {
+      "image": { "type": "text", "hide": true },
+      "name": { "type": "text" },
+      "description": { "type": "text", "optional": true },
+      "price": { "type": "number" }
+    },
+    "permissions": {
+      "canAdd": ["Executive"],
+      "canEdit": ["Executive"],
+      "canView": ["Board", "Executive"]
+    }
+  }
+}
