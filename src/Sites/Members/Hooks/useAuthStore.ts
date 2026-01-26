@@ -6,16 +6,16 @@ import { AdminLevel } from "../Pages/Admin/Utils/types";
 interface AuthStateStore {
   user: User | null;
   authState: AuthState;
-  adminLevel: AdminLevel;
+  adminLevel: AdminLevel | null;
   setUser: (user: User | null) => void;
   setAuthState: (authState: AuthState) => void;
-  setAdminLevel: (adminLevel: AdminLevel) => void;
+  setAdminLevel: (adminLevel: AdminLevel | null) => void;
 }
 
 export const useAuthStore = create<AuthStateStore>(set => ({
   user: null,
   authState: "signin",
-  adminLevel: "Member",
+  adminLevel: null,
   setAuthState: authState => set({ authState }),
   setUser: user => set({ user }),
   setAdminLevel: adminLevel => set({ adminLevel }),
