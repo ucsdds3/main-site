@@ -173,7 +173,7 @@ export function useSignUp() {
 
     console.log(userData);
     setUser(userData.user);
-    setAdminLevel(0);
+    setAdminLevel(null);
     setAuthState("signin");
     // toast.success("Please check your email for verification!");
   };
