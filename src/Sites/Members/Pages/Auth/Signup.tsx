@@ -122,7 +122,7 @@ const Signup = () => {
               />
               <Select
                 label="Gender"
-                options={["Male", "Female", "Prefer not to say"]}
+                options={["Male", "Female", "Other", "Prefer not to say"]}
                 required
                 value={data.gender}
                 setValue={(value: string) => setData({ ...data, gender: value })}
