@@ -3,7 +3,7 @@ import { TfiClose } from "react-icons/tfi";
 
 import { ColumnDefinition } from "../Utils/types";
 import useEditCard from "../Hooks/useEditCard";
-import { formatColumnLabel } from "../Utils/functions";
+import { formatColumnLabel, convertUTCToPST, convertPSTToUTC } from "../Utils/functions";
 
 export interface EditCardProps<T = any> {
   tableName: string;
@@ -105,12 +105,25 @@ export default function EditCard<T extends Record<string, any>>({
           />
         );
       case "date":
+        const isStartOrEnd = col.key === "start" || col.key === "end";
+        const displayValue = isStartOrEnd && value
+          ? convertUTCToPST(value as string)
+          : value
+          ? new Date(value as string).toISOString().slice(0, 16)
+          : "";
+
         return (
           <input
             type="datetime-local"
             className="input input-bordered w-full"
-            value={value ? new Date(value as string).toISOString().slice(0, 16) : ""}
-            onChange={e => handleChange(col.key, e.target.value, col.type)}
+            value={displayValue}
+            onChange={e => {
+              const inputValue = e.target.value;
+              const finalValue = isStartOrEnd && inputValue
+                ? convertPSTToUTC(inputValue)
+                : inputValue;
+              handleChange(col.key, finalValue, col.type);
+            }}
             disabled={!canModify}
           />
         );
