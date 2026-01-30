@@ -1,13 +1,13 @@
 {
   "services": [
     {
-      "title": "Model Design",
-      "description": "We design and implement custom models—specializing in NLP and Computer Vision—tailored to your data and business goals through deep collaboration.",
+      "title": "Machine Learning",
+      "description": "Unlock intelligent automation with custom machine-learning pipelines that forecast outcomes, personalize experiences, and adapt in real time.",
       "image": "/Consulting/Model_Design.webp"
     },
     {
-      "title": "MLOPS",
-      "description": "We deploy, monitor, and continually optimize ML models in production to maximize performance and extract business value at scale.",
+      "title": "Data Engineering",
+      "description": "Build reliable data infrastructure and pipelines that collect, clean, and deliver high-quality data, powering analytics, machine learning, and insights.",
       "image": "/Consulting/MLOPS.webp"
     },
     {
@@ -85,6 +85,11 @@
     {
       "name": "7sherpas",
       "image": "/WhereWeBeen/7sherpas.png"
+    },
+    {
+      "name": "Triton Ball",
+      "image": "/WhereWeBeen/TritonBall.svg",
+      "url": "https://www.tritonball.org/"
     }
   ]
 }

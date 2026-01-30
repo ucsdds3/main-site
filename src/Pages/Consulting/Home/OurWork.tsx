@@ -9,17 +9,27 @@ import { twMerge } from "tailwind-merge";
 import Paginate from "../../../Components/Paginate.tsx";
 import { usePaginate } from "../../../Hooks/usePaginate.ts";
 
+// Flatten if needed
+const flatProjects = Array.isArray(projectsData.projects)
+  ? projectsData.projects
+  : Object.values(projectsData.projects).flat();
+
 const OurWork = () => {
   const sections = ["projects", "clients"];
   const [currSection, setCurrSection] = useState<(typeof sections)[number]>("projects");
 
-  const projects = projectsData.projects;
-  type YearType = keyof typeof projects;
-  const years = Object.keys(projects).reverse() as YearType[];
-  const [year, setYear] = useState<YearType>(years[0]);
+  // Dynamic pagination depending on section
+  const getSectionItems = () => {
+    if (currSection === "projects") return flatProjects;
+    if (currSection === "clients") return consulting.clients;
+    if (currSection === "members") return consulting.members;
+    return [];
+  };
+
+  const items = getSectionItems();
 
   const { page, setPage, numPages, setNumPages, cardsPerPage, start, end } = usePaginate({
-    totalItems: projects[year].length,
+    totalItems: items.length,
     numRows: 3,
   });
 
@@ -36,12 +46,7 @@ const OurWork = () => {
               setPage(1);
               setCurrSection(section);
               setNumPages(
-                Math.ceil(
-                  (section == "projects"
-                    ? projects[year]
-                    : consulting[section as keyof typeof consulting]
-                  ).length / cardsPerPage
-                )
+                Math.ceil(getSectionItems().length / cardsPerPage)
               );
             }}
             className="flex-1 border-0 border-b-2 rounded-none bg-transparent text-[clamp(1rem,4vw,2rem)] pb-3 focus:border-(--color-primary) data-[active=true]:border-(--color-primary)"
@@ -57,21 +62,8 @@ const OurWork = () => {
           currSection == "projects" ? "" : "hidden"
         }`}
       >
-        <fieldset className="fieldset w-[clamp(20rem,25vw,25rem)] flex flex-col md:flex-row md:gap-4 items-center">
-          <span className="text-[clamp(1rem,1.5vw,1.2rem)] font-semibold">Year: </span>
-          <select
-            value={year}
-            className="select select-primary"
-            onChange={(e) => setYear(e.target.value as YearType)}
-          >
-            {years.map((year, index) => (
-              <option key={index}>{year}</option>
-            ))}
-          </select>
-        </fieldset>
-
         <div className={gridClass}>
-          {projects[year].slice(start, end).map((project, index) => (
+          {flatProjects.slice(start, end).map((project, index) => (
             <HoverCard key={index} {...project} size="300px" />
           ))}
         </div>
