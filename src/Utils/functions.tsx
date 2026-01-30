@@ -1,4 +1,4 @@
-import { LinkType, MemberType } from "./types";
+import { LinkType, MemberType, EventType } from "./types";
 import { IoMail } from "react-icons/io5";
 import { FaGlobe, FaLinkedin } from "react-icons/fa6";
 import { IoIosDocument } from "react-icons/io";
@@ -15,7 +15,7 @@ export const setIndex = <T,>(arr: T[], idx: number, value: T) => [
 ];
 
 export const unbreakable = (str: string) =>
-  str.replace(/[ -]/g, (match) => (match === " " ? "\u00A0" : "\u2011")); // Non breaking space and hyphen
+  str.replace(/[ -]/g, match => (match === " " ? "\u00A0" : "\u2011")); // Non breaking space and hyphen
 
 export const parseToPST = (dateString: string) => {
   return new Date(
@@ -31,6 +31,17 @@ export const getNextDeadline = (deadlines: Record<string, string>) =>
 
 export const scrollTo = (ref: React.RefObject<HTMLDivElement>) => {
   ref.current?.scrollIntoView({ behavior: "smooth" });
+};
+
+export const validateResumeLink = (inTalentPool: boolean, resumeLink?: string): boolean => {
+  if (!inTalentPool) return true;
+  if (!resumeLink || typeof resumeLink !== "string") return false;
+  try {
+    new URL(resumeLink);
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 export const formatMemberLinks = ({ email, website, linkedIn, resume }: MemberType) =>
@@ -60,3 +71,34 @@ export const formatMemberLinks = ({ email, website, linkedIn, resume }: MemberTy
       color: "#222222",
     },
   ].filter(Boolean) as LinkType[];
+
+/**
+ * Generates a Google Calendar add event URL from event data
+ * @param event - Event data containing name, start, end, description, and optional location
+ * @returns Google Calendar URL or empty string if start or end is missing
+ */
+export const generateCalendarLink = (event: EventType): string => {
+  if (!event.start || !event.end) return "";
+
+  const startDate = new Date(event.start);
+  const endDate = new Date(event.end);
+
+  // Format dates to ISO 8601 format (YYYYMMDDTHHmmssZ)
+  const formatDate = (date: Date): string => {
+    return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  };
+
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: event.name,
+    dates: `${formatDate(startDate)}/${formatDate(endDate)}`,
+    details: event.description || "",
+    ...(event.location && { location: event.location }),
+  });
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+};
+
+export const formatNumber = (num: number): string => {
+  return num.toLocaleString("en-US");
+};

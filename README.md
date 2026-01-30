@@ -1,4 +1,4 @@
-# 🚀 DS3 Main Site Documentation 
+# 🚀 DS3 Main Site Documentation for the github workshop
 
 ## 🎯 Getting Started 
 

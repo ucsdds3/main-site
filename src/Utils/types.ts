@@ -1,8 +1,13 @@
 export type EventType = {
-  title: string;
+  name: string;
   date?: string;
-  link: string;
+  points: string;
   image?: string;
+  deleted?: boolean;
+  password?: string;
+  start?: string;
+  end?: string;
+  tags?: string[];
   location?: string;
   description: string;
 };
@@ -83,3 +88,21 @@ export type AuthState =
   | "forgot-password"
   | "reset-password"
   | "authenticated";
+
+export type PortalMemberType = {
+  id: number;
+  name: string;
+  points: number;
+  experience: number;
+  deleted: boolean;
+  created_at: string;
+  updated_at: string;
+  email: string;
+  admin_level: number | null;
+};
+
+export type EventTagType = 
+  | "Professional"
+  | "Workshop"
+  | "Social"
+  | "Other";

@@ -1,0 +1,28 @@
+{
+  "main": {
+    "Events": {
+      "Upcoming": "/events/upcoming",
+      "Workshops": "/events/workshops",
+      "Social": "/events/social",
+      "Professional": "/events/professional"
+    },
+    "Board": {
+      "Board": "/board",
+      "Alumni": "/board/alumni"
+    },
+    "Consulting": { "subdomain": "consulting", "pathname": "/" },
+    "DataHacks": "/datahacks",
+    "Projects": "/projects",
+    "Join Us": "/join-us",
+    "Partners": "/partners"
+  },
+  "consulting": {
+    "About Us": "#about-us",
+    "Our Work": "#our-work",
+    "Contact Us": "#contact"
+  },
+  "members": {
+    "Store": "/store",
+    "Events": "/events"
+  }
+}

@@ -1,0 +1,34 @@
+import { toast } from "react-hot-toast";
+import { useEffect, useState } from "react";
+
+import { supabase } from "src/Utils/supabase";
+import { EventType } from "src/Utils/types";
+
+function useEvents() {
+  const [events, setEvents] = useState<EventType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await supabase
+        .from("Events")
+        .select("name,description,image,points,deleted,password,start,end,location,tags")
+        .eq("deleted", false)
+        .order("start", { ascending: false });
+      if (data) setEvents(data);
+
+      if (error) {
+        toast.error(error instanceof Error ? error.message : "An unknown error occurred");
+        setError(error instanceof Error ? error.message : "An unknown error occurred");
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  return { events, loading, error };
+}
+
+export default useEvents;
