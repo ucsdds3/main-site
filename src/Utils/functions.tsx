@@ -15,7 +15,7 @@ export const setIndex = <T,>(arr: T[], idx: number, value: T) => [
 ];
 
 export const unbreakable = (str: string) =>
-  str.replace(/[ -]/g, (match) => (match === " " ? "\u00A0" : "\u2011")); // Non breaking space and hyphen
+  str.replace(/[ -]/g, match => (match === " " ? "\u00A0" : "\u2011")); // Non breaking space and hyphen
 
 export const parseToPST = (dateString: string) => {
   return new Date(
@@ -97,4 +97,8 @@ export const generateCalendarLink = (event: EventType): string => {
   });
 
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
+};
+
+export const formatNumber = (num: number): string => {
+  return num.toLocaleString("en-US");
 };
