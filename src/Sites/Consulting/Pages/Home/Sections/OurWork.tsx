@@ -16,11 +16,6 @@ const flatProjects = Array.isArray(projectsData.projects)
   ? projectsData.projects
   : Object.values(projectsData.projects).flat();
 
-// Flatten if needed
-const flatProjects = Array.isArray(projectsData.projects)
-  ? projectsData.projects
-  : Object.values(projectsData.projects).flat();
-
 const OurWork = () => {
   const sections = ["projects", "clients"];
   const [currSection, setCurrSection] = useState<(typeof sections)[number]>("projects");
@@ -52,13 +47,7 @@ const OurWork = () => {
             onClick={() => {
               setPage(1);
               setCurrSection(section);
-<<<<<<< HEAD:src/Pages/Consulting/Home/OurWork.tsx
-              setNumPages(
-                Math.ceil(getSectionItems().length / cardsPerPage)
-              );
-=======
               setNumPages(Math.ceil(getSectionItems().length / cardsPerPage));
->>>>>>> 94cdf8eb1f5d6f8a2661b0411f41b883c314d77c:src/Sites/Consulting/Pages/Home/Sections/OurWork.tsx
             }}
             className="flex-1 border-0 border-b-2 rounded-none bg-transparent text-[clamp(1rem,4vw,2rem)] pb-3 focus:border-(--color-primary) data-[active=true]:border-(--color-primary)"
             data-active={currSection === section}

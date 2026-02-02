@@ -20,22 +20,28 @@
   "projects": {
     "2024": [
       {
+        "title": "SDFSDFSDFSDFSDF",
+        "description": "A robust system for accurate and efficient facial identification and verification.",
+        "image": "/Consulting/face-recog.webp",
         "card": {
           "title": "Automated Face Recognition System",
           "image": "/Consulting/face-recog.webp",
           "categories": ["Machine Learning", "Web Development"],
           "clients": [
             {
-              "name": "Promo Drone",
+              "name": "CASH MONEY",
               "image": "/WhereWeBeen/promodrone_logo.jpg"
             }
           ]
         }
       },
       {
+        "title": "Interpretable Scoring Algorithm for Predictive Analysis",
+        "description": "An algorithm providing clear, interpretable scores for data-driven decision-making.",
+        "image": "/WhereWeBeen/alama-ai.jpg",
         "card": {
           "title": "Interpretable Scoring Algorithm for Predictive Analysis",
-          "image": "/Consulting/isa.webp",
+          "image": "/WhereWeBeen/alama-ai.jpg",
           "categories": ["Data Engineering"],
           "clients": [
             {
@@ -46,6 +52,9 @@
         }
       },
       {
+        "title": "Conversational AI with Large Language Models",
+        "description": "A chatbot leveraging LLMs for natural, human-like interactions.",
+        "image": "/Consulting/llm.webp",
         "card": {
           "title": "Conversational AI with Large Language Models",
           "image": "/Consulting/llm.webp",
