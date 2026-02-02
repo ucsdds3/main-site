@@ -1,11 +1,12 @@
 // C:\Users\dmath\OneDrive\Desktop\Proper Main Site\main-site\main-site\src\Components\ConsultingProjects.tsx
 import consultingProjects from "../Data/projects.json";
+import Section from "src/Shared/Page/Section";
 
 export default function ConsultingProjects() {
   const projects2024 = consultingProjects.projects["2024"];
 
   return (
-    <section className="w-full py-16 px-6 bg-[#05050b]">
+    <Section>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <h2 className="text-3xl font-bold text-white mb-2">
@@ -80,6 +81,6 @@ export default function ConsultingProjects() {
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
