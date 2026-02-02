@@ -6,6 +6,7 @@ import ContactUs from "src/Shared/Sections/ContactUs";
 import Landing from "./Sections/Landing";
 import AboutUs from "./Sections/AboutUs";
 import OurWork from "./Sections/OurWork";
+import ConsultingProjects from "./Sections/ConsultingProjects";
 
 const Home = () => {
   const contactRef = useRef<HTMLDivElement>(null!);
@@ -14,6 +15,7 @@ const Home = () => {
     <Page id="home">
       <Landing contactRef={contactRef} />
       <AboutUs />
+      <ConsultingProjects />
       <OurWork />
       <ContactUs ref={contactRef} />
     </Page>
