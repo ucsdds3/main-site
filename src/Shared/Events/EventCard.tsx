@@ -44,10 +44,10 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           <div className="skeleton size-full aspect-[16/9]" />
         )}
       </figure>
-      <div className="card-body">
+      <div className="card-body justify-start">
         <h2 className="card-title text-2xl line-clamp-3 capitalize">{name}</h2>
 
-        <p>
+        <p className="flex-grow-0">
           {start && end && (
             <span>
               {new Date(start).toLocaleDateString()}{" "}

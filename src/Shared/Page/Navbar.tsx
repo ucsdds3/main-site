@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
@@ -14,6 +15,7 @@ const Navbar = () => {
   const { subdomain, navigate } = useSiteHandler();
   const { isDark, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = useLocation().pathname;
 
   return (
     <nav
@@ -33,15 +35,17 @@ const Navbar = () => {
               })
             }
           >
-            <img src="./logo.webp" alt="Logo" className="w-10 transition-all duration-500" />
+            <img src="/logo.webp" alt="Logo" className="w-10 transition-all duration-500" />
           </button>
 
           {/* Theme Toggle */}
-          <label className="toggle text-base-content" id="theme-toggle">
-            <input type="checkbox" checked={isDark} onChange={toggleTheme} />
-            <MdLightMode aria-label="disabled" />
-            <MdDarkMode aria-label="enabled" />
-          </label>
+          {pathname !== "/admin" && (
+            <label className="toggle text-base-content" id="theme-toggle">
+              <input type="checkbox" checked={isDark} onChange={toggleTheme} />
+              <MdLightMode aria-label="disabled" />
+              <MdDarkMode aria-label="enabled" />
+            </label>
+          )}
         </div>
 
         {/* Mobile menu button */}
