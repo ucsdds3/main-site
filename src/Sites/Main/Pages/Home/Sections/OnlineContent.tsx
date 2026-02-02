@@ -11,16 +11,16 @@ const OnlineContent = () => {
         Have something to share or want to explore more? Read our latest articles or submit your own
         for publication!
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10">
+      <div className="grid text-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10">
         {onlineContent.map((content, index) => (
           <BrowserCard
             key={content.title}
             image={content.image}
             title={content.title}
-            description={content.description}
+            description= " "
             link={content.link}
             delay={index * 0.1}
-            linkText="Read More"
+            linkText="Read"
           />
         ))}
       </div>
