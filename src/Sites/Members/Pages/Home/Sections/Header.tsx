@@ -6,7 +6,7 @@ import Avatar from "../Components/Avatar";
 
 const Header = () => {
   const { user } = useAuthStore();
-  const { xp, xpNeeded, progress, tier, nextTier } = useStats();
+  const { xp, xpNeeded, progress, tier, nextTier, points } = useStats();
 
   return (
     <Section className="flex-row flex-wrap items-center justify-center">
@@ -39,7 +39,7 @@ const Header = () => {
           </div>
           <div className="flex flex-col items-center">
             <span className="text-primary text-[clamp(1.5rem,2.5vw,3rem)] font-bold">
-              {user?.user_metadata.points || 0}
+              {points}
             </span>
             <span className="text-[clamp(1.25rem,2vw,1.875rem)]">Points</span>
             <span className="mt-4 text-[clamp(0.7rem,1.1vw,1.125rem)] text-balance text-center">

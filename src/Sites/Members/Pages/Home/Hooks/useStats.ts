@@ -1,4 +1,6 @@
+import { supabase } from "src/Utils/supabase";
 import { useAuthStore } from "../../../Hooks/useAuthStore";
+import { useEffect, useState } from "react";
 
 export const tiers = {
   Rookie: "text-primary", // 0 - 1000 xp
@@ -10,7 +12,38 @@ export const tiers = {
 
 export function useStats() {
   const { user } = useAuthStore();
-  const xp = user?.user_metadata.experience || 0;
+  const [xp, setXp] = useState(0);
+  const [points, setPoints] = useState(0);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchStats = async () => {
+      if (!user?.email) return;
+      const { data, error } = await supabase
+        .from("Members")
+        .select("experience,points")
+        .eq("email", user.email)
+        .single();
+      if (!isMounted) return;
+      console.log(data);
+
+      if (error) {
+        console.error("Error fetching stats:", error);
+        return;
+      }
+
+      if (data) {
+        setXp(data.experience ?? 0);
+        setPoints(data.points ?? 0);
+      }
+    };
+
+    fetchStats();
+    return () => {
+      isMounted = false;
+    };
+  }, [user?.email]);
 
   const level = Math.max(Math.floor(Math.log2(xp / 1000)) + 1, 0);
   const offset = Number(xp >= 1000);
@@ -30,5 +63,6 @@ export function useStats() {
       name: Object.keys(tiers)[level + 1],
       color: Object.values(tiers)[level + 1],
     },
+    points,
   };
 }
