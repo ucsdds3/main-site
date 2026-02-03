@@ -19,15 +19,11 @@ const quarters = {
   Spring: [new Date("2026-03-25"), new Date("2026-06-12")],
 };
 
-export type AttendedEvent = EventType & {
-  attended_at: string;
-};
-
 export function useStats() {
   const { user } = useAuthStore();
   const [xp, setXp] = useState(0);
   const [points, setPoints] = useState(0);
-  const [attendedEvents, setAttendedEvents] = useState<AttendedEvent[]>([]);
+  const [attendedEvents, setAttendedEvents] = useState<EventType[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -69,7 +65,7 @@ export function useStats() {
       const { data, error } = await supabase.rpc("get_my_attendance");
       if (error) throw error;
 
-      const rows = (data ?? []) as AttendedEvent[];
+      const rows = (data ?? []) as EventType[];
       setAttendedEvents(rows);
     } catch (err) {
       console.error("[fetchAttended] RPC error:", err);
@@ -124,13 +120,10 @@ export function useStats() {
   const eventStats = {
     "Events This Quarter": (() => {
       const currentQuarter = getCurrentQuarter();
-      console.log(currentQuarter);
       if (!currentQuarter) return 0;
 
       return attendedEvents.filter(event => {
         const eventDate = new Date(event.start ?? "");
-        console.log(eventDate);
-        console.log(eventDate >= currentQuarter[0] && eventDate <= currentQuarter[1]);
         return eventDate >= currentQuarter[0] && eventDate <= currentQuarter[1];
       }).length;
     })(),

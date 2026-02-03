@@ -10,6 +10,7 @@ export type EventType = {
   tags?: string[];
   location?: string;
   description: string;
+  attended_at?: string;
 };
 
 export type TeamType = {
