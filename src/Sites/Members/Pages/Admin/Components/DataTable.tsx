@@ -1,8 +1,9 @@
 import { useState, RefObject } from "react";
-import { TfiReload } from "react-icons/tfi";
+import { TfiReload, TfiDownload } from "react-icons/tfi";
 
 import { useTableData, ColumnSortFilter } from "../Hooks/useTableData";
 import { ColumnDefinition } from "../Utils/types";
+import { formatColumnLabel, formatCellValue } from "../Utils/functions";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 
@@ -45,6 +46,36 @@ export default function DataTable<T extends Record<string, any>>({
 
   const resetFiltersAndSort = () => {
     setColumnStates({});
+  };
+
+  const handleDownload = () => {
+    const visibleColumns = columns.filter(col => !col.hide);
+    const visibleData = data.filter(row => row.deleted !== true);
+
+    const headers = visibleColumns.map(col => formatColumnLabel(col.key));
+    const rows = visibleData.map(row =>
+      visibleColumns.map(col => {
+        const value = row[col.key];
+        const formatted = formatCellValue(value, col.type);
+        return `"${String(formatted).replace(/"/g, '""')}"`;
+      })
+    );
+
+    const csvContent = [
+      headers.map(h => `"${h.replace(/"/g, '""')}"`).join(","),
+      ...rows.map(row => row.join(",")),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `${tableName}_${new Date().toISOString().split("T")[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   // Expose reload and clearSelection functions via ref
@@ -102,6 +133,14 @@ export default function DataTable<T extends Record<string, any>>({
             title="Reload"
           >
             {loading ? <span className="loading loading-spinner loading-sm" /> : <TfiReload />}
+          </button>
+          <button
+            onClick={handleDownload}
+            className="btn btn-outline text-lg font-bold"
+            disabled={loading || data.length === 0}
+            title="Download as CSV"
+          >
+            <TfiDownload />
           </button>
         </div>
       </div>
