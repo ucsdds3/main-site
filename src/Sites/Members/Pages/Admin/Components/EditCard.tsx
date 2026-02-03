@@ -5,7 +5,7 @@ import { ColumnDefinition } from "../Utils/types";
 import useEditCard from "../Hooks/useEditCard";
 import { formatColumnLabel, convertUTCToPST, convertPSTToUTC } from "../Utils/functions";
 
-export interface EditCardProps<T = any> {
+export interface EditCardProps<T> {
   tableName: string;
   columns: ColumnDefinition<T>[];
   selectedRow: T | null;
@@ -14,7 +14,7 @@ export interface EditCardProps<T = any> {
   canAdd?: boolean;
 }
 
-export default function EditCard<T extends Record<string, any>>({
+export default function EditCard<T extends Record<string, unknown>>({
   tableName,
   columns,
   selectedRow,
@@ -22,20 +22,13 @@ export default function EditCard<T extends Record<string, any>>({
   canEdit = false,
   canAdd = false,
 }: EditCardProps<T>) {
-  const {
-    formData,
-    loading,
-    isNew,
-    handleChange,
-    handleFileUpload,
-    handleSave,
-    handleDelete,
-  } = useEditCard({
-    tableName,
-    columns,
-    selectedRow,
-    reloadRef,
-  });
+  const { formData, loading, isNew, handleChange, handleFileUpload, handleSave, handleDelete } =
+    useEditCard({
+      tableName,
+      columns,
+      selectedRow,
+      reloadRef,
+    });
 
   const canModify = isNew ? canAdd : canEdit;
 
@@ -67,7 +60,7 @@ export default function EditCard<T extends Record<string, any>>({
             </div>
           )}
           <input
-            key={selectedRow?.id || "new"}
+            key={String(selectedRow?.id || "new")}
             type="file"
             accept="image/*"
             className="file-input file-input-bordered w-full"
@@ -104,34 +97,26 @@ export default function EditCard<T extends Record<string, any>>({
             disabled={!canModify}
           />
         );
-      case "date":
-        const isStartOrEnd = col.key === "start" || col.key === "end";
-        const displayValue = isStartOrEnd && value
-          ? convertUTCToPST(value as string)
-          : value
-          ? new Date(value as string).toISOString().slice(0, 16)
-          : "";
-
+      case "date": {
         return (
           <input
             type="datetime-local"
             className="input input-bordered w-full"
-            value={displayValue}
+            value={value ? convertUTCToPST(value as string) : ""}
             onChange={e => {
-              const inputValue = e.target.value;
-              const finalValue = isStartOrEnd && inputValue
-                ? convertPSTToUTC(inputValue)
-                : inputValue;
-              handleChange(col.key, finalValue, col.type);
+              // Convert PST from input to UTC for storage
+              const utcValue = e.target.value ? convertPSTToUTC(e.target.value) : "";
+              handleChange(col.key, utcValue, col.type);
             }}
             disabled={!canModify}
           />
         );
+      }
       case "array":
         if (col.key === "tags") {
           const tagOptions = ["Workshop", "Professional", "Social", "Other"];
           const selectedTags = Array.isArray(value) ? value : [];
-          
+
           const handleTagToggle = (tag: string) => {
             const newTags = (selectedTags as string[]).includes(tag)
               ? (selectedTags as string[]).filter((t: string) => t !== tag)
@@ -200,7 +185,7 @@ export default function EditCard<T extends Record<string, any>>({
           const charCount = descValue.length;
           const minChars = 100;
           const isValid = charCount >= minChars;
-          
+
           return (
             <div>
               <textarea
@@ -219,7 +204,7 @@ export default function EditCard<T extends Record<string, any>>({
             </div>
           );
         }
-        
+
         return (
           <input
             type="text"
@@ -233,7 +218,9 @@ export default function EditCard<T extends Record<string, any>>({
   };
 
   return (
-    <div className={`rounded-2xl bg-base-300 p-6 border border-base-content/50 ${canModify || "opacity-50"}`}>
+    <div
+      className={`rounded-2xl bg-base-300 p-6 border border-base-content/50 ${canModify || "opacity-50"}`}
+    >
       <div className="flex justify-between items-center mb-4 px-2">
         <h3 className="font-semibold text-3xl">{isNew ? "Add New Row" : "Edit Row"}</h3>
         {selectedRow && (
@@ -264,22 +251,30 @@ export default function EditCard<T extends Record<string, any>>({
         </div>
 
         <div className="flex gap-2">
-            <>
-              <button className="btn btn-primary flex-1 btn-lg" onClick={handleSave} disabled={loading || !canModify}>
-                {loading ? (
-                  <span className="loading loading-spinner loading-sm" />
-                ) : isNew ? (
-                  "Create"
-                ) : (
-                  "Save"
-                )}
-              </button>
-              {!isNew && (
-                <button className="btn btn-error btn-lg" onClick={handleDelete} disabled={loading || !canModify}>
-                  {loading ? <span className="loading loading-spinner loading-sm" /> : "Delete"}
-                </button>
+          <>
+            <button
+              className="btn btn-primary flex-1 btn-lg"
+              onClick={handleSave}
+              disabled={loading || !canModify}
+            >
+              {loading ? (
+                <span className="loading loading-spinner loading-sm" />
+              ) : isNew ? (
+                "Create"
+              ) : (
+                "Save"
               )}
-            </>
+            </button>
+            {!isNew && (
+              <button
+                className="btn btn-error btn-lg"
+                onClick={handleDelete}
+                disabled={loading || !canModify}
+              >
+                {loading ? <span className="loading loading-spinner loading-sm" /> : "Delete"}
+              </button>
+            )}
+          </>
           <button
             className="btn btn-outline btn-lg"
             onClick={() => reloadRef?.current?.clearSelection()}
