@@ -11,9 +11,9 @@
     "headerImg": "/Events/Workshops/workshops-arrows.webp",
     "image": "/GetInvolved/workshop-img.webp",
     "points": {
-      "Accessible for All": "Our workshops are designed for every skill level — whether you're brand new to data science or diving into advanced topics.",
-      "Experience Through Practice": "We focus on helping students build practical skills and confidence to grow as capable data scientists.",
-      "Diverse Topics": "Sessions cover everything from Exploratory Data Analysis and Scikit-Learn to Generative AI, LLMs, and AI agents."
+      "Accessible for All": "Workshops for every skill level — from beginner to advanced.",
+      "Experience Through Practice": "Hands-on sessions to build practical skills and techincal confidence.",
+      "Diverse Topics": "Sessions cover Exploratory Data Analysis, Scikit-Learn, Generative AI, LLMs, AI agents, and more!"
     }
   },
   "social": {
@@ -23,9 +23,9 @@
     "image": "/GetInvolved/social-img.webp",
     "headerImg": "/Events/Social/social-arrows.webp",
     "points": {
-      "Mentorship": "Through our Big-Little mentorship program, members are matched for guidance, friendship, and support—building strong connections across experience levels.",
-      "Community Beyond Coding": "From beach bonfires to game nights, we host events that bring members together for fun, relaxation, and real community.",
-      "Social Meets Growth": "Whether it's ice skating, study jams, or themed mixers, our events help members unwind, engage, and grow alongside fellow data enthusiasts."
+      "Mentorship": "Connect with mentors through our Big-Little program for guidance, friendship, and support.",
+      "Community Beyond Coding": "Join beach bonfires, game nights, and events that build real community.",
+      "Social Meets Growth": "Engage in themed mixers, study jams, and fun activities with fellow peers."
     }
   },
   "professional": {
@@ -35,9 +35,9 @@
     "image": "/GetInvolved/pf-events-img.webp",
     "headerImg": "/Events/Professional/professional-arrows.webp",
     "points": {
-      "Grow Your Network": "Connect with professionals, alumni, and recruiters through speaker panels, career nights, and exclusive networking events.",
-      "Build Your Career Toolkit": "Strengthen your resume, portfolio, and LinkedIn through interactive workshops on personal branding and professional storytelling.",
-      "Discover Your Path in Data Science": "Explore roles across industry and research, and gain insights on how to turn your skills into meaningful opportunities."
+      "Grow Your Network": "Connect with professionals and alumni through panels and networking events.",
+      "Build Your Career Toolkit": "Strengthen your resume, portfolio, and LinkedIn with practical workshops.",
+      "Discover Your Path in Data Science": "Learn about industry roles and how to turn your skills into opportunities."
     }
   }
 }
