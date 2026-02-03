@@ -26,7 +26,6 @@ export function useStats() {
         .eq("email", user.email)
         .single();
       if (!isMounted) return;
-      console.log(data);
 
       if (error) {
         console.error("Error fetching stats:", error);
