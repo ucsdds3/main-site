@@ -1,5 +1,5 @@
 import { EventTagType, tagColor } from "src/Utils/types";
-import { AttendedEvent } from "../Sections/Events";
+import { AttendedEvent } from "../Hooks/useStats";
 
 const AttendedCard = (event: AttendedEvent) => {
   const { start, end, name, description, points, tags, attended_at } = event;
@@ -34,7 +34,7 @@ const AttendedCard = (event: AttendedEvent) => {
     <div className="flex flex-col bg-base-200 p-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-base">
       {/* name + date (inline) */}
       <div className="flex justify-between items-center mb-2">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <h3 className="text-2xl font-semibold text-primary">{name}</h3>
           <div className="badge badge-primary mt-1">{points} points</div>
           {tags?.map(tag => (
