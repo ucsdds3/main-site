@@ -2,18 +2,21 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 
 import dino from "/src/Assets/Images/dino.webp";
+import { useTheme } from "src/Hooks/useTheme";
 import Button from "src/Shared/Components/Button";
-import Star from "src/Shared/Components/Star";
+// import Star from "src/Shared/Components/Star";
 
-import starData from "../Data/stars.json";
+// import starData from "../Data/stars.json";
+import DotGrid from "../Components/DotGrid";
 
 const Landing = () => {
   const navigate = useNavigate();
-  const stars = starData.positions[Math.round(Math.random() * 4)];
+  // const stars = starData.positions[Math.round(Math.random() * 4)];
+  const { primaryColor, oppositeColor } = useTheme();
 
   return (
     <div className="flex flex-col lg:flex-row  items-start w-[95vw] min-h-[95vh] mx-auto" id="home">
-      <motion.div variants={starData.appearingVariants} animate="animate" className="-z-1">
+      {/* <motion.div variants={starData.appearingVariants} animate="animate" className="-z-1">
         {stars.map((star, index) => (
           <Star
             key={index}
@@ -22,13 +25,36 @@ const Landing = () => {
             style={{ top: `${star.y}%`, left: `${star.x}%` }}
           />
         ))}
-      </motion.div>
+      </motion.div> */}
+
+      <div
+        style={{
+          width: "100vw",
+          height: "110vh",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: -5,
+        }}
+      >
+        <DotGrid
+          dotSize={5}
+          gap={25}
+          baseColor={`${oppositeColor}20`}
+          activeColor={primaryColor}
+          proximity={120}
+          shockRadius={250}
+          shockStrength={5}
+          resistance={750}
+          returnDuration={1.5}
+        />
+      </div>
 
       <div
         className="flex flex-col justify-center items-center md:items-start px-8 mt-[10vh] lg:mt-[20vh]"
         id="textarea"
       >
-        <div className="flex gap-2 font-albert-sans text-[clamp(1rem,3vw,2rem)]">
+        <div className="flex gap-2 font-albert-sans text-[clamp(1rem,3vw,2rem)] font-semibold">
           <div className="text-[#F58134]">LEARN,</div>
           <div className="text-[#19B5CA]">BUILD,</div>
           <div className="text-[#A9A9A9]">INNOVATE</div>
