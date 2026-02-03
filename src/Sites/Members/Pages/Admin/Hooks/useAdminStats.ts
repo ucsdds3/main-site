@@ -12,9 +12,17 @@ export function useAdminStats() {
   const [members, setMembers] = useState<StatData>({ value: "0", hint: "", loading: true });
   const [admins, setAdmins] = useState<StatData>({ value: "0", hint: "", loading: true });
   const [events, setEvents] = useState<StatData>({ value: "0", hint: "", loading: true });
-  const [pendingOrders, setPendingOrders] = useState<StatData>({ value: "0", hint: "", loading: true });
+  const [pendingOrders, setPendingOrders] = useState<StatData>({
+    value: "0",
+    hint: "",
+    loading: true,
+  });
   const [totalOrders, setTotalOrders] = useState<StatData>({ value: "0", hint: "", loading: true });
-  const [eventAttendance, setEventAttendance] = useState<StatData>({ value: "0", hint: "", loading: true });
+  const [eventAttendance, setEventAttendance] = useState<StatData>({
+    value: "0",
+    hint: "",
+    loading: true,
+  });
 
   useEffect(() => {
     const fetchAllStats = async () => {
@@ -22,6 +30,10 @@ export function useAdminStats() {
         const now = new Date();
         const nowISO = now.toISOString();
         const startOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+        // Calculate dates for past 30 days comparison
+        const past30DaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        const past60DaysAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
 
         // Fetch all stats in parallel
         const [
@@ -91,17 +103,17 @@ export function useAdminStats() {
             .from("Purchases")
             .select("*", { count: "exact", head: true })
             .lt("created_at", startOfCurrentMonth.toISOString()),
-          // Event attendance - current month count
+          // Event attendance - past 30 days count
           supabase
             .from("Attendance")
             .select("*", { count: "exact", head: true })
-            .gte("created_at", startOfCurrentMonth.toISOString()),
-          // Event attendance - last month count
+            .gte("created_at", past30DaysAgo.toISOString()),
+          // Event attendance - previous 30 days count (30-60 days ago)
           supabase
             .from("Attendance")
             .select("*", { count: "exact", head: true })
-            .lt("created_at", startOfCurrentMonth.toISOString())
-            .gte("created_at", new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString()),
+            .gte("created_at", past60DaysAgo.toISOString())
+            .lt("created_at", past30DaysAgo.toISOString()),
         ]);
 
         // Process active members stats
@@ -180,7 +192,9 @@ export function useAdminStats() {
           oldestPendingOrder.data.created_at
         ) {
           const oldestOrderDate = new Date(oldestPendingOrder.data.created_at);
-          const ageInDays = Math.floor((now.getTime() - oldestOrderDate.getTime()) / (1000 * 60 * 60 * 24));
+          const ageInDays = Math.floor(
+            (now.getTime() - oldestOrderDate.getTime()) / (1000 * 60 * 60 * 24)
+          );
           if (ageInDays === 0) {
             pendingOrdersHint = "Oldest: Today";
           } else if (ageInDays === 1) {
@@ -220,7 +234,7 @@ export function useAdminStats() {
             ? ((eventAttendanceChange / eventAttendanceLastMonthCount) * 100).toFixed(1)
             : "0.0";
         const eventAttendanceSign = eventAttendanceChange >= 0 ? "+" : "";
-        const eventAttendanceHint = `${eventAttendanceSign}${eventAttendancePercentChange}% this month`;
+        const eventAttendanceHint = `${eventAttendanceSign}${eventAttendancePercentChange}% past 30 days`;
         setEventAttendance({
           value: formatNumber(eventAttendanceCurrentCount),
           hint: eventAttendanceHint,
@@ -242,7 +256,7 @@ export function useAdminStats() {
 
   return {
     "Active Members": members,
-    "Admins": admins,
+    Admins: admins,
     "Upcoming Events": events,
     "Monthly Attendance": eventAttendance,
     "Pending Orders": pendingOrders,
