@@ -7,7 +7,7 @@ import { EventTagType, EventType, tagColor } from "src/Utils/types.ts";
 import { newArray, generateCalendarLink } from "src/Utils/functions.tsx";
 
 const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
-  const { name, description, image, points, start, end, location, tags } = event;
+  const { name, description, image, points, start, end, location, tags, attended_at } = event;
   const { imageStates } = useImagePreloader([image ? image : ""]);
   const [imageError, setImageError] = useState(false);
 
@@ -43,7 +43,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
         <p className="flex-grow-0">
           {start && end && (
             <span>
-              {new Date(start).toLocaleDateString()}{" "}
+              {new Date(start).toLocaleDateString("en-US")}{" "}
               {new Date(start).toLocaleTimeString("en-US", {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -79,12 +79,21 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
             ))}
           </div>
         )}
-        {event.start && event.end && (
+
+        {attended_at ? (
           <div className="card-actions justify-start mt-auto pt-2">
-            <SafeLink href={generateCalendarLink(event)} className="btn text-lg btn-primary">
-              Add to Calendar
-            </SafeLink>
+            Checked in at{" "}
+            {new Date(attended_at).toLocaleString("en-US", { timeZone: "America/Los_Angeles" })}
           </div>
+        ) : (
+          event.start &&
+          event.end && (
+            <div className="card-actions justify-start mt-auto pt-2">
+              <SafeLink href={generateCalendarLink(event)} className="btn text-lg btn-primary">
+                Add to Calendar
+              </SafeLink>
+            </div>
+          )
         )}
       </div>
     </motion.div>
