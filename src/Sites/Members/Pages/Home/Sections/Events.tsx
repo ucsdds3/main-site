@@ -4,30 +4,16 @@ import { FaArrowRight } from "react-icons/fa";
 
 import Section from "src/Shared/Page/Section";
 import { supabase } from "src/Utils/supabase";
+import { EventType } from "src/Utils/types";
 
 import AttendedCard from "../Components/AttendedCard";
 
-type AttendedRow = {
-  attendance_id: number;
-  attended_at: string; // ISO
-  points: number | null;
-  event_id: number;
-  event_name: string;
-  event_description: string | null;
-  event_datetime: string; // ISO
-};
-
-type AttendedCardProps = {
-  id: number;
-  name: string;
-  description?: string | null;
-  points?: number | null;
-  eventDate?: string; // ISO
-  attendedAt?: string; // ISO
+export type AttendedEvent = EventType & {
+  attended_at: string;
 };
 
 const Events = () => {
-  const [attendedEvents, setAttendedEvents] = useState<AttendedCardProps[]>([]);
+  const [attendedEvents, setAttendedEvents] = useState<AttendedEvent[]>([]);
   const [eventCode, setEventCode] = useState("");
 
   // fetch attended, map to AttendedCard shape
@@ -36,18 +22,8 @@ const Events = () => {
       const { data, error } = await supabase.rpc("get_my_attendance");
       if (error) throw error;
 
-      const rows = (data ?? []) as AttendedRow[];
-
-      const mapped: AttendedCardProps[] = rows.map(r => ({
-        id: r.attendance_id,
-        name: r.event_name,
-        description: r.event_description,
-        points: r.points ?? 0,
-        eventDate: r.event_datetime, // 🆕
-        attendedAt: r.attended_at, // 🆕
-      }));
-
-      setAttendedEvents(mapped);
+      const rows = (data ?? []) as AttendedEvent[];
+      setAttendedEvents(rows);
     } catch (err) {
       console.error("[fetchAttended] RPC error:", err);
       setAttendedEvents([]);
@@ -113,11 +89,11 @@ const Events = () => {
         <h2 className="text-4xl font-bold">Attended Events</h2>
 
         <div className="flex size-full justify-center items-start gap-8">
-          <div className="w-full flex flex-col gap-5 mt-10 max-w-[800px]">
+          <div className="w-full flex flex-col gap-5 mt-10">
             {attendedEvents.length === 0 ? (
               <span className="text-2xl opacity-70">You haven't attended any events yet</span>
             ) : (
-              attendedEvents.map(ev => <AttendedCard key={ev.id} {...ev} />)
+              attendedEvents.map((event, idx) => <AttendedCard key={idx} {...event} />)
             )}
           </div>
         </div>
