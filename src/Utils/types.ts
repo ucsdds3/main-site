@@ -10,6 +10,7 @@ export type EventType = {
   tags?: string[];
   location?: string;
   description: string;
+  attended_at?: string;
 };
 
 export type TeamType = {
@@ -101,8 +102,11 @@ export type PortalMemberType = {
   admin_level: number | null;
 };
 
-export type EventTagType = 
-  | "Professional"
-  | "Workshop"
-  | "Social"
-  | "Other";
+export const tagColor = {
+  Professional: "badge-info",
+  Workshop: "badge-warning",
+  Social: "badge-success",
+  Other: "",
+};
+
+export type EventTagType = keyof typeof tagColor;

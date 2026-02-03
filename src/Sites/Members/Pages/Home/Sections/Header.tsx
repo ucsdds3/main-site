@@ -22,7 +22,7 @@ const Header = () => {
             <span className="text-primary text-[clamp(1.5rem,2.5vw,3rem)] font-bold">
               {xp} / {xpNeeded}
             </span>
-            <span className="text-[clamp(1.25rem,2vw,1.875rem)]">XP</span>
+            <span className="text-[clamp(1.25rem,2vw,1.875rem)]">Experience</span>
             <span className="mt-4 text-[clamp(0.7rem,1.1vw,1.125rem)] text-balance text-center">
               You're <span className="text-primary">{progress * 100}%</span> of the way to{" "}
               <span className={nextTier.color}>{nextTier.name}</span> tier!
