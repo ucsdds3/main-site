@@ -12,7 +12,7 @@ interface UseEditCardProps<T> {
   reloadRef?: RefObject<{ reload: () => void; clearSelection: () => void } | null>;
 }
 
-export default function useEditCard<T extends Record<string, any>>({
+export default function useEditCard<T extends Record<string, unknown>>({
   tableName,
   columns,
   selectedRow,
@@ -37,16 +37,16 @@ export default function useEditCard<T extends Record<string, any>>({
         columns.forEach(col => {
           switch (col.type) {
             case "boolean":
-              defaults[col.key] = false as any;
+              defaults[col.key] = false as unknown as T[keyof T];
               break;
             case "number":
-              defaults[col.key] = 0 as any;
+              defaults[col.key] = 0 as unknown as T[keyof T];
               break;
             case "array":
-              defaults[col.key] = [] as any;
+              defaults[col.key] = [] as unknown as T[keyof T];
               break;
             default:
-              defaults[col.key] = "" as any;
+              defaults[col.key] = "" as unknown as T[keyof T];
           }
         });
         setFormData(defaults);
@@ -67,7 +67,7 @@ export default function useEditCard<T extends Record<string, any>>({
     };
   }, [imagePreviewUrl]);
 
-  const handleChange = (key: keyof T, value: any, type: ColumnType) => {
+  const handleChange = (key: keyof T, value: unknown, type: ColumnType) => {
     const processedValue = processFormValue(value, type);
 
     setFormData(prev => ({
@@ -168,8 +168,8 @@ export default function useEditCard<T extends Record<string, any>>({
       }));
 
       toast.success("Image ready for upload");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to process image");
+    } catch (error: unknown) {
+      toast.error((error as Error).message || "Failed to process image");
       console.error("Error processing file:", error);
     } finally {
       setLoading(false);
@@ -200,19 +200,24 @@ export default function useEditCard<T extends Record<string, any>>({
       throw uploadError;
     }
 
-    const { data, error: urlError } = await supabase.storage
-      .from(bucketName)
-      .createSignedUrl(filePath, 3600);
+    // Use public URL by default to avoid expiration issues
+    // If bucket is private, use signed URL with very long expiration (100 years)
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from(bucketName).getPublicUrl(filePath);
 
-    if (urlError || !data) {
-      console.warn("Failed to generate signed URL:", urlError);
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from(bucketName).getPublicUrl(filePath);
-      return publicUrl;
+    // Create signed URL with 100 years expiration (effectively permanent)
+    const { data: signedData, error: urlError } = await supabase.storage
+      .from(bucketName)
+      .createSignedUrl(filePath, 100 * 365 * 24 * 60 * 60); // 100 years expiration
+
+    // Prefer public URL if available, otherwise use signed URL
+    if (!urlError && signedData) {
+      return signedData.signedUrl;
     }
 
-    return data.signedUrl;
+    // Fallback to public URL
+    return publicUrl;
   };
 
   const handleSave = async () => {
@@ -250,7 +255,7 @@ export default function useEditCard<T extends Record<string, any>>({
         return;
       }
 
-      let finalFormData = { ...formData };
+      const finalFormData = { ...formData };
       if (
         pendingImageFile &&
         finalFormData.tags &&
@@ -258,7 +263,7 @@ export default function useEditCard<T extends Record<string, any>>({
         finalFormData.tags.length > 0
       ) {
         const uploadedUrl = await uploadImageFile(pendingImageFile, finalFormData.tags as string[]);
-        (finalFormData as any).image = uploadedUrl;
+        (finalFormData as Record<string, unknown>).image = uploadedUrl;
 
         if (imagePreviewUrl && imagePreviewUrl.startsWith("blob:")) {
           URL.revokeObjectURL(imagePreviewUrl);
@@ -285,8 +290,8 @@ export default function useEditCard<T extends Record<string, any>>({
 
       reloadRef?.current?.reload();
       reloadRef?.current?.clearSelection();
-    } catch (error: any) {
-      toast.error(error.message || "Failed to save");
+    } catch (error) {
+      toast.error((error as Error).message || "Failed to save");
       console.error("Error saving:", error);
     } finally {
       setLoading(false);
@@ -309,8 +314,8 @@ export default function useEditCard<T extends Record<string, any>>({
 
       reloadRef?.current?.reload();
       reloadRef?.current?.clearSelection();
-    } catch (error: any) {
-      toast.error(error.message || "Failed to delete");
+    } catch (error) {
+      toast.error((error as Error).message || "Failed to delete");
       console.error("Error deleting:", error);
     } finally {
       setLoading(false);

@@ -1,7 +1,9 @@
 import "simplebar-react/dist/simplebar.min.css";
 import SimpleBar from "simplebar-react";
 
-import bear from "src/Assets/Images/Sleepy_Bear.webp";
+import { useTheme } from "src/Hooks/useTheme";
+import sleepyDark from "src/Assets/Images/under_construction_dark.png";
+import sleepyLight from "src/Assets/Images/under_construction_light.png";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -13,6 +15,8 @@ interface PageProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Page = ({ children, scrollRef, ...props }: PageProps) => {
+  const { isDark } = useTheme();
+
   return (
     <SimpleBar className="absolute left-0 top-0 w-screen h-screen overflow-x-hidden">
       <Navbar />
@@ -24,9 +28,9 @@ const Page = ({ children, scrollRef, ...props }: PageProps) => {
               Coming Soon
             </h2>
             <img
-              src={bear}
+              src={isDark ? sleepyDark : sleepyLight}
               alt="Under Construction"
-              className="bear mt-[clamp(5rem,5vw,10rem)] w-[clamp(20rem,60vw,65rem)]"
+              className="bear mt-[clamp(5rem,5vw,10rem)] w-[clamp(10rem,30vw,30rem)]"
             />
           </>
         )}
