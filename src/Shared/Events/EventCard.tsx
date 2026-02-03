@@ -3,20 +3,13 @@ import { motion } from "framer-motion";
 
 import useImagePreloader from "src/Hooks/useImagepreload.tsx";
 import SafeLink from "src/Shared/Components/SafeLink.tsx";
-import { EventTagType, EventType } from "src/Utils/types.ts";
+import { EventTagType, EventType, tagColor } from "src/Utils/types.ts";
 import { newArray, generateCalendarLink } from "src/Utils/functions.tsx";
 
 const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
   const { name, description, image, points, start, end, location, tags } = event;
   const { imageStates } = useImagePreloader([image ? image : ""]);
   const [imageError, setImageError] = useState(false);
-
-  const tagColors: Record<EventTagType, string> = {
-    Professional: "badge-info",
-    Workshop: "badge-warning",
-    Social: "badge-success",
-    Other: "",
-  };
 
   return (
     <motion.div
@@ -70,7 +63,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
         <div className="flex flex-wrap gap-2">
           <div className="badge badge-primary">{points} points</div>
           {tags?.map(tag => (
-            <div className={`badge ${tagColors[tag as EventTagType] || ""}`} key={tag}>
+            <div className={`badge ${tagColor[tag as EventTagType] || ""}`} key={tag}>
               {tag}
             </div>
           ))}
