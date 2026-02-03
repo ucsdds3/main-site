@@ -34,7 +34,7 @@ export function useStats() {
       }
 
       if (data) {
-        setXp(data.experience ?? 0);
+        setXp((data.experience ?? 0) * 10);
         setPoints(data.points ?? 0);
       }
     };
