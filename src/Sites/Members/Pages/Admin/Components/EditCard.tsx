@@ -114,7 +114,7 @@ export default function EditCard<T extends Record<string, unknown>>({
       }
       case "array":
         if (col.key === "tags") {
-          const tagOptions = ["Workshop", "Professional", "Social", "Other"];
+          const tagOptions = ["Workshop", "Professional", "Social", "Fundraiser", "Other"];
           const selectedTags = Array.isArray(value) ? value : [];
 
           const handleTagToggle = (tag: string) => {
