@@ -18,11 +18,13 @@ const Members = () => {
 
   useEffect(() => {
     if (authState != "authenticated") {
-      const redirectPath = location.pathname !== "/auth" ? location.pathname : undefined;
-      navigate({ pathname: "/auth", redirect: redirectPath });
+      if (location.pathname !== "/auth") {
+        const redirectPath = location.pathname;
+        navigate({ pathname: "/auth", redirect: redirectPath });
+      }
     } else if (adminLevel == null && location.pathname.includes("admin")) navigate({ pathname: "/" });
     console.log(authState, "MEMBERS");
-  }, [authState, adminLevel]);
+  }, [authState, adminLevel, location.pathname]);
 
   return (
     <Routes>

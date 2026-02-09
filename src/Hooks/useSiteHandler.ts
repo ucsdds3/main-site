@@ -26,15 +26,18 @@ export function useSiteHandler() {
     const hostname = window.location.hostname;
     const path = pathname || window.location.pathname;
     const search = window.location.search || "";
-    
+    const parts = hostname.split(".");
+    const isProdSubdomain = !hostname.includes("localhost") && !hostname.includes("vercel.app") && parts.length > 2;
+    const currentSubdomain = isProdSubdomain ? (parts[0] === "www" ? "main" : parts[0]) : null;
+
     const searchParams = new URLSearchParams(search);
     if (redirect) searchParams.set("redirect", redirect);
-    else if (pathname) searchParams.delete("redirect");
-    if (subdomain) searchParams.set("subdomain", subdomain);
+    if (isProdSubdomain) searchParams.delete("subdomain");
+    else if (subdomain) searchParams.set("subdomain", subdomain);
     const query = searchParams.toString();
     const pathWithSearch = query ? `${path}?${query}` : path;
 
-    if (subdomain) {
+    if (subdomain && (!isProdSubdomain || currentSubdomain !== subdomain)) {
       if (hostname === "localhost" || hostname.includes("vercel.app")) {
         navigate(pathWithSearch);
       } else {
