@@ -39,7 +39,7 @@ const OurWork = () => {
     "w-full grid grid-cols-[repeat(auto-fit,minmax(clamp(300px,40vw,350px),1fr))] justify-center gap-y-8";
 
   return (
-    <Section title="Our Work" id="our-work">
+    <Section title=" " id="our-work">
       <div className="w-full flex justify-center">
         {sections.map((section, index) => (
           <button

@@ -18,53 +18,55 @@
     "/Projects/P7.webp"
   ],
   "projects": {
-    "2024": [
+    "2025": [
       {
-        "title": "Automated Face Recognition System",
-        "description": "A robust system for accurate and efficient facial identification and verification.",
-        "image": "/Consulting/face-recog.webp",
         "card": {
-          "title": "Automated Face Recognition System",
-          "image": "/Consulting/face-recog.webp",
-          "categories": ["Machine Learning", "Web Development"],
-          "clients": [
-            {
-              "name": "Promo Drone",
-              "image": "/WhereWeBeen/promodrone_logo.jpg"
-            }
-          ]
+          "title": "Campus Energy Optimization with Battery Storage",
+          "image": "/WhereWeBeen/cer.jpg",
+          "categories": ["Data Analytics", "Data Engineering"]
         }
       },
       {
-        "title": "Interpretable Scoring Algorithm for Predictive Analysis",
-        "description": "An algorithm providing clear, interpretable scores for data-driven decision-making.",
-        "image": "/Consulting/isa.webp",
         "card": {
-          "title": "Interpretable Scoring Algorithm for Predictive Analysis",
-          "image": "/Consulting/isa.webp",
-          "categories": ["Data Engineering"],
-          "clients": [
-            {
-              "name": "Alama AI",
-              "image": "/WhereWeBeen/alama-ai.jpg"
-            }
-          ]
+          "title": "External Conference Site",
+          "image": "/WhereWeBeen/sen.jpg",
+          "imageScale": 0.85,
+          "categories": ["Web Development"]
         }
       },
       {
-        "title": "Conversational AI with Large Language Models",
-        "description": "A chatbot leveraging LLMs for natural, human-like interactions.",
-        "image": "/Consulting/llm.webp",
         "card": {
-          "title": "Conversational AI with Large Language Models",
-          "image": "/Consulting/llm.webp",
-          "categories": ["Machine Learning"],
-          "clients": [
-            {
-              "name": "7sherpas",
-              "image": "/WhereWeBeen/7sherpas.png"
-            }
-          ]
+          "title": "Site Migration and Maintenance",
+          "image": "/WhereWeBeen/nets.jpg",
+          "categories": ["Web Development"]
+        }
+      },
+      {
+        "card": {
+          "title": "Energy Transitions Dashboard for Global Impact",
+          "image": "/WhereWeBeen/cer.jpg",
+          "categories": ["Data Engineering", "Web Development"]
+        }
+      },
+      {
+        "card": {
+          "title": "San Diego City Nature Challenge Optimization",
+          "image": "/WhereWeBeen/nrs.jpg",
+          "categories": ["Data Analytics", "Data Engineering"]
+        }
+      },
+      {
+        "card": {
+          "title": "Chiba Lab Website Creation",
+          "image": "/WhereWeBeen/cogs.jpg",
+          "categories": ["Web Development"]
+        }
+      },
+      {
+        "card": {
+          "title": "Species Distribution Mapping for Natural Reserves",
+          "image": "/WhereWeBeen/nrs.jpg",
+          "categories": ["Data Analytics", "Web Development"]
         }
       }
     ]
