@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useSiteHandler } from "../../../../../Hooks/useSiteHandler";
 import { useAuthStore } from "../../../Hooks/useAuthStore";
 import { supabase } from "../../../../../Utils/supabase";
 import toast from "react-hot-toast";
 
 export function useSignIn() {
   const { setAuthState, setUser, setAdminLevel } = useAuthStore();
-  const { navigate } = useSiteHandler();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -75,7 +73,6 @@ export function useSignIn() {
       "user",
       JSON.stringify({ ...userData.user, adminLevel: adminData.admin_level })
     );
-    navigate({ pathname: "/", subdomain: "members" });
     toast.success("Login successful!");
   };
 
