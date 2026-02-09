@@ -40,7 +40,7 @@ export default function EditCard<T extends Record<string, unknown>>({
       const password = String(formData.password ?? "");
       return (
         <div className="flex flex-col items-center justify-center gap-2">
-          <EventQRCode password={password} />
+          <EventQRCode password={password} eventName={String(formData.name ?? "")} />
           <span className="text-xs text-base-content/60">Click to download</span>
         </div>
       );

@@ -31,12 +31,16 @@ const getQRCodeOptions = (data: string, size: number) => ({
 
 const DOWNLOAD_SIZE = 400;
 
+const sanitizeFilename = (name: string) =>
+  name.replace(/[\/\\:*?"<>|]/g, "").replace(/\s+/g, "-").trim() || "event";
+
 interface EventQRCodeProps {
   password: string;
+  eventName?: string;
   size?: number;
 }
 
-export default function EventQRCode({ password, size = 200 }: EventQRCodeProps) {
+export default function EventQRCode({ password, eventName, size = 200 }: EventQRCodeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const qrRef = useRef<QRCodeStyling | null>(null);
 
@@ -63,7 +67,7 @@ export default function EventQRCode({ password, size = 200 }: EventQRCodeProps) 
       size >= DOWNLOAD_SIZE
         ? qrRef.current
         : new QRCodeStyling(getQRCodeOptions(url, DOWNLOAD_SIZE));
-    downloadQr?.download({ name: "event-qrcode", extension: "png" });
+    downloadQr?.download({ name: `${sanitizeFilename(eventName ?? "event")}-qr-code`, extension: "png" });
   };
 
   if (!password) {

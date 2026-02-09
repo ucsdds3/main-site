@@ -64,7 +64,7 @@ export default function TableBody<T extends Record<string, any>>({
                     >
                       {isQRCode ? (
                         <div onClick={e => e.stopPropagation()}>
-                          <EventQRCode password={String(row.password ?? "")} size={48} />
+                          <EventQRCode password={String(row.password ?? "")} eventName={row.name} size={48} />
                         </div>
                       ) : (
                         formatCellValue(row[col.key], col.type)
