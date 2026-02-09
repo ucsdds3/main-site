@@ -18,8 +18,8 @@ export function useSiteHandler() {
       subdomain == "consulting"
         ? "DS3 Consulting"
         : subdomain == "members"
-        ? "DS3 Members"
-        : "DS3 @ UCSD";
+          ? "DS3 Members"
+          : "DS3 @ UCSD";
   }, [subdomain]);
 
   const navigateTo = ({ pathname, subdomain, hash, redirect }: NavigateProps) => {
@@ -27,7 +27,8 @@ export function useSiteHandler() {
     const path = pathname || window.location.pathname;
     const search = window.location.search || "";
     const parts = hostname.split(".");
-    const isProdSubdomain = !hostname.includes("localhost") && !hostname.includes("vercel.app") && parts.length > 2;
+    const isProdSubdomain =
+      !hostname.includes("localhost") && !hostname.includes("vercel.app") && parts.length > 2;
     const currentSubdomain = isProdSubdomain ? (parts[0] === "www" ? "main" : parts[0]) : null;
 
     const searchParams = new URLSearchParams(search);

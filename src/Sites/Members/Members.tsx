@@ -22,7 +22,8 @@ const Members = () => {
         const redirectPath = location.pathname;
         navigate({ pathname: "/auth", redirect: redirectPath });
       }
-    } else if (adminLevel == null && location.pathname.includes("admin")) navigate({ pathname: "/" });
+    } else if (adminLevel == null && location.pathname.includes("admin"))
+      navigate({ pathname: "/" });
     console.log(authState, "MEMBERS");
   }, [authState, adminLevel, location.pathname]);
 
