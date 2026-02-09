@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useAuthStore } from "../../Hooks/useAuthStore";
 import { useSiteHandler } from "../../../../Hooks/useSiteHandler";
 import ForgotPassword from "./ForgotPassword";
@@ -9,10 +10,14 @@ import Signup from "./Signup";
 const Auth = () => {
   const { authState } = useAuthStore();
   const { navigate } = useSiteHandler();
+  const { search } = useLocation();
+  const redirectTo = new URLSearchParams(search).get("redirect");
+  const safeRedirect =
+    redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//") ? redirectTo : "/";
 
   useEffect(() => {
     if (authState == "authenticated") {
-      navigate({ pathname: "/" });
+      navigate({ pathname: safeRedirect, subdomain: "members" });
     } else {
       navigate({ pathname: "" });
     }
