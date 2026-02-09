@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "src/Utils/supabase";
 
 import { ColumnDefinition, FilterOperator, SortDirection } from "../Utils/types";
-import { convertFilterValue } from "../Utils/functions";
+import { convertFilterValue } from "../../../Utils/functions";
 
 export interface ColumnSortFilter {
   sort: SortDirection;
