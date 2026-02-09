@@ -6,7 +6,7 @@
       "description": { "type": "text" },
       "points": { "type": "number" },
       "password": { "type": "text" },
-      "qr_code": { "type": "qr_code" },
+      "qr_code": { "type": "qr_code", "optional": true },
       "start": { "type": "date" },
       "end": { "type": "date" },
       "location": { "type": "text", "optional": true },
