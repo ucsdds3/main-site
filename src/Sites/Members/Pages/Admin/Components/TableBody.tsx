@@ -1,5 +1,5 @@
 import { ColumnDefinition } from "../Utils/types";
-import { formatCellValue } from "../Utils/functions";
+import { formatCellValue } from "../../../Utils/functions";
 
 interface TableBodyProps<T = any> {
   columns: ColumnDefinition<T>[];

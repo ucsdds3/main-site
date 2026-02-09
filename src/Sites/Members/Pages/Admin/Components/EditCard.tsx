@@ -3,7 +3,7 @@ import { TfiClose } from "react-icons/tfi";
 
 import { ColumnDefinition } from "../Utils/types";
 import useEditCard from "../Hooks/useEditCard";
-import { formatColumnLabel, convertUTCToPST, convertPSTToUTC } from "../Utils/functions";
+import { formatColumnLabel, convertUTCToPST, convertPSTToUTC } from "../../../Utils/functions";
 
 export interface EditCardProps<T> {
   tableName: string;

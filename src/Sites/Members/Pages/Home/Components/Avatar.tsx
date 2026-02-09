@@ -1,26 +1,92 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 
 import contact_dino from "src/Assets/Images/contact_dino.webp";
 import projects_dino from "src/Assets/Images/projects_dino.webp";
 import dino from "src/Assets/Images/dino_square.webp";
+import Button from "src/Shared/Components/Button";
 
 import { useStats } from "../Hooks/useStats";
+import { useAuthStore } from "../../../Hooks/useAuthStore";
+import { useUploadPFP } from "../../Profile/Hooks/useUploadPFP";
 
-const Avatar = () => {
+interface AvatarProps {
+  updatable?: boolean;
+  data?: Record<string, unknown>;
+  setData?: (data: Record<string, unknown>) => void;
+}
+
+const Avatar = ({ updatable = false, data, setData }: AvatarProps) => {
   const { progress, tier } = useStats();
+  const { user } = useAuthStore();
+  const { handleAvatarUpload, handleClearPFP, uploadingAvatar } = useUploadPFP();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const rand_dino = useMemo(() => {
     const dinos = [dino, contact_dino, projects_dino];
     return dinos[Math.floor(Math.random() * dinos.length)];
   }, []);
 
+  const profilePicture = user?.user_metadata?.profile_picture;
+  const avatarSrc = profilePicture || rand_dino;
+  const avatarAlt = profilePicture ? "Profile picture" : "Dino";
+
+  const handleClick = () => {
+    if (updatable && fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && data && setData) {
+      handleAvatarUpload(file, data, setData);
+    }
+    // Reset input so the same file can be selected again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   return (
-    <div
-      className={`size-60 p-8 bg-base-300 radial-progress ${tier.color}`}
-      style={{ "--value": progress * 100 } as React.CSSProperties}
-    >
-      {/* TODO: User profile picture instead of random dino */}
-      <img src={rand_dino} alt="Dino" />
+    <div className="relative flex flex-col items-center">
+      <div
+        className={`size-68 p-2 bg-base-300 radial-progress ${tier.color} ${
+          updatable && !uploadingAvatar ? "cursor-pointer" : ""
+        } overflow-hidden relative`}
+        style={{ "--value": progress * 100 } as React.CSSProperties}
+        onClick={handleClick}
+      >
+        <img
+          src={avatarSrc}
+          alt={avatarAlt}
+          className="w-full h-full object-cover rounded-full relative z-0"
+        />
+        {updatable && (
+          <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-black/50 text-white text-2xl text-center pt-2 z-10">
+            Edit
+          </div>
+        )}
+      </div>
+      {updatable && profilePicture && data && setData && (
+        <Button
+          onClick={() => {
+            if (confirm("Are you sure you want to remove your profile picture?")) {
+              handleClearPFP(data, setData);
+            }
+          }}
+        >
+          Clear Profile Picture
+        </Button>
+      )}
+      {updatable && (
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+      )}
     </div>
   );
 };

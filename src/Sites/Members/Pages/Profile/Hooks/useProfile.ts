@@ -1,5 +1,5 @@
 import z from "zod";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 
 import { supabase } from "src/Utils/supabase";
@@ -53,13 +53,17 @@ export function useProfile() {
   const { user } = useAuthStore();
   const [data, setData] = useState(user?.user_metadata);
   const [errors, setErrors] = useState<string>("");
+  const originalDataRef = useRef<string | null>(null);
+  const hasUnsavedChangesRef = useRef(false);
+  const isInitializedRef = useRef(false);
+  const toastIdRef = useRef<string | null>(null);
 
-  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>): Promise<boolean> => {
     e.preventDefault();
 
     if (!data) {
       toast.error("No data to update");
-      return;
+      return false;
     }
     const result = signupSchema.safeParse(data);
 
@@ -68,7 +72,7 @@ export function useProfile() {
       toast.error("Please fix the following errors:\n" + errors);
       console.log(errors);
       setErrors(errors);
-      return;
+      return false;
     }
 
     // Filter data to only include Members table fields (exclude password fields)
@@ -85,22 +89,73 @@ export function useProfile() {
       .eq("email", data?.email);
     if (memberError) {
       toast.error(memberError.message);
-      return;
+      return false;
     }
 
-    const { error: userError } = await supabase.auth.updateUser({ email: data?.email, data });
+    const { error: userError, data: updatedUser } = await supabase.auth.updateUser({ email: data?.email, data });
     if (userError) {
       toast.error(userError.message);
-      return;
+      return false;
+    }
+
+    // Update local state with the updated user metadata
+    if (updatedUser?.user?.user_metadata) {
+      const updatedMetadata = updatedUser.user.user_metadata;
+      setData(updatedMetadata);
+      // Immediately update originalDataRef to prevent showing unsaved changes
+      originalDataRef.current = JSON.stringify(updatedMetadata);
+      hasUnsavedChangesRef.current = false;
     }
 
     toast.success("Profile updated successfully");
+    return true;
+  };
+
+  useEffect(() => {
+    if (data && !isInitializedRef.current) {
+      originalDataRef.current = JSON.stringify(data);
+      isInitializedRef.current = true;
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data && originalDataRef.current && isInitializedRef.current) {
+      const currentDataStr = JSON.stringify(data);
+      hasUnsavedChangesRef.current = currentDataStr !== originalDataRef.current;
+
+      if (hasUnsavedChangesRef.current) {
+        if (!toastIdRef.current) {
+          toastIdRef.current = toast.error(
+            "You have unsaved changes. Make sure to click Update Profile.",
+            {
+              id: "unsaved-changes",
+              duration: Infinity,
+              icon: "⚠️",
+            }
+          );
+        }
+      } else {
+        if (toastIdRef.current) {
+          toast.dismiss(toastIdRef.current);
+          toastIdRef.current = null;
+        }
+      }
+    }
+  }, [data]);
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const result = await handleUpdateProfile(e);
+    if (result === true) {
+      // Dismiss the unsaved changes toast immediately by ID
+      toast.dismiss("unsaved-changes");
+      toastIdRef.current = null;
+    }
   };
 
   return {
     data,
     errors,
     setData,
-    handleUpdateProfile,
+    handleUpdateProfile: handleFormSubmit,
   };
 }
