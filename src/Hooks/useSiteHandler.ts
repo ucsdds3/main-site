@@ -24,8 +24,10 @@ export function useSiteHandler() {
 
   const navigateTo = ({ pathname, subdomain, hash, redirect }: NavigateProps) => {
     const hostname = window.location.hostname;
-    const path = pathname || window.location.pathname;
-    const search = window.location.search || "";
+    const rawPath = pathname || window.location.pathname;
+    const [pathOnly, pathSearch] = rawPath.includes("?") ? rawPath.split("?", 2) : [rawPath, ""];
+    const path = pathOnly;
+    const search = pathSearch ? `?${pathSearch}` : window.location.search || "";
     const parts = hostname.split(".");
     const isProdSubdomain =
       !hostname.includes("localhost") && !hostname.includes("vercel.app") && parts.length > 2;
