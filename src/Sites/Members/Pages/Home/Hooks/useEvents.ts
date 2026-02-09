@@ -32,16 +32,33 @@ export function useEvents() {
   }, []);
 
   useEffect(() => {
-    console.log(searchParams, "SEARCH PARAMS");
     const eventcodeParam = searchParams.get("eventcode");
-    if (eventcodeParam) {
-      handleSubmitCode({ preventDefault: () => {} } as React.FormEvent, eventcodeParam);
-      searchParams.delete("eventcode");
-      setSearchParams(searchParams, { replace: true });
-    }
+    if (!eventcodeParam) return;
+
+    const run = async () => {
+      const result = await handleSubmitCode(
+        { preventDefault: () => {} } as React.FormEvent,
+        eventcodeParam
+      );
+      const shouldRemoveParam =
+        result === "registered" ||
+        result === "already_registered" ||
+        result === "invalid_event" ||
+        result === "event_expired" ||
+        result === "event_not_started";
+      if (shouldRemoveParam) {
+        const next = new URLSearchParams(searchParams);
+        next.delete("eventcode");
+        setSearchParams(next, { replace: true });
+      }
+    };
+    run();
   }, []);
 
-  const handleSubmitCode = async (e: React.FormEvent, eventCode: string) => {
+  const handleSubmitCode = async (
+    e: React.FormEvent,
+    eventCode: string
+  ): Promise<string | undefined> => {
     e.preventDefault();
 
     if (!eventCode.trim()) {
@@ -69,6 +86,8 @@ export function useEvents() {
       toast.success("Event registration successful!");
       fetchAttended();
     } else toast.error("Unexpected server response.");
+
+    return data as string | undefined;
   };
 
   const getCurrentQuarter = (): [Date, Date] | null => {
