@@ -27,8 +27,9 @@ export function useTableData<T extends Record<string, any>>(
       try {
         let query = supabase.from(tableName).select("*");
 
-        // Apply filters
-        columns.forEach((col) => {
+        // Apply filters (skip display-only columns like qr_code)
+        columns.forEach(col => {
+          if (col.type === "qr_code") return;
           const state = columnStates?.[col.key as string];
           if (state?.filter && state.filterValue) {
             const value = convertFilterValue(state.filterValue, col.type);
@@ -68,9 +69,9 @@ export function useTableData<T extends Record<string, any>>(
           }
         });
 
-        // Apply sorting
+        // Apply sorting (skip display-only columns like qr_code)
         const sortedColumns = columns.filter(
-          (col) => columnStates?.[col.key as string]?.sort
+          col => col.type !== "qr_code" && columnStates?.[col.key as string]?.sort
         );
         if (sortedColumns.length > 0) {
           const primarySort = sortedColumns[0];
