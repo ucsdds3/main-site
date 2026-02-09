@@ -22,21 +22,26 @@ export function useSiteHandler() {
         : "DS3 @ UCSD";
   }, [subdomain]);
 
-  const navigateTo = ({ pathname, subdomain, hash }: NavigateProps) => {
+  const navigateTo = ({ pathname, subdomain, hash, redirect }: NavigateProps) => {
     const hostname = window.location.hostname;
     const path = pathname || window.location.pathname;
     const search = window.location.search || "";
     
+    const searchParams = new URLSearchParams(search);
+    if (redirect) searchParams.set("redirect", redirect);
+    else if (pathname) searchParams.delete("redirect");
+    if (subdomain) searchParams.set("subdomain", subdomain);
+    const query = searchParams.toString();
+    const pathWithSearch = query ? `${path}?${query}` : path;
+
     if (subdomain) {
       if (hostname === "localhost" || hostname.includes("vercel.app")) {
-        const searchParams = new URLSearchParams(search);
-        searchParams.set("subdomain", subdomain);
-        navigate(`${path}?${searchParams.toString()}`);
+        navigate(pathWithSearch);
       } else {
-        window.location.href = `https://${subdomain}.ds3atucsd.com${path}${search}`;
+        window.location.href = `https://${subdomain}.ds3atucsd.com${path}${query ? `?${query}` : ""}`;
       }
     } else {
-      navigate(`${path}${search}`);
+      navigate(pathWithSearch);
     }
 
     if (hash) {
