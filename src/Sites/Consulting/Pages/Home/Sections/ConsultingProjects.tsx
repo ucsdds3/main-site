@@ -1,81 +1,108 @@
 // C:\Users\dmath\OneDrive\Desktop\Proper Main Site\main-site\main-site\src\Components\ConsultingProjects.tsx
+import { useState } from "react";
 import consultingProjects from "../Data/projects.json";
 import Section from "src/Shared/Page/Section";
 
 export default function ConsultingProjects() {
-  const projects2024 = consultingProjects.projects["2024"];
+  const [activeFilter, setActiveFilter] = useState("All");
+  const projects2024 = consultingProjects.projects["2025"];
+
+  // Get unique categories
+  const allCategories = ["All"];
+  projects2024.forEach(project => {
+    project.card.categories.forEach(cat => {
+      if (!allCategories.includes(cat)) {
+        allCategories.push(cat);
+      }
+    });
+  });
+
+  // Filter projects based on active filter
+  const filteredProjects =
+    activeFilter === "All"
+      ? projects2024
+      : projects2024.filter(project => project.card.categories.includes(activeFilter));
 
   return (
     <Section>
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <h2 className="text-3xl font-bold text-white mb-2">
-          {consultingProjects.about.name}
-        </h2>
-        <p className="text-gray-400 mb-8">
-          Build real products with DS3 through our external consulting work.
-        </p>
+      <div className="max-w-7xl mx-auto">
+        {/* Header Title */}
+        <h2 className="text-5xl font-bold text-center text-white mb-8">OUR WORK</h2>
 
-        {/* Cards grid */}
+        {/* Filter buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {allCategories.map(category => (
+            <button
+              key={category}
+              onClick={() => setActiveFilter(category)}
+              className={`
+                px-8 py-3 rounded-full text-m font-medium
+                transition-all duration-200
+                ${
+                  activeFilter === category
+                    ? "bg-orange-500 text-white"
+                    : "bg-[#1a1a2e] text-gray-300 hover:bg-[#232339]"
+                }
+              `}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Projects grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects2024.map((project, idx) => (
+          {filteredProjects.map((project, idx) => (
             <div
               key={idx}
               className="
                 relative flex flex-col
-                bg-[#101018]
-                border border-[#26263a]
-                rounded-2xl
-                shadow-[0_18px_40px_rgba(0,0,0,0.55)]
-                p-6
-                transition-all duration-150
+                bg-[#0a0a12]
+                border border-[#1f1f2e]
+                rounded-xl
+                overflow-hidden
+                transition-all duration-200
                 hover:-translate-y-1
-                hover:shadow-[0_24px_50px_rgba(0,0,0,0.65)]
+                hover:shadow-xl
+                h-full
               "
             >
-              {/* Top image / icon */}
-              <div className="flex justify-center mb-4">
+              {/* Large top image - Fills the square */}
+              <div className="relative h-75 bg-[#0f0f1a] flex items-center justify-center">
                 <img
                   src={project.card.image}
                   alt={project.card.title}
-                  className="h-14 w-14 object-contain"
+                  className="w-full h-full object-cover"
+                  style={
+                    project.card.imageScale
+                      ? {
+                          transform: `scale(${project.card.imageScale})`,
+                          transformOrigin: "center",
+                        }
+                      : undefined
+                  }
                 />
               </div>
 
-              {/* Title */}
-              <h3 className="text-base font-semibold text-white text-center mb-2">
-                {project.title}
-              </h3>
+              {/* Content section */}
+              <div className="p-6 flex flex-col items-center text-center flex-grow">
+                {/* Title */}
+                <h3 className="text-lg font-bold text-white mb-4 leading-tight">
+                  {project.card.title}
+                </h3>
 
-              {/* Description */}
-              <p className="text-sm text-gray-300 text-center mb-5">
-                {project.description}
-              </p>
-
-              {/* Clients */}
-              <div className="flex justify-center gap-3 mb-4">
-                {project.card.clients.map((client, cIdx) => (
-                  <div key={cIdx} className="flex flex-col items-center gap-1">
-                    <img
-                      src={client.image}
-                      alt={client.name}
-                      className="h-7 w-7 object-contain rounded"
-                    />
-                    <span className="text-[11px] text-gray-400">
-                      {client.name}
+                {/* Category tags - Centered */}
+                <div className="flex flex-wrap justify-center gap-2 mt-auto">
+                  {project.card.categories.map((category, cIdx) => (
+                    <span
+                      key={cIdx}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1a1a2e] text-m font-medium text-gray-300 border border-gray-800"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                      {category}
                     </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Tag pill */}
-              <div className="mt-auto flex justify-center">
-                <span className="inline-flex items-center gap-2 rounded-full bg-[#181824] px-3 py-1">
-                  <span className="h-2 w-2 rounded-full bg-orange-400" />
-                  <span className="text-[11px] font-medium text-gray-200">
-                    {project.card.categories.join(", ")}
-                  </span>
-                </span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
