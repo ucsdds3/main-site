@@ -18,10 +18,8 @@ const Auth = () => {
   useEffect(() => {
     if (authState == "authenticated") {
       navigate({ pathname: safeRedirect, subdomain: "members" });
-    } else {
-      navigate({ pathname: "" });
     }
-  }, [authState]);
+  }, [authState, safeRedirect, navigate]);
 
   if (authState == "signin") return <Signin />;
   if (authState == "signup") return <Signup />;
