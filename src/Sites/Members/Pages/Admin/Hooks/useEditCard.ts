@@ -3,7 +3,7 @@ import { supabase } from "src/Utils/supabase";
 import { useState, useEffect, RefObject } from "react";
 
 import { ColumnDefinition, ColumnType } from "../Utils/types";
-import { processFormValue, formatColumnLabel } from "../Utils/functions";
+import { processFormValue, formatColumnLabel, compressImage } from "../../../Utils/functions";
 
 interface UseEditCardProps<T> {
   tableName: string;
@@ -76,70 +76,6 @@ export default function useEditCard<T extends Record<string, unknown>>({
     }));
   };
 
-  const compressImage = (file: File): Promise<File> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = e => {
-        const img = new Image();
-        img.src = e.target?.result as string;
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          let width = img.width;
-          let height = img.height;
-          const maxDimension = 1920;
-
-          if (width > maxDimension || height > maxDimension) {
-            if (width > height) {
-              height = (height / width) * maxDimension;
-              width = maxDimension;
-            } else {
-              width = (width / height) * maxDimension;
-              height = maxDimension;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-
-          const ctx = canvas.getContext("2d");
-          if (!ctx) {
-            reject(new Error("Could not get canvas context"));
-            return;
-          }
-
-          ctx.drawImage(img, 0, 0, width, height);
-
-          const tryCompress = (quality: number): void => {
-            canvas.toBlob(
-              blob => {
-                if (!blob) {
-                  reject(new Error("Failed to compress image"));
-                  return;
-                }
-
-                if (blob.size <= 500 * 1024 || quality <= 0.1) {
-                  const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, ".webp"), {
-                    type: "image/webp",
-                    lastModified: Date.now(),
-                  });
-                  resolve(compressedFile);
-                } else {
-                  tryCompress(Math.max(0.1, quality - 0.1));
-                }
-              },
-              "image/webp",
-              quality
-            );
-          };
-
-          tryCompress(0.9);
-        };
-        img.onerror = () => reject(new Error("Failed to load image"));
-      };
-      reader.onerror = () => reject(new Error("Failed to read file"));
-    });
-  };
 
   const handleFileUpload = async (key: keyof T, file: File) => {
     if (!file) return;

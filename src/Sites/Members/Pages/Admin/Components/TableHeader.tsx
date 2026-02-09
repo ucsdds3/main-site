@@ -4,7 +4,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 import { ColumnDefinition, FilterOperator, SortDirection } from "../Utils/types";
 import { ColumnSortFilter } from "../Hooks/useTableData";
-import { formatColumnLabel } from "../Utils/functions";
+import { formatColumnLabel } from "../../../Utils/functions";
 
 interface TableHeaderProps<T = any> {
   columns: ColumnDefinition<T>[];
