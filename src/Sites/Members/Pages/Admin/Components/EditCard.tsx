@@ -4,6 +4,7 @@ import { TfiClose } from "react-icons/tfi";
 import { ColumnDefinition } from "../Utils/types";
 import useEditCard from "../Hooks/useEditCard";
 import { formatColumnLabel, convertUTCToPST, convertPSTToUTC } from "../../../Utils/functions";
+import EventQRCode from "./EventQRCode";
 
 export interface EditCardProps<T> {
   tableName: string;
@@ -34,6 +35,16 @@ export default function EditCard<T extends Record<string, unknown>>({
 
   const renderInput = (col: ColumnDefinition<T>) => {
     const value = formData[col.key];
+
+    if (col.key === "qr_code" && col.type === "qr_code") {
+      const password = String(formData.password ?? "");
+      return (
+        <div className="flex flex-col items-center justify-center gap-2">
+          <EventQRCode password={password} />
+          <span className="text-xs text-base-content/60">Click to download</span>
+        </div>
+      );
+    }
 
     if (col.key === "image" && col.type === "text") {
       const isBlobUrl = value && String(value).startsWith("blob:");

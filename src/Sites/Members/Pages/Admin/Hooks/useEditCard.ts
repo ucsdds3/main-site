@@ -76,7 +76,6 @@ export default function useEditCard<T extends Record<string, unknown>>({
     }));
   };
 
-
   const handleFileUpload = async (key: keyof T, file: File) => {
     if (!file) return;
 
@@ -208,7 +207,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
         setImagePreviewUrl(null);
       }
 
-      const fieldsToExclude = ["id", "created_at", "updated_at"];
+      const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code"];
       const dataToSave = { ...finalFormData };
       fieldsToExclude.forEach(field => {
         delete dataToSave[field as keyof T];
