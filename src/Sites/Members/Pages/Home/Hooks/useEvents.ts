@@ -77,8 +77,8 @@ export function useEvents() {
     }
 
     if (data === "already_registered") toast("Already registered for this event!");
-    else if (data === "event_not_started") toast.error("The event hasn't begun yet");
-    else if (data === "event_expired") toast.error("The event has passed");
+    else if (data === "event_not_started") toast.error("The event hasn't started yet");
+    else if (data === "event_expired") toast.error("The event has ended");
     else if (data === "not_authenticated") toast.error("Please log in first.");
     else if (data === "member_not_found") toast.error("Your account is not linked to a profile.");
     else if (data === "invalid_event") toast.error("Invalid event code.");
