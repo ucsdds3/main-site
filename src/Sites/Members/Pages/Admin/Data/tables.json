@@ -6,6 +6,7 @@
       "description": { "type": "text" },
       "points": { "type": "number" },
       "password": { "type": "text" },
+      "qr_code": { "type": "qr_code" },
       "start": { "type": "date" },
       "end": { "type": "date" },
       "location": { "type": "text", "optional": true },
@@ -29,11 +30,7 @@
       "admin_level": { "type": "text", "optional": true },
       "is_grad_student": { "type": "boolean" }
     },
-    "permissions": {
-      "canAdd": [],
-      "canEdit": ["Executive"],
-      "canView": ["Board", "Executive"]
-    }
+    "permissions": { "canAdd": [], "canEdit": ["Executive"], "canView": ["Board", "Executive"] }
   },
   "Items": {
     "columns": {
