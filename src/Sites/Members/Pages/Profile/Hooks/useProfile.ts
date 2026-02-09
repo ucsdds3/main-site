@@ -92,10 +92,19 @@ export function useProfile() {
       return false;
     }
 
-    const { error: userError } = await supabase.auth.updateUser({ email: data?.email, data });
+    const { error: userError, data: updatedUser } = await supabase.auth.updateUser({ email: data?.email, data });
     if (userError) {
       toast.error(userError.message);
       return false;
+    }
+
+    // Update local state with the updated user metadata
+    if (updatedUser?.user?.user_metadata) {
+      const updatedMetadata = updatedUser.user.user_metadata;
+      setData(updatedMetadata);
+      // Immediately update originalDataRef to prevent showing unsaved changes
+      originalDataRef.current = JSON.stringify(updatedMetadata);
+      hasUnsavedChangesRef.current = false;
     }
 
     toast.success("Profile updated successfully");
@@ -136,13 +145,10 @@ export function useProfile() {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const result = await handleUpdateProfile(e);
-    if (result === true && data) {
-      originalDataRef.current = JSON.stringify(data);
-      hasUnsavedChangesRef.current = false;
-      if (toastIdRef.current) {
-        toast.dismiss(toastIdRef.current);
-        toastIdRef.current = null;
-      }
+    if (result === true) {
+      // Dismiss the unsaved changes toast immediately by ID
+      toast.dismiss("unsaved-changes");
+      toastIdRef.current = null;
     }
   };
 

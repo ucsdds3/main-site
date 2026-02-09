@@ -3,7 +3,7 @@ import { TfiReload, TfiDownload } from "react-icons/tfi";
 
 import { useTableData, ColumnSortFilter } from "../Hooks/useTableData";
 import { ColumnDefinition } from "../Utils/types";
-import { formatColumnLabel, formatCellValue } from "../Utils/functions";
+import { formatColumnLabel, formatCellValue } from "../../../Utils/functions";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 
