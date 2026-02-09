@@ -1,12 +1,12 @@
 import Section from "src/Shared/Page/Section";
 
 import { useAuthStore } from "../../../Hooks/useAuthStore";
-import { useStats } from "../Hooks/useStats";
+import { useHeaderStats } from "../Hooks/useHeaderStats";
 import Avatar from "../Components/Avatar";
 
 const Header = () => {
   const { user } = useAuthStore();
-  const { xp, xpNeeded, progress, tier, nextTier, points } = useStats();
+  const { xp, xpNeeded, progress, tier, nextTier, points } = useHeaderStats();
 
   return (
     <Section className="flex-row flex-wrap items-center justify-center">

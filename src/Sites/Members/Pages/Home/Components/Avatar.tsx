@@ -5,7 +5,7 @@ import projects_dino from "src/Assets/Images/projects_dino.webp";
 import dino from "src/Assets/Images/dino_square.webp";
 import Button from "src/Shared/Components/Button";
 
-import { useStats } from "../Hooks/useStats";
+import { useHeaderStats } from "../Hooks/useHeaderStats";
 import { useAuthStore } from "../../../Hooks/useAuthStore";
 import { useUploadPFP } from "../../Profile/Hooks/useUploadPFP";
 
@@ -16,7 +16,7 @@ interface AvatarProps {
 }
 
 const Avatar = ({ updatable = false, data, setData }: AvatarProps) => {
-  const { progress, tier } = useStats();
+  const { progress, tier } = useHeaderStats();
   const { user } = useAuthStore();
   const { handleAvatarUpload, handleClearPFP, uploadingAvatar } = useUploadPFP();
   const fileInputRef = useRef<HTMLInputElement>(null);
