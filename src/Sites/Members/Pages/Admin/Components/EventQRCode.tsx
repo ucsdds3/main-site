@@ -1,0 +1,84 @@
+import { useEffect, useRef } from "react";
+import QRCodeStyling from "qr-code-styling";
+
+const DS3_GRADIENT = {
+  type: "linear" as const,
+  rotation: 0.5,
+  colorStops: [
+    { offset: 0, color: "#F58134" },
+    { offset: 1, color: "#19B5CA" },
+  ],
+};
+
+const getQRCodeOptions = (data: string, size: number) => ({
+  width: size,
+  height: size,
+  data,
+  dotsOptions: {
+    type: "rounded" as const,
+    gradient: DS3_GRADIENT,
+  },
+  cornersSquareOptions: {
+    type: "extra-rounded" as const,
+    gradient: DS3_GRADIENT,
+  },
+  cornersDotOptions: {
+    type: "dot" as const,
+    gradient: DS3_GRADIENT,
+  },
+  backgroundOptions: { color: "#FFFFFF" },
+});
+
+const DOWNLOAD_SIZE = 400;
+
+interface EventQRCodeProps {
+  password: string;
+  size?: number;
+}
+
+export default function EventQRCode({ password, size = 200 }: EventQRCodeProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const qrRef = useRef<QRCodeStyling | null>(null);
+
+  const url = password ? `https://members.ds3atucsd.com?eventcode=${encodeURIComponent(password)}` : "";
+
+  useEffect(() => {
+    if (!url) return;
+
+    if (!qrRef.current) {
+      qrRef.current = new QRCodeStyling(getQRCodeOptions(url, size));
+    } else {
+      qrRef.current.update({ data: url, width: size, height: size });
+    }
+
+    if (containerRef.current) {
+      containerRef.current.innerHTML = "";
+      qrRef.current.append(containerRef.current);
+    }
+  }, [url, size]);
+
+  const handleClick = () => {
+    if (!url || !password) return;
+    const downloadQr =
+      size >= DOWNLOAD_SIZE
+        ? qrRef.current
+        : new QRCodeStyling(getQRCodeOptions(url, DOWNLOAD_SIZE));
+    downloadQr?.download({ name: "event-qrcode", extension: "png" });
+  };
+
+  if (!password) {
+    return <p className="text-sm text-base-content/60">Enter a password to generate QR code</p>;
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      role="button"
+      tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={e => e.key === "Enter" && handleClick()}
+      className="cursor-pointer rounded-lg border border-base-content/20 p-2 hover:border-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+      title="Click to download"
+    />
+  );
+}

@@ -12,7 +12,7 @@ export type FilterOperator =
 
 export type SortDirection = "asc" | "desc" | null;
 
-export type ColumnType = "text" | "number" | "boolean" | "date" | "array" | "json";
+export type ColumnType = "text" | "number" | "boolean" | "date" | "array" | "json" | "qr_code";
 
 export interface ColumnDefinition<T = any> {
   key: keyof T;
