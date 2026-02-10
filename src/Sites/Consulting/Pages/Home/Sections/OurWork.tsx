@@ -40,28 +40,7 @@ const OurWork = () => {
 
   return (
     <Section title=" " id="our-work">
-      <div className="w-full flex justify-center">
-        {sections.map((section, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              setPage(1);
-              setCurrSection(section);
-              setNumPages(Math.ceil(getSectionItems().length / cardsPerPage));
-            }}
-            className="flex-1 border-0 border-b-2 rounded-none bg-transparent text-[clamp(1rem,4vw,2rem)] pb-3 focus:border-(--color-primary) data-[active=true]:border-(--color-primary)"
-            data-active={currSection === section}
-          >
-            {capitalize(section)}
-          </button>
-        ))}
-      </div>
-
-      <div
-        className={`w-full flex flex-col items-center gap-10 ${
-          currSection == "projects" ? "" : "hidden"
-        }`}
-      >
+      <div className={`w-full flex flex-col items-center gap-10 hidden`}>
         <div className={gridClass}>
           {flatProjects.slice(start, end).map((project, index) => (
             <HoverCard key={index} {...project} size="300px" />
@@ -69,7 +48,7 @@ const OurWork = () => {
         </div>
       </div>
 
-      <div className={twMerge(gridClass, currSection == "members" ? "" : "hidden")}>
+      <div className={twMerge(gridClass, "hidden")}>
         {consulting.members.slice(start, end).map((member, index) => (
           <HoverCard
             key={index}
@@ -82,13 +61,11 @@ const OurWork = () => {
         ))}
       </div>
 
-      <div className={twMerge(gridClass, currSection == "clients" ? "" : "hidden")}>
+      <div className={twMerge(gridClass, "hidden")}>
         {consulting.clients.slice(start, end).map(({ name, image, url }, index) => (
           <HoverCard key={index} title={name} image={image} size="300px" link={url} />
         ))}
       </div>
-
-      <Paginate numPages={numPages} page={page} setPage={setPage} />
     </Section>
   );
 };

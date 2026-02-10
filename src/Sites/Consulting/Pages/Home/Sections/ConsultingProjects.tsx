@@ -38,6 +38,7 @@ export default function ConsultingProjects() {
               className={`
                 px-8 py-3 rounded-full text-m font-medium
                 transition-all duration-200
+                hover:cursor-pointer
                 ${
                   activeFilter === category
                     ? "bg-orange-500 text-white"
@@ -51,7 +52,7 @@ export default function ConsultingProjects() {
         </div>
 
         {/* Projects grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
           {filteredProjects.map((project, idx) => (
             <div
               key={idx}
