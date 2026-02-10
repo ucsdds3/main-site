@@ -2,6 +2,8 @@
 import { useState } from "react";
 import consultingProjects from "../Data/projects.json";
 import Section from "src/Shared/Page/Section";
+import Paginate from "src/Shared/Components/Paginate";
+import { usePaginate } from "src/Hooks/usePaginate";
 
 export default function ConsultingProjects() {
   const [activeFilter, setActiveFilter] = useState("All");
@@ -23,6 +25,11 @@ export default function ConsultingProjects() {
       ? projects2024
       : projects2024.filter(project => project.card.categories.includes(activeFilter));
 
+  const { page, setPage, numPages, setNumPages, cardsPerPage, start, end } = usePaginate({
+    totalItems: filteredProjects.length,
+    numRows: 2,
+  });
+
   return (
     <Section>
       <div className="max-w-7xl mx-auto">
@@ -34,7 +41,10 @@ export default function ConsultingProjects() {
           {allCategories.map(category => (
             <button
               key={category}
-              onClick={() => setActiveFilter(category)}
+              onClick={() => {
+                setActiveFilter(category);
+                setPage(1);
+              }}
               className={`
                 px-8 py-3 rounded-full text-m font-medium
                 transition-all duration-200
@@ -53,7 +63,7 @@ export default function ConsultingProjects() {
 
         {/* Projects grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-          {filteredProjects.map((project, idx) => (
+          {filteredProjects.slice(start, end).map((project, idx) => (
             <div
               key={idx}
               className="
@@ -108,6 +118,8 @@ export default function ConsultingProjects() {
             </div>
           ))}
         </div>
+
+        <Paginate numPages={numPages} page={page} setPage={setPage} />
       </div>
     </Section>
   );
