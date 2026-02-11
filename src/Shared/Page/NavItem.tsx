@@ -43,14 +43,11 @@ const NavItem = ({ label, data }: NavItemProps) => {
       {/* {label == "Consulting" && <FaLink className="opacity-0 group-hover:opacity-100 " />} */}
     </button>
   ) : (
-    <div
-      ref={dropdownRef}
-      onClick={() => { setIsOpen(!isOpen) }}
-      className="relative group w-full lg:w-auto lg:dropdown"
-    >
+    <div ref={dropdownRef} className="relative group w-full lg:w-auto lg:dropdown">
       <div
         role="button"
         tabIndex={0}
+        onClick={() => setIsOpen(!isOpen)}
         onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
@@ -66,18 +63,26 @@ const NavItem = ({ label, data }: NavItemProps) => {
       </div>
 
       <ul
-        className={`${isOpen ? 'flex' : 'hidden'} flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center`}
+        className={`${isOpen ? 'flex' : 'hidden'} flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center touch-manipulation`}
       >
-        {Object.entries(data as object).map(([label, pathname]) => (
-          <li key={label}>
+        {Object.entries(data as object).map(([itemLabel, pathname]) => (
+          <li key={itemLabel}>
             <button
-              onClick={() => {
+              type="button"
+              className="hover:text-(--color-primary) text-base cursor-pointer touch-manipulation"
+              onMouseDown={e => {
+                e.preventDefault()
                 navigate({ pathname })
                 setIsOpen(false)
               }}
-              className="hover:text-(--color-primary) text-base"
+              onClick={e => {
+                if (e.detail === 0) {
+                  navigate({ pathname })
+                  setIsOpen(false)
+                }
+              }}
             >
-              {label}
+              {itemLabel}
             </button>
           </li>
         ))}
