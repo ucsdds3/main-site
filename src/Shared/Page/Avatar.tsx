@@ -71,12 +71,21 @@ const Avatar = () => {
           <FaUser />
         </div>
 
-        <ul className={`${isOpen ? "flex" : "hidden"} flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center`}>
+        <ul className={`${isOpen ? "flex" : "hidden"} flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center touch-manipulation`}>
           {Object.entries(data).map(([label, action]) => (
             <li key={label}>
               <button
-                onClick={() => handleAction(label, action)}
-                className="hover:text-(--color-primary) text-base"
+                type="button"
+                className="hover:text-(--color-primary) text-base cursor-pointer touch-manipulation"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  handleAction(label, action);
+                }}
+                onClick={(e) => {
+                  if (e.detail === 0) {
+                    handleAction(label, action);
+                  }
+                }}
               >
                 {label}
               </button>
