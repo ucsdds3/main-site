@@ -20,7 +20,8 @@ export function useUploadPFP() {
     const bucketName = "Profile Pictures";
     // Use email as filename, sanitize it to be safe for file paths
     const sanitizedEmail = email.replace(/[^a-zA-Z0-9._-]/g, "_");
-    const filePath = `${sanitizedEmail}.webp`;
+    const ext = file.name.split(".").pop() ?? "webp";
+    const filePath = `${sanitizedEmail}.${ext}`;
 
     // Upload with upsert to allow overwriting existing profile pictures
     const { error: uploadError } = await supabase.storage.from(bucketName).upload(filePath, file, {
@@ -145,12 +146,11 @@ export function useUploadPFP() {
     try {
       const bucketName = "Profile Pictures";
       const sanitizedEmail = user.email.replace(/[^a-zA-Z0-9._-]/g, "_");
-      const filePath = `${sanitizedEmail}.webp`;
 
-      // Delete from storage
+      // Delete both .webp and .jpg (Safari users get JPEG, Chrome gets WebP)
       const { error: deleteError } = await supabase.storage
         .from(bucketName)
-        .remove([filePath]);
+        .remove([`${sanitizedEmail}.webp`, `${sanitizedEmail}.jpg`]);
 
       if (deleteError && !deleteError.message.includes("not found")) {
         console.warn("Failed to delete profile picture from storage:", deleteError.message);
