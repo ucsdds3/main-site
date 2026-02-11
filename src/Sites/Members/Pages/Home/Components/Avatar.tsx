@@ -50,17 +50,19 @@ const Avatar = ({ updatable = false, data, setData }: AvatarProps) => {
   return (
     <div className="relative flex flex-col items-center">
       <div
-        className={`size-68 p-2 bg-base-300 radial-progress ${tier.color} ${
+        className={`size-68 aspect-square flex-shrink-0 p-2 bg-base-300 radial-progress ${tier.color} ${
           updatable && !uploadingAvatar ? "cursor-pointer" : ""
         } overflow-hidden relative`}
         style={{ "--value": progress * 100 } as React.CSSProperties}
         onClick={handleClick}
       >
-        <img
-          src={avatarSrc}
-          alt={avatarAlt}
-          className="w-full h-full object-cover rounded-full relative z-0"
-        />
+        <div className="absolute inset-2 rounded-full overflow-hidden aspect-square">
+          <img
+            src={avatarSrc}
+            alt={avatarAlt}
+            className="size-full object-cover object-center relative z-0"
+          />
+        </div>
         {updatable && (
           <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-black/50 text-white text-2xl text-center pt-2 z-10">
             Edit
