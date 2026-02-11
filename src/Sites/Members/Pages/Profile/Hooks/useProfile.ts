@@ -24,7 +24,7 @@ export function useProfile() {
           `Graduation year must be ${new Date().getFullYear()} or later`
         ),
       gender: z.string(),
-      in_talent_pool: z.boolean().optional().default(true),
+      in_talent_pool: z.boolean().optional().default(false),
       on_mailing_list: z.boolean().optional().default(false),
       is_grad_student: z.boolean().optional().default(false),
 
