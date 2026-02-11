@@ -23,11 +23,28 @@ export function getPdfPreviewUrl(url?: string): string | undefined {
 }
 
 /**
- * Compresses an image file to WebP format
+ * Checks if the browser supports WebP encoding in canvas.toBlob (Safari does not)
+ */
+function supportsWebP(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    return canvas.toDataURL("image/webp").startsWith("data:image/webp");
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Compresses an image file to WebP or JPEG format
+ * Uses JPEG fallback for Safari, which doesn't support WebP in canvas.toBlob (would fall back to PNG, producing huge files)
  * @param file - The image file to compress
- * @returns Promise resolving to a compressed WebP File
+ * @returns Promise resolving to a compressed File (WebP or JPEG)
  */
 export const compressImage = (file: File): Promise<File> => {
+  const useWebP = supportsWebP();
+  const mimeType = useWebP ? "image/webp" : "image/jpeg";
+  const ext = useWebP ? "webp" : "jpg";
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -70,8 +87,8 @@ export const compressImage = (file: File): Promise<File> => {
               }
 
               if (blob.size <= 500 * 1024 || quality <= 0.1) {
-                const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, ".webp"), {
-                  type: "image/webp",
+                const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, `.${ext}`), {
+                  type: mimeType,
                   lastModified: Date.now(),
                 });
                 resolve(compressedFile);
@@ -79,7 +96,7 @@ export const compressImage = (file: File): Promise<File> => {
                 tryCompress(Math.max(0.1, quality - 0.1));
               }
             },
-            "image/webp",
+            mimeType,
             quality
           );
         };
