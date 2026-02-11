@@ -149,7 +149,7 @@ const Signup = () => {
             <div className="w-full mt-2 flex items-center gap-3 px-4">
               <input
                 type="checkbox"
-                checked={data.in_talent_pool || true}
+                checked={data.in_talent_pool || false}
                 onChange={e => setData({ ...data, in_talent_pool: e.target.checked })}
                 className="w-5 h-5 cursor-pointer"
               />
