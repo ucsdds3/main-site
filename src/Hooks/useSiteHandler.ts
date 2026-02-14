@@ -35,6 +35,7 @@ export function useSiteHandler() {
 
     const searchParams = new URLSearchParams(search);
     if (nextURL) searchParams.set("next", nextURL);
+    else searchParams.delete("next");
     if (isProdSubdomain) searchParams.delete("subdomain");
     else if (subdomain) searchParams.set("subdomain", subdomain);
     const query = searchParams.toString();
