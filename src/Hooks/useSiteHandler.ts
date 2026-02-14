@@ -22,7 +22,7 @@ export function useSiteHandler() {
           : "DS3 @ UCSD";
   }, [subdomain]);
 
-  const navigateTo = ({ pathname, subdomain, hash, redirect }: NavigateProps) => {
+  const navigateTo = ({ pathname, subdomain, hash, nextURL }: NavigateProps) => {
     const hostname = window.location.hostname;
     const rawPath = pathname || window.location.pathname;
     const [pathOnly, pathSearch] = rawPath.includes("?") ? rawPath.split("?", 2) : [rawPath, ""];
@@ -34,7 +34,8 @@ export function useSiteHandler() {
     const currentSubdomain = isProdSubdomain ? (parts[0] === "www" ? "main" : parts[0]) : null;
 
     const searchParams = new URLSearchParams(search);
-    if (redirect) searchParams.set("redirect", redirect);
+    if (nextURL) searchParams.set("next", nextURL);
+    else searchParams.delete("next");
     if (isProdSubdomain) searchParams.delete("subdomain");
     else if (subdomain) searchParams.set("subdomain", subdomain);
     const query = searchParams.toString();
