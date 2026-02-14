@@ -37,9 +37,6 @@ export function useAuth() {
 
       const { data } = await supabase.auth.getUser();
       if (data?.user) return foundUser(data.user);
-
-      const user = localStorage.getItem("user");
-      if (user) return foundUser(JSON.parse(user));
     };
 
     getUser();

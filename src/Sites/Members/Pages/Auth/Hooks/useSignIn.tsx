@@ -69,10 +69,6 @@ export function useSignIn() {
     setAdminLevel(adminData.admin_level);
     setUser(userData.user);
     setAuthState("authenticated");
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ ...userData.user, adminLevel: adminData.admin_level })
-    );
     toast.success("Login successful!");
   };
 
