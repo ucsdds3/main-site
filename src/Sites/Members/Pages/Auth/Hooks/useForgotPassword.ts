@@ -24,6 +24,7 @@ export function useForgotPassword() {
 
     const url = new URL(window.location.href);
     url.searchParams.set("authState", "reset-password");
+    url.searchParams.delete("next"); // temporary fix to always go to reset password
     const { data, error } = await supabase.auth.resetPasswordForEmail(overrideEmail || email, {
       redirectTo: url.toString(),
     });
