@@ -11,15 +11,15 @@ const Auth = () => {
   const { authState } = useAuthStore();
   const { navigate } = useSiteHandler();
   const { search } = useLocation();
-  const redirectTo = new URLSearchParams(search).get("redirect");
-  const safeRedirect =
-    redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//") ? redirectTo : "/";
+  const nextURL = new URLSearchParams(search).get("next");
+  const safeNextURL =
+    nextURL && nextURL.startsWith("/") && !nextURL.startsWith("//") ? nextURL : "/";
 
   useEffect(() => {
     if (authState == "authenticated") {
-      navigate({ pathname: safeRedirect, subdomain: "members" });
+      navigate({ pathname: safeNextURL, subdomain: "members" });
     }
-  }, [authState, safeRedirect, navigate]);
+  }, [authState, safeNextURL, navigate]);
 
   if (authState == "signin") return <Signin />;
   if (authState == "signup") return <Signup />;
