@@ -22,9 +22,10 @@ export function useForgotPassword() {
       return;
     }
 
-    const href = window.location.href;
+    const url = new URL(window.location.href);
+    url.searchParams.set("authState", "reset-password");
     const { data, error } = await supabase.auth.resetPasswordForEmail(overrideEmail || email, {
-      redirectTo: `${href}?authState=reset-password`,
+      redirectTo: url.toString(),
     });
 
     if (error) {
