@@ -81,7 +81,7 @@ export type NavigateProps = {
   subdomain?: string;
   target?: string;
   hash?: string;
-  redirect?: string;
+  nextURL?: string;
 };
 
 export type AuthState =
