@@ -17,7 +17,7 @@ const Events = () => {
         <h2 className="text-4xl font-bold">Recently Attended Events</h2>
 
         <div className="flex size-full justify-center items-start gap-8">
-          <div className="w-full grid grid-cols-[repeat(auto-fit,clamp(100px,80vw,300px))] xl:grid-cols-[repeat(auto-fit,clamp(200px,35vw,325px))] justify-around items-center gap-5 my-10">
+          <div className="w-full grid grid-cols-[repeat(auto-fit,clamp(100px,80vw,300px))] xl:grid-cols-[repeat(auto-fit,clamp(200px,35vw,325px))] justify-around items-center gap-5 mt-10">
             {attendedEvents.length === 0 ? (
               <span className="text-2xl opacity-70">You haven't attended any events yet</span>
             ) : (
