@@ -4,9 +4,15 @@ import { useAuthStore } from "../../../Hooks/useAuthStore";
 import toast from "react-hot-toast";
 import { supabase } from "../../../../../Utils/supabase";
 
+const isLinkExpired = () => {
+  const hashParams = new URLSearchParams(window.location.hash.slice(1));
+  return hashParams.get("error_code") === "otp_expired";
+};
+
 export function useResetPassword() {
   const [errors, setErrors] = useState<string>("");
   const { setAuthState } = useAuthStore();
+  const linkExpired = isLinkExpired();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -56,5 +62,6 @@ export function useResetPassword() {
     confirmPassword,
     setConfirmPassword,
     handleResetPassword,
+    linkExpired,
   };
 }
