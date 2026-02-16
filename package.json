@@ -17,6 +17,7 @@
     "@supabase/supabase-js": "^2.56.1",
     "@tailwindcss/vite": "^4.1.4",
     "@types/react-router-dom": "^5.3.3",
+    "@vercel/analytics": "^1.6.1",
     "embla-carousel": "^8.6.0",
     "embla-carousel-auto-scroll": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
