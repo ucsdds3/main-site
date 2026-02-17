@@ -44,7 +44,7 @@ export function useSignUp() {
 
   const signupSchema = z
     .object({
-      email: z.email("Invalid email format").regex(/@ucsd\.edu$/, "Must be a UCSD email address"),
+      email: z.email("Invalid email format").regex(/\.edu$/, "Must be a .edu email address"),
 
       full_name: z
         .string()
