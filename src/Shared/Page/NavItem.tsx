@@ -43,7 +43,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
       {/* {label == "Consulting" && <FaLink className="opacity-0 group-hover:opacity-100 " />} */}
     </button>
   ) : (
-    <div ref={dropdownRef} className="relative group w-full lg:w-auto lg:dropdown">
+    <div ref={dropdownRef} className="relative group w-full lg:w-auto lg:dropdown lg:dropdown-hover">
       <div
         role="button"
         tabIndex={0}
@@ -58,7 +58,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
       >
         <span>{label}</span>
         <IoIosArrowUp
-          className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+          className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} lg:group-hover:rotate-180`}
         />
       </div>
 
