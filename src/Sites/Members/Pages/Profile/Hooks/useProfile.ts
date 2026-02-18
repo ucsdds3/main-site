@@ -109,7 +109,12 @@ export function useProfile() {
       hasUnsavedChangesRef.current = false;
     }
 
-    toast.success("Profile updated successfully");
+    if (user?.email && data?.email && user.email !== data.email) {
+      toast.success(
+        "Profile updated. Check your new email inbox and click the confirmation link to complete the email change.",
+        { duration: 6000 }
+      );
+    } else toast.success("Profile updated successfully");
     return true;
   };
 
