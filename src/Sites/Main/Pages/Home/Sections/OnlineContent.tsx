@@ -1,29 +1,83 @@
+import { useEffect, useState } from "react";
 import Button from "src/Shared/Components/Button";
 import Section from "src/Shared/Page/Section";
-
 import BrowserCard from "../Components/BrowserCard";
-import onlineContent from "../Data/onlineContent.json";
+
+interface Article {
+  title: string;
+  description: string;
+  link: string;
+  image: string;
+  author: string;
+}
 
 const OnlineContent = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch(
+          "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/ds3ucsd"
+        );
+        const data = await response.json();
+
+        const formatted = data.items
+          .slice(1, 4)
+          .filter(Boolean)
+          .map((item: any) => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(item.content, "text/html");
+            const img = doc.querySelector("img");
+            const textContent = doc.body.textContent || "";
+
+            return {
+              title: item.title,
+              description: "", // remove description
+              link: item.link,
+              image: img?.src?.split("?")[0] || "/OnlineContent/default.webp",
+              author: item.author,
+            };
+          });
+
+        setArticles(formatted);
+      } catch (error) {
+        console.error("Error fetching Medium articles:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
   return (
     <Section title="Online Content" className="gap-0">
       <p className="text-2xl font-light max-w-xl text-center px-10">
         Have something to share or want to explore more? Read our latest articles or submit your own
         for publication!
       </p>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10">
-        {onlineContent.map((content, index) => (
-          <BrowserCard
-            key={content.title}
-            image={content.image}
-            title={content.title}
-            description={content.description}
-            link={content.link}
-            delay={index * 0.1}
-            linkText="Read More"
-          />
-        ))}
+        {loading ? (
+          <p className="text-center col-span-full">Loading articles...</p>
+        ) : (
+          articles.map((content, index) => (
+            <div key={content.link} className="text-center">
+              <BrowserCard
+                image={content.image}
+                title={content.title}
+                description=" "
+                link={content.link}
+                delay={index * 0.1}
+                linkText="Read"
+              />
+            </div>
+          ))
+        )}
       </div>
+
       <Button
         onClick={() => {
           window.open("https://medium.com/ds3ucsd", "_blank");
@@ -36,3 +90,45 @@ const OnlineContent = () => {
 };
 
 export default OnlineContent;
+
+{
+  /*
+import Button from "src/Shared/Components/Button";
+import Section from "src/Shared/Page/Section";
+
+import BrowserCard from "../Components/BrowserCard";
+import onlineContent from "../Data/onlineContent.json";
+
+const OnlineContent = () => {
+  return (
+    <Section title="Online Content" className="gap-0">
+      <p className="text-2xl font-light max-w-xl text-center px-10">
+        Have something to share or want to explore more? Read our latest articles or submit your own
+        for publication!
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10">
+        {onlineContent.map((content, index) => (
+          <BrowserCard
+            key={content.title}
+            image={content.image}
+            title={content.title}
+            description={content.description}
+            link={content.link}
+            delay={index * 0.1}
+            linkText="Read More"
+          />
+        ))}
+      </div>
+      <Button
+        onClick={() => {
+          window.open("https://medium.com/ds3ucsd", "_blank");
+        }}
+      >
+        View All
+      </Button>
+    </Section>
+  );
+};
+
+export default OnlineContent;*/
+}
