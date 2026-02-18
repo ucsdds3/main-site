@@ -22,7 +22,7 @@ export function useForgotPassword() {
       return;
     }
 
-    const emailToUse = overrideEmail || email;
+    const emailToUse = (overrideEmail || email).toLowerCase();
 
     // Check if account exists before sending reset (avoids confusing "sent" message for non-existent emails)
     const { data: existingMember, error: lookupError } = await supabase

@@ -126,8 +126,9 @@ export function useSignUp() {
 
     const href = window.location.href;
     const search = new URLSearchParams(window.location.search);
+    const email = data.email.toLowerCase();
     const formData = {
-      email: data.email,
+      email,
       full_name: data.full_name,
       major: data.major,
       date_of_birth: data.date_of_birth,
@@ -145,7 +146,7 @@ export function useSignUp() {
     };
     setErrors("");
     const { data: userData, error } = await supabase.auth.signUp({
-      email: data.email,
+      email,
       password: data.password,
       options: {
         data: formData,
