@@ -50,7 +50,7 @@ export function useProfile() {
       path: ["resume_link"],
     });
 
-  const { user } = useAuthStore();
+  const { user, setUser } = useAuthStore();
   const [data, setData] = useState(user?.user_metadata);
   const [errors, setErrors] = useState<string>("");
   const originalDataRef = useRef<string | null>(null);
@@ -86,7 +86,7 @@ export function useProfile() {
     const { error: memberError } = await supabase
       .from("Members")
       .update(memberUpdateData)
-      .eq("email", data?.email);
+      .eq("email", user?.email ?? data?.email);
     if (memberError) {
       toast.error(memberError.message);
       return false;
@@ -98,12 +98,14 @@ export function useProfile() {
       return false;
     }
 
-    // Update local state with the updated user metadata
-    if (updatedUser?.user?.user_metadata) {
+    // Update local state and auth store with the updated user
+    if (updatedUser?.user) {
       const updatedMetadata = updatedUser.user.user_metadata;
-      setData(updatedMetadata);
-      // Immediately update originalDataRef to prevent showing unsaved changes
-      originalDataRef.current = JSON.stringify(updatedMetadata);
+      if (updatedMetadata) {
+        setData(updatedMetadata);
+        originalDataRef.current = JSON.stringify(updatedMetadata);
+      }
+      setUser(updatedUser.user);
       hasUnsavedChangesRef.current = false;
     }
 
