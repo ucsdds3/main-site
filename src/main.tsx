@@ -4,8 +4,8 @@ import { BrowserRouter } from "react-router";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 import App from "./App";
-import "./styles/index.css";
-import "./styles/custom.css";
+import "./Styles/index.css";
+import "./Styles/custom.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
