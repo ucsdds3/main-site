@@ -82,17 +82,22 @@ export function useProfile() {
     const memberUpdateData = Object.fromEntries(
       Object.entries(data).filter(([key]) => allowedFields.includes(key))
     );
+    const normalizedEmail = data?.email?.toLowerCase();
+    memberUpdateData.email = normalizedEmail;
 
     const { error: memberError } = await supabase
       .from("Members")
       .update(memberUpdateData)
-      .eq("email", user?.email ?? data?.email);
+      .eq("email", (user?.email ?? data?.email)?.toLowerCase());
     if (memberError) {
       toast.error(memberError.message);
       return false;
     }
 
-    const { error: userError, data: updatedUser } = await supabase.auth.updateUser({ email: data?.email, data });
+    const { error: userError, data: updatedUser } = await supabase.auth.updateUser({
+      email: normalizedEmail,
+      data: { ...data, email: normalizedEmail },
+    });
     if (userError) {
       toast.error(userError.message);
       return false;
