@@ -22,10 +22,30 @@ export function useForgotPassword() {
       return;
     }
 
+    const emailToUse = overrideEmail || email;
+
+    // Check if account exists before sending reset (avoids confusing "sent" message for non-existent emails)
+    const { data: existingMember, error: lookupError } = await supabase
+      .from("Members")
+      .select("email")
+      .eq("email", emailToUse)
+      .eq("deleted", false)
+      .limit(1)
+      .maybeSingle();
+
+    if (lookupError) {
+      toast.error(lookupError.message);
+      return;
+    }
+    if (!existingMember) {
+      toast.error("No account found with that email address.");
+      return;
+    }
+
     const url = new URL(window.location.href);
     url.searchParams.set("authState", "reset-password");
     url.searchParams.delete("next"); // temporary fix to always go to reset password
-    const { data, error } = await supabase.auth.resetPasswordForEmail(overrideEmail || email, {
+    const { error } = await supabase.auth.resetPasswordForEmail(emailToUse, {
       redirectTo: url.toString(),
     });
 
@@ -34,8 +54,7 @@ export function useForgotPassword() {
       return;
     }
 
-    console.log(data);
-    toast.success("Reset link sent to email");
+    toast.success("Reset link sent to your inbox");
   };
 
   return {
