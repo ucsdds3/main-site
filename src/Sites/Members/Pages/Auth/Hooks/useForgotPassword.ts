@@ -24,20 +24,10 @@ export function useForgotPassword() {
 
     const emailToUse = (overrideEmail || email).toLowerCase();
 
-    // Check if account exists before sending reset (avoids confusing "sent" message for non-existent emails)
-    const { data: existingMember, error: lookupError } = await supabase
-      .from("Members")
-      .select("email")
-      .eq("email", emailToUse)
-      .eq("deleted", false)
-      .limit(1)
-      .maybeSingle();
+    const { data: exists, error: lookupError } = await supabase
+      .rpc('check_member_email_exists', { check_email: emailToUse });
 
-    if (lookupError) {
-      toast.error(lookupError.message);
-      return;
-    }
-    if (!existingMember) {
+    if (lookupError || !exists) {
       toast.error("No account found with that email address.");
       return;
     }
