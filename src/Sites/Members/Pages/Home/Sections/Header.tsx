@@ -20,7 +20,7 @@ const Header = () => {
         <div className="flex size-full justify-around items-center min-w-[min(50vw,400px)]">
           <div className="flex flex-col items-center">
             <span className="text-primary text-[clamp(1.5rem,2.5vw,3rem)] font-bold">
-              {xp % 1000gi} / {xpNeeded}
+              {xp % 1000} / {xpNeeded}
             </span>
             <span className="text-[clamp(1.25rem,2vw,1.875rem)]">Experience</span>
             <span className="mt-4 text-[clamp(0.7rem,1.1vw,1.125rem)] text-balance text-center">
