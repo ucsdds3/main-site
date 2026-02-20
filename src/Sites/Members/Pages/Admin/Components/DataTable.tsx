@@ -142,7 +142,7 @@ export default function DataTable<T extends Record<string, any>>({
         </div>
       </div>
 
-      <div className="overflow-x-auto overflow-y-auto max-h-[70vh] rounded-lg border border-base-content/30">
+      <div className="overflow-x-auto overflow-y-auto max-h-[70vh] rounded-lg border border-primary">
         <table className="table table-zebra w-full">
           <TableHeader columns={columns} />
           <TableBody
