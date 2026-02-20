@@ -1,33 +1,22 @@
 import { toast } from "react-hot-toast";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { supabase } from "src/Utils/supabase";
 
-import { ColumnDefinition, FilterOperator, SortDirection } from "../Utils/types";
 import { convertFilterValue } from "../../../Utils/functions";
-import type { SortOrderEntry } from "./useSortStore";
+import { useAdminStore } from "./useAdminStore";
 
-export interface ColumnSortFilter {
-  sort: SortDirection;
-  filter: FilterOperator;
-  filterValue: string;
-}
-
-export type { SortOrderEntry };
-
-export function useTableData<T extends Record<string, any>>(
-  tableName: string,
-  columns: ColumnDefinition<T>[],
-  initialData?: T[],
-  columnStates?: Record<string, ColumnSortFilter>,
-  reloadTrigger?: number,
-  sortOrder?: SortOrderEntry[]
-) {
-  const [data, setData] = useState<T[]>(initialData || []);
-  const [loading, setLoading] = useState(!initialData);
+export function useAdminFetch() {
+  const tableName = useAdminStore(state => state.tableName);
+  const columns = useAdminStore(state => state.columns);
+  const columnStates = useAdminStore(state => state.columnStates);
+  const sortOrder = useAdminStore(state => state.sortOrder);
+  const reloadTrigger = useAdminStore(state => state.reloadTrigger);
 
   useEffect(() => {
+    if (!tableName || columns.length === 0) return;
+
     const fetchData = async () => {
-      setLoading(true);
+      useAdminStore.setState({ loading: true });
       try {
         const isAttendance = tableName === "Attendance";
         const selectStr = isAttendance
@@ -35,13 +24,11 @@ export function useTableData<T extends Record<string, any>>(
           : "*";
         let query = supabase.from(tableName).select(selectStr);
 
-        // Apply filters (skip display-only columns like qr_code, skip join columns)
         columns.forEach(col => {
           if (col.type === "qr_code" || col.join) return;
           const state = columnStates?.[col.key as string];
           const colKey = col.key as string;
 
-          // empty/non_empty don't need filterValue
           if (state?.filter === "empty" || state?.filter === "non_empty") {
             if (col.type === "text") {
               if (state.filter === "empty") {
@@ -50,7 +37,6 @@ export function useTableData<T extends Record<string, any>>(
                 query = query.not(colKey, "is", null).neq(colKey, "");
               }
             } else {
-              // number, date, boolean, etc. - empty = null
               if (state.filter === "empty") {
                 query = query.is(colKey, null);
               } else {
@@ -63,42 +49,20 @@ export function useTableData<T extends Record<string, any>>(
           if (state?.filter && state.filterValue) {
             const value = convertFilterValue(state.filterValue, col.type);
             if (value !== null && value !== undefined) {
-              switch (state.filter) {
-                case "eq":
-                  query = query.eq(colKey, value);
-                  break;
-                case "neq":
-                  query = query.neq(colKey, value);
-                  break;
-                case "gt":
-                  query = query.gt(colKey, value);
-                  break;
-                case "gte":
-                  query = query.gte(colKey, value);
-                  break;
-                case "lt":
-                  query = query.lt(colKey, value);
-                  break;
-                case "lte":
-                  query = query.lte(colKey, value);
-                  break;
-                case "like":
-                  query = query.like(colKey, value);
-                  break;
-                case "ilike":
-                  query = query.ilike(colKey, value);
-                  break;
-                case "in":
-                  if (Array.isArray(value)) {
-                    query = query.in(colKey, value);
-                  }
-                  break;
-              }
+              if (state.filter == "eq") query = query.eq(colKey, value);
+              else if (state.filter == "neq") query = query.neq(colKey, value);
+              else if (state.filter == "gt") query = query.gt(colKey, value);
+              else if (state.filter == "gte") query = query.gte(colKey, value);
+              else if (state.filter == "lt") query = query.lt(colKey, value);
+              else if (state.filter == "lte") query = query.lte(colKey, value);
+              else if (state.filter == "like") query = query.like(colKey, value);
+              else if (state.filter == "ilike") query = query.ilike(colKey, value);
+              else if (state.filter == "in" && Array.isArray(value))
+                query = query.in(colKey, value);
             }
           }
         });
 
-        // Apply sorting
         const sortableColumns = columns.filter(col => col.type !== "qr_code" && !col.join);
         const sortableKeys = new Set(sortableColumns.map(c => String(c.key)));
 
@@ -133,19 +97,16 @@ export function useTableData<T extends Record<string, any>>(
               };
             });
           }
-          setData(resultData as T[]);
+          useAdminStore.setState({ data: resultData });
         }
       } catch (error) {
         toast.error("Failed to fetch data");
         console.error("Error:", error);
       } finally {
-        setLoading(false);
+        useAdminStore.setState({ loading: false });
       }
     };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tableName, reloadTrigger, columnStates, sortOrder]);
-
-  return { data, loading };
+  }, [tableName, reloadTrigger, columnStates, sortOrder, columns]);
 }

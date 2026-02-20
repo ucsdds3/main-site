@@ -1,8 +1,8 @@
-import { useState, useRef, RefObject } from "react";
-import { useEffect } from "react";
+import { useState, RefObject, useEffect } from "react";
 import { TfiReload, TfiDownload, TfiPlus } from "react-icons/tfi";
-import { useTableData, ColumnSortFilter } from "../Hooks/useTableData";
-import { useSortStore } from "../Hooks/useSortStore";
+
+import { useAdminStore } from "../Hooks/useAdminStore";
+import { useAdminFetch } from "../Hooks/useAdminFetch";
 import { ColumnDefinition } from "../Utils/types";
 import { formatColumnLabel, formatCellValue } from "../../../Utils/functions";
 import TableHeader from "./TableHeader";
@@ -22,39 +22,29 @@ export interface DataTableProps<T = any> {
 export default function DataTable<T extends Record<string, any>>({
   tableName,
   columns,
-  initialData,
   onRowSelect,
   reloadRef,
   onTableChange,
   canAdd = false,
 }: DataTableProps<T>) {
-  const [columnStates, setColumnStates] = useState<Record<string, ColumnSortFilter>>({});
-  const [reloadTrigger, setReloadTrigger] = useState(0);
   const [selectedRow, setSelectedRow] = useState<T | null>(null);
 
-  const setColumns = useSortStore(state => state.setColumns);
-  const sortOrder = useSortStore(state => state.sortOrder);
-  const clearSorts = useSortStore(state => state.clearSorts);
+  const setTable = useAdminStore(state => state.setTable);
+  const reload = useAdminStore(state => state.reload);
+  const columnStates = useAdminStore(state => state.columnStates);
+  const data = useAdminStore(state => state.data) as T[];
+  const loading = useAdminStore(state => state.loading);
 
-  const prevTableRef = useRef<string | null>(null);
+  useAdminFetch();
+
   useEffect(() => {
-    if (prevTableRef.current !== tableName) {
-      prevTableRef.current = tableName;
-      setColumns(columns);
-    }
-    // Only run when tableName changes; columns from closure is correct for new table
+    setTable(tableName, columns);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableName]);
 
   const handleRowSelect = (row: T | null) => {
     setSelectedRow(row);
     onRowSelect?.(row);
-  };
-
-  const reload = () => {
-    setReloadTrigger(prev => prev + 1);
-    setColumnStates({});
-    clearSorts();
   };
 
   const clearSelection = () => {
@@ -92,15 +82,6 @@ export default function DataTable<T extends Record<string, any>>({
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
-
-  const { data, loading } = useTableData<T>(
-    tableName,
-    columns,
-    initialData,
-    columnStates,
-    reloadTrigger,
-    sortOrder
-  );
 
   if (reloadRef) {
     reloadRef.current = { reload, clearSelection };
@@ -165,7 +146,11 @@ export default function DataTable<T extends Record<string, any>>({
           <TableHeader
             columns={columns}
             columnStates={columnStates}
-            setColumnStates={setColumnStates}
+            setColumnStates={updater =>
+              useAdminStore.setState(state => ({
+                columnStates: typeof updater === "function" ? updater(state.columnStates) : updater,
+              }))
+            }
           />
           <TableBody
             columns={columns}
