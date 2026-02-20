@@ -29,7 +29,12 @@ export const Input = ({ label, error, icon, className, value, setValue, ...props
       </span>
       <label className={`input w-full input-lg ${error ? "input-error" : "input-primary"}`}>
         {icon}
-        <input value={value} onChange={e => setValue && setValue(e.target.value)} {...props} />
+        <input
+          id={label}
+          value={value}
+          onChange={e => setValue && setValue(e.target.value)}
+          {...props}
+        />
       </label>
     </div>
   );
@@ -57,8 +62,8 @@ export const TextArea = ({
         )}
       >
         {icon}
-
         <textarea
+          id={label}
           {...props}
           value={value}
           onChange={e => setValue?.(e.target.value)}

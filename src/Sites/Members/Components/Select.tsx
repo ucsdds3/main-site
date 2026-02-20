@@ -29,10 +29,11 @@ const Select = ({
       <label className={`select w-full select-lg ${error ? "select-error" : "select-primary"}`}>
         {icon}
         <select
+          id={label}
           value={value || ""}
           onChange={(e) => setValue && setValue(e.target.value)}
         >
-          <option value="" disabled={true}>Select {label}</option>
+          <option value="" disabled={true} className="hidden">Select {label}</option>
           {options.map((option) => (
             <option key={option} value={option}>
               {option}
