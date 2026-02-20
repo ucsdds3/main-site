@@ -7,6 +7,7 @@ import { ColumnDefinition } from "../Utils/types";
 import { formatColumnLabel, formatCellValue } from "../../../Utils/functions";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
+import FilterDropdown from "./FilterDropdown";
 import SortDropdown from "./SortDropdown";
 
 export interface DataTableProps<T = any> {
@@ -31,7 +32,6 @@ export default function DataTable<T extends Record<string, any>>({
 
   const setTable = useAdminStore(state => state.setTable);
   const reload = useAdminStore(state => state.reload);
-  const columnStates = useAdminStore(state => state.columnStates);
   const data = useAdminStore(state => state.data) as T[];
   const loading = useAdminStore(state => state.loading);
 
@@ -105,7 +105,7 @@ export default function DataTable<T extends Record<string, any>>({
             <option value="Attendance">Attendance</option>
           </select>
         </div>
-        <span className="text-lg font-semibold md:ml-4 md:mr-auto order-last md:order-none">
+        <span className="text-lg font-semibold md:ml-4 md:mr-auto order-last md:order-0">
           Found{" "}
           {tableName === "Attendance"
             ? data.length
@@ -113,6 +113,7 @@ export default function DataTable<T extends Record<string, any>>({
           rows
         </span>
         <div className="flex gap-2 items-center">
+          <FilterDropdown />
           <SortDropdown />
           <button
             onClick={reload}
@@ -143,15 +144,7 @@ export default function DataTable<T extends Record<string, any>>({
 
       <div className="overflow-x-auto overflow-y-auto max-h-[70vh] rounded-lg border border-base-content/30">
         <table className="table table-zebra w-full">
-          <TableHeader
-            columns={columns}
-            columnStates={columnStates}
-            setColumnStates={updater =>
-              useAdminStore.setState(state => ({
-                columnStates: typeof updater === "function" ? updater(state.columnStates) : updater,
-              }))
-            }
-          />
+          <TableHeader columns={columns} />
           <TableBody
             columns={columns}
             data={data}
