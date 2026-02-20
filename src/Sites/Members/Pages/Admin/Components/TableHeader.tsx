@@ -58,7 +58,13 @@ export default function TableHeader<T extends Record<string, any>>({
           .filter(col => !col.hide)
           .map((col, index) => {
             const colState = columnStates[col.key as string];
-            const hasFilter = colState?.filter && colState?.filterValue;
+            const isValueFilter =
+              colState?.filter && colState?.filter !== "empty" && colState?.filter !== "non_empty";
+            const hasFilter =
+              colState?.filter &&
+              (colState.filter === "empty" ||
+                colState.filter === "non_empty" ||
+                !!colState?.filterValue);
             const isLong = col.long && col.type === "text";
             const isQRCode = col.key === "qr_code" && col.type === "qr_code";
 
@@ -134,16 +140,20 @@ export default function TableHeader<T extends Record<string, any>>({
                                   <option value="gte">Greater/Equal</option>
                                   <option value="lt">Less</option>
                                   <option value="lte">Less/Equal</option>
+                                  <option value="empty">Empty</option>
+                                  <option value="non_empty">Non-empty</option>
                                 </>
                               )}
                               {col.type === "boolean" && (
                                 <>
                                   <option value="eq">Equals</option>
                                   <option value="neq">Not Equals</option>
+                                  <option value="empty">Empty</option>
+                                  <option value="non_empty">Non-empty</option>
                                 </>
                               )}
                             </select>
-                            {colState?.filter && (
+                            {isValueFilter && (
                               <input
                                 type={
                                   col.type === "number"
