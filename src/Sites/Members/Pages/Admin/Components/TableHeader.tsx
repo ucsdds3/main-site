@@ -2,7 +2,7 @@ import { FaFilter } from "react-icons/fa";
 import { CiFilter } from "react-icons/ci";
 
 import { ColumnDefinition, FilterOperator } from "../Utils/types";
-import { ColumnSortFilter } from "../Hooks/useTableData";
+import type { ColumnSortFilter } from "../Hooks/useAdminStore";
 import { formatColumnLabel } from "../../../Utils/functions";
 
 interface TableHeaderProps<T = any> {
