@@ -28,15 +28,25 @@ export default function EditCard<T extends Record<string, unknown>>({
   canEdit = false,
   canAdd = false,
 }: EditCardProps<T>) {
-  const { formData, loading, isNew, handleChange, handleFileUpload, handleSave, handleDelete } =
-    useEditCard({
-      tableName,
-      columns,
-      selectedRow,
-      reloadRef,
-    });
+  const {
+    formData,
+    loading,
+    isNew,
+    handleChange,
+    handleFileUpload,
+    handleSave,
+    handleDelete,
+    handleExtendEventEnd,
+  } = useEditCard({
+    tableName,
+    columns,
+    selectedRow,
+    reloadRef,
+  });
 
   const canModify = isNew ? canAdd : canEdit;
+
+  const getColumnLabel = (col: ColumnDefinition<T>) => col.label ?? formatColumnLabel(col.key);
 
   const renderInput = (col: ColumnDefinition<T>) => {
     const value = formData[col.key];
@@ -122,13 +132,45 @@ export default function EditCard<T extends Record<string, unknown>>({
           />
         );
       case "date": {
+        if (col.key === "temp_end" && tableName === "Events") {
+          const tempEnd = value as string | null | undefined;
+
+          return (
+            <div className="flex gap-2 items-center">
+              <input
+                type="datetime-local"
+                className="input input-bordered w-full flex-1"
+                value={tempEnd ? convertUTCToPST(tempEnd) : ""}
+                onChange={e => {
+                  const utcValue = e.target.value ? convertPSTToUTC(e.target.value) : "";
+                  handleChange(col.key, utcValue, col.type);
+                }}
+                placeholder="Not extended"
+                disabled={!canModify}
+              />
+              {!isNew && formData.id && (
+                <button
+                  type="button"
+                  className="btn btn-primary shrink-0"
+                  onClick={() => handleExtendEventEnd()}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <span className="loading loading-spinner" />
+                  ) : (
+                    "+5 Mins"
+                  )}
+                </button>
+              )}
+            </div>
+          );
+        }
         return (
           <input
             type="datetime-local"
             className="input input-bordered w-full"
             value={value ? convertUTCToPST(value as string) : ""}
             onChange={e => {
-              // Convert PST from input to UTC for storage
               const utcValue = e.target.value ? convertPSTToUTC(e.target.value) : "";
               handleChange(col.key, utcValue, col.type);
             }}
@@ -265,7 +307,7 @@ export default function EditCard<T extends Record<string, unknown>>({
               <div key={String(col.key)} className="form-control flex flex-col gap-2">
                 <label className="label">
                   <span className="label-text">
-                    {formatColumnLabel(col.key)}
+                    {getColumnLabel(col)}
                     {col.optional !== true && <span className="text-error ml-1">*</span>}
                   </span>
                 </label>

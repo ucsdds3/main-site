@@ -24,6 +24,7 @@ export interface ColumnDefinition<T = any> {
   long?: boolean;
   hide?: boolean;
   join?: string;
+  label?: string;
 }
 
 export type AttendanceRow = {
