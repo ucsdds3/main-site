@@ -47,7 +47,8 @@ export default function DataTable<T extends Record<string, any>>({
 
   const handleDownload = () => {
     const visibleColumns = columns.filter(col => !col.hide);
-    const visibleData = data.filter(row => row.deleted !== true);
+    const visibleData =
+      tableName === "Attendance" ? data : data.filter(row => row.deleted !== true);
 
     const headers = visibleColumns.map(col => formatColumnLabel(col.key));
     const rows = visibleData.map(row =>
@@ -103,10 +104,11 @@ export default function DataTable<T extends Record<string, any>>({
             <option value="Events">Events</option>
             <option value="Members">Members</option>
             <option value="Items">Items</option>
+            <option value="Attendance">Attendance</option>
           </select>
         </div>
         <span className="text-lg font-semibold md:ml-4 md:mr-auto order-last md:order-none">
-          Found {data.filter(row => row.deleted !== true).length} rows
+          Found {tableName === "Attendance" ? data.length : data.filter(row => row.deleted !== true).length} rows
         </span>
         <div className="flex gap-2">
           <button

@@ -23,7 +23,21 @@ export interface ColumnDefinition<T = any> {
   optional?: boolean;
   long?: boolean;
   hide?: boolean;
+  join?: string;
 }
+
+export type AttendanceRow = {
+  id: number;
+  check_in: string;
+  updated_at: string;
+  member_id: number;
+  event_id: number;
+  points: number | null;
+  member: string;
+  email: string;
+  event: string;
+  start: string;
+};
 
 export type EventRow = {
   id: number;
