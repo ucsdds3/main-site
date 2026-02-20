@@ -41,7 +41,7 @@ export default function TableBody<T extends Record<string, any>>({
             <tr
               key={row.id || index}
               className={`cursor-pointer hover:opacity-90 ${
-                selectedRow?.id === row.id ? "!bg-primary/50" : ""
+                selectedRow?.id === row.id ? "bg-primary/50!" : ""
               }`}
               onClick={() => onRowSelect?.(row)}
             >
@@ -52,13 +52,13 @@ export default function TableBody<T extends Record<string, any>>({
                     key={String(col.key)}
                     className={
                       col.type === "qr_code"
-                        ? "p-1 flex items-center justify-center"
+                        ? "p-1"
                         : "whitespace-pre-line"
                     }
                     title={formatCellValue(row[col.key], col.type)}
                   >
                     {col.type === "qr_code" ? (
-                      <div onClick={e => e.stopPropagation()}>
+                      <div className="flex items-center justify-center" onClick={e => e.stopPropagation()}>
                         <EventQRCode
                           password={String(row.password ?? "")}
                           eventName={row.name}
