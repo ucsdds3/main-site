@@ -177,7 +177,14 @@ export default function DashboardPieChart() {
             data={chartData}
             options={{
               plugins: {
-                legend: { position: "bottom" },
+                legend: {
+                  position: "bottom",
+                  labels: {
+                    filter: function (legendItem) {
+                      return legendItem?.index ? legendItem.index < 5 : true;
+                    },
+                  },
+                },
                 tooltip: {
                   callbacks: {
                     label: ctx => {
