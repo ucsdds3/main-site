@@ -31,37 +31,58 @@ export function useTableData<T extends Record<string, any>>(
         columns.forEach(col => {
           if (col.type === "qr_code") return;
           const state = columnStates?.[col.key as string];
+          const colKey = col.key as string;
+
+          // empty/non_empty don't need filterValue
+          if (state?.filter === "empty" || state?.filter === "non_empty") {
+            if (col.type === "text") {
+              if (state.filter === "empty") {
+                query = query.or(`${colKey}.is.null,${colKey}.eq.`);
+              } else {
+                query = query.not(colKey, "is", null).neq(colKey, "");
+              }
+            } else {
+              // number, date, boolean, etc. - empty = null
+              if (state.filter === "empty") {
+                query = query.is(colKey, null);
+              } else {
+                query = query.not(colKey, "is", null);
+              }
+            }
+            return;
+          }
+
           if (state?.filter && state.filterValue) {
             const value = convertFilterValue(state.filterValue, col.type);
             if (value !== null && value !== undefined) {
               switch (state.filter) {
                 case "eq":
-                  query = query.eq(col.key as string, value);
+                  query = query.eq(colKey, value);
                   break;
                 case "neq":
-                  query = query.neq(col.key as string, value);
+                  query = query.neq(colKey, value);
                   break;
                 case "gt":
-                  query = query.gt(col.key as string, value);
+                  query = query.gt(colKey, value);
                   break;
                 case "gte":
-                  query = query.gte(col.key as string, value);
+                  query = query.gte(colKey, value);
                   break;
                 case "lt":
-                  query = query.lt(col.key as string, value);
+                  query = query.lt(colKey, value);
                   break;
                 case "lte":
-                  query = query.lte(col.key as string, value);
+                  query = query.lte(colKey, value);
                   break;
                 case "like":
-                  query = query.like(col.key as string, value);
+                  query = query.like(colKey, value);
                   break;
                 case "ilike":
-                  query = query.ilike(col.key as string, value);
+                  query = query.ilike(colKey, value);
                   break;
                 case "in":
                   if (Array.isArray(value)) {
-                    query = query.in(col.key as string, value);
+                    query = query.in(colKey, value);
                   }
                   break;
               }

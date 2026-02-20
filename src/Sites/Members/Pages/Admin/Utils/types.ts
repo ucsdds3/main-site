@@ -8,6 +8,8 @@ export type FilterOperator =
   | "like"
   | "ilike"
   | "in"
+  | "empty"
+  | "non_empty"
   | null;
 
 export type SortDirection = "asc" | "desc" | null;
