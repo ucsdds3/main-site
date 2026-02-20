@@ -65,17 +65,16 @@ export default function TableHeader<T extends Record<string, any>>({
               (colState.filter === "empty" ||
                 colState.filter === "non_empty" ||
                 !!colState?.filterValue);
-            const isLong = col.long && col.type === "text";
             const isQRCode = col.key === "qr_code" && col.type === "qr_code";
 
             return (
               <th
                 key={String(col.key)}
-                className={`relative ${isLong ? "w-48 max-w-[150px]" : ""}`}
+                className="relative max-w-[200px]"
               >
                 <div className="flex gap-2 items-center">
                   {isQRCode ? (
-                    <span className="text-lg">{formatColumnLabel(col.key)}</span>
+                    <span className="text-lg">{col.label ?? formatColumnLabel(col.key)}</span>
                   ) : (
                     <>
                       <button
@@ -85,7 +84,7 @@ export default function TableHeader<T extends Record<string, any>>({
                         }}
                         className="flex items-center gap-2 hover:text-primary transition-colors text-lg"
                       >
-                        <span>{formatColumnLabel(col.key)}</span>{" "}
+                        <span>{col.label ?? formatColumnLabel(col.key)}</span>{" "}
                         {columnStates[col.key as string]?.sort === "asc" ? (
                           <IoIosArrowUp className="mt-1" />
                         ) : (
