@@ -129,7 +129,7 @@ export function formatCellValue(value: unknown, type: ColumnType): string {
     case "boolean":
       return value ? "Yes" : "No";
     case "date":
-      return new Date(String(value)).toLocaleString();
+      return new Date(String(value)).toLocaleString().replace(",", "\n");
     case "array":
       return Array.isArray(value) ? value.join(", ") : String(value);
     case "json":

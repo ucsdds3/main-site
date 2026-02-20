@@ -8,6 +8,8 @@ export type FilterOperator =
   | "like"
   | "ilike"
   | "in"
+  | "empty"
+  | "non_empty"
   | null;
 
 export type SortDirection = "asc" | "desc" | null;
@@ -19,8 +21,23 @@ export interface ColumnDefinition<T = any> {
   type: ColumnType;
   locked?: boolean;
   optional?: boolean;
+  long?: boolean;
   hide?: boolean;
+  join?: string;
 }
+
+export type AttendanceRow = {
+  id: number;
+  check_in: string;
+  updated_at: string;
+  member_id: number;
+  event_id: number;
+  points: number | null;
+  member: string;
+  email: string;
+  event: string;
+  start: string;
+};
 
 export type EventRow = {
   id: number;

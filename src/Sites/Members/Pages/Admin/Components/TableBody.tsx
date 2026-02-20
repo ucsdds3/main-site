@@ -47,31 +47,31 @@ export default function TableBody<T extends Record<string, any>>({
             >
               {columns
                 .filter(col => !col.hide)
-                .map(col => {
-                  const isDescription = col.key === "description" && col.type === "text";
-                  const isQRCode = col.key === "qr_code" && col.type === "qr_code";
-                  return (
-                    <td
-                      key={String(col.key)}
-                      className={
-                        isDescription
-                          ? "w-48 max-w-[150px] truncate"
-                          : isQRCode
-                            ? "p-1 flex items-center justify-center"
-                            : ""
-                      }
-                      title={isDescription ? formatCellValue(row[col.key], col.type) : undefined}
-                    >
-                      {isQRCode ? (
-                        <div onClick={e => e.stopPropagation()}>
-                          <EventQRCode password={String(row.password ?? "")} eventName={row.name} size={48} />
-                        </div>
-                      ) : (
-                        formatCellValue(row[col.key], col.type)
-                      )}
-                    </td>
-                  );
-                })}
+                .map(col => (
+                  <td
+                    key={String(col.key)}
+                    className={
+                      col.type === "qr_code"
+                        ? "p-1 flex items-center justify-center"
+                        : "whitespace-pre-line"
+                    }
+                    title={formatCellValue(row[col.key], col.type)}
+                  >
+                    {col.type === "qr_code" ? (
+                      <div onClick={e => e.stopPropagation()}>
+                        <EventQRCode
+                          password={String(row.password ?? "")}
+                          eventName={row.name}
+                          size={48}
+                        />
+                      </div>
+                    ) : (
+                      <span className="line-clamp-3 max-w-[150px]">
+                        {formatCellValue(row[col.key], col.type)}
+                      </span>
+                    )}
+                  </td>
+                ))}
             </tr>
           ))
       )}

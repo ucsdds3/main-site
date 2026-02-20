@@ -3,7 +3,7 @@
     "columns": {
       "image": { "type": "text", "hide": true },
       "name": { "type": "text" },
-      "description": { "type": "text" },
+      "description": { "type": "text", "long": true },
       "points": { "type": "number" },
       "password": { "type": "text" },
       "qr_code": { "type": "qr_code", "optional": true },
@@ -28,7 +28,12 @@
       "experience": { "type": "number" },
       "gender": { "type": "text", "optional": true },
       "admin_level": { "type": "text", "optional": true },
-      "is_grad_student": { "type": "boolean" }
+      "is_grad_student": { "type": "boolean" },
+      "in_talent_pool": { "type": "boolean" },
+      "resume_link": { "type": "text", "optional": true, "long": true },
+      "github_link": { "type": "text", "optional": true, "long": true },
+      "linkedin_link": { "type": "text", "optional": true, "long": true },
+      "other_link": { "type": "text", "optional": true, "long": true }
     },
     "permissions": { "canAdd": [], "canEdit": ["Executive"], "canView": ["Board", "Executive"] }
   },
@@ -44,5 +49,16 @@
       "canEdit": ["Executive"],
       "canView": ["Board", "Executive"]
     }
+  },
+  "Attendance": {
+    "columns": {
+      "member": { "type": "text", "join": "Members.full_name" },
+      "email": { "type": "text", "join": "Members.email" },
+      "event": { "type": "text", "join": "Events.name" },
+      "start": { "type": "date", "join": "Events.start" },
+      "check_in": { "type": "date" },
+      "points": { "type": "number", "optional": true }
+    },
+    "permissions": { "canAdd": [], "canEdit": [], "canView": ["Board", "Executive"] }
   }
 }
