@@ -1,6 +1,7 @@
 {
   "main": {
     "Events": {
+      "All Events": "/events",
       "Upcoming": "/events/upcoming",
       "Workshops": "/events/workshops",
       "Social": "/events/social",
