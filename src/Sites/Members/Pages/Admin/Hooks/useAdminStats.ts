@@ -83,26 +83,6 @@ export function useAdminStats() {
             .gt("start", nowISO)
             .order("start", { ascending: true })
             .limit(1),
-          // Pending orders (Ordered + Shipped) - count
-          supabase
-            .from("Purchases")
-            .select("*", { count: "exact", head: true })
-            .in("status", ["Ordered", "Shipped"]),
-          // Oldest pending order (for age calculation)
-          supabase
-            .from("Purchases")
-            .select("created_at")
-            .in("status", ["Ordered", "Shipped"])
-            .order("created_at", { ascending: true })
-            .limit(1)
-            .maybeSingle(),
-          // Total orders - current count
-          supabase.from("Purchases").select("*", { count: "exact", head: true }),
-          // Total orders - last month count
-          supabase
-            .from("Purchases")
-            .select("*", { count: "exact", head: true })
-            .lt("created_at", startOfCurrentMonth.toISOString()),
           // Event attendance - past 30 days count
           supabase
             .from("Attendance")
