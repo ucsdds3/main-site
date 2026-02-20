@@ -113,8 +113,6 @@ export default function DataTable<T extends Record<string, any>>({
           rows
         </span>
         <div className="flex gap-2 items-center">
-          <FilterDropdown />
-          <SortDropdown />
           <button
             onClick={reload}
             className="btn btn-outline hover:border-primary text-lg font-bold"
@@ -123,6 +121,8 @@ export default function DataTable<T extends Record<string, any>>({
           >
             {loading ? <span className="loading loading-spinner loading-sm" /> : <TfiReload />}
           </button>
+          <SortDropdown />
+          <FilterDropdown />
           <button
             onClick={handleDownload}
             className="btn btn-outline hover:border-primary text-lg font-bold"
