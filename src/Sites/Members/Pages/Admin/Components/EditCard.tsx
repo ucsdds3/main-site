@@ -3,7 +3,12 @@ import { TfiClose } from "react-icons/tfi";
 
 import { ColumnDefinition } from "../Utils/types";
 import useEditCard from "../Hooks/useEditCard";
-import { formatColumnLabel, convertUTCToPST, convertPSTToUTC } from "../../../Utils/functions";
+import {
+  formatColumnLabel,
+  formatCellValue,
+  convertUTCToPST,
+  convertPSTToUTC,
+} from "../../../Utils/functions";
 import EventQRCode from "./EventQRCode";
 
 export interface EditCardProps<T> {
@@ -35,6 +40,14 @@ export default function EditCard<T extends Record<string, unknown>>({
 
   const renderInput = (col: ColumnDefinition<T>) => {
     const value = formData[col.key];
+
+    if (col.join) {
+      return (
+        <span className="input input-bordered w-full bg-base-200 cursor-not-allowed">
+          {formatCellValue(value, col.type)}
+        </span>
+      );
+    }
 
     if (col.key === "qr_code" && col.type === "qr_code") {
       const password = String(formData.password ?? "");

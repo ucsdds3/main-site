@@ -25,11 +25,15 @@ export function useTableData<T extends Record<string, any>>(
     const fetchData = async () => {
       setLoading(true);
       try {
-        let query = supabase.from(tableName).select("*");
+        const isAttendance = tableName === "Attendance";
+        const selectStr = isAttendance
+          ? "id, created_at, updated_at, member_id, event_id, points, Members(full_name, email), Events(name, start)"
+          : "*";
+        let query = supabase.from(tableName).select(selectStr);
 
-        // Apply filters (skip display-only columns like qr_code)
+        // Apply filters (skip display-only columns like qr_code, skip join columns)
         columns.forEach(col => {
-          if (col.type === "qr_code") return;
+          if (col.type === "qr_code" || col.join) return;
           const state = columnStates?.[col.key as string];
           const colKey = col.key as string;
 
@@ -90,17 +94,19 @@ export function useTableData<T extends Record<string, any>>(
           }
         });
 
-        // Apply sorting (skip display-only columns like qr_code)
+        // Apply sorting (skip display-only columns like qr_code, skip join columns)
         const sortedColumns = columns.filter(
-          col => col.type !== "qr_code" && columnStates?.[col.key as string]?.sort
+          col =>
+            col.type !== "qr_code" &&
+            !col.join &&
+            columnStates?.[col.key as string]?.sort
         );
         if (sortedColumns.length > 0) {
           const primarySort = sortedColumns[0];
           const sortDir = columnStates?.[primarySort.key as string]?.sort === "asc";
           query = query.order(primarySort.key as string, { ascending: sortDir });
         } else {
-          // Default sort by id if available
-          query = query.order("id", { ascending: false });
+          query = query.order("created_at", { ascending: false });
         }
 
         const { data: fetchedData, error } = await query;
@@ -109,7 +115,22 @@ export function useTableData<T extends Record<string, any>>(
           toast.error(error.message);
           console.error("Error fetching data:", error);
         } else {
-          setData(fetchedData || []);
+          let resultData = (fetchedData || []) as unknown as Record<string, unknown>[];
+          if (isAttendance && resultData.length > 0) {
+            resultData = resultData.map(row => {
+              const members = row.Members as Record<string, unknown> | undefined;
+              const events = row.Events as Record<string, unknown> | undefined;
+              return {
+                ...row,
+                check_in: row.created_at ?? "",
+                member: members?.full_name ?? "",
+                email: members?.email ?? "",
+                event: events?.name ?? "",
+                start: events?.start ?? "",
+              };
+            });
+          }
+          setData(resultData as T[]);
         }
       } catch (error) {
         toast.error("Failed to fetch data");

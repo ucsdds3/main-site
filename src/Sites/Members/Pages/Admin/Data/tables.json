@@ -49,5 +49,16 @@
       "canEdit": ["Executive"],
       "canView": ["Board", "Executive"]
     }
+  },
+  "Attendance": {
+    "columns": {
+      "member": { "type": "text", "join": "Members.full_name" },
+      "email": { "type": "text", "join": "Members.email" },
+      "event": { "type": "text", "join": "Events.name" },
+      "start": { "type": "date", "join": "Events.start" },
+      "check_in": { "type": "date" },
+      "points": { "type": "number", "optional": true }
+    },
+    "permissions": { "canAdd": [], "canEdit": [], "canView": ["Board", "Executive"] }
   }
 }

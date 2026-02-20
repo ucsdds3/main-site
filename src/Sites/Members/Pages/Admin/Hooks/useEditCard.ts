@@ -160,7 +160,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
     try {
       const missingFields: string[] = [];
       columns.forEach(col => {
-        if (col.optional === true) return;
+        if (col.optional === true || col.join) return;
 
         const value = formData[col.key];
 
@@ -208,6 +208,9 @@ export default function useEditCard<T extends Record<string, unknown>>({
       }
 
       const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code"];
+      columns.forEach(col => {
+        if (col.join) fieldsToExclude.push(col.key as string);
+      });
       const dataToSave = { ...finalFormData };
       fieldsToExclude.forEach(field => {
         delete dataToSave[field as keyof T];
@@ -240,10 +243,10 @@ export default function useEditCard<T extends Record<string, unknown>>({
 
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from(tableName)
-        .update({ deleted: true })
-        .eq("id", formData.id);
+      const isAttendance = tableName === "Attendance";
+      const { error } = isAttendance
+        ? await supabase.from(tableName).delete().eq("id", formData.id)
+        : await supabase.from(tableName).update({ deleted: true }).eq("id", formData.id);
       if (error) throw error;
       toast.success("Row deleted successfully");
 
