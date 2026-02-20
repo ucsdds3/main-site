@@ -2,6 +2,7 @@ import { IoClose } from "react-icons/io5";
 
 import { formatColumnLabel } from "../../../Utils/functions";
 import { useAdminStore } from "../Hooks/useAdminStore";
+import { TfiArrowsVertical } from "react-icons/tfi";
 
 export default function SortDropdown() {
   const sortOrder = useAdminStore(state => state.sortOrder);
@@ -24,7 +25,7 @@ export default function SortDropdown() {
         className="btn btn-outline hover:border-primary text-lg font-bold"
         title="Sort"
       >
-        Sort {sortOrder.length > 0 && `(${sortOrder.length})`}
+        <TfiArrowsVertical /> {sortOrder.length > 0 && `(${sortOrder.length})`}
       </button>
       <div
         tabIndex={0}
