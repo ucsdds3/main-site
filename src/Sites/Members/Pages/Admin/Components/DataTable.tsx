@@ -1,11 +1,13 @@
-import { useState, RefObject } from "react";
+import { useState, useRef, RefObject } from "react";
+import { useEffect } from "react";
 import { TfiReload, TfiDownload, TfiPlus } from "react-icons/tfi";
-
 import { useTableData, ColumnSortFilter } from "../Hooks/useTableData";
+import { useSortStore } from "../Hooks/useSortStore";
 import { ColumnDefinition } from "../Utils/types";
 import { formatColumnLabel, formatCellValue } from "../../../Utils/functions";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
+import SortDropdown from "./SortDropdown";
 
 export interface DataTableProps<T = any> {
   tableName: string;
@@ -30,6 +32,20 @@ export default function DataTable<T extends Record<string, any>>({
   const [reloadTrigger, setReloadTrigger] = useState(0);
   const [selectedRow, setSelectedRow] = useState<T | null>(null);
 
+  const setColumns = useSortStore(state => state.setColumns);
+  const sortOrder = useSortStore(state => state.sortOrder);
+  const clearSorts = useSortStore(state => state.clearSorts);
+
+  const prevTableRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (prevTableRef.current !== tableName) {
+      prevTableRef.current = tableName;
+      setColumns(columns);
+    }
+    // Only run when tableName changes; columns from closure is correct for new table
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tableName]);
+
   const handleRowSelect = (row: T | null) => {
     setSelectedRow(row);
     onRowSelect?.(row);
@@ -38,6 +54,7 @@ export default function DataTable<T extends Record<string, any>>({
   const reload = () => {
     setReloadTrigger(prev => prev + 1);
     setColumnStates({});
+    clearSorts();
   };
 
   const clearSelection = () => {
@@ -76,18 +93,18 @@ export default function DataTable<T extends Record<string, any>>({
     URL.revokeObjectURL(url);
   };
 
-  // Expose reload and clearSelection functions via ref
-  if (reloadRef) {
-    reloadRef.current = { reload, clearSelection };
-  }
-
   const { data, loading } = useTableData<T>(
     tableName,
     columns,
     initialData,
     columnStates,
-    reloadTrigger
+    reloadTrigger,
+    sortOrder
   );
+
+  if (reloadRef) {
+    reloadRef.current = { reload, clearSelection };
+  }
 
   return (
     <div className="w-full bg-base-300 rounded-xl p-6 min-w-0 h-fit border border-base-content/50">
@@ -108,20 +125,17 @@ export default function DataTable<T extends Record<string, any>>({
           </select>
         </div>
         <span className="text-lg font-semibold md:ml-4 md:mr-auto order-last md:order-none">
-          Found {tableName === "Attendance" ? data.length : data.filter(row => row.deleted !== true).length} rows
+          Found{" "}
+          {tableName === "Attendance"
+            ? data.length
+            : data.filter(row => row.deleted !== true).length}{" "}
+          rows
         </span>
-        <div className="flex gap-2">
-          <button
-            onClick={clearSelection}
-            className="btn btn-primary text-lg font-bold"
-            disabled={!canAdd}
-            title="Add New"
-          >
-            <TfiPlus className="font-bold" />
-          </button>
+        <div className="flex gap-2 items-center">
+          <SortDropdown />
           <button
             onClick={reload}
-            className="btn btn-outline text-lg font-bold"
+            className="btn btn-outline hover:border-primary text-lg font-bold"
             disabled={loading}
             title="Reload"
           >
@@ -129,11 +143,19 @@ export default function DataTable<T extends Record<string, any>>({
           </button>
           <button
             onClick={handleDownload}
-            className="btn btn-outline text-lg font-bold"
+            className="btn btn-outline hover:border-primary text-lg font-bold"
             disabled={loading || data.length === 0}
             title="Download as CSV"
           >
             <TfiDownload />
+          </button>
+          <button
+            onClick={clearSelection}
+            className="btn btn-primary text-lg font-bold"
+            disabled={!canAdd}
+            title="Add New"
+          >
+            <TfiPlus className="font-bold" />
           </button>
         </div>
       </div>
