@@ -48,19 +48,19 @@ export default function TableBody<T extends Record<string, any>>({
               {columns
                 .filter(col => !col.hide)
                 .map(col => {
-                  const isDescription = col.key === "description" && col.type === "text";
+                  const isLong = col.long && col.type === "text";
                   const isQRCode = col.key === "qr_code" && col.type === "qr_code";
                   return (
                     <td
                       key={String(col.key)}
                       className={
-                        isDescription
+                        isLong
                           ? "w-48 max-w-[150px] truncate"
                           : isQRCode
                             ? "p-1 flex items-center justify-center"
                             : ""
                       }
-                      title={isDescription ? formatCellValue(row[col.key], col.type) : undefined}
+                      title={formatCellValue(row[col.key], col.type)}
                     >
                       {isQRCode ? (
                         <div onClick={e => e.stopPropagation()}>
