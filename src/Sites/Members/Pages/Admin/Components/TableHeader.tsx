@@ -1,8 +1,7 @@
 import { FaFilter } from "react-icons/fa";
 import { CiFilter } from "react-icons/ci";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-import { ColumnDefinition, FilterOperator, SortDirection } from "../Utils/types";
+import { ColumnDefinition, FilterOperator } from "../Utils/types";
 import { ColumnSortFilter } from "../Hooks/useTableData";
 import { formatColumnLabel } from "../../../Utils/functions";
 
@@ -17,28 +16,6 @@ export default function TableHeader<T extends Record<string, any>>({
   columnStates,
   setColumnStates,
 }: TableHeaderProps<T>) {
-  const handleSort = (columnKey: string) => {
-    setColumnStates(prev => {
-      const current = prev[columnKey];
-      let newSort: SortDirection = "asc";
-      if (current?.sort === "asc") {
-        newSort = "desc";
-      } else if (current?.sort === "desc") {
-        newSort = null;
-      }
-
-      return {
-        ...prev,
-        [columnKey]: {
-          ...current,
-          sort: newSort,
-          filter: current?.filter || null,
-          filterValue: current?.filterValue || "",
-        },
-      };
-    });
-  };
-
   const handleFilterChange = (columnKey: string, operator: FilterOperator, value: string) => {
     setColumnStates(prev => ({
       ...prev,
@@ -68,29 +45,13 @@ export default function TableHeader<T extends Record<string, any>>({
             const isQRCode = col.key === "qr_code" && col.type === "qr_code";
 
             return (
-              <th
-                key={String(col.key)}
-                className="relative max-w-[200px]"
-              >
+              <th key={String(col.key)} className="relative max-w-[200px]">
                 <div className="flex gap-2 items-center">
                   {isQRCode ? (
                     <span className="text-lg">{col.label ?? formatColumnLabel(col.key)}</span>
                   ) : (
                     <>
-                      <button
-                        onClick={e => {
-                          e.stopPropagation();
-                          handleSort(String(col.key));
-                        }}
-                        className="flex items-center gap-2 hover:text-primary transition-colors text-lg"
-                      >
-                        <span>{col.label ?? formatColumnLabel(col.key)}</span>{" "}
-                        {columnStates[col.key as string]?.sort === "asc" ? (
-                          <IoIosArrowUp className="mt-1" />
-                        ) : (
-                          <IoIosArrowDown className="mt-1" />
-                        )}
-                      </button>
+                      <span className="text-lg">{col.label ?? formatColumnLabel(col.key)}</span>
                       <div className={`dropdown ${index <= 1 ? "dropdown-start" : "dropdown-end"}`}>
                         <div
                           tabIndex={0}

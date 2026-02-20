@@ -4,6 +4,7 @@ import { supabase } from "src/Utils/supabase";
 
 import { ColumnDefinition, FilterOperator, SortDirection } from "../Utils/types";
 import { convertFilterValue } from "../../../Utils/functions";
+import type { SortOrderEntry } from "./useSortStore";
 
 export interface ColumnSortFilter {
   sort: SortDirection;
@@ -11,12 +12,15 @@ export interface ColumnSortFilter {
   filterValue: string;
 }
 
+export type { SortOrderEntry };
+
 export function useTableData<T extends Record<string, any>>(
   tableName: string,
   columns: ColumnDefinition<T>[],
   initialData?: T[],
   columnStates?: Record<string, ColumnSortFilter>,
-  reloadTrigger?: number
+  reloadTrigger?: number,
+  sortOrder?: SortOrderEntry[]
 ) {
   const [data, setData] = useState<T[]>(initialData || []);
   const [loading, setLoading] = useState(!initialData);
@@ -94,17 +98,16 @@ export function useTableData<T extends Record<string, any>>(
           }
         });
 
-        // Apply sorting (skip display-only columns like qr_code, skip join columns)
-        const sortedColumns = columns.filter(
-          col =>
-            col.type !== "qr_code" &&
-            !col.join &&
-            columnStates?.[col.key as string]?.sort
-        );
-        if (sortedColumns.length > 0) {
-          const primarySort = sortedColumns[0];
-          const sortDir = columnStates?.[primarySort.key as string]?.sort === "asc";
-          query = query.order(primarySort.key as string, { ascending: sortDir });
+        // Apply sorting
+        const sortableColumns = columns.filter(col => col.type !== "qr_code" && !col.join);
+        const sortableKeys = new Set(sortableColumns.map(c => String(c.key)));
+
+        if (sortOrder && sortOrder.length > 0) {
+          sortOrder.forEach(({ columnKey, direction }) => {
+            if (sortableKeys.has(columnKey)) {
+              query = query.order(columnKey, { ascending: direction === "asc" });
+            }
+          });
         } else {
           query = query.order("created_at", { ascending: false });
         }
@@ -142,7 +145,7 @@ export function useTableData<T extends Record<string, any>>(
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tableName, reloadTrigger, columnStates]);
+  }, [tableName, reloadTrigger, columnStates, sortOrder]);
 
   return { data, loading };
 }
