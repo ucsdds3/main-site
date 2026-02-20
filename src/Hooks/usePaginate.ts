@@ -6,6 +6,7 @@ interface PaginateProps {
   numRows: number;
 }
 
+// TO USE - Use a div with class "grid"
 export const usePaginate = ({ numRows, totalItems, minCardsPerPage = 3 }: PaginateProps) => {
   const [page, setPage] = useState(1);
   const [cardsPerPage, setCardsPerPage] = useState(minCardsPerPage);
@@ -21,11 +22,13 @@ export const usePaginate = ({ numRows, totalItems, minCardsPerPage = 3 }: Pagina
       const computedStyle = window.getComputedStyle(grid);
       const gridTemplateColumns = computedStyle.gridTemplateColumns.split(' ');
       const cardsPerRow = gridTemplateColumns.length;
-
+      
       const cardsPerPage = Math.max(
         minCardsPerPage,
-        Math.ceil(minCardsPerPage / cardsPerRow) * cardsPerRow
+        Math.ceil(minCardsPerPage / cardsPerRow) * cardsPerRow,
+        numRows * cardsPerRow,
       );
+      console.log(cardsPerPage);
       setCardsPerPage(cardsPerPage);
       setNumPages(Math.ceil(totalItems / cardsPerPage));
     };
