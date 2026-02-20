@@ -35,7 +35,7 @@
       "linkedin_link": { "type": "text", "optional": true, "long": true },
       "other_link": { "type": "text", "optional": true, "long": true }
     },
-    "permissions": { "canAdd": [], "canEdit": [], "canView": ["Board", "Executive"] }
+    "permissions": { "canAdd": [], "canEdit": ["Executive"], "canView": ["Board", "Executive"] }
   },
   "Items": {
     "columns": {
