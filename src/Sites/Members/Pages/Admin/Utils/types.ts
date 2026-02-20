@@ -19,6 +19,7 @@ export interface ColumnDefinition<T = any> {
   type: ColumnType;
   locked?: boolean;
   optional?: boolean;
+  long?: boolean;
   hide?: boolean;
 }
 
