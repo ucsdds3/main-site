@@ -67,7 +67,7 @@ export default function FilterDropdown() {
   ).length;
 
   return (
-    <div className={`dropdown ${filterDropdownOpen ? "dropdown-open" : ""}`}>
+    <div className={`dropdown dropdown-center ${filterDropdownOpen ? "dropdown-open" : ""}`}>
       <button
         tabIndex={0}
         onClick={() => {
@@ -157,7 +157,7 @@ export default function FilterDropdown() {
                             ? "datetime-local"
                             : "text"
                       }
-                      className="input input-bordered min-w-[200px]"
+                      className="input input-bordered min-w-[100px] max-w-[200px]"
                       value={row.filterValue}
                       onChange={e =>
                         useAdminStore.setState(state => ({

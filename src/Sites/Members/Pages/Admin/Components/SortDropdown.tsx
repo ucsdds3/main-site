@@ -11,7 +11,7 @@ export default function SortDropdown() {
   const sortableColumns = useAdminStore(state => state.sortableColumns);
 
   return (
-    <div className={`dropdown ${sortDropdownOpen ? "dropdown-open" : ""}`}>
+    <div className={`dropdown dropdown-center ${sortDropdownOpen ? "dropdown-open" : ""}`}>
       <button
         tabIndex={0}
         onClick={() => {
