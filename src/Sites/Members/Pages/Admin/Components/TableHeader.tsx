@@ -14,7 +14,7 @@ export default function TableHeader<T extends Record<string, any>>({
         {columns
           .filter(col => !col.hide)
           .map(col => (
-            <th key={String(col.key)} className="relative max-w-[200px]">
+            <th key={String(col.key)} className="relative max-w-[200px] border-b border-base-content/30">
               <span className="text-lg text-base-content">
                 {col.label ?? formatColumnLabel(col.key)}
               </span>
