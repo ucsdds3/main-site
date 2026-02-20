@@ -41,22 +41,26 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
         <h2 className="card-title text-2xl line-clamp-3 capitalize">{name}</h2>
 
         <p className="flex-grow-0">
-          {start && end && (
-            <span>
-              {new Date(start).toLocaleDateString("en-US")}{" "}
-              {new Date(start).toLocaleTimeString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-              })}{" "}
-              -{" "}
-              {new Date(end).toLocaleTimeString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-              })}
-            </span>
-          )}
+          {start && end && (() => {
+            const startDate = new Date(start).toLocaleDateString("en-US");
+            const endDate = new Date(end).toLocaleDateString("en-US");
+            return (
+              <span>
+                {startDate}{" "}
+                {new Date(start).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}{" "}
+                - {startDate === endDate ? "" : `${endDate} `}
+                {new Date(end).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </span>
+            );
+          })()}
           {location && <span>{" | " + location}</span>}
         </p>
 
