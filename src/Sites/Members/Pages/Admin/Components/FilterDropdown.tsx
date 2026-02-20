@@ -3,6 +3,7 @@ import { IoClose } from "react-icons/io5";
 import { FilterOperator } from "../Utils/types";
 import { formatColumnLabel } from "../../../Utils/functions";
 import { useAdminStore } from "../Hooks/useAdminStore";
+import { TfiFilter } from "react-icons/tfi";
 
 const FILTER_OPTIONS: Record<string, { value: FilterOperator; label: string }[]> = {
   text: [
@@ -87,7 +88,7 @@ export default function FilterDropdown() {
         className="btn btn-outline hover:border-primary text-lg font-bold"
         title="Filter"
       >
-        Filter {appliedCount > 0 && `(${appliedCount})`}
+        <TfiFilter /> {appliedCount > 0 && `(${appliedCount})`}
       </button>
       <div
         tabIndex={0}
