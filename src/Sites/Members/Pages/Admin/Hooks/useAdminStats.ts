@@ -12,12 +12,12 @@ export function useAdminStats() {
   const [members, setMembers] = useState<StatData>({ value: "0", hint: "", loading: true });
   const [admins, setAdmins] = useState<StatData>({ value: "0", hint: "", loading: true });
   const [events, setEvents] = useState<StatData>({ value: "0", hint: "", loading: true });
-  const [pendingOrders, setPendingOrders] = useState<StatData>({
-    value: "0",
-    hint: "",
-    loading: true,
-  });
-  const [totalOrders, setTotalOrders] = useState<StatData>({ value: "0", hint: "", loading: true });
+  // const [pendingOrders, setPendingOrders] = useState<StatData>({
+  //   value: "0",
+  //   hint: "",
+  //   loading: true,
+  // });
+  // const [totalOrders, setTotalOrders] = useState<StatData>({ value: "0", hint: "", loading: true });
   const [eventAttendance, setEventAttendance] = useState<StatData>({
     value: "0",
     hint: "",
@@ -43,10 +43,10 @@ export function useAdminStats() {
           adminsLastMonth,
           upcomingEventsCurrent,
           nextEvent,
-          pendingOrdersCount,
-          oldestPendingOrder,
-          totalOrdersCurrent,
-          totalOrdersLastMonth,
+          // pendingOrdersCount,
+          // oldestPendingOrder,
+          // totalOrdersCurrent,
+          // totalOrdersLastMonth,
           eventAttendanceCurrent,
           eventAttendanceLastMonth,
         ] = await Promise.all([
@@ -184,46 +184,46 @@ export function useAdminStats() {
         });
 
         // Process pending orders stats
-        const pendingOrdersCountValue = pendingOrdersCount.count || 0;
-        let pendingOrdersHint = "No pending orders";
-        if (
-          !oldestPendingOrder.error &&
-          oldestPendingOrder.data &&
-          oldestPendingOrder.data.created_at
-        ) {
-          const oldestOrderDate = new Date(oldestPendingOrder.data.created_at);
-          const ageInDays = Math.floor(
-            (now.getTime() - oldestOrderDate.getTime()) / (1000 * 60 * 60 * 24)
-          );
-          if (ageInDays === 0) {
-            pendingOrdersHint = "Oldest: Today";
-          } else if (ageInDays === 1) {
-            pendingOrdersHint = "Oldest: 1 day";
-          } else {
-            pendingOrdersHint = `Oldest: ${ageInDays} days`;
-          }
-        }
-        setPendingOrders({
-          value: formatNumber(pendingOrdersCountValue),
-          hint: pendingOrdersHint,
-          loading: false,
-        });
+        // const pendingOrdersCountValue = pendingOrdersCount.count || 0;
+        // let pendingOrdersHint = "No pending orders";
+        // if (
+        //   !oldestPendingOrder.error &&
+        //   oldestPendingOrder.data &&
+        //   oldestPendingOrder.data.created_at
+        // ) {
+        //   const oldestOrderDate = new Date(oldestPendingOrder.data.created_at);
+        //   const ageInDays = Math.floor(
+        //     (now.getTime() - oldestOrderDate.getTime()) / (1000 * 60 * 60 * 24)
+        //   );
+        //   if (ageInDays === 0) {
+        //     pendingOrdersHint = "Oldest: Today";
+        //   } else if (ageInDays === 1) {
+        //     pendingOrdersHint = "Oldest: 1 day";
+        //   } else {
+        //     pendingOrdersHint = `Oldest: ${ageInDays} days`;
+        //   }
+        // }
+        // setPendingOrders({
+        //   value: formatNumber(pendingOrdersCountValue),
+        //   hint: pendingOrdersHint,
+        //   loading: false,
+        // });
 
-        // Process total orders stats
-        const totalOrdersCurrentCount = totalOrdersCurrent.count || 0;
-        const totalOrdersLastMonthCount = totalOrdersLastMonth.count || 0;
-        const totalOrdersChange = totalOrdersCurrentCount - totalOrdersLastMonthCount;
-        const totalOrdersPercentChange =
-          totalOrdersLastMonthCount > 0
-            ? ((totalOrdersChange / totalOrdersLastMonthCount) * 100).toFixed(1)
-            : "0.0";
-        const totalOrdersSign = totalOrdersChange >= 0 ? "+" : "";
-        const totalOrdersHint = `${totalOrdersSign}${totalOrdersPercentChange}% this month`;
-        setTotalOrders({
-          value: formatNumber(totalOrdersCurrentCount),
-          hint: totalOrdersHint,
-          loading: false,
-        });
+        // // Process total orders stats
+        // const totalOrdersCurrentCount = totalOrdersCurrent.count || 0;
+        // const totalOrdersLastMonthCount = totalOrdersLastMonth.count || 0;
+        // const totalOrdersChange = totalOrdersCurrentCount - totalOrdersLastMonthCount;
+        // const totalOrdersPercentChange =
+        //   totalOrdersLastMonthCount > 0
+        //     ? ((totalOrdersChange / totalOrdersLastMonthCount) * 100).toFixed(1)
+        //     : "0.0";
+        // const totalOrdersSign = totalOrdersChange >= 0 ? "+" : "";
+        // const totalOrdersHint = `${totalOrdersSign}${totalOrdersPercentChange}% this month`;
+        // setTotalOrders({
+        //   value: formatNumber(totalOrdersCurrentCount),
+        //   hint: totalOrdersHint,
+        //   loading: false,
+        // });
 
         // Process event attendance stats
         const eventAttendanceCurrentCount = eventAttendanceCurrent.count || 0;
@@ -245,8 +245,8 @@ export function useAdminStats() {
         setMembers({ value: "0", hint: "", loading: false });
         setAdmins({ value: "0", hint: "", loading: false });
         setEvents({ value: "0", hint: "", loading: false });
-        setPendingOrders({ value: "0", hint: "", loading: false });
-        setTotalOrders({ value: "0", hint: "", loading: false });
+        // setPendingOrders({ value: "0", hint: "", loading: false });
+        // setTotalOrders({ value: "0", hint: "", loading: false });
         setEventAttendance({ value: "0", hint: "", loading: false });
       }
     };
@@ -259,7 +259,7 @@ export function useAdminStats() {
     Admins: admins,
     "Upcoming Events": events,
     "Monthly Attendance": eventAttendance,
-    "Pending Orders": pendingOrders,
-    "Total Orders": totalOrders,
+    // "Pending Orders": pendingOrders,
+    // "Total Orders": totalOrders,
   };
 }
