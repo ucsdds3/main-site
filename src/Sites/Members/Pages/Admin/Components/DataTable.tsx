@@ -1,5 +1,5 @@
 import { useState, RefObject } from "react";
-import { TfiReload, TfiDownload } from "react-icons/tfi";
+import { TfiReload, TfiDownload, TfiPlus } from "react-icons/tfi";
 
 import { useTableData, ColumnSortFilter } from "../Hooks/useTableData";
 import { ColumnDefinition } from "../Utils/types";
@@ -37,6 +37,7 @@ export default function DataTable<T extends Record<string, any>>({
 
   const reload = () => {
     setReloadTrigger(prev => prev + 1);
+    setColumnStates({});
   };
 
   const clearSelection = () => {
@@ -44,13 +45,10 @@ export default function DataTable<T extends Record<string, any>>({
     onRowSelect?.(null);
   };
 
-  const resetFiltersAndSort = () => {
-    setColumnStates({});
-  };
-
   const handleDownload = () => {
     const visibleColumns = columns.filter(col => !col.hide);
-    const visibleData = data.filter(row => row.deleted !== true);
+    const visibleData =
+      tableName === "Attendance" ? data : data.filter(row => row.deleted !== true);
 
     const headers = visibleColumns.map(col => formatColumnLabel(col.key));
     const rows = visibleData.map(row =>
@@ -93,10 +91,10 @@ export default function DataTable<T extends Record<string, any>>({
 
   return (
     <div className="w-full bg-base-300 rounded-xl p-6 min-w-0 h-fit border border-base-content/50">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center mb-4">
         <div className="flex items-center gap-4">
           <select
-            className="select select-bordered text-lg font-semibold py-2 max-w-[200px]"
+            className="select select-bordered text-lg font-semibold py-2 w-[200px]"
             value={tableName}
             onChange={e => {
               onTableChange(e.target.value);
@@ -106,25 +104,20 @@ export default function DataTable<T extends Record<string, any>>({
             <option value="Events">Events</option>
             <option value="Members">Members</option>
             <option value="Items">Items</option>
+            <option value="Attendance">Attendance</option>
           </select>
-          <span className="text-lg font-semibold w-60">
-            Found {data.filter(row => row.deleted !== true).length} rows
-          </span>
         </div>
+        <span className="text-lg font-semibold md:ml-4 md:mr-auto order-last md:order-none">
+          Found {tableName === "Attendance" ? data.length : data.filter(row => row.deleted !== true).length} rows
+        </span>
         <div className="flex gap-2">
           <button
             onClick={clearSelection}
             className="btn btn-primary text-lg font-bold"
             disabled={!canAdd}
+            title="Add New"
           >
-            Add New
-          </button>
-          <button
-            onClick={resetFiltersAndSort}
-            className="btn btn-outline text-lg font-bold"
-            title="Reset filters and sort"
-          >
-            Reset
+            <TfiPlus className="font-bold" />
           </button>
           <button
             onClick={reload}

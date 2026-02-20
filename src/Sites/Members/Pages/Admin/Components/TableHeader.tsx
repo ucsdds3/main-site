@@ -58,14 +58,20 @@ export default function TableHeader<T extends Record<string, any>>({
           .filter(col => !col.hide)
           .map((col, index) => {
             const colState = columnStates[col.key as string];
-            const hasFilter = colState?.filter && colState?.filterValue;
-            const isDescription = col.key === "description" && col.type === "text";
+            const isValueFilter =
+              colState?.filter && colState?.filter !== "empty" && colState?.filter !== "non_empty";
+            const hasFilter =
+              colState?.filter &&
+              (colState.filter === "empty" ||
+                colState.filter === "non_empty" ||
+                !!colState?.filterValue);
+            const isLong = col.long && col.type === "text";
             const isQRCode = col.key === "qr_code" && col.type === "qr_code";
 
             return (
               <th
                 key={String(col.key)}
-                className={`relative ${isDescription ? "w-48 max-w-[150px]" : ""}`}
+                className={`relative ${isLong ? "w-48 max-w-[150px]" : ""}`}
               >
                 <div className="flex gap-2 items-center">
                   {isQRCode ? (
@@ -122,6 +128,8 @@ export default function TableHeader<T extends Record<string, any>>({
                                   <option value="neq">Not Equals</option>
                                   <option value="like">Like</option>
                                   <option value="ilike">ILike</option>
+                                  <option value="empty">Empty</option>
+                                  <option value="non_empty">Non-empty</option>
                                 </>
                               )}
                               {(col.type === "number" || col.type === "date") && (
@@ -132,16 +140,20 @@ export default function TableHeader<T extends Record<string, any>>({
                                   <option value="gte">Greater/Equal</option>
                                   <option value="lt">Less</option>
                                   <option value="lte">Less/Equal</option>
+                                  <option value="empty">Empty</option>
+                                  <option value="non_empty">Non-empty</option>
                                 </>
                               )}
                               {col.type === "boolean" && (
                                 <>
                                   <option value="eq">Equals</option>
                                   <option value="neq">Not Equals</option>
+                                  <option value="empty">Empty</option>
+                                  <option value="non_empty">Non-empty</option>
                                 </>
                               )}
                             </select>
-                            {colState?.filter && (
+                            {isValueFilter && (
                               <input
                                 type={
                                   col.type === "number"
