@@ -31,7 +31,7 @@ export function useSignIn() {
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { data: userData, error } = await supabase.auth.signInWithPassword({
-      email: data.email,
+      email: data.email.toLowerCase(),
       password: data.password,
     });
 

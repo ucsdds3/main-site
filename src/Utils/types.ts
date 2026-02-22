@@ -107,6 +107,7 @@ export const tagColor = {
   Professional: "badge-info",
   Workshop: "badge-warning",
   Social: "badge-success",
+  Fundraiser: "badge-accent",
   Other: "",
 };
 

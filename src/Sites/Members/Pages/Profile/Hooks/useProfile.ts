@@ -50,7 +50,7 @@ export function useProfile() {
       path: ["resume_link"],
     });
 
-  const { user } = useAuthStore();
+  const { user, setUser } = useAuthStore();
   const [data, setData] = useState(user?.user_metadata);
   const [errors, setErrors] = useState<string>("");
   const originalDataRef = useRef<string | null>(null);
@@ -82,32 +82,44 @@ export function useProfile() {
     const memberUpdateData = Object.fromEntries(
       Object.entries(data).filter(([key]) => allowedFields.includes(key))
     );
+    const normalizedEmail = data?.email?.toLowerCase();
+    memberUpdateData.email = normalizedEmail;
 
     const { error: memberError } = await supabase
       .from("Members")
       .update(memberUpdateData)
-      .eq("email", data?.email);
+      .eq("email", (user?.email ?? data?.email)?.toLowerCase());
     if (memberError) {
       toast.error(memberError.message);
       return false;
     }
 
-    const { error: userError, data: updatedUser } = await supabase.auth.updateUser({ email: data?.email, data });
+    const { error: userError, data: updatedUser } = await supabase.auth.updateUser({
+      email: normalizedEmail,
+      data: { ...data, email: normalizedEmail },
+    });
     if (userError) {
       toast.error(userError.message);
       return false;
     }
 
-    // Update local state with the updated user metadata
-    if (updatedUser?.user?.user_metadata) {
+    // Update local state and auth store with the updated user
+    if (updatedUser?.user) {
       const updatedMetadata = updatedUser.user.user_metadata;
-      setData(updatedMetadata);
-      // Immediately update originalDataRef to prevent showing unsaved changes
-      originalDataRef.current = JSON.stringify(updatedMetadata);
+      if (updatedMetadata) {
+        setData(updatedMetadata);
+        originalDataRef.current = JSON.stringify(updatedMetadata);
+      }
+      setUser(updatedUser.user);
       hasUnsavedChangesRef.current = false;
     }
 
-    toast.success("Profile updated successfully");
+    if (user?.email && data?.email && user.email !== data.email) {
+      toast.success(
+        "Profile updated. Check your new email inbox and click the confirmation link to complete the email change.",
+        { duration: 6000 }
+      );
+    } else toast.success("Profile updated successfully");
     return true;
   };
 

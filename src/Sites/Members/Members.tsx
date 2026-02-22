@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
-import Events from "src/Shared/Events/Events";
+import Events from "src/Shared/Events/EventPage";
 
 import Auth from "./Pages/Auth/Auth";
 import Home from "./Pages/Home/Home";

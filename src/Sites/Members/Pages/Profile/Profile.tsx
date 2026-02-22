@@ -52,7 +52,6 @@ const Profile = () => {
                 />
                 <Input
                   required
-                  disabled
                   label="UCSD Email"
                   type="email"
                   error={errors.toLowerCase().includes("email")}
