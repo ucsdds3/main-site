@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, ReactElement, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 
@@ -6,7 +6,7 @@ import { newArray } from "src/Utils/functions.tsx";
 import SafeLink from "src/Shared/Components/SafeLink";
 
 interface BrowserCardProps {
-  title: string;
+  title: string | ReactElement;
   link?: string;
   image?: string;
   description?: string;
@@ -61,7 +61,7 @@ const BrowserCard = memo(function BrowserCard({
         {image && !imageError ? (
           <img
             src={image}
-            alt={title}
+            alt={typeof title === "string" ? title : ""}
             crossOrigin="anonymous"
             referrerPolicy="no-referrer"
             className="object-cover aspect-[1.4/1] transition-transform duration-300 group-hover:scale-105"
