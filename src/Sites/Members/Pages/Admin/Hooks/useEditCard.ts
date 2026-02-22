@@ -160,7 +160,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
     try {
       const missingFields: string[] = [];
       columns.forEach(col => {
-        if (col.optional === true) return;
+        if (col.optional === true || col.join) return;
 
         const value = formData[col.key];
 
@@ -208,6 +208,9 @@ export default function useEditCard<T extends Record<string, unknown>>({
       }
 
       const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code"];
+      columns.forEach(col => {
+        if (col.join) fieldsToExclude.push(col.key as string);
+      });
       const dataToSave = { ...finalFormData };
       fieldsToExclude.forEach(field => {
         delete dataToSave[field as keyof T];
@@ -233,6 +236,30 @@ export default function useEditCard<T extends Record<string, unknown>>({
     }
   };
 
+  const handleExtendEventEnd = async () => {
+    if (tableName !== "Events" || !formData.id || isNew) return;
+
+    setLoading(true);
+    try {
+      const tempEnd = new Date(Date.now() + 5 * 60 * 1000).toISOString();
+      const { error } = await supabase
+        .from("Events")
+        .update({ temp_end: tempEnd })
+        .eq("id", formData.id);
+
+      if (error) throw error;
+
+      setFormData(prev => ({ ...prev, temp_end: tempEnd }));
+      toast.success("Event window extended by 5 minutes.");
+      reloadRef?.current?.reload();
+    } catch (err) {
+      toast.error((err as Error).message || "Failed to extend event");
+      console.error("Error extending event:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleDelete = async () => {
     if (!selectedRow || isNew) return;
 
@@ -240,10 +267,10 @@ export default function useEditCard<T extends Record<string, unknown>>({
 
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from(tableName)
-        .update({ deleted: true })
-        .eq("id", formData.id);
+      const isAttendance = tableName === "Attendance";
+      const { error } = isAttendance
+        ? await supabase.from(tableName).delete().eq("id", formData.id)
+        : await supabase.from(tableName).update({ deleted: true }).eq("id", formData.id);
       if (error) throw error;
       toast.success("Row deleted successfully");
 
@@ -265,5 +292,6 @@ export default function useEditCard<T extends Record<string, unknown>>({
     handleFileUpload,
     handleSave,
     handleDelete,
+    handleExtendEventEnd,
   };
 }

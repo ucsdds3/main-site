@@ -22,10 +22,20 @@ export function useForgotPassword() {
       return;
     }
 
+    const emailToUse = (overrideEmail || email).toLowerCase();
+
+    const { data: exists, error: lookupError } = await supabase
+      .rpc('check_member_email_exists', { check_email: emailToUse });
+
+    if (lookupError || !exists) {
+      toast.error("No account found with that email address.");
+      return;
+    }
+
     const url = new URL(window.location.href);
     url.searchParams.set("authState", "reset-password");
     url.searchParams.delete("next"); // temporary fix to always go to reset password
-    const { data, error } = await supabase.auth.resetPasswordForEmail(overrideEmail || email, {
+    const { error } = await supabase.auth.resetPasswordForEmail(emailToUse, {
       redirectTo: url.toString(),
     });
 
@@ -34,8 +44,7 @@ export function useForgotPassword() {
       return;
     }
 
-    console.log(data);
-    toast.success("Reset link sent to email");
+    toast.success("Reset link sent to your inbox");
   };
 
   return {
