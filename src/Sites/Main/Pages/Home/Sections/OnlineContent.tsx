@@ -24,7 +24,7 @@ const OnlineContent = () => {
         const data = await response.json();
 
         const formatted = data.items
-          .slice(1, 4)
+          .slice(0, 3)
           .filter(Boolean)
           .map((item: any) => {
             const parser = new DOMParser();
@@ -66,8 +66,11 @@ const OnlineContent = () => {
           articles.map((content, index) => (
             <div key={content.link} className="text-center">
               <BrowserCard
-                image={content.image}
-                title={content.title}
+                image={content.image} 
+                title= {
+                <p className = "text-3xl line-clamp-2"> 
+                {content.title}
+                </p>}
                 description=" "
                 link={content.link}
                 delay={index * 0.1}
