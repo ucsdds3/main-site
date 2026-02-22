@@ -13,13 +13,13 @@ const Landing = () => {
         <h2 className="text-[clamp(3rem,10vw,6rem)] lg:text-[clamp(3rem,6vw,5rem)]  font-semibold uppercase">
           Projects
         </h2>
-        <Button
+        {/* <Button
           onClick={() => {
             window.open("https://forms.gle/Ww918yDpTf44Xmq89", "_blank");
           }}
         >
           Apply Now
-        </Button>
+        </Button> */}
         <div className="hidden lg:block relative w-full h-[80px]">
           <Star size={1.4} className="absolute top-3/8 left-1/8" />
           <Star size={2} className="absolute top-5/8 left-1/4" />
