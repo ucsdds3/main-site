@@ -1,7 +1,7 @@
 import dino from "/src/Assets/Images/projects_dino.webp";
 import Section from "src/Shared/Page/Section";
 import Star from "src/Shared/Components/Star";
-import Button from "src/Shared/Components/Button";
+//import Button from "src/Shared/Components/Button";
 
 const Landing = () => {
   return (
