@@ -43,11 +43,14 @@ const NavItem = ({ label, data }: NavItemProps) => {
       {/* {label == "Consulting" && <FaLink className="opacity-0 group-hover:opacity-100 " />} */}
     </button>
   ) : (
-    <div ref={dropdownRef} className="relative group w-full lg:w-auto lg:dropdown lg:dropdown-hover">
+    <div
+      ref={dropdownRef}
+      onClick={() => { setIsOpen(!isOpen) }}
+      className="relative group w-full lg:w-auto lg:dropdown"
+    >
       <div
         role="button"
         tabIndex={0}
-        onClick={() => setIsOpen(!isOpen)}
         onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
@@ -58,31 +61,23 @@ const NavItem = ({ label, data }: NavItemProps) => {
       >
         <span>{label}</span>
         <IoIosArrowUp
-          className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} lg:group-hover:rotate-180`}
+          className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
         />
       </div>
 
       <ul
-        className={`${isOpen ? 'flex' : 'hidden'} flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center touch-manipulation`}
+        className={`${isOpen ? 'flex' : 'hidden'} flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center`}
       >
-        {Object.entries(data as object).map(([itemLabel, pathname]) => (
-          <li key={itemLabel}>
+        {Object.entries(data as object).map(([label, pathname]) => (
+          <li key={label}>
             <button
-              type="button"
-              className="hover:text-(--color-primary) text-base cursor-pointer touch-manipulation"
-              onMouseDown={e => {
-                e.preventDefault()
+              onClick={() => {
                 navigate({ pathname })
                 setIsOpen(false)
               }}
-              onClick={e => {
-                if (e.detail === 0) {
-                  navigate({ pathname })
-                  setIsOpen(false)
-                }
-              }}
+              className="hover:text-(--color-primary) text-base"
             >
-              {itemLabel}
+              {label}
             </button>
           </li>
         ))}
