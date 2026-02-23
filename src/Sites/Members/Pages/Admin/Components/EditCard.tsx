@@ -78,7 +78,7 @@ export default function EditCard<T extends Record<string, unknown>>({
               <img
                 src={String(value)}
                 alt="Preview"
-                className="w-full aspect-[16/9] object-cover rounded-lg border border-base-content/20"
+                className="w-full aspect-video object-cover rounded-lg border border-base-content/20"
                 onError={e => {
                   (e.target as HTMLImageElement).style.display = "none";
                 }}
