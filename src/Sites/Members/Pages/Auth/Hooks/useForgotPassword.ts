@@ -4,7 +4,7 @@ import { useState } from "react";
 import { z } from "zod";
 
 const forgotPasswordSchema = z.object({
-  email: z.email("Invalid email format").regex(/@ucsd\.edu$/, "Must be a UCSD email address"),
+  email: z.email("Invalid email format").regex(/\.edu$/, "Must be a .edu email address"),
 });
 
 export function useForgotPassword() {
@@ -22,9 +22,21 @@ export function useForgotPassword() {
       return;
     }
 
-    const href = window.location.href;
-    const { data, error } = await supabase.auth.resetPasswordForEmail(overrideEmail || email, {
-      redirectTo: `${href}?authState=reset-password`,
+    const emailToUse = (overrideEmail || email).toLowerCase();
+
+    const { data: exists, error: lookupError } = await supabase
+      .rpc('check_member_email_exists', { check_email: emailToUse });
+
+    if (lookupError || !exists) {
+      toast.error("No account found with that email address.");
+      return;
+    }
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("authState", "reset-password");
+    url.searchParams.delete("next"); // temporary fix to always go to reset password
+    const { error } = await supabase.auth.resetPasswordForEmail(emailToUse, {
+      redirectTo: url.toString(),
     });
 
     if (error) {
@@ -32,8 +44,7 @@ export function useForgotPassword() {
       return;
     }
 
-    console.log(data);
-    toast.success("Reset link sent to email");
+    toast.success("Reset link sent to your inbox");
   };
 
   return {

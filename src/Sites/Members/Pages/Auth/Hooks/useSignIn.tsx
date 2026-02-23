@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useSiteHandler } from "../../../../../Hooks/useSiteHandler";
 import { useAuthStore } from "../../../Hooks/useAuthStore";
 import { supabase } from "../../../../../Utils/supabase";
 import toast from "react-hot-toast";
 
 export function useSignIn() {
   const { setAuthState, setUser, setAdminLevel } = useAuthStore();
-  const { navigate } = useSiteHandler();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -33,7 +31,7 @@ export function useSignIn() {
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { data: userData, error } = await supabase.auth.signInWithPassword({
-      email: data.email,
+      email: data.email.toLowerCase(),
       password: data.password,
     });
 
@@ -71,11 +69,6 @@ export function useSignIn() {
     setAdminLevel(adminData.admin_level);
     setUser(userData.user);
     setAuthState("authenticated");
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ ...userData.user, adminLevel: adminData.admin_level })
-    );
-    navigate({ pathname: "/", subdomain: "members" });
     toast.success("Login successful!");
   };
 

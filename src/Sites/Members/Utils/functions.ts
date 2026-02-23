@@ -1,4 +1,113 @@
-import { ColumnType } from "./types";
+import { ColumnType } from "../Pages/Admin/Utils/types";
+
+/**
+ * Gets a preview URL for a PDF, handling both direct PDF links and Google Drive links
+ */
+export function getPdfPreviewUrl(url?: string): string | undefined {
+  if (!url) return undefined;
+
+  // Direct PDF
+  if (url.toLowerCase().endsWith(".pdf")) {
+    return url;
+  }
+
+  // Google Drive file link (robust)
+  const driveFileRegex = /https?:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
+  const match = url.match(driveFileRegex);
+
+  if (match && match[1]) {
+    return `https://drive.google.com/file/d/${match[1]}/preview`;
+  }
+
+  return undefined;
+}
+
+/**
+ * Checks if the browser supports WebP encoding in canvas.toBlob (Safari does not)
+ */
+function supportsWebP(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    return canvas.toDataURL("image/webp").startsWith("data:image/webp");
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Compresses an image file to WebP or JPEG format
+ * Uses JPEG fallback for Safari, which doesn't support WebP in canvas.toBlob (would fall back to PNG, producing huge files)
+ * @param file - The image file to compress
+ * @returns Promise resolving to a compressed File (WebP or JPEG)
+ */
+export const compressImage = (file: File): Promise<File> => {
+  const useWebP = supportsWebP();
+  const mimeType = useWebP ? "image/webp" : "image/jpeg";
+  const ext = useWebP ? "webp" : "jpg";
+
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = e => {
+      const img = new Image();
+      img.src = e.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+        const maxDimension = 1920;
+
+        if (width > maxDimension || height > maxDimension) {
+          if (width > height) {
+            height = (height / width) * maxDimension;
+            width = maxDimension;
+          } else {
+            width = (width / height) * maxDimension;
+            height = maxDimension;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          reject(new Error("Could not get canvas context"));
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const tryCompress = (quality: number): void => {
+          canvas.toBlob(
+            blob => {
+              if (!blob) {
+                reject(new Error("Failed to compress image"));
+                return;
+              }
+
+              if (blob.size <= 500 * 1024 || quality <= 0.1) {
+                const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, `.${ext}`), {
+                  type: mimeType,
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
+              } else {
+                tryCompress(Math.max(0.1, quality - 0.1));
+              }
+            },
+            mimeType,
+            quality
+          );
+        };
+
+        tryCompress(0.9);
+      };
+      img.onerror = () => reject(new Error("Failed to load image"));
+    };
+    reader.onerror = () => reject(new Error("Failed to read file"));
+  });
+};
 
 /**
  * Converts snake_case to Title Case
@@ -20,7 +129,7 @@ export function formatCellValue(value: unknown, type: ColumnType): string {
     case "boolean":
       return value ? "Yes" : "No";
     case "date":
-      return new Date(String(value)).toLocaleString();
+      return new Date(String(value)).toLocaleString().replace(",", "\n");
     case "array":
       return Array.isArray(value) ? value.join(", ") : String(value);
     case "json":

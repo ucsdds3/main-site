@@ -6,8 +6,10 @@
       "description": { "type": "text" },
       "points": { "type": "number" },
       "password": { "type": "text" },
+      "qr_code": { "type": "qr_code", "optional": true },
       "start": { "type": "date" },
       "end": { "type": "date" },
+      "temp_end": { "type": "date", "optional": true, "label": "Extended End Time", "hide": true },
       "location": { "type": "text", "optional": true },
       "tags": { "type": "array" }
     },
@@ -21,19 +23,20 @@
     "columns": {
       "email": { "type": "text" },
       "full_name": { "type": "text" },
-      "graduation_year": { "type": "number" },
+      "graduation_year": { "type": "number", "label": "Grad Year" },
       "major": { "type": "text" },
       "points": { "type": "number" },
       "experience": { "type": "number" },
       "gender": { "type": "text", "optional": true },
       "admin_level": { "type": "text", "optional": true },
-      "is_grad_student": { "type": "boolean" }
+      "is_grad_student": { "type": "boolean" },
+      "in_talent_pool": { "type": "boolean" },
+      "resume_link": { "type": "text", "optional": true },
+      "github_link": { "type": "text", "optional": true },
+      "linkedin_link": { "type": "text", "optional": true },
+      "other_link": { "type": "text", "optional": true }
     },
-    "permissions": {
-      "canAdd": [],
-      "canEdit": ["Executive"],
-      "canView": ["Board", "Executive"]
-    }
+    "permissions": { "canAdd": [], "canEdit": ["Executive"], "canView": ["Board", "Executive"] }
   },
   "Items": {
     "columns": {
@@ -47,5 +50,16 @@
       "canEdit": ["Executive"],
       "canView": ["Board", "Executive"]
     }
+  },
+  "Attendance": {
+    "columns": {
+      "member": { "type": "text", "join": "Members.full_name" },
+      "email": { "type": "text", "join": "Members.email" },
+      "event": { "type": "text", "join": "Events.name" },
+      "start": { "type": "date", "join": "Events.start" },
+      "check_in": { "type": "date" },
+      "points": { "type": "number", "optional": true }
+    },
+    "permissions": { "canAdd": [], "canEdit": [], "canView": ["Board", "Executive"] }
   }
 }

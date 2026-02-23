@@ -18,30 +18,12 @@ import Select from "../../Components/Select";
 import majors from "../../Data/majors.json";
 import { useAuthStore } from "../../Hooks/useAuthStore";
 import { useSignUp } from "./Hooks/useSignUp";
+import { getPdfPreviewUrl } from "../../Utils/functions";
 
 const Signup = () => {
   const { setAuthState } = useAuthStore();
   const { errors, data, setData, handleSignup } = useSignUp();
 
-  const getPdfPreviewUrl = (url?: string) => {
-    if (!url) return undefined;
-
-    // Direct PDF
-    if (url.toLowerCase().endsWith(".pdf")) {
-      return url;
-    }
-
-    // Google Drive file link (robust)
-    const driveFileRegex = /https?:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
-
-    const match = url.match(driveFileRegex);
-
-    if (match && match[1]) {
-      return `https://drive.google.com/file/d/${match[1]}/preview`;
-    }
-
-    return undefined;
-  };
   const previewUrl = getPdfPreviewUrl(data.resume_link);
 
   return (
@@ -149,7 +131,7 @@ const Signup = () => {
             <div className="w-full mt-2 flex items-center gap-3 px-4">
               <input
                 type="checkbox"
-                checked={data.in_talent_pool || true}
+                checked={data.in_talent_pool || false}
                 onChange={e => setData({ ...data, in_talent_pool: e.target.checked })}
                 className="w-5 h-5 cursor-pointer"
               />

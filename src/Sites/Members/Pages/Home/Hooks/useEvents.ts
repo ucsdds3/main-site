@@ -1,17 +1,8 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { supabase } from "src/Utils/supabase";
-
 import { EventType } from "src/Utils/types";
-import { useAuthStore } from "../../../Hooks/useAuthStore";
 import toast from "react-hot-toast";
-
-export const tiers = {
-  Rookie: "text-primary", // 0 - 1000 xp
-  Bronze: "text-yellow-700", // 1000 - 2000 xp
-  Silver: "text-gray-400", // 2000 - 4000 xp
-  Gold: "text-yellow-300", // 4000 - 8000 xp
-  Platinum: "text-secondary", // 8000 - 16000 xp
-};
 
 const quarters = {
   Fall: [new Date("2025-09-22"), new Date("2025-12-13")],
@@ -19,46 +10,9 @@ const quarters = {
   Spring: [new Date("2026-03-25"), new Date("2026-06-12")],
 };
 
-export function useStats() {
-  const { user } = useAuthStore();
-  const [xp, setXp] = useState(0);
-  const [points, setPoints] = useState(0);
+export function useEvents() {
   const [attendedEvents, setAttendedEvents] = useState<EventType[]>([]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchStats = async () => {
-      if (!user?.email) return;
-      const { data, error } = await supabase
-        .from("Members")
-        .select("experience,points")
-        .eq("email", user.email)
-        .single();
-      if (!isMounted) return;
-
-      if (error) {
-        console.error("Error fetching stats:", error);
-        return;
-      }
-
-      if (data) {
-        setXp((data.experience ?? 0) * 10);
-        setPoints(data.points ?? 0);
-      }
-    };
-
-    fetchStats();
-    return () => {
-      isMounted = false;
-    };
-  }, [user?.email]);
-
-  const level = Math.max(Math.floor(Math.log2(xp / 1000)) + 1, 0);
-  const offset = Number(xp >= 1000);
-  const xpNeeded = 1000 * Math.pow(2, level - offset);
-  const progress = xp / xpNeeded - offset;
-  const [tier, color] = Object.entries(tiers)[level];
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const fetchAttended = async () => {
     try {
@@ -77,7 +31,34 @@ export function useStats() {
     fetchAttended();
   }, []);
 
-  const handleSubmitCode = async (e: React.FormEvent, eventCode: string) => {
+  useEffect(() => {
+    const eventcodeParam = searchParams.get("eventcode");
+    if (!eventcodeParam) return;
+
+    const run = async () => {
+      const result = await handleSubmitCode(
+        { preventDefault: () => {} } as React.FormEvent,
+        eventcodeParam
+      );
+      const shouldRemoveParam =
+        result === "registered" ||
+        result === "already_registered" ||
+        result === "invalid_event" ||
+        result === "event_expired" ||
+        result === "event_not_started";
+      if (shouldRemoveParam) {
+        const next = new URLSearchParams(searchParams);
+        next.delete("eventcode");
+        setSearchParams(next, { replace: true });
+      }
+    };
+    run();
+  }, []);
+
+  const handleSubmitCode = async (
+    e: React.FormEvent,
+    eventCode: string
+  ): Promise<string | undefined> => {
     e.preventDefault();
 
     if (!eventCode.trim()) {
@@ -96,8 +77,8 @@ export function useStats() {
     }
 
     if (data === "already_registered") toast("Already registered for this event!");
-    else if (data === "event_not_started") toast.error("The event hasn't begun yet");
-    else if (data === "event_expired") toast.error("The event has passed");
+    else if (data === "event_not_started") toast.error("The event hasn't started yet");
+    else if (data === "event_expired") toast.error("The event has ended");
     else if (data === "not_authenticated") toast.error("Please log in first.");
     else if (data === "member_not_found") toast.error("Your account is not linked to a profile.");
     else if (data === "invalid_event") toast.error("Invalid event code.");
@@ -105,6 +86,8 @@ export function useStats() {
       toast.success("Event registration successful!");
       fetchAttended();
     } else toast.error("Unexpected server response.");
+
+    return data as string | undefined;
   };
 
   const getCurrentQuarter = (): [Date, Date] | null => {
@@ -131,18 +114,6 @@ export function useStats() {
   };
 
   return {
-    xp,
-    xpNeeded,
-    progress,
-    tier: {
-      name: tier,
-      color: color,
-    },
-    nextTier: {
-      name: Object.keys(tiers)[level + 1],
-      color: Object.values(tiers)[level + 1],
-    },
-    points,
     attendedEvents,
     handleSubmitCode,
     eventStats,

@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
-import Events from "src/Shared/Events/Events";
+import Events from "src/Shared/Events/EventPage";
 
 import Auth from "./Pages/Auth/Auth";
 import Home from "./Pages/Home/Home";
@@ -17,10 +17,15 @@ const Members = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (authState != "authenticated") navigate({ pathname: "/auth" });
-    else if (adminLevel == null && location.pathname.includes("admin")) navigate({ pathname: "/" });
+    if (authState != "authenticated") {
+      if (location.pathname !== "/auth") {
+        const nextURL = location.pathname + (location.search || "");
+        navigate({ pathname: "/auth", nextURL });
+      }
+    } else if (adminLevel == null && location.pathname.includes("admin"))
+      navigate({ pathname: "/" });
     console.log(authState, "MEMBERS");
-  }, [authState, adminLevel]);
+  }, [authState, adminLevel, location.pathname, location.search]);
 
   return (
     <Routes>

@@ -33,7 +33,7 @@ export function useSignUp() {
     date_of_birth: "",
     graduation_year: new Date().getFullYear(),
     gender: "",
-    in_talent_pool: true,
+    in_talent_pool: false,
     on_mailing_list: false,
     is_grad_student: false,
     resume_link: "",
@@ -44,7 +44,7 @@ export function useSignUp() {
 
   const signupSchema = z
     .object({
-      email: z.email("Invalid email format").regex(/@ucsd\.edu$/, "Must be a UCSD email address"),
+      email: z.email("Invalid email format").regex(/\.edu$/, "Must be a .edu email address"),
 
       full_name: z
         .string()
@@ -126,8 +126,9 @@ export function useSignUp() {
 
     const href = window.location.href;
     const search = new URLSearchParams(window.location.search);
+    const email = data.email.toLowerCase();
     const formData = {
-      email: data.email,
+      email,
       full_name: data.full_name,
       major: data.major,
       date_of_birth: data.date_of_birth,
@@ -145,7 +146,7 @@ export function useSignUp() {
     };
     setErrors("");
     const { data: userData, error } = await supabase.auth.signUp({
-      email: data.email,
+      email,
       password: data.password,
       options: {
         data: formData,

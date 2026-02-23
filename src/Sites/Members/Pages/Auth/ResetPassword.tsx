@@ -4,9 +4,11 @@ import Page from "src/Shared/Page/Page";
 import Button from "src/Shared/Components/Button";
 
 import { Input } from "../../Components/Input";
+import { useAuthStore } from "../../Hooks/useAuthStore";
 import { useResetPassword } from "./Hooks/useResetPassword";
 
 const ResetPassword = () => {
+  const { setAuthState } = useAuthStore();
   const {
     errors,
     password,
@@ -14,7 +16,29 @@ const ResetPassword = () => {
     confirmPassword,
     setConfirmPassword,
     handleResetPassword,
+    linkExpired,
   } = useResetPassword();
+
+  if (linkExpired) {
+    return (
+      <Page>
+        <div className="flex flex-col items-center justify-center w-full flex-1 py-20">
+          <h1 className="text-center hero-text-shadow text-[clamp(2.5rem,14vw,4.5rem)]">
+            Reset Password
+          </h1>
+          <p className="text-center text-xl mb-6">
+            Your reset link has expired. Please request a new one.
+          </p>
+          <Button
+            btnClass="text-[clamp(1rem,1vw,1.5rem)]"
+            onClick={() => setAuthState("forgot-password")}
+          >
+            Resend Reset Link
+          </Button>
+        </div>
+      </Page>
+    );
+  }
 
   return (
     <Page>

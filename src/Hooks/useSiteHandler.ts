@@ -18,25 +18,37 @@ export function useSiteHandler() {
       subdomain == "consulting"
         ? "DS3 Consulting"
         : subdomain == "members"
-        ? "DS3 Members"
-        : "DS3 @ UCSD";
+          ? "DS3 Members"
+          : "DS3 @ UCSD";
   }, [subdomain]);
 
-  const navigateTo = ({ pathname, subdomain, hash }: NavigateProps) => {
+  const navigateTo = ({ pathname, subdomain, hash, nextURL }: NavigateProps) => {
     const hostname = window.location.hostname;
-    const path = pathname || window.location.pathname;
-    const search = window.location.search || "";
-    
-    if (subdomain) {
+    const rawPath = pathname || window.location.pathname;
+    const [pathOnly, pathSearch] = rawPath.includes("?") ? rawPath.split("?", 2) : [rawPath, ""];
+    const path = pathOnly;
+    const search = pathSearch ? `?${pathSearch}` : window.location.search || "";
+    const parts = hostname.split(".");
+    const isProdSubdomain =
+      !hostname.includes("localhost") && !hostname.includes("vercel.app") && parts.length > 2;
+    const currentSubdomain = isProdSubdomain ? (parts[0] === "www" ? "main" : parts[0]) : null;
+
+    const searchParams = new URLSearchParams(search);
+    if (nextURL) searchParams.set("next", nextURL);
+    else searchParams.delete("next");
+    if (isProdSubdomain) searchParams.delete("subdomain");
+    else if (subdomain) searchParams.set("subdomain", subdomain);
+    const query = searchParams.toString();
+    const pathWithSearch = query ? `${path}?${query}` : path;
+
+    if (subdomain && (!isProdSubdomain || currentSubdomain !== subdomain)) {
       if (hostname === "localhost" || hostname.includes("vercel.app")) {
-        const searchParams = new URLSearchParams(search);
-        searchParams.set("subdomain", subdomain);
-        navigate(`${path}?${searchParams.toString()}`);
+        navigate(pathWithSearch);
       } else {
-        window.location.href = `https://${subdomain}.ds3atucsd.com${path}${search}`;
+        window.location.href = `https://${subdomain}.ds3atucsd.com${path}${query ? `?${query}` : ""}`;
       }
     } else {
-      navigate(`${path}${search}`);
+      navigate(pathWithSearch);
     }
 
     if (hash) {

@@ -3,7 +3,7 @@ import { supabase } from "src/Utils/supabase";
 import { useState, useEffect, RefObject } from "react";
 
 import { ColumnDefinition, ColumnType } from "../Utils/types";
-import { processFormValue, formatColumnLabel } from "../Utils/functions";
+import { processFormValue, formatColumnLabel, compressImage } from "../../../Utils/functions";
 
 interface UseEditCardProps<T> {
   tableName: string;
@@ -74,71 +74,6 @@ export default function useEditCard<T extends Record<string, unknown>>({
       ...prev,
       [key]: processedValue,
     }));
-  };
-
-  const compressImage = (file: File): Promise<File> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = e => {
-        const img = new Image();
-        img.src = e.target?.result as string;
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          let width = img.width;
-          let height = img.height;
-          const maxDimension = 1920;
-
-          if (width > maxDimension || height > maxDimension) {
-            if (width > height) {
-              height = (height / width) * maxDimension;
-              width = maxDimension;
-            } else {
-              width = (width / height) * maxDimension;
-              height = maxDimension;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-
-          const ctx = canvas.getContext("2d");
-          if (!ctx) {
-            reject(new Error("Could not get canvas context"));
-            return;
-          }
-
-          ctx.drawImage(img, 0, 0, width, height);
-
-          const tryCompress = (quality: number): void => {
-            canvas.toBlob(
-              blob => {
-                if (!blob) {
-                  reject(new Error("Failed to compress image"));
-                  return;
-                }
-
-                if (blob.size <= 500 * 1024 || quality <= 0.1) {
-                  const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, ".webp"), {
-                    type: "image/webp",
-                    lastModified: Date.now(),
-                  });
-                  resolve(compressedFile);
-                } else {
-                  tryCompress(Math.max(0.1, quality - 0.1));
-                }
-              },
-              "image/webp",
-              quality
-            );
-          };
-
-          tryCompress(0.9);
-        };
-        img.onerror = () => reject(new Error("Failed to load image"));
-      };
-      reader.onerror = () => reject(new Error("Failed to read file"));
-    });
   };
 
   const handleFileUpload = async (key: keyof T, file: File) => {
@@ -225,7 +160,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
     try {
       const missingFields: string[] = [];
       columns.forEach(col => {
-        if (col.optional === true) return;
+        if (col.optional === true || col.join) return;
 
         const value = formData[col.key];
 
@@ -272,7 +207,10 @@ export default function useEditCard<T extends Record<string, unknown>>({
         setImagePreviewUrl(null);
       }
 
-      const fieldsToExclude = ["id", "created_at", "updated_at"];
+      const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code"];
+      columns.forEach(col => {
+        if (col.join) fieldsToExclude.push(col.key as string);
+      });
       const dataToSave = { ...finalFormData };
       fieldsToExclude.forEach(field => {
         delete dataToSave[field as keyof T];
@@ -298,6 +236,30 @@ export default function useEditCard<T extends Record<string, unknown>>({
     }
   };
 
+  const handleExtendEventEnd = async () => {
+    if (tableName !== "Events" || !formData.id || isNew) return;
+
+    setLoading(true);
+    try {
+      const tempEnd = new Date(Date.now() + 5 * 60 * 1000).toISOString();
+      const { error } = await supabase
+        .from("Events")
+        .update({ temp_end: tempEnd })
+        .eq("id", formData.id);
+
+      if (error) throw error;
+
+      setFormData(prev => ({ ...prev, temp_end: tempEnd }));
+      toast.success("Event window extended by 5 minutes.");
+      reloadRef?.current?.reload();
+    } catch (err) {
+      toast.error((err as Error).message || "Failed to extend event");
+      console.error("Error extending event:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleDelete = async () => {
     if (!selectedRow || isNew) return;
 
@@ -305,10 +267,10 @@ export default function useEditCard<T extends Record<string, unknown>>({
 
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from(tableName)
-        .update({ deleted: true })
-        .eq("id", formData.id);
+      const isAttendance = tableName === "Attendance";
+      const { error } = isAttendance
+        ? await supabase.from(tableName).delete().eq("id", formData.id)
+        : await supabase.from(tableName).update({ deleted: true }).eq("id", formData.id);
       if (error) throw error;
       toast.success("Row deleted successfully");
 
@@ -330,5 +292,6 @@ export default function useEditCard<T extends Record<string, unknown>>({
     handleFileUpload,
     handleSave,
     handleDelete,
+    handleExtendEventEnd,
   };
 }
