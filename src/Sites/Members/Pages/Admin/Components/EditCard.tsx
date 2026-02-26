@@ -155,11 +155,7 @@ export default function EditCard<T extends Record<string, unknown>>({
                   onClick={() => handleExtendEventEnd()}
                   disabled={loading}
                 >
-                  {loading ? (
-                    <span className="loading loading-spinner" />
-                  ) : (
-                    "+5 Mins"
-                  )}
+                  {loading ? <span className="loading loading-spinner" /> : "+5 Mins"}
                 </button>
               )}
             </div>

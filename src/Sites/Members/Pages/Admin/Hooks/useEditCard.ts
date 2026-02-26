@@ -35,19 +35,11 @@ export default function useEditCard<T extends Record<string, unknown>>({
       } else {
         const defaults: Partial<T> = {};
         columns.forEach(col => {
-          switch (col.type) {
-            case "boolean":
-              defaults[col.key] = false as unknown as T[keyof T];
-              break;
-            case "number":
-              defaults[col.key] = 0 as unknown as T[keyof T];
-              break;
-            case "array":
-              defaults[col.key] = [] as unknown as T[keyof T];
-              break;
-            default:
-              defaults[col.key] = "" as unknown as T[keyof T];
-          }
+          if (col.optional) defaults[col.key] = null as unknown as T[keyof T];
+          else if (col.type === "boolean") defaults[col.key] = false as unknown as T[keyof T];
+          else if (col.type === "number") defaults[col.key] = 0 as unknown as T[keyof T];
+          else if (col.type === "array") defaults[col.key] = [] as unknown as T[keyof T];
+          else defaults[col.key] = "" as unknown as T[keyof T];
         });
         setFormData(defaults);
         setIsNew(true);
@@ -207,13 +199,14 @@ export default function useEditCard<T extends Record<string, unknown>>({
         setImagePreviewUrl(null);
       }
 
-      const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code"];
-      columns.forEach(col => {
-        if (col.join) fieldsToExclude.push(col.key as string);
-      });
       const dataToSave = { ...finalFormData };
-      fieldsToExclude.forEach(field => {
-        delete dataToSave[field as keyof T];
+      const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code"];
+      columns.forEach(col => { if (col.join) fieldsToExclude.push(col.key as string) });
+      fieldsToExclude.forEach(field => delete dataToSave[field as keyof T]);
+
+      columns.forEach(col => {
+        if (col.type !== "date") return;
+        if (!dataToSave[col.key]) delete (dataToSave as Record<string, unknown>)[col.key as string];
       });
 
       if (isNew) {
