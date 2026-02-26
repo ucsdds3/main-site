@@ -24,9 +24,9 @@ const Avatar = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -34,12 +34,17 @@ const Avatar = () => {
     if (typeof action === "function") {
       action();
     } else {
-      navigate(typeof action === "string" ? { pathname: action } : action as { pathname: string; subdomain?: string });
+      navigate(
+        typeof action === "string"
+          ? { pathname: action }
+          : (action as { pathname: string; subdomain?: string })
+      );
     }
     setIsOpen(false);
   };
 
-  const linkClass = "hover:text-(--color-primary) relative flex items-center justify-center gap-1 cursor-pointer w-full lg:w-auto";
+  const linkClass =
+    "hover:text-(--color-primary) relative flex items-center justify-center gap-1 cursor-pointer w-full lg:w-auto";
 
   return (
     <>
@@ -55,12 +60,15 @@ const Avatar = () => {
       ))}
 
       {/* Desktop: dropdown */}
-      <div ref={dropdownRef} className="relative group w-full lg:w-auto lg:dropdown lg:dropdown-end hidden lg:block">
+      <div
+        ref={dropdownRef}
+        className="relative group w-full lg:w-auto lg:dropdown lg:dropdown-end hidden lg:block"
+      >
         <div
           role="button"
           tabIndex={0}
           onClick={() => setIsOpen(!isOpen)}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
               setIsOpen(!isOpen);
@@ -71,17 +79,19 @@ const Avatar = () => {
           <FaUser />
         </div>
 
-        <ul className={`${isOpen ? "flex" : "hidden"} flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center touch-manipulation`}>
+        <ul
+          className={`flex flex-col gap-3 lg:gap-0 dropdown-content lg:menu bg-base-100 lg:w-52 z-10 p-2 shadow-sm border-t border-(--color-primary) lg:border lg:border-white mt-2 lg:rounded-lg text-center touch-manipulation`}
+        >
           {Object.entries(data).map(([label, action]) => (
             <li key={label}>
               <button
                 type="button"
                 className="hover:text-(--color-primary) text-base cursor-pointer touch-manipulation"
-                onMouseDown={(e) => {
+                onMouseDown={e => {
                   e.preventDefault();
                   handleAction(label, action);
                 }}
-                onClick={(e) => {
+                onClick={e => {
                   if (e.detail === 0) {
                     handleAction(label, action);
                   }
