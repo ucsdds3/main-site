@@ -10,6 +10,7 @@ import Home from "./Pages/Home/Home";
 import Profile from "./Pages/Profile/Profile";
 import Store from "./Pages/Store/Store";
 import Admin from "./Pages/Admin/Admin";
+import Insights from "./Pages/Admin/Insights";
 
 const Members = () => {
   const { authState, adminLevel } = useAuthStore();
@@ -31,6 +32,7 @@ const Members = () => {
     <Routes>
       <Route index element={<Home />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/admin/insights" element={<Insights />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/events" element={<Events />} />
       <Route path="/profile" element={<Profile />} />

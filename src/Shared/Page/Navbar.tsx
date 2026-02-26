@@ -39,7 +39,7 @@ const Navbar = () => {
           </button>
 
           {/* Theme Toggle */}
-          {pathname !== "/admin" && (
+          {!pathname.startsWith("/admin") && (
             <label className="toggle text-base-content" id="theme-toggle">
               <input type="checkbox" checked={isDark} onChange={toggleTheme} />
               <MdLightMode aria-label="disabled" />

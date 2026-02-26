@@ -21,7 +21,10 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
         <NavItem key={index} label={label} data={data} />
       ))}
       {subdomain == "members" && authState == "authenticated" && adminLevel != "Member" && (
-        <NavItem label={"Admin"} data={"/admin"} />
+        <NavItem
+          label={"Admin"}
+          data={{ Dashboard: "/admin", Insights: "/admin/insights" }}
+        />
       )}
       {subdomain != "members" || authState != "authenticated" ? (
         <button
