@@ -23,11 +23,9 @@ const parseFirstParagraph = (htmlContent: string): string => {
     const isShort = text.length < 80;
     const isByline = /^by\s/i.test(text);
     const isHeader = ["H1","H2","H3","H4"].includes(p.previousElementSibling?.tagName || "");
-    //const hasGarbledContent = /\d+\s*[×x]\s*10|\d+\^|\b10\^\d+/.test(text);
-    //const hasMath = /[⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉×∑∏√∞∂∫≈≠≤≥±−]/.test(text);
 
     if (!isShort && !isByline && !isHeader) {
-      return text;//.slice(0, 150).trimEnd() + "...";
+      return text;
     }
   }
 
