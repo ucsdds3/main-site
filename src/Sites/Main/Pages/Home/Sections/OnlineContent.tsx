@@ -11,6 +11,29 @@ interface Article {
   author: string;
 }
 
+const parseFirstParagraph = (htmlContent: string): string => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlContent, "text/html");
+
+  const paragraphs = doc.querySelectorAll("p");
+
+  for (const p of paragraphs) {
+    const text = p.textContent?.trim() || "";
+
+    const isShort = text.length < 80;
+    const isByline = /^by\s/i.test(text);
+    const isHeader = ["H1","H2","H3","H4"].includes(p.previousElementSibling?.tagName || "");
+    //const hasGarbledContent = /\d+\s*[×x]\s*10|\d+\^|\b10\^\d+/.test(text);
+    //const hasMath = /[⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉×∑∏√∞∂∫≈≠≤≥±−]/.test(text);
+
+    if (!isShort && !isByline && !isHeader) {
+      return text;//.slice(0, 150).trimEnd() + "...";
+    }
+  }
+
+  return "";
+};
+
 const OnlineContent = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,6 +45,7 @@ const OnlineContent = () => {
           "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/ds3ucsd"
         );
         const data = await response.json();
+        console.log(data);
 
         const formatted = data.items
           .slice(0, 3)
@@ -30,11 +54,10 @@ const OnlineContent = () => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(item.content, "text/html");
             const img = doc.querySelector("img");
-            const textContent = doc.body.textContent || "";
 
             return {
               title: item.title,
-              description: "", // remove description
+              description: parseFirstParagraph(item.content),
               link: item.link,
               image: img?.src?.split("?")[0] || "/OnlineContent/default.webp",
               author: item.author,
@@ -64,14 +87,15 @@ const OnlineContent = () => {
           <p className="text-center col-span-full">Loading articles...</p>
         ) : (
           articles.map((content, index) => (
-            <div key={content.link} className="text-center">
+            <div key={content.link} className="text-left">  {/* changed text-center to text-left */}
               <BrowserCard
-                image={content.image} 
-                title= {
-                <p className = "text-3xl line-clamp-2"> 
-                {content.title}
-                </p>}
-                description=" "
+                image={content.image}
+                title={
+                  <p className="text-3xl line-clamp-2">
+                    {content.title}
+                  </p>
+                }
+                description={<span className="line-clamp-4">{content.description}</span>}
                 link={content.link}
                 delay={index * 0.1}
                 linkText="Read"
