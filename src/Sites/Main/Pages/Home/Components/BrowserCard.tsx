@@ -9,7 +9,7 @@ interface BrowserCardProps {
   title: string | ReactElement;
   link?: string;
   image?: string;
-  description?: string;
+  description?: string | ReactElement;
   delay?: number;
   linkText?: string;
 }
