@@ -2,6 +2,12 @@
   "about": {
     "name": "Projects",
     "image": "/GetInvolved/projects-img.webp",
+    "photoPool": [
+      { "src": "/GetInvolved/projects-img.webp", "caption": "Fall 2025 Projects" },
+      { "src": "/Projects/P1.webp", "caption": "SayStroop — FA25" },
+      { "src": "/Projects/P2.webp", "caption": "TubeScope — FA25" },
+      { "src": "/Projects/P3.webp", "caption": "Next-Up — FA25" }
+    ],
     "points": {
       "Gain First-hand Experience": "Build real projects from language models to applied ML systems with tangible outcomes.",
       "Build Your Portfolio": "Create deliverables that strengthen your resume and showcase your skills.",

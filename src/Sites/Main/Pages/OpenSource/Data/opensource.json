@@ -1,0 +1,34 @@
+{
+  "about": {
+    "name": "Open Source",
+    "image": "/OpenSource/opensource-img.webp",
+    "photoPool": [
+      { "src": "/OpenSource/opensource-img.webp", "caption": "DS3 Open Source" }
+    ],
+    "points": {
+      "Build in Public": "All DS3 open-source projects are publicly available on GitHub — explore, fork, and build on top of our work.",
+      "Learn by Contributing": "Contributing to real codebases is one of the best ways to grow as an engineer. Every PR counts.",
+      "Community-Driven": "Projects are maintained by DS3 members and open to contributions from anyone in the community."
+    }
+  },
+  "repos": [
+    {
+      "title": "DS3 Website",
+      "description": "The official DS3 club website — built with React, TypeScript, and Tailwind. The very site you're on.",
+      "github": "https://github.com/ds3ucsd/ds3-website",
+      "tags": ["React", "TypeScript", "Tailwind"]
+    },
+    {
+      "title": "DataHacks Starter Kit",
+      "description": "Starter notebooks, datasets, and infrastructure used for DS3's annual DataHacks hackathon.",
+      "github": "https://github.com/ds3ucsd/datahacks",
+      "tags": ["Python", "Jupyter", "Pandas"]
+    },
+    {
+      "title": "ML Workshop Notebooks",
+      "description": "A collection of Jupyter notebooks from DS3 workshops covering EDA, Scikit-Learn, LLMs, and more.",
+      "github": "https://github.com/ds3ucsd/ml-workshops",
+      "tags": ["Python", "Jupyter", "ML"]
+    }
+  ]
+}
