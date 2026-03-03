@@ -1,43 +1,132 @@
 {
   "upcoming": {
     "title": "Upcoming Events",
-    "subtitle": "Want to see what's next?",
+    "subtitle": "See what’s happening next across DS3.",
     "headerImg": "/Events/upcoming-arrows.webp"
+  },
+  "gbm": {
+    "title": "GBM",
+    "subtitle": "Quarterly Kickoff. Community. Getting Involved.",
+    "name": "General Body Meetings",
+    "image": "/GetInvolved/workshop-img.webp",
+    "photoPool": [
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "WI26 GBM"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "FA25 GBM"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "FA24 GBM"
+      }
+    ],
+    "points": {
+      "Quarterly Vision & Roadmap": "Our once-per-quarter GBMs unveil the full slate of events, workshops, projects, and initiatives shaping the upcoming term.",
+      "Meet the People Behind DS3": "Connect directly with our board and leadership team, learn what we’re building, and discover how you can contribute.",
+      "Your Entry Point Into the Community": "Whether you're new or returning, GBMs provide clear pathways to get involved, join projects, and engage meaningfully from day one."
+    }
   },
   "workshops": {
     "title": "Workshops",
-    "subtitle": "Python. GitHub. Web Dev. Generative AI.",
+    "subtitle": "Technical Depth. Real Implementation. Modern Tools.",
     "name": "Workshops",
-    "headerImg": "/Events/workshops-arrows.webp",
     "image": "/GetInvolved/workshop-img.webp",
+    "photoPool": [
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "Palantir Workshop"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "GitHub Crash Course"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "LLM Workshop — Fall '24"
+      }
+    ],
     "points": {
-      "Accessible for All": "Workshops for every skill level — from beginner to advanced.",
-      "Experience Through Practice": "Hands-on sessions to build practical skills and techincal confidence.",
-      "Diverse Topics": "Sessions cover Exploratory Data Analysis, Scikit-Learn, Generative AI, LLMs, AI agents, and more!"
+      "Production-Ready Skill Building": "Go beyond surface-level tutorials and develop hands-on experience with the tools and workflows used in industry.",
+      "Learn by Doing": "Each session centers around real implementation — writing code, debugging systems, and building projects you can actually showcase.",
+      "Aligned with Industry Evolution": "From data pipelines and model deployment to generative AI and agent frameworks, our workshops reflect the technologies shaping today’s technical landscape."
     }
   },
   "social": {
-    "title": "Social Events",
-    "subtitle": "Mentorship. Building community. Having fun.",
+    "title": "Socials",
+    "subtitle": "Community. Mentorship. Connection.",
     "name": "Social Events",
     "image": "/GetInvolved/social-img.webp",
-    "headerImg": "/Events/social-arrows.webp",
+    "photoPool": [
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "Pickleball"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "Beach Bonfire"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "Fundraiser"
+      }
+    ],
     "points": {
-      "Mentorship": "Connect with mentors through our Big-Little program for guidance, friendship, and support.",
-      "Community Beyond Coding": "Join beach bonfires, game nights, and events that build real community.",
-      "Social Meets Growth": "Engage in themed mixers, study jams, and fun activities with fellow peers."
+      "Structured Mentorship & Big-Little": "Build long-term academic and professional support through our mentorship initiatives and Big-Little program.",
+      "Community Beyond the Classroom": "From beach bonfires to game nights, our socials foster genuine relationships that make campus feel smaller and more connected.",
+      "Collaboration Starts with Belonging": "Strong technical communities are built on trust and connection — our socials create the foundation for that growth."
     }
   },
   "professional": {
     "title": "Professional Events",
-    "subtitle": "Networking. Career Growth. Industry Insights.",
+    "subtitle": "Industry Access. Career Growth. Strategic Positioning.",
     "name": "Professional Events",
     "image": "/GetInvolved/pf-events-img.webp",
-    "headerImg": "/Events/professional-arrows.webp",
+    "photoPool": [
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "2025 Career Fair"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "TechConnect with InternShip"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "LinkedIn Panel"
+      }
+    ],
     "points": {
-      "Grow Your Network": "Connect with professionals and alumni through panels and networking events.",
-      "Build Your Career Toolkit": "Strengthen your resume, portfolio, and LinkedIn with practical workshops.",
-      "Discover Your Path in Data Science": "Learn about industry roles and how to turn your skills into opportunities."
+      "Direct Access to Industry Leaders": "Engage with engineers, founders, recruiters, and alumni through curated panels, networking events, and career fairs.",
+      "Practical Career Preparation": "Refine your resume, portfolio, interview skills, and professional presence through actionable workshops and expert feedback.",
+      "Clarity in Career Direction": "Explore pathways across data science, AI, software engineering, and adjacent fields — and learn how to position yourself competitively."
+    }
+  },
+  "leetcode": {
+    "title": "LeetCode Sessions",
+    "subtitle": "Data Structures. Algorithms. SQL. ML.",
+    "name": "LeetCode Sessions",
+    "image": "/GetInvolved/pf-events-img.webp",
+    "photoPool": [
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "2025 Career Fair"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "TechConnect with InternShip"
+      },
+      {
+        "src": "/GetInvolved/workshop-img.webp",
+        "caption": "LinkedIn Panel"
+      }
+    ],
+    "points": {
+      "Structured Interview Preparation": "Work through core data structures and algorithm patterns modeled after real technical interviews.",
+      "Engineering-Level Problem Solving": "Develop clean coding habits, optimization strategies, and pattern recognition essential for competitive recruiting.",
+      "Accountability Through Community": "Prepare alongside peers in a consistent, high-discipline environment that builds long-term confidence."
     }
   }
 }

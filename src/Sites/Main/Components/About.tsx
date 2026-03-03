@@ -1,8 +1,7 @@
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
-
-import Section from "src/Shared/Page/Section";
 import { TeamType } from "src/Utils/types.ts";
-
 import Star from "src/Shared/Components/Star";
 
 export interface AboutProps extends TeamType {
@@ -10,46 +9,289 @@ export interface AboutProps extends TeamType {
   className?: string;
 }
 
-const About = ({ name, image, points, noAbout, className }: AboutProps) => {
+interface PhotoEntry {
+  src: string;
+  caption: string;
+}
+
+const About = ({ name, image, photoPool, points, noAbout, className }: AboutProps & { photoPool?: PhotoEntry[] }) => {
   if (!name || !image) return null;
 
+  const pool: PhotoEntry[] = photoPool && photoPool.length > 0
+    ? photoPool
+    : [{ src: image, caption: "" }];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [hasClicked, setHasClicked] = useState(false);
+
+  const advance = useCallback(() => {
+    if (pool.length <= 1) return;
+    setDirection(1);
+    setHasClicked(true);
+    setCurrentIndex(i => (i + 1) % pool.length);
+  }, [pool.length]);
+
+  const current = pool[currentIndex];
+  const isClickable = pool.length > 1;
+
   return (
-    <Section className="pt-[5rem]">
-      <div
-        className={twMerge(
-          "w-[80vw] max-w-[1204px] border-2 hover:border-(--color-primary) duration-300 rounded-xl p-[clamp(1.5rem,2vw,2.5rem)] group",
-          className
-        )}
-      >
-        <h2 className="text-[clamp(2.5rem,2vw,3.0rem)] font-bold uppercase w-full">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className={twMerge("w-full", className)}
+    >
+      {/* Label + heading */}
+      <div style={{ marginBottom: "2rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.85rem" }}>
+          <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
+          <span style={{
+            fontFamily: "ui-monospace, monospace",
+            fontSize: "0.65rem",
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: "#F58134",
+          }}>
+            {noAbout ? "Overview" : "About"}
+          </span>
+        </div>
+        <h2 style={{
+          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontSize: "clamp(2rem, 3.5vw, 3rem)",
+          fontWeight: 400,
+          color: "var(--obs-text-primary)",
+          margin: 0,
+          lineHeight: 1.1,
+        }}>
           {noAbout ? name : `About ${name}`}
         </h2>
+      </div>
 
-        <div className="w-full flex flex-col lg:flex-row gap-8 mt-6">
-          <div className="aspect-video skeleton flex-[6] rounded-2xl overflow-hidden">
-            <img
-              src={image}
-              className="w-full h-full object-cover group-hover:scale-105 duration-300"
-              onError={e => (e.currentTarget.style.display = "none")}
-            />
+      {/* Image + points */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "clamp(2rem, 4vw, 4rem)",
+          alignItems: "center",
+        }}
+        className="about-grid"
+      >
+        {/* Clickable image with caption */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          <div
+            onClick={advance}
+            style={{
+              borderRadius: "0.625rem",
+              overflow: "hidden",
+              width: "100%",
+              aspectRatio: "4/3",
+              position: "relative",
+              cursor: isClickable ? "pointer" : "default",
+              background: "rgba(0,0,0,0.2)",
+            }}
+          >
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.img
+                key={currentIndex}
+                src={current.src}
+                custom={direction}
+                initial={{ opacity: 0, x: 24 * direction }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 * direction }}
+                transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+                onError={e => (e.currentTarget.style.display = "none")}
+              />
+            </AnimatePresence>
+
+            {/* Persistent click hint — fades out after first click */}
+            {isClickable && (
+              <AnimatePresence>
+                {!hasClicked && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 4 }}
+                    transition={{ delay: 0.6, duration: 0.4 }}
+                    style={{
+                      position: "absolute",
+                      bottom: 10,
+                      right: 10,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.35rem",
+                      background: "rgba(0,0,0,0.55)",
+                      backdropFilter: "blur(6px)",
+                      borderRadius: "2rem",
+                      padding: "0.3rem 0.65rem 0.3rem 0.5rem",
+                      pointerEvents: "none",
+                      zIndex: 10,
+                    }}
+                  >
+                    <motion.svg
+                      width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      animate={{ y: [0, -2, 0] }}
+                      transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
+                      style={{ color: "#F58134", flexShrink: 0 }}
+                    >
+                      <path d="M9 11V6a3 3 0 0 1 6 0v5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M15 11h.01M9 11H8a3 3 0 0 0-3 3v1a7 7 0 0 0 14 0v-4a1 1 0 0 0-2 0v-1a1 1 0 0 0-2 0v-1a1 1 0 0 0-1-1Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </motion.svg>
+                    <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "0.58rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.8)", whiteSpace: "nowrap" }}>
+                      Click to explore
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
+
+            {/* Hover overlay */}
+            {isClickable && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.38)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.5rem",
+                  pointerEvents: "none",
+                }}
+              >
+                <span style={{
+                  fontFamily: "ui-monospace, monospace",
+                  fontSize: "0.62rem",
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.9)",
+                }}>
+                  Next photo
+                </span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: "rgba(255,255,255,0.9)" }}>
+                  <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </motion.div>
+            )}
+
+            {/* Dot indicators */}
+            {pool.length > 1 && (
+              <div style={{
+                position: "absolute",
+                bottom: 10,
+                left: "50%",
+                transform: "translateX(-50%)",
+                display: "flex",
+                gap: "5px",
+                pointerEvents: "none",
+              }}>
+                {pool.map((_, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      width: i === currentIndex ? 16 : 5,
+                      height: 5,
+                      borderRadius: 3,
+                      background: i === currentIndex ? "#F58134" : "rgba(255,255,255,0.45)",
+                      transition: "width 0.3s ease, background 0.3s ease",
+                    }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="flex-[4] flex flex-col justify-center gap-8">
-            {Object.entries(points ?? {}).map(([point, description], index) => (
-              <div key={index} className="flex gap-4">
-                <Star className="mt-3" style={{ width: "30px", height: "30px" }} />
-                <div className="flex flex-col gap-2">
-                  <p className="text-[clamp(1.5rem,2.5vw,2.0rem)] font-bold">{point}</p>
-                  <p className="text-[clamp(1.2rem,2.2vw,1.5rem)] opacity-75 line-clamp-6">
+          {/* Caption */}
+          <AnimatePresence mode="wait">
+            {current.caption && (
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.28 }}
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <div style={{ width: 12, height: 1.5, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
+                <span style={{
+                  fontFamily: "ui-monospace, monospace",
+                  fontSize: "0.62rem",
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "var(--obs-text-primary)",
+                  opacity: 0.55,
+                }}>
+                  {current.caption}
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Points */}
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "clamp(1.25rem, 2vw, 2rem)" }}>
+          {Object.entries(points ?? {}).map(([point, description], index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {index > 0 && (
+                <div style={{
+                  height: 1,
+                  background: "var(--obs-border, rgba(128,128,128,0.15))",
+                  marginBottom: "clamp(1.25rem, 2vw, 2rem)",
+                }} />
+              )}
+              <div style={{ display: "flex", gap: "0.85rem", alignItems: "flex-start" }}>
+                <Star style={{ width: 16, height: 16, flexShrink: 0, marginTop: "0.3rem", color: "#F58134" }} />
+                <div>
+                  <p style={{
+                    fontFamily: "'DM Serif Display', Georgia, serif",
+                    fontSize: "clamp(1.25rem, 1.5vw, 1.6rem)",
+                    fontWeight: 400,
+                    color: "var(--obs-text-primary)",
+                    margin: "0 0 0.3rem 0",
+                    lineHeight: 1.2,
+                  }}>
+                    {point}
+                  </p>
+                  <p style={{
+                    fontSize: "clamp(1.1rem, 1vw, 1.3rem)",
+                    color: "var(--obs-text-primary)",
+                    opacity: 0.58,
+                    margin: 0,
+                    lineHeight: 1.65,
+                  }}>
                     {description}
                   </p>
                 </div>
               </div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
       </div>
-    </Section>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .about-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </motion.div>
   );
 };
 
