@@ -23,7 +23,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       style={{ paddingTop: menuOpen ? "0.5rem" : 0 }}
     >
       {Object.entries(links).map(([label, data], index) => (
-        <NavItem key={index} label={label} data={data} />
+        <NavItem key={index} label={label} data={data as string | Record<string, string>} />
       ))}
 
       {isMembers && isAuthed && adminLevel !== "Member" && (

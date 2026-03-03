@@ -3,7 +3,10 @@
     "name": "Open Source",
     "image": "/OpenSource/opensource-img.webp",
     "photoPool": [
-      { "src": "/OpenSource/opensource-img.webp", "caption": "DS3 Open Source" }
+      { "src": "/GetInvolved/projects-img.webp", "caption": "Fall 2025 Projects" },
+      { "src": "/Projects/P1.webp", "caption": "SayStroop — FA25" },
+      { "src": "/Projects/P2.webp", "caption": "TubeScope — FA25" },
+      { "src": "/Projects/P3.webp", "caption": "Next-Up — FA25" }
     ],
     "points": {
       "Build in Public": "All DS3 open-source projects are publicly available on GitHub — explore, fork, and build on top of our work.",

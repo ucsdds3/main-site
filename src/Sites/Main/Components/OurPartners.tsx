@@ -1,53 +1,58 @@
 import { motion } from "framer-motion";
 import SafeLink from "src/Shared/Components/SafeLink";
-import Section from "src/Shared/Page/Section";
 
 import partners from "../Data/partners.json";
 
 const DEPARTMENT_KEYS = [
-  "SCIDS",
-  "Basement",
-  "Scripps",
-  "COGS",
-  "Rady School of Management",
-  "CSE",
-  "Jacobs School of Engineering",
-  "BRAIN"
+  "SCIDS", "Basement", "Scripps", "COGS",
+  "Rady School of Management", "CSE",
+  "Jacobs School of Engineering", "BRAIN",
 ];
 
 const CLUB_KEYS = [
-  "Triton Ball",
-  "AISC",
-  "AWS Cloud Club",
-  "Biomedical Engineering Society (BMES)",
-  "CBC",
-  "CSSA",
-  "DS3",
-  "Emblem",
-  "GDG",
-  "Product Management Club (PMC)",
-  "Startup Incubator Club",
-  "SUMS",
-  "TESC",
-  "Triton Quantitative Trading (TQT)",
-  "Triton Software Engineering (TSE)"
+  "Triton Ball", "AISC", "AWS Cloud Club",
+  "Biomedical Engineering Society (BMES)", "CBC", "CSSA",
+  "DS3", "Emblem", "GDG", "Product Management Club (PMC)",
+  "Startup Incubator Club", "SUMS", "TESC",
+  "Triton Quantitative Trading (TQT)", "Triton Software Engineering (TSE)",
 ];
 
 const OurPartners = () => {
   const logos = partners.dark;
 
-  const department = Object.entries(logos).filter(([name]) =>
-    DEPARTMENT_KEYS.includes(name)
-  );
-
-  const clubs = Object.entries(logos).filter(([name]) =>
-    CLUB_KEYS.includes(name)
-  );
-
+  const department = Object.entries(logos).filter(([name]) => DEPARTMENT_KEYS.includes(name));
+  const clubs = Object.entries(logos).filter(([name]) => CLUB_KEYS.includes(name));
   const industry = Object.entries(logos).filter(
-    ([name]) =>
-      !DEPARTMENT_KEYS.includes(name) &&
-      !CLUB_KEYS.includes(name)
+    ([name]) => !DEPARTMENT_KEYS.includes(name) && !CLUB_KEYS.includes(name)
+  );
+
+  const SectionLabel = ({
+    label,
+    color,
+    delay = 0,
+  }: {
+    label: string;
+    color: string;
+    delay?: number;
+  }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{ display: "flex", alignItems: "center", gap: "0.65rem", marginBottom: "1.25rem" }}
+    >
+      <div style={{ width: 22, height: 2, background: color, borderRadius: 2, flexShrink: 0 }} />
+      <span style={{
+        fontFamily: "ui-monospace, monospace",
+        fontSize: "0.65rem",
+        letterSpacing: "0.22em",
+        textTransform: "uppercase",
+        color,
+      }}>
+        {label}
+      </span>
+    </motion.div>
   );
 
   const LogoGrid = ({
@@ -82,7 +87,16 @@ const OurPartners = () => {
   );
 
   return (
-    <Section title="Our Partners" className="gap-0">
+    <div
+      style={{
+        width: "100%",
+        maxWidth: 1300,
+        margin: "0 auto",
+        padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3rem)",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <style>{`
         .partner-logo-cell {
           display: flex;
@@ -93,9 +107,7 @@ const OurPartners = () => {
           border-bottom: 1px solid var(--obs-border);
           transition: background 0.25s ease;
         }
-        .partner-logo-cell:hover {
-          background: var(--obs-surface);
-        }
+        .partner-logo-cell:hover { background: var(--obs-surface); }
         .partner-grid {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(clamp(100px, 20vw, 200px), 1fr));
@@ -110,187 +122,117 @@ const OurPartners = () => {
           opacity: 0.8;
           transition: opacity 0.3s ease;
         }
-        
-        /* Smaller club logos */
-        .club-grid .partner-logo-cell img {
-          height: 48px;
-        }
-        .partner-logo-cell:hover img {
-          opacity: 1;
-        }
+        .club-grid .partner-logo-cell img { height: 48px; }
+        .partner-logo-cell:hover img { opacity: 1; }
       `}</style>
 
-<motion.p
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          fontFamily: "'Albert Sans', sans-serif",
-          fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)",
-          lineHeight: 1.8,
-          color: "var(--obs-text-muted)",
-          fontWeight: 300,
-          maxWidth: 500,
-          textAlign: "center",
-          marginBottom: "3rem",
-        }}
-      >
-        Interested in working with us? Reach out at{" "}
-        <SafeLink
-          href="mailto:ds3@ucsd.edu"
-          style={{
-            color: "#19B5CA",
-            textDecoration: "none",
-            borderBottom: "1px solid rgba(25,181,202,0.35)",
-            paddingBottom: 1,
-          }}
+      {/* ── Editorial header ── */}
+      <div style={{ borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))", marginBottom: "clamp(2.5rem, 4vw, 4rem)", paddingBottom: "clamp(1.5rem, 3vw, 3rem)" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}
         >
-          ds3@ucsd.edu
-        </SafeLink>
-        .
-      </motion.p>
-
-      <div style={{ height: "clamp(2.5rem, 4vw, 4rem)" }} />
-
-      {/* ───────── Industry Partners ───────── */}
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          marginBottom: "1.5rem",
-          alignSelf: "flex-start",
-        }}
-      >
-        <div
-          style={{
-            width: 28,
-            height: 2,
-            background: "#F58134",
-            borderRadius: 2,
-            flexShrink: 0,
-          }}
-        />
-        <span
-          style={{
+          <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
+          <span style={{
             fontFamily: "ui-monospace, monospace",
-            fontSize: "0.68rem",
+            fontSize: "0.65rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
             color: "#F58134",
-          }}
-        >
-          Industry Partners
-        </span>
-      </motion.div>
+          }}>
+            Our community
+          </span>
+        </motion.div>
 
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontSize: "clamp(3rem, 7vw, 6rem)",
+              fontWeight: 400,
+              lineHeight: 0.95,
+              color: "var(--obs-text-primary)",
+              margin: 0,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            Our Partners
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            style={{
+              fontSize: "clamp(0.85rem, 1.1vw, 1rem)",
+              color: "var(--obs-text-primary)",
+              opacity: 0.55,
+              margin: 0,
+              maxWidth: 380,
+              lineHeight: 1.7,
+              textAlign: "right",
+            }}
+          >
+            Interested in working with us? Reach out at{" "}
+            <SafeLink
+              href="mailto:ds3@ucsd.edu"
+              style={{
+                color: "#19B5CA",
+                textDecoration: "none",
+                borderBottom: "1px solid rgba(25,181,202,0.35)",
+                paddingBottom: 1,
+              }}
+            >
+              ds3@ucsd.edu
+            </SafeLink>
+            .
+          </motion.p>
+        </div>
+      </div>
+
+      {/* ── Industry ── */}
+      <SectionLabel label="Industry Partners" color="#F58134" />
       <LogoGrid entries={industry} />
 
       <div style={{ height: "clamp(2.5rem, 4vw, 4rem)" }} />
 
-            {/* ───────── Department Partners ───────── */}
-            <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          marginBottom: "1.5rem",
-          alignSelf: "flex-start",
-        }}
-      >
-        <div
-          style={{
-            width: 28,
-            height: 2,
-            background: "#19B5CA",
-            borderRadius: 2,
-            flexShrink: 0,
-          }}
-        />
-        <span
-          style={{
-            fontFamily: "ui-monospace, monospace",
-            fontSize: "0.68rem",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "#19B5CA",
-          }}
-        >
-          On-Campus & Department Partners
-        </span>
-      </motion.div>
-
+      {/* ── Departments ── */}
+      <SectionLabel label="On-Campus & Department Partners" color="#19B5CA" delay={0.05} />
       <LogoGrid entries={department} delay={0.1} />
 
       <div style={{ height: "clamp(2.5rem, 4vw, 4rem)" }} />
 
-      {/* ───────── Club Partners ───────── */}
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          marginBottom: "1.5rem",
-          alignSelf: "flex-start",
-        }}
-      >
-        <div
-          style={{
-            width: 28,
-            height: 2,
-            background: "#a78bfa",
-            borderRadius: 2,
-            flexShrink: 0,
-          }}
-        />
-        <span
-          style={{
-            fontFamily: "ui-monospace, monospace",
-            fontSize: "0.68rem",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "#a78bfa",
-          }}
-        >
-          Club Partners
-        </span>
-      </motion.div>
-
+      {/* ── Clubs ── */}
+      <SectionLabel label="Club Partners" color="#a78bfa" delay={0.05} />
       <LogoGrid entries={clubs} delay={0.1} variant="club" />
 
-      {/* ───────── Disclaimer ───────── */}
-      <p
-        style={{
-          marginTop: "2.5rem",
-          fontFamily: "ui-monospace, monospace",
-          fontSize: "0.62rem",
-          lineHeight: 1.75,
-          letterSpacing: "0.04em",
-          color: "var(--obs-text-faint)",
-          textAlign: "center",
-          maxWidth: 620,
-        }}
-      >
+      {/* ── Disclaimer ── */}
+      <p style={{
+        marginTop: "2.5rem",
+        fontFamily: "ui-monospace, monospace",
+        fontSize: "0.62rem",
+        lineHeight: 1.75,
+        letterSpacing: "0.04em",
+        color: "var(--obs-text-faint)",
+        textAlign: "center",
+        maxWidth: 620,
+        alignSelf: "center",
+      }}>
         Partnerships listed do not imply sponsorship or official endorsement.
         They indicate that DS3 has worked with the listed organization or its employee(s) in some
-        capacity within the past 365 days — including but not limited to sponsorship, workshops, DataHacks, or other
-        collaborative events. The actions and views of DS3 do not reflect those
+        capacity within the past 365 days — including but not limited to sponsorship, workshops,
+        DataHacks, or other collaborative events. The actions and views of DS3 do not reflect those
         of our partners, and vice versa.
       </p>
-    </Section>
+    </div>
   );
 };
 

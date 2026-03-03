@@ -26,13 +26,13 @@
     "Marimo": "/Partners/marimo.webp",
     "Sphinx": "/Partners/sphinx.png",
     "NVIDIA": "/Partners/nvidia_logo.webp",
-    "US Navy": "/Partners/navy_logo.webp",
     "DSA": "/Partners/dsa.png",
     "Neurocrine": "/Partners/neurocrine.png",
     "FBI": "/Partners/fbi.png",
     "SCE": "/Partners/sce.png",
     "AfterQuery": "/Partners/afterquery.webp",
     "YC": "/Partners/yc.png",
+    "Signal Verified": "/Partners/signalverified.png",
 
     "Triton Ball": "/Clubs/tritonball.svg",
     "AISC": "/Clubs/aisc.png",
@@ -81,6 +81,7 @@
     "AfterQuery": "/Partners/afterquery.webp",
     "YC": "/Partners/yc.png",
     "FBI": "/Partners/fbi.png",
+    "Signal Verified": "/Partners/signalverified.png",
 
     "Triton Ball": "/Clubs/tritonball.svg",
     "AISC": "/Clubs/aisc.png",

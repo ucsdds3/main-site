@@ -1,73 +1,225 @@
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
-import Section from "src/Shared/Page/Section";
 import Page from "src/Shared/Page/Page";
 import HoverCard from "src/Shared/Components/HoverCard";
 import Paginate from "src/Shared/Components/Paginate";
 import { usePaginate } from "src/Hooks/usePaginate";
 import { unbreakable } from "src/Utils/functions";
-import Star from "src/Shared/Components/Star";
 
 import alumniData from "./Data/alumni.json";
+
+const PER_PAGE = 12;
 
 const Alumni = () => {
   const [search, setSearch] = useState("");
   const [alumni, setAlumni] = useState(alumniData);
-
-  const { page, setPage, cardsPerPage, numPages, setNumPages, start, end } = usePaginate({
-    totalItems: alumniData.length,
-    numRows: 3,
-  });
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     setPage(1);
-    const filteredAlumni = alumniData.filter(member =>
-      member.name.toLowerCase().includes(search.toLowerCase())
+    const filtered = alumniData.filter(m =>
+      m.name.toLowerCase().includes(search.toLowerCase())
     );
-    setAlumni(filteredAlumni);
-    setNumPages(Math.ceil(filteredAlumni.length / cardsPerPage));
-  }, [search, cardsPerPage, setPage, setNumPages]);
+    setAlumni(filtered);
+  }, [search]);
+
+  const numPages = Math.ceil(alumni.length / PER_PAGE);
+  const start = (page - 1) * PER_PAGE;
+  const pageAlumni = alumni.slice(start, start + PER_PAGE);
 
   return (
     <Page>
-      <Section title="Alumni" className="gap-0 relative">
-        <p className="text-2xl font-light max-w-2xl text-center px-10">
-          Our alumni are a vital part of our community. They are a source of inspiration and
-          motivation for our current members.
-        </p>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: 1300,
+          margin: "0 auto",
+          padding: "clamp(5rem, 9vw, 9rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 5vw, 5rem)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "clamp(2rem, 4vw, 3.5rem)",
+        }}
+      >
+        {/* Hero header */}
+        <div style={{ borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))", paddingBottom: "clamp(1.5rem, 3vw, 3rem)" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}
+          >
+            <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
+            <span style={{
+              fontFamily: "ui-monospace, monospace",
+              fontSize: "0.65rem",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "#F58134",
+            }}>
+              Where are they now
+            </span>
+          </motion.div>
 
-        <Star size={2.5} className="absolute top-10 right-16" />
-        <Star size={2} className="absolute top-6 right-6" />
-        <Star size={2} className="absolute bottom-10 left-6" />
-        <Star size={2.5} className="absolute bottom-4 left-16" />
-      </Section>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontSize: "clamp(3rem, 7vw, 6rem)",
+                fontWeight: 400,
+                lineHeight: 0.95,
+                color: "var(--obs-text-primary)",
+                margin: 0,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Alumni
+            </motion.h1>
 
-      <Section className="gap-0">
-        <div className="flex justify-center md:justify-end w-full">
-          <input
-            type="text"
-            placeholder="Search"
-            className="input input-lg input-primary w-full max-w-xs"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              style={{
+                fontSize: "clamp(0.85rem, 1.1vw, 1rem)",
+                color: "var(--obs-text-primary)",
+                opacity: 0.55,
+                margin: 0,
+                maxWidth: 420,
+                lineHeight: 1.7,
+                textAlign: "right",
+              }}
+            >
+              Our alumni are a vital part of our community — a source of inspiration and motivation for our current members.
+            </motion.p>
+          </div>
         </div>
 
-        <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-y-8 py-12">
-          {alumni.slice(start, end).map((member, index) => (
-            <Suspense key={index} fallback={<div className="w-full" />}>
-              <HoverCard
-                title={member.name}
-                description={`${member.role} ${unbreakable(member.year)}`}
-                image={member.image}
-                size="240px"
-              />
-            </Suspense>
-          ))}
-        </div>
+        {/* Search + count row */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}
+        >
+          {/* Result count */}
+          <span style={{
+            fontFamily: "ui-monospace, monospace",
+            fontSize: "0.62rem",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "var(--obs-text-primary)",
+            opacity: 0.4,
+          }}>
+            {alumni.length} {alumni.length === 1 ? "member" : "members"}
+          </span>
 
-        <Paginate numPages={numPages} page={page} setPage={setPage} />
-      </Section>
+          {/* Search input */}
+          <div style={{ position: "relative" }}>
+            <svg
+              width="13" height="13" viewBox="0 0 24 24" fill="none"
+              style={{
+                position: "absolute",
+                left: "0.75rem",
+                top: "50%",
+                transform: "translateY(-50%)",
+                color: "var(--obs-text-primary)",
+                opacity: 0.35,
+                pointerEvents: "none",
+              }}
+            >
+              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
+              <path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            <input
+              type="text"
+              placeholder="Search alumni..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              style={{
+                fontFamily: "ui-monospace, monospace",
+                fontSize: "0.72rem",
+                letterSpacing: "0.1em",
+                padding: "0.5rem 1rem 0.5rem 2.25rem",
+                background: "transparent",
+                border: "1px solid var(--obs-border, rgba(128,128,128,0.25))",
+                borderRadius: "2rem",
+                color: "var(--obs-text-primary)",
+                outline: "none",
+                width: "clamp(180px, 20vw, 260px)",
+                transition: "border-color 0.2s ease",
+              }}
+              onFocus={e => (e.currentTarget.style.borderColor = "#F58134")}
+              onBlur={e => (e.currentTarget.style.borderColor = "var(--obs-border, rgba(128,128,128,0.25))")}
+            />
+          </div>
+        </motion.div>
+
+        {/* Grid */}
+        {pageAlumni.length > 0 ? (
+          <>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+              gap: "clamp(1rem, 2vw, 1.5rem)",
+            }}>
+              {pageAlumni.map((member, index) => (
+                <Suspense key={`${page}-${index}`} fallback={<div style={{ aspectRatio: "1" }} />}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.03, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <HoverCard
+                      title={member.name}
+                      description={`${member.role} ${unbreakable(member.year)}`}
+                      image={member.image}
+                      size="180px"
+                    />
+                  </motion.div>
+                </Suspense>
+              ))}
+            </div>
+
+            {numPages > 1 && (
+              <div style={{ marginTop: "0.5rem" }}>
+                <Paginate numPages={numPages} page={page} setPage={setPage} />
+              </div>
+            )}
+          </>
+        ) : (
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.6rem",
+            padding: "4rem 2rem",
+            border: "1px dashed var(--obs-border, rgba(128,128,128,0.2))",
+            borderRadius: "0.75rem",
+          }}>
+            <span style={{
+              fontFamily: "ui-monospace, monospace",
+              fontSize: "0.62rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "#F58134",
+            }}>No results</span>
+            <p style={{
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontSize: "clamp(1.2rem, 2vw, 1.6rem)",
+              fontWeight: 400,
+              color: "var(--obs-text-primary)",
+              opacity: 0.5,
+              margin: 0,
+            }}>
+              No alumni found for "{search}"
+            </p>
+          </div>
+        )}
+      </div>
     </Page>
   );
 };

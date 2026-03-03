@@ -19,7 +19,18 @@ const Section = memo(function Section({ title, className, children, ref, ...prop
       {...props}
     >
       {title && (
-        <h2 className="font-semibold text-[clamp(2.7rem,7vw,4rem)] text-center uppercase px-4">
+        <h2
+          style={{
+            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontSize: "clamp(2.7rem, 7vw, 4rem)",
+            fontWeight: 400,
+            letterSpacing: "-0.01em",
+            textAlign: "center",
+            color: "var(--obs-text-primary)",
+            margin: 0,
+            lineHeight: 1.05,
+          }}
+        >
           {title}
         </h2>
       )}

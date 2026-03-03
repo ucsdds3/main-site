@@ -9,7 +9,7 @@ export function getEventRoutes() {
   return {
     path: "/events",
     children: [
-      { index: true, element: <EventPage defaultTime="All" /> },
+      { index: true, element: <EventPage defaultTime="Upcoming" /> },
       // { path: "upcoming", element: <EventTemplate team={upcoming} /> },
       { path: "gbm", element: <EventTemplate team={gbm} /> },
       { path: "workshops", element: <EventTemplate team={workshops} /> },
