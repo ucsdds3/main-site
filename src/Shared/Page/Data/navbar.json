@@ -14,7 +14,7 @@
     },
     "Projects": {
       "Quarterly Projects": "/projects",
-      "Consulting": { "subdomain": "consulting", "pathname": "/" },
+      "Consulting": "/consulting",
       "Open-Source": "/opensource"
     },
     "DataHacks": "/datahacks",
