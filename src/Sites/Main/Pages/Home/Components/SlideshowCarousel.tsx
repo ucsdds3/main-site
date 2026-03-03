@@ -6,69 +6,186 @@ import { cardData } from "src/Utils/types";
 
 const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  const { imageStates } = useImagePreloader(images.map(daton => daton.image));
-
-  const btnClass =
-    "rounded-full hover:text-(--color-primary) p-3 hover:bg-base-300 transition-colors duration-300 cursor-pointer text-2xl md:mx-8 z-100";
-
-  const handlePrev = () => {
-    emblaApi?.scrollPrev();
-  };
-
-  const handleNext = () => {
-    emblaApi?.scrollNext();
-  };
+  const { imageStates } = useImagePreloader(images.map((d) => d.image));
 
   return (
-    <div className="w-full min-h-[550px] md:min-h-[400px] flex items-center justify-center gap-4 md:px-4">
-      <button onClick={handlePrev} className={btnClass} aria-label="Previous">
-        <IoIosArrowBack />
-      </button>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Albert+Sans:wght@300;400;500&display=swap');
 
-      <span
-        className="w-full flex min-h-[550px] md:min-h-[400px] overflow-hidden embla"
-        ref={emblaRef}
+        .slide-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          border: 1px solid var(--obs-border-mid);
+          background: var(--obs-surface);
+          color: var(--obs-text-muted);
+          cursor: pointer;
+          flex-shrink: 0;
+          transition: border-color 0.25s ease, color 0.25s ease,
+                      background 0.25s ease, transform 0.25s ease;
+          backdrop-filter: blur(8px);
+          z-index: 10;
+        }
+        .slide-btn:hover {
+          border-color: rgba(25,181,202,0.5);
+          color: #19B5CA;
+          background: rgba(25,181,202,0.08);
+          transform: scale(1.08);
+        }
+
+        .obs-skel-sq {
+          background: linear-gradient(90deg,
+            var(--obs-surface) 0%,
+            var(--obs-border) 50%,
+            var(--obs-surface) 100%);
+          background-size: 200% 100%;
+          animation: obs-shimmer 1.8s ease-in-out infinite;
+        }
+        @keyframes obs-shimmer {
+          0%   { background-position: -200% 0; }
+          100% { background-position:  200% 0; }
+        }
+      `}</style>
+
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          gap: "clamp(0.75rem, 2vw, 1.5rem)",
+          minHeight: "clamp(340px, 45vw, 480px)",
+          padding: "0 clamp(0.5rem, 2vw, 1.5rem)",
+        }}
       >
-        <section className="flex flex-row w-full ease-in-out embla__container">
-          {images.map((data, i) => {
-            return (
+        {/* Prev */}
+        <button className="slide-btn" onClick={() => emblaApi?.scrollPrev()} aria-label="Previous">
+          <IoIosArrowBack size={16} />
+        </button>
+
+        {/* Embla viewport */}
+        <div
+          ref={emblaRef}
+          style={{ overflow: "hidden", width: "100%", minHeight: "clamp(340px, 45vw, 480px)" }}
+        >
+          <div style={{ display: "flex" }}>
+            {images.map((data, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 flex flex-col md:flex-row items-center justify-center w-full gap-[clamp(1rem,6vw,6rem)] z-100 embla__slides"
+                style={{
+                  flexShrink: 0,
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: "clamp(2rem, 5vw, 5rem)",
+                  padding: "0 clamp(0.5rem, 2vw, 2rem)",
+                }}
+                className="flex-col md:flex-row"
               >
-                <div className="md:w-auto w-full flex justify-center mb-6 md:mb-0">
-                  {imageStates[data.image] || false ? (
-                    <img
-                      src={data.image}
-                      alt={data.title}
-                      className="w-[300px] aspect-square rounded-xl object-cover"
-                    />
+                {/* Image */}
+                <div style={{ flexShrink: 0 }}>
+                  {imageStates[data.image] ? (
+                    <div
+                      style={{
+                        position: "relative",
+                        width: "clamp(200px, 22vw, 300px)",
+                        aspectRatio: "1/1",
+                        borderRadius: "1rem",
+                        overflow: "hidden",
+                        border: "1px solid var(--obs-border)",
+                        boxShadow: "0 20px 50px rgba(0,0,0,0.45)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {/* glint */}
+                      <div style={{ position:"absolute", inset:0, background:"linear-gradient(135deg,var(--obs-border) 0%,transparent 50%)", zIndex:1, pointerEvents:"none" }} />
+                      <img
+                        src={data.image}
+                        alt={data.title}
+                        style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}
+                      />
+                    </div>
                   ) : (
-                    <div className="w-[300px] aspect-square rounded-xl skeleton"></div>
+                    <div
+                      className="obs-skel-sq"
+                      style={{
+                        width: "clamp(200px, 22vw, 300px)",
+                        aspectRatio: "1/1",
+                        borderRadius: "1rem",
+                        flexShrink: 0,
+                      }}
+                    />
                   )}
                 </div>
 
-                <div className="md:w-1/2 w-full text-left font-albert-sans px-[clamp(1rem,3.5vw,3.5rem)] md:px-0">
-                  <h4 className="text-[clamp(1.2rem,4vw,2rem)] md:text-[clamp(1rem,2vw,2rem)] font-semibold mb-2">
+                {/* Text */}
+                <div style={{ flex: 1, display:"flex", flexDirection:"column", gap:"1rem" }}>
+                  {/* Accent line */}
+                  <div style={{ display:"flex", alignItems:"center", gap:"0.6rem" }}>
+                    <div style={{ width:20, height:2, background:"#19B5CA", borderRadius:2, flexShrink:0 }} />
+                    <span style={{ fontFamily:"ui-monospace,monospace", fontSize:"0.62rem", letterSpacing:"0.2em", textTransform:"uppercase", color:"#19B5CA" }}>
+                      Testimonial
+                    </span>
+                  </div>
+
+                  <h4
+                    style={{
+                      fontFamily: "'DM Serif Display', Georgia, serif",
+                      fontSize: "clamp(1.3rem, 2.2vw, 2rem)",
+                      fontWeight: 400,
+                      color: "var(--obs-text-primary)",
+                      lineHeight: 1.2,
+                      margin: 0,
+                    }}
+                  >
                     {data.title}
                   </h4>
-                  <p className="text-[clamp(1.5rem,2.5vw,2rem)] md:text-[clamp(1.5rem,1.5vw,1.8rem)] mb-4 leading-relaxed opacity-75">
+
+                  {/* Divider */}
+                  <div style={{ height:1, background:"linear-gradient(90deg,var(--obs-border),transparent)" }} />
+
+                  <p
+                    style={{
+                      fontFamily: "'Albert Sans', sans-serif",
+                      fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)",
+                      lineHeight: 1.85,
+                      color: "var(--obs-text-muted)",
+                      fontWeight: 300,
+                      margin: 0,
+                      fontStyle: "italic",
+                    }}
+                  >
                     {data.description}
                   </p>
-                  <p className="text-[clamp(1.7rem,2.5vw,2rem)] md:text-[clamp(1.7rem,1.5vw,1.9rem)] font-light">
-                    {data.author}
+
+                  <p
+                    style={{
+                      fontFamily: "ui-monospace, monospace",
+                      fontSize: "0.72rem",
+                      letterSpacing: "0.12em",
+                      color: "var(--obs-text-faint)",
+                      margin: 0,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    — {data.author}
                   </p>
                 </div>
               </div>
-            );
-          })}
-        </section>
-      </span>
+            ))}
+          </div>
+        </div>
 
-      <button onClick={handleNext} className={btnClass} aria-label="Next">
-        <IoIosArrowForward />
-      </button>
-    </div>
+        {/* Next */}
+        <button className="slide-btn" onClick={() => emblaApi?.scrollNext()} aria-label="Next">
+          <IoIosArrowForward size={16} />
+        </button>
+      </div>
+    </>
   );
 };
 

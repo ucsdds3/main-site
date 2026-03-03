@@ -11,9 +11,12 @@
       "Board": "/board",
       "Alumni": "/board/alumni"
     },
-    "Consulting": { "subdomain": "consulting", "pathname": "/" },
+    "Projects": {
+      "Quarterly Projects": "/projects",
+      "Consulting": { "subdomain": "consulting", "pathname": "/" },
+      "Open-Source": "/open-source"
+    },
     "DataHacks": "/datahacks",
-    "Projects": "/projects",
     "Join Us": "/join-us",
     "Partners": "/partners"
   },
