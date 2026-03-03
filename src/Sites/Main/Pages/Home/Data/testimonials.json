@@ -1,15 +1,9 @@
 [
   {
     "image": "/Board/Ansh-Bhatnagar.webp",
-    "title": "SDE Intern | Amazon (AWS) '25",
+    "title": "SDE Intern | AWS '25",
     "description": "Class of 2027",
     "author": "Ansh Bhatnagar - President"
-  },
-  {
-    "image": "/Board/Charles-Rivera.webp",
-    "title": "Product Manager Intern | US Bank '25",
-    "description": "Class of 2026",
-    "author": "Charles Rivera - Workshops Team"
   },
   {
     "image": "/Board/Kaii-Bijlani.webp",
@@ -28,12 +22,6 @@
     "title": "Data Science Intern | Kaiser Permanente '25",
     "description": "Class of 2026",
     "author": "Tanvi Vidyala - Online Content Director"
-  },
-  {
-    "image": "/Board/Viki-Shi.webp",
-    "title": "Intern | Walt Disney Studios '25",
-    "description": "Class of 2026",
-    "author": "Viki Shi - Design Director"
   },
   {
     "image": "/Board/Anirudh-Annabathula.webp",
@@ -55,15 +43,9 @@
   },
   {
     "image": "/Board/Jeronimo-AdamesBaena.webp",
-    "title": "Data Science + IoT Researcher | Chiba Lab '25",
+    "title": "IoT Researcher | Chiba Lab '25",
     "description": "Class of 2027",
     "author": "Jeronimo Adames-Baena - Software Developer"
-  },
-  {
-    "image": "/Board/Srinivas-Sriram.webp",
-    "title": "Intern | Algorithmical.ai '25",
-    "description": "Class of 2028",
-    "author": "Srinivas Sriram - Online Content Writer"
   },
   {
     "image": "/Board/Annabelle-Guiditta.webp",
@@ -72,52 +54,16 @@
     "author": "Annabelle Guiditta - Professional Events Director"
   },
   {
-    "image": "/Board/Huize-Mao.webp",
-    "title": "Data Science Intern | Plants without Borders '25",
-    "description": "Class of 2026",
-    "author": "Huize Mao - External Team"
-  },
-  {
-    "image": "/Board/Aryan-Agarwal.webp",
-    "title": "Cloud Data Engineering Intern | Ally '25",
-    "description": "Class of 2027",
-    "author": "Aryan Agarwal - Projects Mentor"
-  },
-  {
-    "image": "/Board/Ketan-Mittal.webp",
-    "title": "SWE Intern | Resmed '25",
-    "description": "Class of 2027",
-    "author": "Ketan Mittal - Projects Director"
-  },
-  {
     "image": "/Board/Rocio-Saez.webp",
     "title": "Data Analyst Research Intern | Dolphin Cognition Lab '25",
     "description": "Class of 2027",
     "author": "Rocio Saez-Aguirra - Projects Director"
   },
   {
-    "image": "/Board/Vaidehi-Karve.webp",
-    "title": "Data Science + Machine Learning Intern | SDGE '25",
-    "description": "Class of 2027",
-    "author": "Vaidehi Karve - Events Coordinator"
-  },
-  {
-    "image": "/Board/Vani-Sahjwani.webp",
-    "title": "IDX Exchange Summer '25",
-    "description": "Class of 2027",
-    "author": "Vani Sahjwani - Online Content Writer"
-  },
-  {
     "image": "/Board/Camille-Sicat.webp",
     "title": "IRIS-HEP Fellow Summer '25",
     "description": "Class of 2026",
     "author": "Camille Sicat - VP Internal"
-  },
-  {
-    "image": "/Board/Krish-Kankure.webp",
-    "title": "SWE Intern | Atlassian '25",
-    "description": "Class of 2028",
-    "author": "Krish Kankure - Software Team"
   },
   {
     "image": "/Board/Varick-Hasim.webp",
@@ -130,12 +76,6 @@
     "title": "Technology Consultant Intern | PwC India '25",
     "description": "Class of 2027",
     "author": "Vedant Vardhaan - Projects Mentor"
-  },
-  {
-    "image": "/Board/Anika-Thatavarthy.webp",
-    "title": "SWE Intern | Google '25",
-    "description": "Alumni",
-    "author": "Anika Thatavarthy - Advisor"
   },
   {
     "image": "/Board/So-Hirota.webp",

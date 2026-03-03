@@ -21,11 +21,11 @@
   --card-textcolor: oklch(0.93 0.0011 17.19);
   --link-textcolor: oklch(0.86 0 0);
   --color: oklch(0% 0 0);
-  --color-base-100: oklch(25.33% 0.016 252.42);
-  --color-base-200: oklch(23.26% 0.014 253.1);
-  --color-base-300: oklch(21.15% 0.012 254.09);
-  --color-base-400: oklch(19.08% 0.01 254.77);
-  --color-base-500: oklch(17.01% 0.008 255.45);
+  --color-base-100: oklch(5.5% 0.0279 278.3);   /* = #0b1220 */
+  --color-base-200: oklch(3.9% 0.0194 275.9);   /* = #080e19 */
+  --color-base-300: oklch(2.2% 0.0086 275.2);   /* = #05080f */
+  --color-base-400: oklch(1.5% 0.006 275);
+  --color-base-500: oklch(1% 0.004 275);
   --color-base-content: oklch(97.807% 0.029 256.847);
   --color-primary: oklch(75.16% 0.166 50.82);
   --color-primary-content: oklch(100% 0 0);

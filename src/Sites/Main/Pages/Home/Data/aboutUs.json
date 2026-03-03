@@ -1,7 +1,7 @@
 [
   {
     "section": "WHO WE ARE",
-    "title": "Together, we collaborate, learn, and lead the future of data science.",
+    "title": "Together, we collaborate, learn, and lead the future of data science & AI.",
     "content": "We're a diverse community of students passionate about data, technology, and solving real-world problems.",
     "button": "OUR TEAM",
     "link": "/board",
@@ -9,7 +9,7 @@
   },
   {
     "section": "WHAT WE DO",
-    "title": "From workshops to online articles — we turn curiosity into capability.",
+    "title": "From workshops to online articles: we turn curiosity into capability.",
     "content": "We provide opportunities to build technical skills, gain real-world experience, and network with industry & peers.",
     "button": "EVENTS",
     "link": "/events/upcoming",

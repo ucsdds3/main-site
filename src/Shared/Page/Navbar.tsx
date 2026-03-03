@@ -17,20 +17,29 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useLocation().pathname;
 
+  const bg      = isDark ? "rgba(5,8,15,0.92)"      : "rgba(242,237,230,0.92)";
+  const border  = isDark ? "rgba(255,255,255,0.07)"  : "rgba(10,20,50,0.1)";
+
   return (
     <nav
-      className="bg-[#0E1111] sticky top-0 w-full z-50 border-b border-(--color-primary) flex flex-col lg:flex-row items-center justify-between px-6 py-4"
-      data-theme="dark"
+      style={{
+        background: bg,
+        borderBottom: `1px solid ${border}`,
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+      }}
+      className="sticky top-0 w-full z-50 flex flex-col lg:flex-row items-center justify-between px-6 py-4"
     >
-      {/* Top bar with logo and mobile menu button */}
+      {/* Top bar */}
       <div className="w-full lg:w-auto flex items-center justify-between">
         <div className="flex items-center gap-5">
           <button
-            className="space-x-2 cursor-pointer [&:hover>img]:-rotate-180"
+            className="cursor-pointer [&:hover>img]:-rotate-180"
+            style={{ background: "none", border: "none", padding: 0 }}
             onClick={() =>
               navigate({
                 pathname: "/",
-                subdomain: authState == "authenticated" ? subdomain : "main",
+                subdomain: authState === "authenticated" ? subdomain : "main",
                 hash: "home",
               })
             }
@@ -38,7 +47,6 @@ const Navbar = () => {
             <img src="/logo.webp" alt="Logo" className="w-10 transition-all duration-500" />
           </button>
 
-          {/* Theme Toggle */}
           {pathname !== "/admin" && (
             <label className="toggle text-base-content" id="theme-toggle">
               <input type="checkbox" checked={isDark} onChange={toggleTheme} />

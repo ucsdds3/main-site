@@ -1,5 +1,6 @@
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
+import { useTheme } from "src/Hooks/useTheme";
 
 import navData from "./Data/navbar.json";
 import NavItem from "./NavItem";
@@ -8,29 +9,59 @@ import Avatar from "./Avatar";
 const Links = ({ menuOpen }: { menuOpen: boolean }) => {
   const { authState, adminLevel } = useAuthStore();
   const { subdomain, navigate } = useSiteHandler();
+  const { isDark } = useTheme();
   const links = navData[subdomain as keyof typeof navData] || navData.main;
-  const typographyClasses = "font-quicksand font-normal tracking-[0px]";
+
+  const isMembers = subdomain === "members";
+  const isAuthed  = authState === "authenticated";
 
   return (
     <div
-      className={`w-full lg:w-auto items-center flex-col lg:flex lg:flex-row gap-6 text-2xl ${
+      className={`w-full lg:w-auto items-center flex-col lg:flex lg:flex-row gap-6 lg:gap-8 ${
         menuOpen ? "flex" : "hidden"
-      } ${typographyClasses}`}
+      }`}
+      style={{ paddingTop: menuOpen ? "0.5rem" : 0 }}
     >
       {Object.entries(links).map(([label, data], index) => (
         <NavItem key={index} label={label} data={data} />
       ))}
-      {subdomain == "members" && authState == "authenticated" && adminLevel != "Member" && (
-        <NavItem label={"Admin"} data={"/admin"} />
+
+      {isMembers && isAuthed && adminLevel !== "Member" && (
+        <NavItem label="Admin" data="/admin" />
       )}
-      {subdomain != "members" || authState != "authenticated" ? (
+
+      {(!isMembers || !isAuthed) ? (
         <button
           onClick={() =>
-            navigate({ pathname: "/", subdomain: subdomain == "main" ? "members" : "main" })
+            navigate({ pathname: "/", subdomain: subdomain === "main" ? "members" : "main" })
           }
-          className={`bg-(--color-primary) px-4 pb-2 pt-1 hover:brightness-110 cursor-pointer rounded-full text-center ${typographyClasses} font-medium w-full sm:w-auto min-w-[120px] uppercase`}
+          style={{
+            fontFamily: "ui-monospace, monospace",
+            fontSize: "0.68rem",
+            fontWeight: 500,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            padding: "0.55rem 1.4rem",
+            borderRadius: "9999px",
+            border: "1px solid rgba(25,181,202,0.45)",
+            background: "rgba(25,181,202,0.1)",
+            color: "#19B5CA",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+            whiteSpace: "nowrap",
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = "rgba(25,181,202,0.2)"
+            e.currentTarget.style.borderColor = "rgba(25,181,202,0.75)"
+            e.currentTarget.style.boxShadow = "0 0 20px rgba(25,181,202,0.2)"
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = "rgba(25,181,202,0.1)"
+            e.currentTarget.style.borderColor = "rgba(25,181,202,0.45)"
+            e.currentTarget.style.boxShadow = "none"
+          }}
         >
-          {subdomain == "main" ? "Members Login" : "Main Site"}
+          {subdomain === "main" ? "Members Login" : "Main Site"}
         </button>
       ) : (
         <Avatar />
