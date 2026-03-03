@@ -21,7 +21,6 @@ const Landing = () => {
           borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))",
         }}
       >
-        {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -29,20 +28,17 @@ const Landing = () => {
           style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}
         >
           <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
-          <span
-            style={{
-              fontFamily: "ui-monospace, monospace",
-              fontSize: "0.65rem",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "#F58134",
-            }}
-          >
-            Want to build your resume?
+          <span style={{
+            fontFamily: "ui-monospace, monospace",
+            fontSize: "0.65rem",
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: "#F58134",
+          }}>
+            Free & open to all
           </span>
         </motion.div>
 
-        {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -57,7 +53,7 @@ const Landing = () => {
             letterSpacing: "-0.02em",
           }}
         >
-          Projects
+          Open Source
         </motion.h1>
       </div>
     </Section>

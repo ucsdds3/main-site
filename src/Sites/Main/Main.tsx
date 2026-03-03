@@ -5,6 +5,7 @@ import { getEventRoutes } from "./Pages/Events/EventRoutes";
 import Board from "./Pages/Board/Board";
 import Alumni from "./Pages/Board/Alumni";
 import Projects from "./Pages/Projects/Projects";
+import OpenSource from "./Pages/OpenSource/OpenSource";
 import DataHacks from "./Pages/DataHacks/DataHacks";
 import Partners from "./Pages/Partners/Partners";
 import JoinUs from "./Pages/JoinUs/JoinUs";
@@ -25,6 +26,7 @@ const Main = () => {
         <Route path="alumni" element={<Alumni />} />
       </Route>
       <Route path="/projects" element={<Projects />} />
+      <Route path="/opensource" element={<OpenSource />} />
       <Route path="/datahacks" element={<DataHacks />} />
       <Route path="/partners" element={<Partners />} />
       <Route path="/join-us" element={<JoinUs />} />

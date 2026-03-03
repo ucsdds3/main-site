@@ -1,12 +1,33 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import { FaFilePowerpoint, FaGithub, FaGlobe } from "react-icons/fa";
 
 import HoverCard from "src/Shared/Components/HoverCard";
 import Paginate from "src/Shared/Components/Paginate";
-import Section from "src/Shared/Page/Section";
 import { usePaginate } from "src/Hooks/usePaginate";
 
 import projectsData from "../Data/projects.json";
+
+const PER_PAGE = 4;
+
+const selectStyle: React.CSSProperties = {
+  fontFamily: "ui-monospace, monospace",
+  fontSize: "0.68rem",
+  letterSpacing: "0.12em",
+  textTransform: "uppercase",
+  background: "transparent",
+  border: "1px solid var(--obs-border, rgba(128,128,128,0.25))",
+  borderRadius: "0.375rem",
+  padding: "0.45rem 2rem 0.45rem 0.75rem",
+  color: "var(--obs-text-primary)",
+  cursor: "pointer",
+  appearance: "none",
+  WebkitAppearance: "none",
+  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F58134' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "right 0.6rem center",
+  minWidth: "11rem",
+};
 
 const ShowCase = () => {
   const projects = projectsData.projects;
@@ -14,100 +35,127 @@ const ShowCase = () => {
   const years = Object.keys(projects).reverse() as YearType[];
   const [year, setYear] = useState<YearType>(years[0]);
   const [order, setOrder] = useState<"Projects" | "Presentation">("Projects");
+  const [page, setPage] = useState(1);
 
-  const { page, setPage, numPages, start, end } = usePaginate({
-    totalItems: projects[year].length,
-    numRows: 1,
-  });
+  const sortedProjects = useMemo(() => [...projects[year]].sort((a, b) =>
+    order === "Projects"
+      ? b.projects_points - a.projects_points
+      : b.presentation_points - a.presentation_points
+  ), [year, order]);
 
-  const sortedProjects = projects[year].sort((a, b) => {
-    if (order === "Projects") return b.projects_points - a.projects_points;
-    return b.presentation_points - a.presentation_points;
-  });
+  const numPages = Math.ceil(sortedProjects.length / PER_PAGE);
+  const start = (page - 1) * PER_PAGE;
+  const end = start + PER_PAGE;
+  const pageProjects = sortedProjects.slice(start, end);
 
-  const createLinks = (project: (typeof projects)[YearType][0]) => {
-    return [
-      {
-        title: "GitHub",
-        href: project.github_repository,
-        icon: <FaGithub />,
-        color: "#11B3C9",
-      },
-      {
-        title: "Presentation",
-        href: project.presentation_slides,
-        icon: <FaFilePowerpoint />,
-        color: "#F58134",
-      },
-      {
-        title: "Website",
-        href: project.website,
-        icon: <FaGlobe />,
-        color: "#222222",
-      },
-    ];
-  };
+  const createLinks = (project: (typeof projects)[YearType][0]) => [
+    { title: "GitHub", href: project.github_repository, icon: <FaGithub />, color: "#11B3C9" },
+    { title: "Presentation", href: project.presentation_slides, icon: <FaFilePowerpoint />, color: "#F58134" },
+    { title: "Website", href: project.website, icon: <FaGlobe />, color: "#222222" },
+  ];
 
   return (
-    <Section>
-      <div className="flex flex-col md:flex-row gap-4 justify-between items-center w-full">
-        <div className="flex flex-col text-center md:text-left">
-          <h2 className="text-5xl font-semibold">PROJECT SHOWCASE</h2>
-          <p className="text-2xl">
-            {" "}
-            Here are some of our latest projects. Hover over a project for relevant links.
-          </p>
+    <div style={{ width: "100%" }}>
+      {/* Header row */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "flex-end",
+          justifyContent: "space-between",
+          gap: "1rem",
+          marginBottom: "1.5rem",
+        }}
+      >
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.7rem" }}>
+            <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
+            <span style={{
+              fontFamily: "ui-monospace, monospace",
+              fontSize: "0.65rem",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "#F58134",
+            }}>Ranked by score</span>
+          </div>
+          <h2 style={{
+            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
+            fontWeight: 400,
+            color: "var(--obs-text-primary)",
+            margin: 0,
+            lineHeight: 1.1,
+          }}>Project Showcase</h2>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4">
-          <fieldset className="fieldset w-[clamp(10rem,15vw,15rem)] flex flex-col items-center gap-2">
-            <span className="text-2xl font-semibold">Order By</span>
-            <select
-              value={order}
-              className="select select-primary select-lg"
-              onChange={e => {
-                setPage(1);
-                setOrder(e.target.value as "Projects" | "Presentation");
-              }}
-            >
-              <option value="Projects">Projects Points</option>
+        {/* Controls */}
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "flex-end" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+            <span style={{
+              fontFamily: "ui-monospace, monospace",
+              fontSize: "0.58rem",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "var(--obs-text-primary)",
+              opacity: 0.45,
+            }}>Order by</span>
+            <select value={order} style={selectStyle}
+              onChange={e => { setPage(1); setOrder(e.target.value as "Projects" | "Presentation"); }}>
+              <option value="Projects">Project Points</option>
               <option value="Presentation">Presentation Points</option>
             </select>
-          </fieldset>
-
-          <fieldset className="fieldset w-[clamp(10rem,15vw,15rem)] flex flex-col items-center gap-2">
-            <span className="text-2xl font-semibold">Year</span>
-            <select
-              value={year}
-              className="select select-primary select-lg"
-              onChange={e => {
-                setPage(1);
-                setYear(e.target.value as YearType);
-              }}
-            >
-              {years.map((year, index) => (
-                <option key={index}>{year}</option>
-              ))}
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+            <span style={{
+              fontFamily: "ui-monospace, monospace",
+              fontSize: "0.58rem",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "var(--obs-text-primary)",
+              opacity: 0.45,
+            }}>Year</span>
+            <select value={year} style={selectStyle}
+              onChange={e => { setPage(1); setYear(e.target.value as YearType); }}>
+              {years.map((y, i) => <option key={i}>{y}</option>)}
             </select>
-          </fieldset>
+          </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(clamp(300px,40vw,350px),1fr))] justify-center gap-y-8">
-        {sortedProjects.slice(start, end).map((project, index) => (
-          <HoverCard
-            key={index}
-            {...project}
-            placement={page === 1 ? index + 1 : undefined}
-            links={createLinks(project)}
-            size="clamp(300px, 40vw, 350px)"
-            imgClassName="border-2 border-primary"
-          />
+      {/* Grid — fixed 4 columns */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "clamp(0.75rem, 1.5vw, 1.25rem)",
+      }}>
+        {pageProjects.map((project, index) => (
+          <motion.div
+            key={`${year}-${page}-${index}`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <HoverCard
+              {...project}
+              placement={page === 1 ? start + index + 1 : undefined}
+              links={createLinks(project)}
+              size="clamp(160px, 20vw, 280px)"
+              imgClassName="border border-primary"
+            />
+          </motion.div>
         ))}
       </div>
 
-      <Paginate numPages={numPages} page={page} setPage={setPage} />
-    </Section>
+      {numPages > 1 && (
+        <div style={{ marginTop: "1.5rem" }}>
+          <Paginate numPages={numPages} page={page} setPage={setPage} />
+        </div>
+      )}
+    </div>
   );
 };
 
