@@ -1,0 +1,60 @@
+{
+  "about": {
+    "name": "Consulting",
+    "image": "/Consulting/consulting-img.webp",
+    "photoPool": [
+      { "src": "/Consulting/consulting-img.webp", "caption": "DS3 Consulting" },
+      { "src": "/Consulting/consulting-img2.webp", "caption": "Client Workshop" },
+      { "src": "/Consulting/consulting-img3.webp", "caption": "Data Presentation" }
+    ],
+    "points": {
+      "Real-World Impact": "We work directly with companies, research groups, and nonprofits to solve meaningful data science problems with tangible outcomes.",
+      "Student-Led, Mentor-Backed": "Projects are led by DS3 members and supported by experienced mentors — bridging academic rigor with industry practice.",
+      "End-to-End Delivery": "From scoping and EDA to model development and final presentation, we own the full project lifecycle."
+    }
+  },
+  "services": [
+    {
+      "title": "Data Analytics",
+      "icon": "/Consulting/Data_Analytics.webp",
+      "description": "Turn raw data into actionable insight. We build dashboards, run EDA, and deliver clear reports that drive decisions."
+    },
+    {
+      "title": "Machine Learning",
+      "icon": "/Consulting/MLOPS.webp",
+      "description": "From classification to forecasting, we design and deploy ML pipelines tailored to your organization's needs."
+    },
+    {
+      "title": "Cloud Solutions",
+      "icon": "/Consulting/Model_Design.webp",
+      "description": "Architecture and tooling on AWS, GCP, or Azure — designed for scale, cost-efficiency, and reliability."
+    },
+    {
+      "title": "Web Development",
+      "icon": "/Consulting/Solutions_Architecture.webp",
+      "description": "Data-driven web apps and internal tools built with modern frameworks, from prototypes to production."
+    }
+  ],
+  "projects": [
+    {
+      "title": "Geisel IOT Occupancy Tracker",
+      "description": "Real-time visualization of Geisel Library traffic using IoT sensors and a live Firebase data pipeline.",
+      "link": "https://github.com/ds3ucsd/geisel-iot"
+    },
+    {
+      "title": "UCSD Enrollment Predictor",
+      "description": "Forecasting course enrollment demand using historical registrar data to help departments plan capacity.",
+      "link": "https://github.com/ds3ucsd/enrollment-predictor"
+    },
+    {
+      "title": "Research Lab Data Pipeline",
+      "description": "Built an end-to-end data ingestion and transformation pipeline for a UCSD neuroscience lab.",
+      "link": ""
+    }
+  ],
+  "clients": [
+    { "name": "UCSD Geisel Library", "logo": "/Consulting/clients/geisel.webp" },
+    { "name": "UCSD CSE Department", "logo": "/Consulting/clients/cse.webp" },
+    { "name": "Rady School of Management", "logo": "/Consulting/clients/rady.webp" }
+  ]
+}
