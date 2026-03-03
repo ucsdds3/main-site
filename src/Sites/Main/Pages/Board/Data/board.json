@@ -715,29 +715,9 @@
     "linkedIn": "https://www.linkedin.com/in/alexander-cloninger-9b5877133/"
   },
   {
-    "name": "Kyle Shannon",
-    "teams": ["Advisors"],
-    "role": "Volunteer Faculty Advisor",
-    "email": "kshannon@ucsd.edu",
-    "image": "/Board/Kyle-Shannon.webp",
-    "website": "https://www.kmshannon.com/about/",
-    "resume": "https://s3.us-west-2.amazonaws.com/kmshannon.com/documents/kshannon_cv_web.pdf",
-    "linkedIn": "https://www.linkedin.com/in/kmshannon/"
-  },
-  {
-    "name": "Anika Thatavarthy",
-    "teams": ["Advisors"],
-    "role": "Graduate Advisor",
-    "email": "athatavarthy@ucsd.edu",
-    "image": "/Board/Anika-Thatavarthy.webp",
-    "website": "https://www.linkedin.com/in/anika-thatavarthy/",
-    "resume": "https://docs.google.com/document/d/1Mx59JBfTKTUnnei-ltQlXvBPSH023dZhpN6hqj4XufU/edit?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/anika-thatavarthy/"
-  },
-  {
     "name": "Jingbo Shang",
     "teams": ["Advisors"],
-    "role": "Graduate Advisor",
+    "role": "CSE Faculty Advisor",
     "email": "jshang@ucsd.edu",
     "image": "/Board/Jingbo-Shang.webp",
     "website": "https://shangjingbo1226.github.io/",

@@ -6,10 +6,6 @@ import useImagePreloader from "src/Hooks/useImagepreload";
 
 import data from "../Data/aboutUs.json";
 
-/* ═══════════════════════════════════════════
-   AboutUs — Dark Observatory aesthetic
-   ═══════════════════════════════════════════ */
-
 const rowVariants: Variants = {
   hidden: { opacity: 0, y: 48 },
   visible: {
@@ -36,14 +32,10 @@ const AboutUs = () => {
   const { imageStates } = useImagePreloader(data.map((d) => d.image));
 
   return (
-    <div
-      id="about-us-root"
-      style={{ position: "relative" }}
-    >
+    <div id="about-us-root" style={{ position: "relative" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Albert+Sans:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 
-        /* Strip any background the Section component injects */
         #about-us-root > *,
         #about-us-root section,
         #about-us-root [class*="section"],
@@ -52,7 +44,6 @@ const AboutUs = () => {
           background-color: transparent !important;
         }
 
-        /* Alternating row layouts */
         .about-row {
           display: flex;
           flex-direction: column;
@@ -64,7 +55,6 @@ const AboutUs = () => {
           .about-row-odd  { flex-direction: row; }
         }
 
-        /* CTA link */
         .obs-link {
           display: inline-block;
           padding: 0.85rem 2rem;
@@ -86,17 +76,13 @@ const AboutUs = () => {
           color: var(--obs-text-primary);
           transform: translateY(-2px);
         }
-        .obs-link-teal {
-          border: 1px solid rgba(25,181,202,0.35);
-        }
+        .obs-link-teal  { border: 1px solid rgba(25,181,202,0.35); }
         .obs-link-teal:hover {
           background: rgba(25,181,202,0.12);
           border-color: rgba(25,181,202,0.7);
           box-shadow: 0 12px 36px rgba(25,181,202,0.18);
         }
-        .obs-link-orange {
-          border: 1px solid rgba(245,129,52,0.35);
-        }
+        .obs-link-orange { border: 1px solid rgba(245,129,52,0.35); }
         .obs-link-orange:hover {
           background: rgba(245,129,52,0.12);
           border-color: rgba(245,129,52,0.7);
@@ -115,7 +101,7 @@ const AboutUs = () => {
       `}</style>
 
       <Section title="About Us">
-        <div style={{ marginTop:"3.5rem", display:"flex", flexDirection:"column", gap:"clamp(5rem,9vw,8rem)" }}>
+        <div style={{ marginTop: "3.5rem", display: "flex", flexDirection: "column", gap: "clamp(5rem,9vw,8rem)" }}>
           {data.map((section, index) => {
             const isEven = index % 2 === 0;
             const accent = ACCENT[index % 2];
@@ -132,26 +118,26 @@ const AboutUs = () => {
                 className={`about-row ${isEven ? "about-row-even" : "about-row-odd"}`}
               >
                 {/* ── Text column ── */}
-                <div style={{ flex: 1, display:"flex", flexDirection:"column", justifyContent:"center", gap:"1.4rem" }}>
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "1.4rem" }}>
 
                   {/* Section label */}
-                  <div style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
-                    <div style={{ width:28, height:2, background:accent, borderRadius:2, boxShadow:`0 0 8px ${accentGlow}0.7)`, flexShrink:0 }} />
-                    <span style={{ fontFamily:"ui-monospace,monospace", fontSize:"0.68rem", letterSpacing:"0.22em", textTransform:"uppercase", color:accent }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                    <div style={{ width: 28, height: 2, background: accent, borderRadius: 2, boxShadow: `0 0 8px ${accentGlow}0.7)`, flexShrink: 0 }} />
+                    <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: accent }}>
                       {section.section}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h2 style={{ fontFamily:"'DM Serif Display',Georgia,serif", fontSize:"clamp(2rem,3.2vw,3rem)", fontWeight:400, lineHeight:1.1, color:"var(--obs-text-primary)", margin:0 }}>
+                  <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "clamp(2rem,3.2vw,3rem)", fontWeight: 400, lineHeight: 1.1, color: "var(--obs-text-primary)", margin: 0 }}>
                     {section.title}
                   </h2>
 
                   {/* Rule */}
-                  <div style={{ width:"100%", height:1, background:"linear-gradient(90deg,var(--obs-border) 0%,transparent 100%)" }} />
+                  <div style={{ width: "100%", height: 1, background: "linear-gradient(90deg,var(--obs-border) 0%,transparent 100%)" }} />
 
-                  {/* Body */}
-                  <p style={{ fontFamily:"'Albert Sans',sans-serif", fontSize:"clamp(0.95rem,1.2vw,1.05rem)", lineHeight:1.85, color:"var(--obs-text-muted)", fontWeight:300, margin:0 }}>
+                  {/* Body — inherits site font, no Albert Sans */}
+                  <p style={{ fontSize: "clamp(0.95rem,1.2vw,1.05rem)", lineHeight: 1.85, color: "var(--obs-text-muted)", fontWeight: 300, margin: 0 }}>
                     {section.content}
                   </p>
 
@@ -164,28 +150,23 @@ const AboutUs = () => {
                 </div>
 
                 {/* ── Image column ── */}
-                <motion.div
-                  variants={imgVariants}
-                  style={{ flex:1, display:"flex", alignItems:"center" }}
-                >
+                <motion.div variants={imgVariants} style={{ flex: 1, display: "flex", alignItems: "center" }}>
                   <div style={{
-                    position:"relative",
-                    width:"100%",
-                    aspectRatio:"16/9",
-                    borderRadius:"1rem",
-                    overflow:"hidden",
-                    border:"1px solid var(--obs-border)",
-                    boxShadow:"0 24px 64px rgba(0,0,0,0.5), inset 0 1px 0 var(--obs-surface)",
+                    position: "relative",
+                    width: "100%",
+                    aspectRatio: "16/9",
+                    borderRadius: "1rem",
+                    overflow: "hidden",
+                    border: "1px solid var(--obs-border)",
+                    boxShadow: "0 24px 64px rgba(0,0,0,0.5), inset 0 1px 0 var(--obs-surface)",
                   }}>
-                    {/* Glint */}
-                    <div aria-hidden style={{ position:"absolute", inset:0, background:"linear-gradient(135deg,var(--obs-surface) 0%,transparent 50%)", zIndex:1, pointerEvents:"none" }} />
-                    {/* Corner glow */}
-                    <div aria-hidden style={{ position:"absolute", top:0, left:0, width:"50%", height:"50%", background:`radial-gradient(circle at 0% 0%,${accentGlow}0.1) 0%,transparent 65%)`, zIndex:1, pointerEvents:"none" }} />
+                    <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,var(--obs-surface) 0%,transparent 50%)", zIndex: 1, pointerEvents: "none" }} />
+                    <div aria-hidden style={{ position: "absolute", top: 0, left: 0, width: "50%", height: "50%", background: `radial-gradient(circle at 0% 0%,${accentGlow}0.1) 0%,transparent 65%)`, zIndex: 1, pointerEvents: "none" }} />
 
                     {imageStates[section.image] ? (
-                      <img src={section.image} alt={section.section} style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
+                      <img src={section.image} alt={section.section} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                     ) : (
-                      <div className="img-skeleton" style={{ width:"100%", height:"100%" }} />
+                      <div className="img-skeleton" style={{ width: "100%", height: "100%" }} />
                     )}
                   </div>
                 </motion.div>
