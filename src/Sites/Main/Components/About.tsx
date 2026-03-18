@@ -7,6 +7,7 @@ import Star from "src/Shared/Components/Star";
 export interface AboutProps extends TeamType {
   noAbout?: boolean;
   className?: string;
+  hidePointIcon?: boolean;
 }
 
 interface PhotoEntry {
@@ -14,7 +15,7 @@ interface PhotoEntry {
   caption: string;
 }
 
-const About = ({ name, image, photoPool, points, noAbout, className }: AboutProps & { photoPool?: PhotoEntry[] }) => {
+const About = ({ name, image, photoPool, points, noAbout, className, hidePointIcon }: AboutProps & { photoPool?: PhotoEntry[] }) => {
   if (!name || !image) return null;
 
   const pool: PhotoEntry[] = photoPool && photoPool.length > 0
@@ -256,7 +257,9 @@ const About = ({ name, image, photoPool, points, noAbout, className }: AboutProp
                 }} />
               )}
               <div style={{ display: "flex", gap: "0.85rem", alignItems: "flex-start" }}>
-                <Star style={{ width: 16, height: 16, flexShrink: 0, marginTop: "0.3rem", color: "#F58134" }} />
+                {!hidePointIcon && (
+                  <Star style={{ width: 16, height: 16, flexShrink: 0, marginTop: "0.3rem", color: "#F58134" }} />
+                )}
                 <div>
                   <p style={{
                     fontFamily: "'DM Serif Display', Georgia, serif",

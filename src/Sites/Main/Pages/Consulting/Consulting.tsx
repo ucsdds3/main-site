@@ -32,7 +32,7 @@ const Consulting = () => {
         <Suspense>
         <Services />
           <Divider />
-          <About {...consultingData.about} />
+          <About {...consultingData.about} hidePointIcon />
           <Divider />
           <ConsultingProjects />
           <Divider />

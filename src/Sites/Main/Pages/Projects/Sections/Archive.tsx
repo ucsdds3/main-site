@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
-import HoverCard from "src/Shared/Components/HoverCard";
 import Paginate from "src/Shared/Components/Paginate";
 
 import projectsData from "../Data/projects.json";
@@ -26,6 +26,11 @@ const selectStyle: React.CSSProperties = {
   backgroundPosition: "right 0.6rem center",
   minWidth: "9rem",
 };
+
+function normalizeLink(raw: string | null | undefined) {
+  if (!raw) return "";
+  return raw.trim().replace(/:+$/, "");
+}
 
 const Archive = () => {
   const archive = projectsData.archive;
@@ -88,37 +93,27 @@ const Archive = () => {
           }}>Year</span>
           <select value={year} style={selectStyle}
             onChange={e => { setPage(1); setYear(e.target.value as YearType); }}>
-            {years.map((y, i) => <option key={i}>{y}</option>)}
+            {years.map((y, i) => (
+              <option
+                key={i}
+                value={y}
+                style={{
+                  backgroundColor: "#020815",
+                  color: "rgba(255,255,255,0.9)",
+                }}
+              >
+                {y}
+              </option>
+            ))}
           </select>
         </div>
       </motion.div>
 
-      {/* Year pill tabs */}
-      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
-        {years.map(y => (
-          <button key={y} onClick={() => { setPage(1); setYear(y); }} style={{
-            fontFamily: "ui-monospace, monospace",
-            fontSize: "0.62rem",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            padding: "0.3rem 0.85rem",
-            borderRadius: "2rem",
-            border: "1px solid",
-            borderColor: y === year ? "#F58134" : "var(--obs-border, rgba(128,128,128,0.25))",
-            background: y === year ? "rgba(245,129,52,0.12)" : "transparent",
-            color: y === year ? "#F58134" : "var(--obs-text-primary)",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-            opacity: y === year ? 1 : 0.5,
-          }}>{y}</button>
-        ))}
-      </div>
-
-      {/* Grid — fixed 4 columns */}
+      {/* Grid */}
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gap: "clamp(0.75rem, 1.5vw, 1.25rem)",
+        gridTemplateColumns: "repeat(auto-fill, minmax(clamp(260px, 28vw, 380px), 1fr))",
+        gap: "clamp(1rem, 2vw, 1.5rem)",
       }}>
         {pageProjects.map((project, index) => (
           <motion.div
@@ -126,13 +121,127 @@ const Archive = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              padding: "clamp(1.25rem, 2vw, 1.75rem)",
+              border: "1px solid var(--obs-border, rgba(128,128,128,0.18))",
+              borderRadius: "0.75rem",
+              transition: "border-color 0.25s ease",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.borderColor = "#F58134")}
+            onMouseLeave={e => (e.currentTarget.style.borderColor = "var(--obs-border, rgba(128,128,128,0.18))")}
           >
-            <HoverCard
-              {...project}
-              link={"link" in project && project.link ? (project.link as string) : undefined}
-              size="clamp(160px, 20vw, 280px)"
-              imgClassName="border border-primary"
-            />
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span
+                style={{
+                  fontFamily: "ui-monospace, monospace",
+                  fontSize: "0.58rem",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  padding: "0.22rem 0.58rem",
+                  borderRadius: "2rem",
+                  border: "1px solid var(--obs-border, rgba(128,128,128,0.2))",
+                  color: "var(--obs-text-primary)",
+                  opacity: 0.78,
+                }}
+              >
+                {year}
+              </span>
+
+              {normalizeLink("link" in project ? (project.link as string | undefined) : undefined) && (
+                <a
+                  href={normalizeLink("link" in project ? (project.link as string | undefined) : undefined)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "var(--obs-text-primary)", opacity: 0.35 }}
+                >
+                  <FaExternalLinkAlt size={12} />
+                </a>
+              )}
+            </div>
+
+            <div
+              style={{
+                width: "100%",
+                aspectRatio: "16 / 9",
+                borderRadius: "0.55rem",
+                overflow: "hidden",
+                border: "1px solid var(--obs-border, rgba(128,128,128,0.2))",
+                background: "rgba(255,255,255,0.03)",
+              }}
+            >
+              <img
+                src={project.image}
+                alt={project.title}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
+            </div>
+
+            <h3 style={{
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontSize: "clamp(1.05rem, 1.45vw, 1.32rem)",
+              fontWeight: 400,
+              color: "var(--obs-text-primary)",
+              margin: 0,
+              lineHeight: 1.2,
+            }}>
+              {project.title}
+            </h3>
+
+            <p style={{
+              fontSize: "clamp(0.82rem, 1vw, 0.92rem)",
+              color: "var(--obs-text-primary)",
+              opacity: 0.55,
+              margin: 0,
+              lineHeight: 1.65,
+              flexGrow: 1,
+            }}>
+              {project.description}
+            </p>
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginTop: "auto" }}>
+              {"placement" in project && typeof project.placement === "number" && (
+                <span
+                  style={{
+                    fontFamily: "ui-monospace, monospace",
+                    fontSize: "0.58rem",
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    padding: "0.2rem 0.55rem",
+                    borderRadius: "2rem",
+                    border: "1px solid rgba(245,129,52,0.3)",
+                    color: "#F58134",
+                    background: "rgba(245,129,52,0.08)",
+                  }}
+                >
+                  Placement: #{project.placement}
+                </span>
+              )}
+
+              {normalizeLink("link" in project ? (project.link as string | undefined) : undefined) && (
+                <a
+                  href={normalizeLink("link" in project ? (project.link as string | undefined) : undefined)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: "ui-monospace, monospace",
+                    fontSize: "0.58rem",
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    padding: "0.2rem 0.55rem",
+                    borderRadius: "2rem",
+                    border: "1px solid var(--obs-border, rgba(128,128,128,0.2))",
+                    color: "var(--obs-text-primary)",
+                    opacity: 0.75,
+                    textDecoration: "none",
+                  }}
+                >
+                  View Project
+                </a>
+              )}
+            </div>
           </motion.div>
         ))}
       </div>

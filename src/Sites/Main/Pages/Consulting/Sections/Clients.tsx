@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
+import { useTheme } from "src/Hooks/useTheme";
 import consultingData from "../Data/consulting.json";
 
 const Clients = () => {
   const clients = consultingData.clients;
+  const { isDark } = useTheme();
+  const darkLogoFilter = "brightness(1.14) contrast(1.08) saturate(0.95)";
 
   return (
     <div style={{ width: "100%" }}>
@@ -64,26 +67,22 @@ const Clients = () => {
             onMouseEnter={e => (e.currentTarget.style.background = "var(--obs-surface, rgba(128,128,128,0.05))")}
             onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
           >
-            {client.logo ? (
-              <img
-                src={client.logo}
-                alt={client.name}
-                title={client.name}
-                style={{ height: 56, width: "100%", objectFit: "contain", opacity: 0.75, transition: "opacity 0.2s ease" }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
-              />
-            ) : (
-              <span style={{
-                fontFamily: "ui-monospace, monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--obs-text-primary)",
-                opacity: 0.5,
-                textAlign: "center",
-              }}>{client.name}</span>
-            )}
+            <img
+              src={client.logo}
+              alt=""
+              title={client.name}
+              style={{
+                height: 56,
+                width: "100%",
+                objectFit: "contain",
+                opacity: 0.75,
+                transition: "opacity 0.2s ease, filter 0.2s ease",
+                filter: isDark ? darkLogoFilter : "none",
+              }}
+              onError={e => (e.currentTarget.style.display = "none")}
+              onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+              onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
+            />
           </motion.div>
         ))}
       </motion.div>

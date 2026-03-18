@@ -34,7 +34,6 @@ const Landing = () => {
   const textPrimary    = isDark ? "#ffffff"                : "rgba(10,20,50,0.92)";
   const textMuted      = isDark ? "rgba(255,255,255,0.55)" : "rgba(10,20,50,0.55)";
   const textFaint      = isDark ? "rgba(255,255,255,0.35)" : "rgba(10,20,50,0.35)";
-  const textScroll     = isDark ? "rgba(255,255,255,0.2)"  : "rgba(10,20,50,0.25)";
   const borderFaint    = isDark ? "rgba(255,255,255,0.07)" : "rgba(10,20,50,0.08)";
   const learnMoreColor = isDark ? "rgba(255,255,255,0.4)"  : "rgba(10,20,50,0.4)";
   const learnMoreHover = isDark ? "rgba(255,255,255,0.85)" : "rgba(10,20,50,0.85)";
@@ -45,9 +44,6 @@ const Landing = () => {
   const blob2          = isDark
     ? "radial-gradient(circle, rgba(245,129,52,0.08) 0%, transparent 70%)"
     : "radial-gradient(circle, rgba(245,129,52,0.1)  0%, transparent 70%)";
-  const scrollLine     = isDark
-    ? "linear-gradient(to bottom, rgba(255,255,255,0.2), transparent)"
-    : "linear-gradient(to bottom, rgba(10,20,50,0.2), transparent)";
 
   return (
     <div

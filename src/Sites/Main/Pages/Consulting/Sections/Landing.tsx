@@ -62,12 +62,12 @@ const Landing = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
             style={{
-              fontSize: "clamp(0.85rem, 1.1vw, 1rem)",
+              fontSize: "clamp(1rem, 1.45vw, 1.35rem)",
               color: "var(--obs-text-primary)",
               opacity: 0.55,
               margin: 0,
-              maxWidth: 380,
-              lineHeight: 1.7,
+              maxWidth: 560,
+              lineHeight: 1.6,
               textAlign: "right",
             }}
           >

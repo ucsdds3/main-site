@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router";
 
 const TIERS = [
   {
@@ -86,8 +85,6 @@ const TIERS = [
 ];
 
 const WorkWithUs = () => {
-  const navigate = useNavigate();
-
   return (
     <div
       style={{

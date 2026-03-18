@@ -1,6 +1,5 @@
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
-import { useTheme } from "src/Hooks/useTheme";
 
 import navData from "./Data/navbar.json";
 import NavItem from "./NavItem";
@@ -9,7 +8,6 @@ import Avatar from "./Avatar";
 const Links = ({ menuOpen }: { menuOpen: boolean }) => {
   const { authState, adminLevel } = useAuthStore();
   const { subdomain, navigate } = useSiteHandler();
-  const { isDark } = useTheme();
   const links = navData[subdomain as keyof typeof navData] || navData.main;
 
   const isMembers = subdomain === "members";
