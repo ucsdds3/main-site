@@ -182,7 +182,7 @@ const Landing = () => {
             </button>
 
             <button
-              onClick={() => navigate("/about")}
+              onClick={() => navigate("/partners")}
               className="text-sm tracking-widest uppercase transition-all duration-200"
               style={{
                 color: learnMoreColor,
@@ -194,7 +194,7 @@ const Landing = () => {
               onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = learnMoreHover; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = learnMoreColor; }}
             >
-              Learn More →
+              Partner With Us →
             </button>
           </motion.div>
 
@@ -237,27 +237,6 @@ const Landing = () => {
           />
         </div>
       </div>
-
-      {/* ── Bottom scroll indicator ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span
-          className="text-xs tracking-[0.25em] uppercase"
-          style={{ color: textScroll, fontFamily: "ui-monospace, monospace" }}
-        >
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-8"
-          style={{ background: scrollLine }}
-        />
-      </motion.div>
     </div>
   );
 };

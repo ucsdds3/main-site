@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import SafeLink from "src/Shared/Components/SafeLink";
+import { useTheme } from "src/Hooks/useTheme";
 
 import partners from "../Data/partners.json";
 
@@ -18,7 +19,8 @@ const CLUB_KEYS = [
 ];
 
 const OurPartners = () => {
-  const logos = partners.dark;
+  const { isDark } = useTheme();
+  const logos = (isDark ? partners.dark : partners.light) as Record<string, PartnerEntry>;
 
   const department = Object.entries(logos).filter(([name]) => DEPARTMENT_KEYS.includes(name));
   const clubs = Object.entries(logos).filter(([name]) => CLUB_KEYS.includes(name));
@@ -45,7 +47,7 @@ const OurPartners = () => {
       <div style={{ width: 22, height: 2, background: color, borderRadius: 2, flexShrink: 0 }} />
       <span style={{
         fontFamily: "ui-monospace, monospace",
-        fontSize: "0.65rem",
+        fontSize: "0.75rem",
         letterSpacing: "0.22em",
         textTransform: "uppercase",
         color,
@@ -60,7 +62,7 @@ const OurPartners = () => {
     delay = 0,
     variant = "default",
   }: {
-    entries: [string, string][];
+    entries: [string, PartnerEntry][];
     delay?: number;
     variant?: "default" | "club";
   }) => (
@@ -71,7 +73,9 @@ const OurPartners = () => {
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
       className={`partner-grid ${variant === "club" ? "club-grid" : ""}`}
     >
-      {entries.map(([name, path], index) => (
+      {entries.map(([name, entry], index) => {
+        const { src, href } = typeof entry === "string" ? { src: entry, href: undefined } : entry;
+        return (
         <motion.div
           key={name}
           className="partner-logo-cell"
@@ -80,9 +84,15 @@ const OurPartners = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: index * 0.04 }}
         >
-          <img src={path} alt={name} title={name} />
+          {href ? (
+            <SafeLink href={href} style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+              <img src={src} alt={name} title={name} />
+            </SafeLink>
+          ) : (
+            <img src={src} alt={name} title={name} />
+          )}
         </motion.div>
-      ))}
+      )})}
     </motion.div>
   );
 
@@ -102,7 +112,7 @@ const OurPartners = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 1.5rem 2rem;
+          padding: 2.15rem 2.25rem;
           border-right: 1px solid var(--obs-border);
           border-bottom: 1px solid var(--obs-border);
           transition: background 0.25s ease;
@@ -117,36 +127,17 @@ const OurPartners = () => {
         }
         .partner-logo-cell img {
           width: 100%;
-          height: 80px;
+          height: 92px;
           object-fit: contain;
-          opacity: 0.8;
+          opacity: 0.65;
           transition: opacity 0.3s ease;
         }
-        .club-grid .partner-logo-cell img { height: 48px; }
-        .partner-logo-cell:hover img { opacity: 1; }
+        .club-grid .partner-logo-cell img { height: 58px; }
+        .partner-logo-cell:hover img { opacity: 0.92; }
       `}</style>
 
       {/* ── Editorial header ── */}
       <div style={{ borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))", marginBottom: "clamp(2.5rem, 4vw, 4rem)", paddingBottom: "clamp(1.5rem, 3vw, 3rem)" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}
-        >
-          <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
-          <span style={{
-            fontFamily: "ui-monospace, monospace",
-            fontSize: "0.65rem",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "#F58134",
-          }}>
-            Our community
-          </span>
-        </motion.div>
-
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
@@ -172,9 +163,9 @@ const OurPartners = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             style={{
-              fontSize: "clamp(0.85rem, 1.1vw, 1rem)",
+              fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)",
               color: "var(--obs-text-primary)",
-              opacity: 0.55,
+              opacity: 0.68,
               margin: 0,
               maxWidth: 380,
               lineHeight: 1.7,
@@ -218,7 +209,7 @@ const OurPartners = () => {
       <p style={{
         marginTop: "2.5rem",
         fontFamily: "ui-monospace, monospace",
-        fontSize: "0.62rem",
+        fontSize: "0.7rem",
         lineHeight: 1.75,
         letterSpacing: "0.04em",
         color: "var(--obs-text-faint)",
@@ -237,3 +228,5 @@ const OurPartners = () => {
 };
 
 export default OurPartners;
+
+type PartnerEntry = string | { src: string; href?: string };

@@ -30,7 +30,7 @@ const GetInvolved = () => {
         }} />
         <span style={{
           fontFamily: "ui-monospace, monospace",
-          fontSize: "0.68rem",
+          fontSize: "0.78rem",
           letterSpacing: "0.22em",
           textTransform: "uppercase",
           color: "#19B5CA",

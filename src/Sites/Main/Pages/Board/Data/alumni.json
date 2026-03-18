@@ -179,5 +179,26 @@
     "occupation": "Cloud Engineer",
     "company": "ASML",
     "image": "/Board/alumni_webp_imgs/Jonathan_Lo.webp"
+  },
+  {
+    "name": "Camille Sicat",
+    "year": "2024-2025",
+    "role": "VP Internal",
+    "linkedIn": "https://www.linkedin.com/in/camille-sicat-8b3267256",
+    "image": "/Board/alumni_webp_imgs/Camille-Sicat.webp"
+  },
+  {
+    "name": "Heidi Tam",
+    "year": "2024-2025",
+    "role": "Marketing Co-Director",
+    "linkedIn": "https://www.linkedin.com/in/heiditam/",
+    "image": "/Board/alumni_webp_imgs/Heidi-Tam.webp"
+  },
+  {
+    "name": "Priya Iyer",
+    "year": "2024-2025",
+    "role": "Design Director",
+    "linkedIn": "https://www.linkedin.com/in/pliyer",
+    "image": "/Board/alumni_webp_imgs/Priya-Iyer.webp"
   }
 ]

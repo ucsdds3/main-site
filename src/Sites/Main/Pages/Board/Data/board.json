@@ -10,16 +10,6 @@
     "linkedIn": "https://www.linkedin.com/in/ansh-bhatnagar-721286234/"
   },
   {
-    "name": "Camille Sicat",
-    "teams": ["Executive", "Internal"],
-    "role": "Vice President Internal",
-    "email": "camillesicatwork@gmail.com",
-    "image": "/Board/Camille-Sicat.webp",
-    "website": "https://iris-hep.org/fellows/couchsnail.html",
-    "resume": "https://docs.google.com/document/d/1LGcSgXJ9vzXLBio_4G5_c6AjLBx32SjOOUtJPA3-9r4/edit?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/camille-sicat-8b3267256"
-  },
-  {
     "name": "Praveen Sharma",
     "teams": ["Executive", "External"],
     "role": "Vice President External",
@@ -68,8 +58,8 @@
   },
   {
     "name": "Kaii Bijlani",
-    "teams": ["Executive", "Projects"],
-    "role": "Projects Co-Director",
+    "teams": ["Projects"],
+    "role": "Projects Mentor",
     "email": "bijlanikaii@gmail.com",
     "image": "/Board/Kaii-Bijlani.webp",
     "resume": "https://drive.google.com/file/d/1PjfXjrJrrCZ4hSB-Wutib37VSbeoV4mV/view?usp=sharing",
@@ -87,8 +77,8 @@
   },
   {
     "name": "Coleman Clougherty",
-    "teams": ["Executive", "Professional Events"],
-    "role": "Professional Events Co-Director",
+    "teams": ["Executive", "Internal"],
+    "role": "Vice President Internal",
     "email": "cclougherty@ucsd.edu",
     "image": "/Board/Coleman-Clougherty.webp",
     "resume": "https://docs.google.com/document/d/1DVgc6fgLKhfgWGFJe0jbzALBYVMX8BuXGbdQQEwESYw/edit?usp=sharing",
@@ -102,15 +92,6 @@
     "image": "/Board/Annabelle-Guiditta.webp",
     "resume": "https://drive.google.com/file/d/1yMF8V_7OHQWz_laLmei--DuUkxvM0qf7/view?usp=sharing",
     "linkedIn": "https://www.linkedin.com/in/aguiditta"
-  },
-  {
-    "name": "Heidi Tam",
-    "teams": ["Executive", "Marketing"],
-    "role": "Marketing Co-Director",
-    "email": "hetam@ucsd.edu",
-    "image": "/Board/Heidi-Tam.webp",
-    "resume": "https://drive.google.com/file/d/1lDiImjNe28tr4Jk78HylMMfz3s7xPGOs/view?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/heiditam/"
   },
   {
     "name": "Anagha Kamath",
@@ -131,16 +112,6 @@
     "image": "/Board/Yagnasri-Chilukuri.webp",
     "resume": "https://docs.google.com/document/d/1y2Ve1UANgxoYe1FGuFLH5sg5ooxMiBfvB8dgyF4WHKQ/edit?usp=sharing",
     "linkedIn": "https://www.linkedin.com/in/minyoung-kim-360189222/"
-  },
-  {
-    "name": "Priya Iyer",
-    "teams": ["Executive", "Design"],
-    "role": "Design Director",
-    "email": "pliyer@ucsd.edu",
-    "image": "/Board/Priya-Iyer.webp",
-    "website": "https://www.priyaiyerdesign.com/",
-    "resume": "https://docs.google.com/document/d/1E4EXi_ZqW5GGgmmHzF-mCeOI5CED7gua_UsDJbtrSvg/edit?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/pliyer"
   },
   {
     "name": "Tijil Chhabra",

@@ -138,15 +138,13 @@ const About = ({ name, image, photoPool, points, noAbout, className }: AboutProp
                       zIndex: 10,
                     }}
                   >
-                    <motion.svg
+                    <svg
                       width="13" height="13" viewBox="0 0 24 24" fill="none"
-                      animate={{ y: [0, -2, 0] }}
-                      transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
                       style={{ color: "#F58134", flexShrink: 0 }}
                     >
                       <path d="M9 11V6a3 3 0 0 1 6 0v5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                       <path d="M15 11h.01M9 11H8a3 3 0 0 0-3 3v1a7 7 0 0 0 14 0v-4a1 1 0 0 0-2 0v-1a1 1 0 0 0-2 0v-1a1 1 0 0 0-1-1Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </motion.svg>
+                    </svg>
                     <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "0.58rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.8)", whiteSpace: "nowrap" }}>
                       Click to explore
                     </span>
@@ -227,7 +225,7 @@ const About = ({ name, image, photoPool, points, noAbout, className }: AboutProp
                 <div style={{ width: 12, height: 1.5, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
                 <span style={{
                   fontFamily: "ui-monospace, monospace",
-                  fontSize: "0.62rem",
+                  fontSize: "0.75rem",
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
                   color: "var(--obs-text-primary)",
