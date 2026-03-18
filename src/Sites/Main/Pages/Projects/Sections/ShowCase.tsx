@@ -4,7 +4,6 @@ import { FaFilePowerpoint, FaGithub, FaGlobe } from "react-icons/fa";
 
 import HoverCard from "src/Shared/Components/HoverCard";
 import Paginate from "src/Shared/Components/Paginate";
-import { usePaginate } from "src/Hooks/usePaginate";
 
 import projectsData from "../Data/projects.json";
 

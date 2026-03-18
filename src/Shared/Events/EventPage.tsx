@@ -41,21 +41,13 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
   const titleTag = tag === "All" ? "Events" : `${tag} Events`;
   const titleTime = time === "All" ? "All" : time;
 
-  const filteredEvents = useMemo(() => {
+  const calendarEvents = useMemo(() => {
     const tagEvents = tag === "All" ? events : events.filter(e => e.tags?.includes(tag));
-    const timeEvents =
-      time === "All"
-        ? tagEvents
-        : tagEvents.filter(e =>
-            time === "Past"
-              ? new Date(e.start!).getTime() <= new Date().getTime()
-              : new Date(e.start!).getTime() >= new Date().getTime()
-          );
-
-    return [...timeEvents].sort(
-      (a, b) => (new Date(a.start!).getTime() - new Date(b.start!).getTime()) * (ascending ? 1 : -1)
+    const withoutSuperbowl = tagEvents.filter(
+      event => (event.name ?? "").trim().toLowerCase() !== "superbowl"
     );
-  }, [ascending, events, tag, time]);
+    return [...withoutSuperbowl].sort((a, b) => new Date(a.start!).getTime() - new Date(b.start!).getTime());
+  }, [events, tag]);
 
   return (
     <Page>
@@ -111,71 +103,80 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
 
             {/* Filter controls */}
             <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "flex-end" }}>
-              {time === "Upcoming" && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-                  <span style={{
-                    fontFamily: "ui-monospace, monospace",
-                    fontSize: "0.55rem",
-                    letterSpacing: "0.18em",
-                    textTransform: "uppercase",
-                    color: "var(--obs-text-primary)",
-                    opacity: 0.4,
-                  }}>
-                    View
-                  </span>
-                  <div style={{
-                    display: "inline-flex",
-                    borderRadius: "9999px",
-                    border: "1px solid var(--obs-border, rgba(128,128,128,0.25))",
-                    overflow: "hidden",
-                    background: "transparent",
-                  }}>
-                    {(["Cards", "Calendar"] as const).map(v => (
-                      <button
-                        key={v}
-                        type="button"
-                        onClick={() => setView(v)}
-                        style={{
-                          fontFamily: "ui-monospace, monospace",
-                          fontSize: "0.68rem",
-                          letterSpacing: "0.12em",
-                          textTransform: "uppercase",
-                          padding: "0.45rem 0.9rem",
-                          border: "none",
-                          cursor: "pointer",
-                          background: view === v ? "rgba(245,129,52,0.14)" : "transparent",
-                          color: view === v ? "var(--obs-text-primary)" : "var(--obs-text-primary)",
-                          opacity: view === v ? 1 : 0.55,
-                          transition: "background 0.15s ease, opacity 0.15s ease",
-                        }}
-                      >
-                        {v}
-                      </button>
-                    ))}
-                  </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                <span style={{
+                  fontFamily: "ui-monospace, monospace",
+                  fontSize: "0.55rem",
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "var(--obs-text-primary)",
+                  opacity: 0.4,
+                }}>
+                  View
+                </span>
+                <div style={{
+                  display: "inline-flex",
+                  borderRadius: "9999px",
+                  border: "1px solid var(--obs-border, rgba(128,128,128,0.25))",
+                  overflow: "hidden",
+                  background: "transparent",
+                }}>
+                  {(["Cards", "Calendar"] as const).map(v => (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setView(v)}
+                      style={{
+                        fontFamily: "ui-monospace, monospace",
+                        fontSize: "0.68rem",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        padding: "0.45rem 0.9rem",
+                        border: "none",
+                        cursor: "pointer",
+                        background: view === v ? "rgba(245,129,52,0.14)" : "transparent",
+                        color: view === v ? "var(--obs-text-primary)" : "var(--obs-text-primary)",
+                        opacity: view === v ? 1 : 0.55,
+                        transition: "background 0.15s ease, opacity 0.15s ease",
+                      }}
+                    >
+                      {v}
+                    </button>
+                  ))}
                 </div>
-              )}
+              </div>
 
-              {([
-                {
-                  label: "When",
-                  value: time,
-                  options: ["Past", "Upcoming", "All"],
-                  onChange: (v: string) => setTime(v as TimeType),
-                },
-                {
-                  label: "Tag",
-                  value: tag,
-                  options: ["All", ...Object.keys(tagColor)],
-                  onChange: (v: string) => setTag(v as EventTagType | "All"),
-                },
-                {
-                  label: "Sort",
-                  value: ascending ? "Ascending" : "Descending",
-                  options: ["Ascending", "Descending"],
-                  onChange: (v: string) => setAscending(v === "Ascending"),
-                },
-              ] as const).map(({ label, value, options, onChange }) => (
+              {(
+                view === "Calendar"
+                  ? ([
+                      {
+                        label: "Tag",
+                        value: tag,
+                        options: ["All", ...Object.keys(tagColor)],
+                        onChange: (v: string) => setTag(v as EventTagType | "All"),
+                      },
+                    ] as const)
+                  : ([
+                      {
+                        label: "When",
+                        value: time,
+                        options: ["Past", "Upcoming", "All"],
+                        onChange: (v: string) => setTime(v as TimeType),
+                      },
+                      {
+                        label: "Tag",
+                        value: tag,
+                        options: ["All", ...Object.keys(tagColor)],
+                        onChange: (v: string) => setTag(v as EventTagType | "All"),
+                      },
+                      {
+                        label: "Sort",
+                        value: ascending ? "Ascending" : "Descending",
+                        options: ["Ascending", "Descending"],
+                        onChange: (v: string) => setAscending(v === "Ascending"),
+                      },
+                    ] as const)
+              ).map(({ label, value, options, onChange }) => (
                 <div key={label} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                   <span style={{
                     fontFamily: "ui-monospace, monospace",
@@ -193,7 +194,16 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
                     onChange={e => onChange(e.target.value)}
                   >
                     {options.map((opt: string) => (
-                      <option key={opt} value={opt}>{opt}</option>
+                      <option
+                        key={opt}
+                        value={opt}
+                        style={{
+                          backgroundColor: "#020815",
+                          color: "rgba(255,255,255,0.9)",
+                        }}
+                      >
+                        {opt}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -203,7 +213,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
         </div>
 
         {/* Event list */}
-        {time === "Upcoming" && view === "Calendar" ? (
+        {view === "Calendar" ? (
           <>
             {error ? (
               <div style={{ display: "flex", justifyContent: "center", padding: "3rem 1rem" }}>
@@ -232,7 +242,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
                 </span>
               </div>
             ) : (
-              <EventCalendar events={filteredEvents} />
+              <EventCalendar events={calendarEvents} />
             )}
           </>
         ) : (

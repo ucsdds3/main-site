@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 import useImagePreloader from "src/Hooks/useImagepreload.tsx";
 import SafeLink from "src/Shared/Components/SafeLink.tsx";
-import { EventTagType, EventType, tagColor } from "src/Utils/types.ts";
+import { EventType } from "src/Utils/types.ts";
 import { newArray, generateCalendarLink } from "src/Utils/functions.tsx";
 
 const TAG_ACCENT: Record<string, string> = {

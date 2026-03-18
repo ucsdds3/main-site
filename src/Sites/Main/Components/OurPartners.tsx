@@ -21,6 +21,7 @@ const CLUB_KEYS = [
 const OurPartners = () => {
   const { isDark } = useTheme();
   const logos = (isDark ? partners.dark : partners.light) as Record<string, PartnerEntry>;
+  const darkLogoFilter = "brightness(1.14) contrast(1.08) saturate(0.95)";
 
   const department = Object.entries(logos).filter(([name]) => DEPARTMENT_KEYS.includes(name));
   const clubs = Object.entries(logos).filter(([name]) => CLUB_KEYS.includes(name));
@@ -86,10 +87,24 @@ const OurPartners = () => {
         >
           {href ? (
             <SafeLink href={href} style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-              <img src={src} alt={name} title={name} />
+              <img
+                src={src}
+                alt={name}
+                title={name}
+                style={{
+                  filter: isDark ? darkLogoFilter : "none",
+                }}
+              />
             </SafeLink>
           ) : (
-            <img src={src} alt={name} title={name} />
+            <img
+              src={src}
+              alt={name}
+              title={name}
+              style={{
+                filter: isDark ? darkLogoFilter : "none",
+              }}
+            />
           )}
         </motion.div>
       )})}
@@ -129,11 +144,11 @@ const OurPartners = () => {
           width: 100%;
           height: 92px;
           object-fit: contain;
-          opacity: 0.65;
-          transition: opacity 0.3s ease;
+          opacity: 0.82;
+          transition: opacity 0.3s ease, filter 0.3s ease;
         }
         .club-grid .partner-logo-cell img { height: 58px; }
-        .partner-logo-cell:hover img { opacity: 0.92; }
+        .partner-logo-cell:hover img { opacity: 1; }
       `}</style>
 
       {/* ── Editorial header ── */}

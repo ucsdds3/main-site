@@ -1,10 +1,9 @@
-import { Suspense, useState, useEffect, useRef } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import Page from "src/Shared/Page/Page";
 import HoverCard from "src/Shared/Components/HoverCard";
 import Paginate from "src/Shared/Components/Paginate";
-import { usePaginate } from "src/Hooks/usePaginate";
 import { unbreakable } from "src/Utils/functions";
 
 import alumniData from "./Data/alumni.json";

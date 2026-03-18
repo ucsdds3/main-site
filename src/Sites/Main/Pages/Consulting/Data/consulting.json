@@ -1,11 +1,11 @@
 {
   "about": {
     "name": "Consulting",
-    "image": "/Consulting/consulting-img.webp",
+    "image": "/Consulting/consulting_pic_1.jpg",
     "photoPool": [
-      { "src": "/Consulting/consulting-img.webp", "caption": "DS3 Consulting" },
-      { "src": "/Consulting/consulting-img2.webp", "caption": "Client Workshop" },
-      { "src": "/Consulting/consulting-img3.webp", "caption": "Data Presentation" }
+      { "src": "/Consulting/consulting_pic_1.jpg", "caption": "DS3 Consulting" },
+      { "src": "/Consulting/consulting_pic_2.JPG", "caption": "Client Workshop" },
+      { "src": "/Consulting/consulting_pic_3.jpg", "caption": "Data Presentation" }
     ],
     "points": {
       "Real-World Impact": "We work directly with companies, research groups, and nonprofits to solve meaningful data science problems with tangible outcomes.",
@@ -37,24 +37,29 @@
   ],
   "projects": [
     {
-      "title": "Geisel IOT Occupancy Tracker",
-      "description": "Real-time visualization of Geisel Library traffic using IoT sensors and a live Firebase data pipeline.",
-      "link": "https://github.com/ds3ucsd/geisel-iot"
+      "title": "Campus Energy Optimization (Intermediate)",
+      "description": "Client: UCSD Center for Energy Research (CER). Build load forecasting and BESS charge/discharge decision strategy for campus microgrid operations.",
+      "link": ""
     },
     {
-      "title": "UCSD Enrollment Predictor",
-      "description": "Forecasting course enrollment demand using historical registrar data to help departments plan capacity.",
-      "link": "https://github.com/ds3ucsd/enrollment-predictor"
+      "title": "Energy Transitions Dashboard (Advanced)",
+      "description": "Client: UCSD Center for Energy Research (CER). Develop an interactive, auto-updating platform for global energy, renewables, demand, and CO2 trend analysis.",
+      "link": ""
     },
     {
-      "title": "Research Lab Data Pipeline",
-      "description": "Built an end-to-end data ingestion and transformation pipeline for a UCSD neuroscience lab.",
+      "title": "SD City Nature Challenge Optimization (Intermediate)",
+      "description": "Client: UCSD Natural Reserve System (NRS). Use geospatial optimization on iNaturalist data to improve species-yield strategy during City Nature Challenge.",
+      "link": ""
+    },
+    {
+      "title": "Imputing Species Distributions in Under-Sampled Natural Reserves (Intermediate)",
+      "description": "Client: UCSD Natural Reserve System (NRS). Infer likely species presence in under-sampled reserve regions using spatial similarity and observation coverage patterns.",
       "link": ""
     }
   ],
   "clients": [
-    { "name": "UCSD Geisel Library", "logo": "/Consulting/clients/geisel.webp" },
-    { "name": "UCSD CSE Department", "logo": "/Consulting/clients/cse.webp" },
-    { "name": "Rady School of Management", "logo": "/Consulting/clients/rady.webp" }
+    { "name": "UCSD CSE Department", "logo": "/Partners/cse.png" },
+    { "name": "Jacobs School of Engineering", "logo": "/Partners/jacobs.png" },
+    { "name": "Scripps Institution", "logo": "/Partners/scripps.png" }
   ]
 }

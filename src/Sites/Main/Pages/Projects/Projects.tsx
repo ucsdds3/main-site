@@ -3,11 +3,8 @@ import { lazy, Suspense, useRef } from "react";
 import Page from "src/Shared/Page/Page.tsx";
 
 import Landing from "./Sections/Landing.tsx";
-import projects from "./Data/projects.json";
 
-const About = lazy(() => import("../../Components/About.tsx"));
-// const Gallery = lazy(() => import("../../Components/Gallery.tsx"));
-const ShowCase = lazy(() => import("./Sections/ShowCase.tsx"));
+const QuarterlyProjects = lazy(() => import("./Sections/QuarterlyProjects.tsx"));
 const Archive = lazy(() => import("./Sections/Archive.tsx"));
 
 const Projects = () => {
@@ -29,19 +26,12 @@ const Projects = () => {
         }}
       >
         <Suspense>
-          <About {...projects.about} />
-
-          <div style={{ height: 1, background: "var(--obs-border, rgba(128,128,128,0.15))", margin: "clamp(1rem, 2vw, 2rem) 0" }} />
-
-          <ShowCase />
+          <QuarterlyProjects />
 
           <div style={{ height: 1, background: "var(--obs-border, rgba(128,128,128,0.15))", margin: "clamp(1rem, 2vw, 2rem) 0" }} />
 
           <Archive />
 
-          <div style={{ height: 1, background: "var(--obs-border, rgba(128,128,128,0.15))", margin: "clamp(1rem, 2vw, 2rem) 0" }} />
-
-          {/* <Gallery images={projects.images} /> */}
         </Suspense>
       </div>
     </Page>
