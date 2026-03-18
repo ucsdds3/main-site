@@ -61,7 +61,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
             e.currentTarget.style.boxShadow = "none"
           }}
         >
-          {subdomain === "main" ? "Members Login" : "Main Site"}
+          {subdomain === "main" ? "Login / Sign up" : "Main Site"}
         </button>
       ) : (
         <Avatar />

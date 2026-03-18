@@ -33,7 +33,7 @@ const OnlineContent = () => {
         transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         style={{
           fontFamily: "'Albert Sans', sans-serif",
-          fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)",
+          fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)",
           lineHeight: 1.8,
           color: "var(--obs-text-muted)",
           fontWeight: 300,
@@ -64,6 +64,7 @@ const OnlineContent = () => {
             link={content.link}
             delay={index * 0.1}
             linkText="View More"
+            compact
           />
         ))}
       </div>
@@ -87,7 +88,7 @@ const OnlineContent = () => {
               padding: "0.85rem 2.5rem",
               borderRadius: "9999px",
               fontFamily: "ui-monospace, monospace",
-              fontSize: "0.72rem",
+              fontSize: "0.78rem",
               fontWeight: 500,
               letterSpacing: "0.18em",
               textTransform: "uppercase",

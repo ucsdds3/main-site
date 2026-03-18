@@ -3,6 +3,8 @@ import Page from "src/Shared/Page/Page";
 
 import Landing from "./Sections/Landing";
 import OnlineContent from "./Sections/OnlineContent";
+import faq from "../JoinUs/Data/FAQ.json";
+import FAQ from "../JoinUs/Sections/FAQ";
 
 const OurPartners = lazy(() => import("../../Components/OurPartners"));
 const AboutUs = lazy(() => import("./Sections/AboutUs"));
@@ -22,6 +24,7 @@ const Home = () => {
           <WhereWeBeen />
           <OnlineContent />
           <OurPartners />
+          <FAQ faq={faq} />
         </Suspense>
       </div>
     </Page>

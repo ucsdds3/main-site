@@ -104,7 +104,18 @@ const HoverCard = ({
         className="text-lg text-center flex flex-col gap-2"
         style={{ width: `calc(${size} * 0.95)` }}
       >
-        {title && <span className="text-2xl font-bold">{title}</span>}
+        {title && (
+          <span
+            className="text-2xl"
+            style={{
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontWeight: 400,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {title}
+          </span>
+        )}
         {description && <span className="text-xl opacity-75 font-medium">{description}</span>}
       </div>
     </div>

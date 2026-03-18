@@ -12,6 +12,7 @@ interface BrowserCardProps {
   description?: string;
   delay?: number;
   linkText?: string;
+  compact?: boolean;
 }
 
 const BrowserCard = memo(function BrowserCard({
@@ -21,6 +22,7 @@ const BrowserCard = memo(function BrowserCard({
   description,
   delay = 0,
   linkText = "View",
+  compact = false,
 }: BrowserCardProps) {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3atucsd.com");
@@ -65,13 +67,13 @@ const BrowserCard = memo(function BrowserCard({
           align-items: center;
           gap: 0.5rem;
           padding: 0 0.75rem;
-          height: 28px;
+          height: 30px;
           border-radius: 9999px;
-          background: rgba(0,0,0,0.25);
+          background: rgba(128,128,128,0.14);
           border: 1px solid var(--obs-border);
           font-family: ui-monospace, monospace;
-          font-size: 0.65rem;
-          color: var(--obs-text-faint);
+          font-size: 0.7rem;
+          color: var(--obs-text-muted);
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -98,6 +100,7 @@ const BrowserCard = memo(function BrowserCard({
           background: rgba(0,0,0,0.2);
           flex-shrink: 0;
         }
+        .obs-card-compact .obs-img-wrap { aspect-ratio: 16/9; }
         .obs-img-wrap img {
           width: 100%; height: 100%;
           object-fit: contain;
@@ -162,7 +165,7 @@ const BrowserCard = memo(function BrowserCard({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ type: "spring", stiffness: 90, damping: 22, delay }}
-        className={`obs-card ${notEvent ? "obs-card-clickable" : ""} w-full`}
+        className={`obs-card ${compact ? "obs-card-compact" : ""} ${notEvent ? "obs-card-clickable" : ""} w-full`}
         onClick={notEvent ? () => navigate(link?.replace("www.ds3atucsd.com", "") || "") : undefined}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -214,13 +217,14 @@ const BrowserCard = memo(function BrowserCard({
 
         {/* ── Body ── */}
         <div
+          className="obs-body"
           style={{
             position: "relative",
             zIndex: 1,
             display: "flex",
             flexDirection: "column",
             gap: "0.75rem",
-            padding: "1.1rem 1.25rem 1.25rem",
+            padding: compact ? "0.95rem 1.1rem 1.1rem" : "1.1rem 1.25rem 1.25rem",
             flex: 1,
           }}
         >
