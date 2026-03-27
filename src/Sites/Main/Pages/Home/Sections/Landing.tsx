@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useNavigate } from "react-router";
 import { useRef } from "react";
 
+import { useSiteHandler } from "src/Hooks/useSiteHandler";
 import { useTheme } from "src/Hooks/useTheme";
 
 /* ─────────────────────────────────────────
@@ -24,6 +25,7 @@ const slideUp: Variants = {
 
 const Landing = () => {
   const navigate = useNavigate();
+  const { navigate: navigateSite } = useSiteHandler();
   const { isDark } = useTheme();
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -65,13 +67,25 @@ const Landing = () => {
       />
 
       {/* ── Decorative large label ── */}
-      <motion.p
-        style={{ y: bgY, color: ds3Label, fontFamily: "sans-serif" }}
+      <motion.div
+        style={{ y: bgY }}
         aria-hidden
-        className="pointer-events-none select-none absolute right-[-2rem] top-[10%] text-[clamp(6rem,14vw,16rem)] font-black leading-none opacity-[0.03] tracking-tighter"
+        className="pointer-events-none select-none absolute right-[15.5rem] top-1/2 -translate-y-1/2"
       >
-        DS3
-      </motion.p>
+        <motion.p
+          style={{ color: ds3Label, fontFamily: "sans-serif" }}
+          className="text-[clamp(6rem,14vw,16rem)] font-black leading-none opacity-[0.03] tracking-tighter"
+          animate={{ y: [0, -14, 0] }}
+          transition={{
+            duration: 4.8,
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatType: "loop",
+          }}
+        >
+          DS3
+        </motion.p>
+      </motion.div>
 
       {/* ── Main content ── */}
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between min-h-screen max-w-[1400px] mx-auto px-6 md:px-16 py-20 gap-12">
@@ -157,7 +171,7 @@ const Landing = () => {
           {/* CTA row */}
           <motion.div variants={slideUp} className="flex items-center gap-6 flex-wrap">
             <button
-              onClick={() => navigate("/join-us")}
+              onClick={() => navigateSite({ pathname: "/", subdomain: "members" })}
               className="group relative overflow-hidden px-8 py-3.5 rounded-full text-sm font-semibold tracking-widest uppercase transition-all duration-300"
               style={{
                 background: "linear-gradient(135deg, #19B5CA, #0e8fa0)",
@@ -174,7 +188,7 @@ const Landing = () => {
                 (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
               }}
             >
-              Join Us
+              Sign Up
             </button>
 
             <button

@@ -2,7 +2,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 import { TeamType } from "src/Utils/types.ts";
-import Star from "src/Shared/Components/Star";
 
 export interface AboutProps extends TeamType {
   noAbout?: boolean;
@@ -14,6 +13,8 @@ interface PhotoEntry {
   src: string;
   caption: string;
 }
+
+const isVideoFile = (src: string) => /\.(mp4|webm|ogg)$/i.test(src);
 
 const About = ({ name, image, photoPool, points, noAbout, className, hidePointIcon }: AboutProps & { photoPool?: PhotoEntry[] }) => {
   if (!name || !image) return null;
@@ -95,24 +96,48 @@ const About = ({ name, image, photoPool, points, noAbout, className, hidePointIc
             }}
           >
             <AnimatePresence mode="wait" custom={direction}>
-              <motion.img
-                key={currentIndex}
-                src={current.src}
-                custom={direction}
-                initial={{ opacity: 0, x: 24 * direction }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 * direction }}
-                transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
-                }}
-                onError={e => (e.currentTarget.style.display = "none")}
-              />
+              {isVideoFile(current.src) ? (
+                <motion.video
+                  key={currentIndex}
+                  src={current.src}
+                  custom={direction}
+                  initial={{ opacity: 0, x: 24 * direction }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 * direction }}
+                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                  onError={e => (e.currentTarget.style.display = "none")}
+                />
+              ) : (
+                <motion.img
+                  key={currentIndex}
+                  src={current.src}
+                  custom={direction}
+                  initial={{ opacity: 0, x: 24 * direction }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 * direction }}
+                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                  onError={e => (e.currentTarget.style.display = "none")}
+                />
+              )}
             </AnimatePresence>
 
             {/* Persistent click hint — fades out after first click */}
@@ -258,7 +283,17 @@ const About = ({ name, image, photoPool, points, noAbout, className, hidePointIc
               )}
               <div style={{ display: "flex", gap: "0.85rem", alignItems: "flex-start" }}>
                 {!hidePointIcon && (
-                  <Star style={{ width: 16, height: 16, flexShrink: 0, marginTop: "0.3rem", color: "#F58134" }} />
+                  <span
+                    aria-hidden
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: "#F58134",
+                      flexShrink: 0,
+                      marginTop: "0.7rem",
+                    }}
+                  />
                 )}
                 <div>
                   <p style={{
