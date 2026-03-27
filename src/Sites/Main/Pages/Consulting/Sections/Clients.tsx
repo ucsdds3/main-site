@@ -6,6 +6,12 @@ const Clients = () => {
   const clients = consultingData.clients;
   const { isDark } = useTheme();
   const darkLogoFilter = "brightness(1.14) contrast(1.08) saturate(0.95)";
+  const lightToDarkLogoMap: Record<string, string> = {
+    "/Partners/jacobs.png": "/Partners/jacobs_dark.png",
+    "/Partners/scripps.png": "/Partners/scripps_dark.png",
+    "/Partners/scids_light.png": "/Partners/scids_dark.png",
+  };
+  const resolveClientLogo = (src: string) => (isDark ? lightToDarkLogoMap[src] ?? src : src);
 
   return (
     <div style={{ width: "100%" }}>
@@ -68,14 +74,14 @@ const Clients = () => {
             onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
           >
             <img
-              src={client.logo}
+              src={resolveClientLogo(client.logo)}
               alt=""
               title={client.name}
               style={{
-                height: 56,
-                width: "100%",
+                height: 100,
+                width: "150%",
                 objectFit: "contain",
-                opacity: 0.75,
+                opacity: 0.82,
                 transition: "opacity 0.2s ease, filter 0.2s ease",
                 filter: isDark ? darkLogoFilter : "none",
               }}

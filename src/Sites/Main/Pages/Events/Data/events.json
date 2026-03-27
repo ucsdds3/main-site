@@ -11,15 +11,15 @@
     "image": "/GetInvolved/workshop-img.webp",
     "photoPool": [
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/gbm-photo-3.png",
         "caption": "WI26 GBM"
       },
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/gbm-photo-2.png",
         "caption": "FA25 GBM"
       },
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/gbm-photo-1.png",
         "caption": "FA24 GBM"
       }
     ],
@@ -36,16 +36,16 @@
     "image": "/GetInvolved/workshop-img.webp",
     "photoPool": [
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/workshop-photo-1.png",
         "caption": "Palantir Workshop"
       },
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/workshop-photo-2.png",
         "caption": "GitHub Crash Course"
       },
       {
-        "src": "/GetInvolved/workshop-img.webp",
-        "caption": "LLM Workshop — Fall '24"
+        "src": "/Events/workshop-photo-3.png",
+        "caption": "Blockchain Workshop"
       }
     ],
     "points": {
@@ -61,16 +61,16 @@
     "image": "/GetInvolved/social-img.webp",
     "photoPool": [
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/social-photo-1.png",
         "caption": "Pickleball"
       },
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/social-photo-2.png",
         "caption": "Beach Bonfire"
       },
       {
-        "src": "/GetInvolved/workshop-img.webp",
-        "caption": "Fundraiser"
+        "src": "/Events/social-photo-3.png",
+        "caption": "Bowling"
       }
     ],
     "points": {
@@ -86,15 +86,15 @@
     "image": "/GetInvolved/pf-events-img.webp",
     "photoPool": [
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/professional-photo-2.png",
         "caption": "2025 Career Fair"
       },
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/professional-photo-1.png",
         "caption": "TechConnect with InternShip"
       },
       {
-        "src": "/GetInvolved/workshop-img.webp",
+        "src": "/Events/professional-photo-3.png",
         "caption": "LinkedIn Panel"
       }
     ],
@@ -111,16 +111,8 @@
     "image": "/GetInvolved/pf-events-img.webp",
     "photoPool": [
       {
-        "src": "/GetInvolved/workshop-img.webp",
-        "caption": "2025 Career Fair"
-      },
-      {
-        "src": "/GetInvolved/workshop-img.webp",
-        "caption": "TechConnect with InternShip"
-      },
-      {
-        "src": "/GetInvolved/workshop-img.webp",
-        "caption": "LinkedIn Panel"
+        "src": "/Events/leetcode-session.mp4",
+        "caption": "LeetCode Session"
       }
     ],
     "points": {

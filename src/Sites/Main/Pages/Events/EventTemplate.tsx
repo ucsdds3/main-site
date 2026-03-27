@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { motion } from "framer-motion";
 
 import Page from "src/Shared/Page/Page";
@@ -9,8 +8,6 @@ import Landing from "./Sections/Landing";
 import EventList from "src/Shared/Events/EventList";
 
 export default function EventTemplate({ team }: { team: TeamType }) {
-  const scrollRef = useRef<HTMLDivElement>(null!);
-
   if (!team.title || !team.subtitle) {
     console.error("Missing team title or subtitle");
     return null;
@@ -23,7 +20,7 @@ export default function EventTemplate({ team }: { team: TeamType }) {
   };
 
   return (
-    <Page scrollRef={scrollRef}>
+    <Page>
       <Landing
         title={team.title.toUpperCase()}
         subtitle={team.subtitle}
@@ -31,7 +28,6 @@ export default function EventTemplate({ team }: { team: TeamType }) {
       />
 
       <div
-        ref={scrollRef}
         style={{
           width: "100%",
           maxWidth: 1300,

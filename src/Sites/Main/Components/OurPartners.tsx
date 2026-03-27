@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import SafeLink from "src/Shared/Components/SafeLink";
+import useImagePreloader from "src/Hooks/useImagepreload.tsx";
 import { useTheme } from "src/Hooks/useTheme";
 
 import partners from "../Data/partners.json";
@@ -22,6 +23,33 @@ const OurPartners = () => {
   const { isDark } = useTheme();
   const logos = (isDark ? partners.dark : partners.light) as Record<string, PartnerEntry>;
   const darkLogoFilter = "brightness(1.14) contrast(1.08) saturate(0.95)";
+  const darkLogoScaleByFile: Record<string, number> = {
+    "/Partners/amazon_dark.png": 2.2,
+    "/Partners/scripps_dark.png": 2.15,
+    "/Partners/scids_dark.png": 2.15,
+    "/Partners/jacobs_dark.png": 2.15,
+    "/Partners/basement_dark.png": 2.15,
+    "/Partners/databricks_dark.png": 2.25,
+    "/Clubs/aws_dark.png": 2.2,
+  };
+  const uploadedDarkLogos = Object.keys(darkLogoScaleByFile);
+  const { imageStates } = useImagePreloader(isDark ? uploadedDarkLogos : []);
+  const getLogoStyle = (src: string): React.CSSProperties => {
+    const isUploadedDarkVariant = isDark && src in darkLogoScaleByFile;
+    if (isUploadedDarkVariant) {
+      // Uploaded dark variants contain black fills; screen blend removes black backdrop.
+      return {
+        mixBlendMode: "screen",
+        filter: "none",
+        transform: `scale(${darkLogoScaleByFile[src] ?? 2.15})`,
+        transformOrigin: "center",
+        opacity: imageStates[src] ? undefined : 0,
+      };
+    }
+    return {
+      filter: isDark ? darkLogoFilter : "none",
+    };
+  };
 
   const department = Object.entries(logos).filter(([name]) => DEPARTMENT_KEYS.includes(name));
   const clubs = Object.entries(logos).filter(([name]) => CLUB_KEYS.includes(name));
@@ -76,6 +104,29 @@ const OurPartners = () => {
     >
       {entries.map(([name, entry], index) => {
         const { src, href } = typeof entry === "string" ? { src: entry, href: undefined } : entry;
+        const isUploadedDarkVariant = isDark && src in darkLogoScaleByFile;
+        const showPreloadPlaceholder = isUploadedDarkVariant && !imageStates[src];
+        const logoContent = (
+          <div style={{ position: "relative", width: "100%", display: "flex", justifyContent: "center" }}>
+            {showPreloadPlaceholder && (
+              <div
+                className="partner-logo-preload"
+                style={{
+                  width: "72%",
+                  height: variant === "club" ? "30px" : "44px",
+                }}
+                aria-hidden="true"
+              />
+            )}
+            <img
+              src={src}
+              alt={name}
+              title={name}
+              style={getLogoStyle(src)}
+              loading={isUploadedDarkVariant ? "eager" : "lazy"}
+            />
+          </div>
+        );
         return (
         <motion.div
           key={name}
@@ -87,24 +138,10 @@ const OurPartners = () => {
         >
           {href ? (
             <SafeLink href={href} style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-              <img
-                src={src}
-                alt={name}
-                title={name}
-                style={{
-                  filter: isDark ? darkLogoFilter : "none",
-                }}
-              />
+              {logoContent}
             </SafeLink>
           ) : (
-            <img
-              src={src}
-              alt={name}
-              title={name}
-              style={{
-                filter: isDark ? darkLogoFilter : "none",
-              }}
-            />
+            logoContent
           )}
         </motion.div>
       )})}
@@ -127,6 +164,7 @@ const OurPartners = () => {
           display: flex;
           align-items: center;
           justify-content: center;
+          overflow: hidden;
           padding: 2.15rem 2.25rem;
           border-right: 1px solid var(--obs-border);
           border-bottom: 1px solid var(--obs-border);
@@ -145,7 +183,26 @@ const OurPartners = () => {
           height: 92px;
           object-fit: contain;
           opacity: 0.82;
-          transition: opacity 0.3s ease, filter 0.3s ease;
+          transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+        }
+        .partner-logo-preload {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border-radius: 0.55rem;
+          background: linear-gradient(
+            90deg,
+            rgba(255,255,255,0.04) 0%,
+            rgba(255,255,255,0.12) 50%,
+            rgba(255,255,255,0.04) 100%
+          );
+          background-size: 220% 100%;
+          animation: logo-preload-shimmer 1.15s ease-in-out infinite;
+        }
+        @keyframes logo-preload-shimmer {
+          0% { background-position: -160% 0; }
+          100% { background-position: 160% 0; }
         }
         .club-grid .partner-logo-cell img { height: 58px; }
         .partner-logo-cell:hover img { opacity: 1; }

@@ -1,11 +1,12 @@
 import { lazy, Suspense, useRef } from "react";
 
 import Page from "src/Shared/Page/Page.tsx";
+import About from "src/Sites/Main/Components/About";
 
 import Landing from "./Sections/Landing.tsx";
+import projectsData from "./Data/projects.json";
 
 const QuarterlyProjects = lazy(() => import("./Sections/QuarterlyProjects.tsx"));
-const Archive = lazy(() => import("./Sections/Archive.tsx"));
 
 const Projects = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
@@ -26,11 +27,11 @@ const Projects = () => {
         }}
       >
         <Suspense>
-          <QuarterlyProjects />
+          <About {...projectsData.about} />
 
           <div style={{ height: 1, background: "var(--obs-border, rgba(128,128,128,0.15))", margin: "clamp(1rem, 2vw, 2rem) 0" }} />
 
-          <Archive />
+          <QuarterlyProjects />
 
         </Suspense>
       </div>

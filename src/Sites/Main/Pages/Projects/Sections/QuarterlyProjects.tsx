@@ -41,10 +41,14 @@ function getPrimaryLink(project: QuarterProject) {
 
 const QuarterlyProjects = () => {
   const allProjects = projectsData.projects;
-  const quarters = Object.keys(allProjects).reverse() as QuarterKey[];
-  const [quarter, setQuarter] = useState<QuarterKey>(quarters[0]);
+  const quarters = ["Fall 2025", "Winter 2026"] as const;
+  type SelectQuarter = (typeof quarters)[number];
+  const [quarter, setQuarter] = useState<SelectQuarter>("Fall 2025");
 
-  const projects = useMemo(() => allProjects[quarter], [allProjects, quarter]);
+  const projects = useMemo(
+    () => ((allProjects as Record<string, QuarterProject[]>)[quarter] ?? []),
+    [allProjects, quarter]
+  );
 
   return (
     <div style={{ width: "100%" }}>
@@ -104,7 +108,7 @@ const QuarterlyProjects = () => {
           >
             Quarter
           </span>
-          <select value={quarter} style={selectStyle} onChange={e => setQuarter(e.target.value as QuarterKey)}>
+          <select value={quarter} style={selectStyle} onChange={e => setQuarter(e.target.value as SelectQuarter)}>
             {quarters.map((q, i) => (
               <option
                 key={i}
@@ -128,6 +132,33 @@ const QuarterlyProjects = () => {
           gap: "clamp(1rem, 2vw, 1.5rem)",
         }}
       >
+        {projects.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              border: "1px solid var(--obs-border, rgba(128,128,128,0.18))",
+              borderRadius: "0.75rem",
+              padding: "clamp(1.2rem, 2vw, 1.6rem)",
+            }}
+          >
+            <p
+              style={{
+                margin: 0,
+                fontFamily: "ui-monospace, monospace",
+                fontSize: "0.7rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "var(--obs-text-primary)",
+                opacity: 0.7,
+              }}
+            >
+              Winter 2026 projects coming soon
+            </p>
+          </motion.div>
+        )}
         {projects.map((project, index) => {
           const primaryLink = getPrimaryLink(project);
           const githubLink = normalizeLink(project.github_repository);

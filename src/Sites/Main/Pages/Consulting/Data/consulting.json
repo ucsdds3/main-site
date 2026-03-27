@@ -58,8 +58,7 @@
     }
   ],
   "clients": [
-    { "name": "UCSD CSE Department", "logo": "/Partners/cse.png" },
-    { "name": "Jacobs School of Engineering", "logo": "/Partners/jacobs.png" },
-    { "name": "Scripps Institution", "logo": "/Partners/scripps.png" }
+    { "name": "UCSD Center for Energy Research (CER)", "logo": "/Consulting/cer.png" },
+    { "name": "UCSD Natural Reserve System (NRS)", "logo": "/Consulting/nrs.png" }
   ]
 }
