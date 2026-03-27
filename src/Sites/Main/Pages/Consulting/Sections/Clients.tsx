@@ -13,6 +13,9 @@ const Clients = () => {
   };
   const resolveClientLogo = (src: string) => (isDark ? lightToDarkLogoMap[src] ?? src : src);
 
+  const isCerNrsLogo = (logo: string) =>
+    logo === "/Consulting/cer.png" || logo === "/Consulting/nrs.png";
+
   return (
     <div style={{ width: "100%" }}>
       <motion.div
@@ -26,7 +29,7 @@ const Clients = () => {
           <div style={{ width: 22, height: 2, background: "#a78bfa", borderRadius: 2 }} />
           <span style={{
             fontFamily: "ui-monospace, monospace",
-            fontSize: "0.65rem",
+            fontSize: "0.72rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
             color: "#a78bfa",
@@ -34,7 +37,7 @@ const Clients = () => {
         </div>
         <h2 style={{
           fontFamily: "'DM Serif Display', Georgia, serif",
-          fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
+          fontSize: "clamp(2rem, 3.4vw, 3.1rem)",
           fontWeight: 400,
           color: "var(--obs-text-primary)",
           margin: 0,
@@ -78,8 +81,16 @@ const Clients = () => {
               alt=""
               title={client.name}
               style={{
-                height: 100,
-                width: "150%",
+                ...(isCerNrsLogo(client.logo)
+                  ? {
+                      height: "clamp(160px, 22vw, 220px)",
+                      width: "100%",
+                      maxWidth: 360,
+                    }
+                  : {
+                      height: 100,
+                      width: "150%",
+                    }),
                 objectFit: "contain",
                 opacity: 0.82,
                 transition: "opacity 0.2s ease, filter 0.2s ease",

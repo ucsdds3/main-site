@@ -1,11 +1,11 @@
 {
   "about": {
     "name": "Consulting",
-    "image": "/Consulting/consulting_pic_1.jpg",
+    "image": "/Consulting/inaturalist.png",
     "photoPool": [
-      { "src": "/Consulting/consulting_pic_1.jpg", "caption": "DS3 Consulting" },
-      { "src": "/Consulting/consulting_pic_2.JPG", "caption": "Client Workshop" },
-      { "src": "/Consulting/consulting_pic_3.jpg", "caption": "Data Presentation" }
+      { "src": "/Consulting/inaturalist.png", "caption": "iNaturalist Platform: Database for Natural Reserve System Projects" },
+      { "src": "/Consulting/powerPlantTour1.png", "caption": "CER: UCSD Power Plant Tour (with Honda and UCLA)" },
+      { "src": "/Consulting/powerPlantTour2.png", "caption": "CER: UCSD Power Plant Tour (with Honda and UCLA)" }
     ],
     "points": {
       "Real-World Impact": "We work directly with companies, research groups, and nonprofits to solve meaningful data science problems with tangible outcomes.",
@@ -37,28 +37,32 @@
   ],
   "projects": [
     {
-      "title": "Campus Energy Optimization (Intermediate)",
-      "description": "Client: UCSD Center for Energy Research (CER). Build load forecasting and BESS charge/discharge decision strategy for campus microgrid operations.",
-      "link": ""
+      "title": "SD City Nature Challenge",
+      "description": "Analyzing biodiversity data from the San Diego City Nature Challenge to uncover trends in local wildlife and habitat health.",
+      "mentor": "Ishaan Gosain",
+      "github_repository": "https://github.com/Igosain08/Sd-City-Nature---DS3-Consulting-Project",
+      "presentation_slides": null,
+      "website": null
     },
     {
-      "title": "Energy Transitions Dashboard (Advanced)",
-      "description": "Client: UCSD Center for Energy Research (CER). Develop an interactive, auto-updating platform for global energy, renewables, demand, and CO2 trend analysis.",
-      "link": ""
+      "title": "Energy Transitions Dashboard",
+      "description": "Interactive dashboard tracking global energy transitions, EV adoption impact, and GDP correlations across countries.",
+      "mentor": "Claudine",
+      "github_repository": "https://github.com/k-shiroma-code/Energy-Dashboard-DS3",
+      "presentation_slides": "https://www.canva.com/design/DAHCYSfJg2s/3S7UKksQ3-09FAk075h9TA/edit?utm_content=DAHCYSfJg2s&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+      "website": "https://k-shiroma-code.github.io/Energy-Dashboard-DS3/htmlfile/ev_gdp_impact_by_country.html"
     },
     {
-      "title": "SD City Nature Challenge Optimization (Intermediate)",
-      "description": "Client: UCSD Natural Reserve System (NRS). Use geospatial optimization on iNaturalist data to improve species-yield strategy during City Nature Challenge.",
-      "link": ""
-    },
-    {
-      "title": "Imputing Species Distributions in Under-Sampled Natural Reserves (Intermediate)",
-      "description": "Client: UCSD Natural Reserve System (NRS). Infer likely species presence in under-sampled reserve regions using spatial similarity and observation coverage patterns.",
-      "link": ""
+      "title": "Energy Optimization",
+      "description": "Building optimization models to improve energy consumption efficiency and reduce costs through data-driven analysis.",
+      "mentor": "Dylan",
+      "github_repository": "https://github.com/v1zhu/Energy_Optimization",
+      "presentation_slides": null,
+      "website": null
     }
   ],
   "clients": [
-    { "name": "UCSD Center for Energy Research (CER)", "logo": "/Consulting/cer.png" },
-    { "name": "UCSD Natural Reserve System (NRS)", "logo": "/Consulting/nrs.png" }
+    { "name": "UCSD Center for Energy Research", "logo": "/Consulting/cer.png" },
+    { "name": "UCSD Natural Reserve System", "logo": "/Consulting/nrs.png" }
   ]
 }

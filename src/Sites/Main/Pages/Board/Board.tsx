@@ -75,7 +75,7 @@ const Board = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              onClick={() => navigate("/join-us")}
+              onClick={() => navigate({ pathname: "/", hash: "#get-involved" })}
               style={{
                 fontFamily: "ui-monospace, monospace",
                 fontSize: "0.65rem",

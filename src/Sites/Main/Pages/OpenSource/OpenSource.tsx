@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef } from "react";
+import { lazy, Suspense } from "react";
 
 import Page from "src/Shared/Page/Page.tsx";
 
@@ -6,16 +6,13 @@ import Landing from "./Sections/Landing.tsx";
 import opensourceData from "./Data/opensource.json";
 
 const About = lazy(() => import("../../Components/About.tsx"));
-const RepoShowcase = lazy(() => import("./Sections/RepoShowcase.tsx"));
+const OpenSourceProjects = lazy(() => import("./Sections/OpenSourceProjects.tsx"));
 
 const OpenSource = () => {
-  const scrollRef = useRef<HTMLDivElement>(null!);
-
   return (
-    <Page scrollRef={scrollRef}>
+    <Page>
       <Landing />
       <div
-        ref={scrollRef}
         style={{
           width: "100%",
           maxWidth: 1300,
@@ -31,7 +28,7 @@ const OpenSource = () => {
 
           <div style={{ height: 1, background: "var(--obs-border, rgba(128,128,128,0.15))" }} />
 
-          <RepoShowcase />
+          <OpenSourceProjects />
         </Suspense>
       </div>
     </Page>

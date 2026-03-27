@@ -7,7 +7,7 @@ import cardData from "../Data/getInvolved.json";
 
 const GetInvolved = () => {
   return (
-    <Section title="Get Involved" className="gap-16">
+    <Section title="Get Involved" id="get-involved" className="gap-16">
       {/* ── Section intro label ── */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}

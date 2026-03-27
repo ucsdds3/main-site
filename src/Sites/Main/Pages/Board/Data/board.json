@@ -94,6 +94,14 @@
     "linkedIn": "https://www.linkedin.com/in/aguiditta"
   },
   {
+    "name": "Divyansh Kanodia",
+    "teams": ["Executive", "Consulting"],
+    "role": "Consulting Director",
+    "email": "dkanodia@ucsd.edu",
+    "image": "/Board/Divyansh-Kanodia.png",
+    "linkedIn": "https://www.linkedin.com/in/divyansh-kanodia-0978611a9/"
+  },
+  {
     "name": "Anagha Kamath",
     "teams": ["Executive", "Marketing"],
     "role": "Marketing Director",
@@ -299,7 +307,7 @@
   },
   {
     "name": "Anisha Kalgi",
-    "teams": ["Online Content", "Consulting"],
+    "teams": ["Online Content"],
     "role": "Technical Team Writer",
     "email": "akalgi@ucsd.edu",
     "image": "/Board/Anisha-Kalgi.webp",
@@ -337,7 +345,17 @@
     "name": "Daniel Mathews",
     "teams": ["Software"],
     "role": "Software Developer",
+    "email": "djmathews@ucsd.edu",
     "image": "/Board/Daniel-Mathews.png"
+  },
+  {
+    "name": "Vivek Morkooth",
+    "teams": ["Software"],
+    "role": "Software Developer",
+    "email": "vmoorkoth@ucsd.edu",
+    "image": "/Board/Vivek-Morkooth.webp",
+    "resume": "https://docs.google.com/document/d/15yFV5XordCHb3LbT55ImG9EyD9frQ13ex8La4lp1L-U/edit?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/vivek-moorkoth/"
   },
   {
     "name": "Nguyen Viet Minh Hieu",

@@ -8,7 +8,6 @@ import Projects from "./Pages/Projects/Projects";
 import OpenSource from "./Pages/OpenSource/OpenSource";
 import Consulting from "./Pages/Consulting/Consulting";
 import Partners from "./Pages/Partners/Partners";
-import JoinUs from "./Pages/JoinUs/JoinUs";
 
 const DataHacksRedirect = () => {
   window.location.replace("https://datahacks.ds3ucsd.com/");
@@ -35,7 +34,6 @@ const Main = () => {
       <Route path="/consulting" element={<Consulting />} />
       <Route path="/datahacks" element={<DataHacksRedirect />} />
       <Route path="/partners" element={<Partners />} />
-      <Route path="/join-us" element={<JoinUs />} />
     </Routes>
   );
 };

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef } from "react";
+import { lazy, Suspense } from "react";
 import Page from "src/Shared/Page/Page.tsx";
 import Landing from "./Sections/Landing.tsx";
 import consultingData from "./Data/consulting.json";
@@ -13,12 +13,10 @@ const Divider = () => (
 );
 
 const Consulting = () => {
-  const scrollRef = useRef<HTMLDivElement>(null!);
   return (
-    <Page scrollRef={scrollRef}>
+    <Page>
       <Landing />
       <div
-        ref={scrollRef}
         style={{
           width: "100%",
           maxWidth: 1300,
@@ -32,7 +30,7 @@ const Consulting = () => {
         <Suspense>
         <Services />
           <Divider />
-          <About {...consultingData.about} hidePointIcon />
+          <About {...consultingData.about} />
           <Divider />
           <ConsultingProjects />
           <Divider />

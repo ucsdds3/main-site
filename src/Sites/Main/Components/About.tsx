@@ -16,7 +16,17 @@ interface PhotoEntry {
 
 const isVideoFile = (src: string) => /\.(mp4|webm|ogg)$/i.test(src);
 
-const About = ({ name, image, photoPool, points, noAbout, className, hidePointIcon }: AboutProps & { photoPool?: PhotoEntry[] }) => {
+const About = ({
+  name,
+  image,
+  photoPool,
+  points,
+  noAbout,
+  className,
+  hidePointIcon,
+  galleryImageFit = "cover",
+  galleryPadding,
+}: AboutProps & { photoPool?: PhotoEntry[] }) => {
   if (!name || !image) return null;
 
   const pool: PhotoEntry[] = photoPool && photoPool.length > 0
@@ -36,6 +46,9 @@ const About = ({ name, image, photoPool, points, noAbout, className, hidePointIc
 
   const current = pool[currentIndex];
   const isClickable = pool.length > 1;
+  const innerPad =
+    galleryPadding ??
+    (galleryImageFit === "contain" ? "clamp(0.75rem, 3vw, 2rem)" : "0");
 
   return (
     <motion.div
@@ -89,56 +102,67 @@ const About = ({ name, image, photoPool, points, noAbout, className, hidePointIc
               borderRadius: "0.625rem",
               overflow: "hidden",
               width: "100%",
+              maxWidth: galleryImageFit === "contain" ? "min(100%, 520px)" : undefined,
+              margin: galleryImageFit === "contain" ? "0 auto" : undefined,
               aspectRatio: "4/3",
               position: "relative",
               cursor: isClickable ? "pointer" : "default",
               background: "rgba(0,0,0,0.2)",
             }}
           >
-            <AnimatePresence mode="wait" custom={direction}>
-              {isVideoFile(current.src) ? (
-                <motion.video
-                  key={currentIndex}
-                  src={current.src}
-                  custom={direction}
-                  initial={{ opacity: 0, x: 24 * direction }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 * direction }}
-                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                  controls
-                  playsInline
-                  preload="metadata"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                  onError={e => (e.currentTarget.style.display = "none")}
-                />
-              ) : (
-                <motion.img
-                  key={currentIndex}
-                  src={current.src}
-                  custom={direction}
-                  initial={{ opacity: 0, x: 24 * direction }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 * direction }}
-                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                  onError={e => (e.currentTarget.style.display = "none")}
-                />
-              )}
-            </AnimatePresence>
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                padding: innerPad,
+                boxSizing: "border-box",
+              }}
+            >
+              <AnimatePresence mode="wait" custom={direction}>
+                {isVideoFile(current.src) ? (
+                  <motion.video
+                    key={currentIndex}
+                    src={current.src}
+                    custom={direction}
+                    initial={{ opacity: 0, x: 24 * direction }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 * direction }}
+                    transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: galleryImageFit,
+                      display: "block",
+                    }}
+                    onError={e => (e.currentTarget.style.display = "none")}
+                  />
+                ) : (
+                  <motion.img
+                    key={currentIndex}
+                    src={current.src}
+                    custom={direction}
+                    initial={{ opacity: 0, x: 24 * direction }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 * direction }}
+                    transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: galleryImageFit,
+                      display: "block",
+                    }}
+                    onError={e => (e.currentTarget.style.display = "none")}
+                  />
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Persistent click hint — fades out after first click */}
             {isClickable && (

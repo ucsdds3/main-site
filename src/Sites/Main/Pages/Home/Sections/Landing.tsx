@@ -215,7 +215,7 @@ const Landing = () => {
             style={{ borderTop: `1px solid ${borderFaint}` }}
           >
             {[
-              { value: "500+", label: "Members" },
+              { value: "600+", label: "Members" },
               { value: "10+",  label: "Majors" },
               { value: "20+",  label: "Projects" },
             ].map(({ value, label }) => (

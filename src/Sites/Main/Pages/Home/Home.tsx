@@ -1,10 +1,10 @@
-import { lazy, Suspense, useRef } from "react";
+import { lazy, Suspense } from "react";
 import Page from "src/Shared/Page/Page";
 
 import Landing from "./Sections/Landing";
 import OnlineContent from "./Sections/OnlineContent";
-import faq from "../JoinUs/Data/FAQ.json";
-import FAQ from "../JoinUs/Sections/FAQ";
+import faq from "./Data/FAQ.json";
+import FAQ from "./Sections/FAQ";
 
 const OurPartners = lazy(() => import("../../Components/OurPartners"));
 const AboutUs = lazy(() => import("./Sections/AboutUs"));
@@ -12,12 +12,10 @@ const GetInvolved = lazy(() => import("./Sections/GetInvolved"));
 const WhereWeBeen = lazy(() => import("./Sections/WhereWeBeen"));
 
 const Home = () => {
-  const scrollRef = useRef<HTMLDivElement>(null!);
-
   return (
-    <Page scrollRef={scrollRef}>
+    <Page>
       <Landing />
-      <div ref={scrollRef}>
+      <div>
         <Suspense>
           <AboutUs />
           <GetInvolved />
