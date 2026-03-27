@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { FaGithub, FaFilePowerpoint, FaGlobe } from "react-icons/fa";
 
-import consultingData from "../Data/consulting.json";
+import opensourceData from "../Data/opensource.json";
 
-interface ConsultingProject {
+interface OpenSourceProject {
   title: string;
   description: string;
   mentor?: string;
@@ -12,17 +12,17 @@ interface ConsultingProject {
   website: string | null;
 }
 
-const ProjectCard = ({ project }: { project: ConsultingProject }) => {
+const ProjectCard = ({ project }: { project: OpenSourceProject }) => {
   const iconBtnBase: React.CSSProperties = {
-    width: 34,
-    height: 34,
+    width: 26,
+    height: 26,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "0.35rem",
     border: "1px solid var(--obs-border, rgba(128,128,128,0.2))",
     background: "transparent",
-    fontSize: "0.82rem",
+    fontSize: "0.72rem",
     textDecoration: "none",
     transition: "opacity 0.2s ease, border-color 0.2s ease",
   };
@@ -51,10 +51,9 @@ const ProjectCard = ({ project }: { project: ConsultingProject }) => {
         position: "relative",
         transition: "border-color 0.25s ease",
       }}
-      onMouseEnter={e => (e.currentTarget.style.borderColor = "#19B5CA")}
+      onMouseEnter={e => (e.currentTarget.style.borderColor = "#F58134")}
       onMouseLeave={e => (e.currentTarget.style.borderColor = "var(--obs-border, rgba(128,128,128,0.18))")}
     >
-      {/* Top row: 3 horizontal icons */}
       <div style={{ display: "flex", flexDirection: "row", gap: "0.3rem" }}>
         {links.map(({ icon, href, title }) =>
           href ? (
@@ -66,7 +65,7 @@ const ProjectCard = ({ project }: { project: ConsultingProject }) => {
               title={title}
               onClick={e => e.stopPropagation()}
               style={{ ...iconBtnBase, color: "var(--obs-text-primary)", opacity: 0.5, cursor: "pointer" }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.borderColor = "#19B5CA"; }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.borderColor = "#F58134"; }}
               onMouseLeave={e => { e.currentTarget.style.opacity = "0.5"; e.currentTarget.style.borderColor = "var(--obs-border, rgba(128,128,128,0.2))"; }}
             >
               {icon}
@@ -83,10 +82,9 @@ const ProjectCard = ({ project }: { project: ConsultingProject }) => {
         )}
       </div>
 
-      {/* Title */}
       <h3 style={{
         fontFamily: "'DM Serif Display', Georgia, serif",
-        fontSize: "clamp(1.45rem, 2vw, 1.9rem)",
+        fontSize: "clamp(1.1rem, 1.6vw, 1.4rem)",
         fontWeight: 400,
         color: "var(--obs-text-primary)",
         margin: 0,
@@ -95,9 +93,8 @@ const ProjectCard = ({ project }: { project: ConsultingProject }) => {
         {project.title}
       </h3>
 
-      {/* Description */}
       <p style={{
-        fontSize: "clamp(1.05rem, 1.25vw, 1.2rem)",
+        fontSize: "clamp(0.82rem, 1vw, 0.92rem)",
         color: "var(--obs-text-primary)",
         opacity: 0.58,
         margin: 0,
@@ -110,8 +107,8 @@ const ProjectCard = ({ project }: { project: ConsultingProject }) => {
   );
 };
 
-const ConsultingProjects = () => {
-  const projects = consultingData.projects as ConsultingProject[];
+const OpenSourceProjects = () => {
+  const projects = opensourceData.projects as OpenSourceProject[];
 
   return (
     <div style={{ width: "100%" }}>
@@ -123,18 +120,18 @@ const ConsultingProjects = () => {
         style={{ marginBottom: "2rem" }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.7rem" }}>
-          <div style={{ width: 22, height: 2, background: "#19B5CA", borderRadius: 2 }} />
+          <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
           <span style={{
             fontFamily: "ui-monospace, monospace",
-            fontSize: "0.72rem",
+            fontSize: "0.65rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
-            color: "#19B5CA",
+            color: "#F58134",
           }}>Past work</span>
         </div>
         <h2 style={{
           fontFamily: "'DM Serif Display', Georgia, serif",
-          fontSize: "clamp(2rem, 3.4vw, 3.1rem)",
+          fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
           fontWeight: 400,
           color: "var(--obs-text-primary)",
           margin: 0,
@@ -155,4 +152,4 @@ const ConsultingProjects = () => {
   );
 };
 
-export default ConsultingProjects;
+export default OpenSourceProjects;

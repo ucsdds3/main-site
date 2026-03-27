@@ -126,11 +126,10 @@ const WorkWithUs = () => {
           }}>
             Work With Us
           </h2>
-          <button
-            onClick={() => {
-              const el = document.getElementById("contact");
-              el?.scrollIntoView({ behavior: "smooth" });
-            }}
+          <a
+            href="https://drive.google.com/drive/folders/1SsWNyer200v3aojhCbK2VQhe33dcAXy6?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               fontFamily: "ui-monospace, monospace",
               fontSize: "0.65rem",
@@ -144,12 +143,14 @@ const WorkWithUs = () => {
               cursor: "pointer",
               flexShrink: 0,
               transition: "background 0.2s ease",
+              textDecoration: "none",
+              display: "inline-block",
             }}
             onMouseEnter={e => (e.currentTarget.style.background = "rgba(245,129,52,0.18)")}
             onMouseLeave={e => (e.currentTarget.style.background = "rgba(245,129,52,0.08)")}
           >
-            Get in touch →
-          </button>
+            View Sponsor Packet →
+          </a>
         </div>
       </motion.div>
 

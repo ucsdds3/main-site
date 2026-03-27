@@ -1,12 +1,10 @@
 {
   "about": {
     "name": "Open Source",
-    "image": "/OpenSource/opensource-img.webp",
+    "image": "/OpenSource/gallery-xarray-sql.png",
     "photoPool": [
-      { "src": "/GetInvolved/projects-img.webp", "caption": "Fall 2025 Projects" },
-      { "src": "/Projects/P1.webp", "caption": "SayStroop — FA25" },
-      { "src": "/Projects/P2.webp", "caption": "TubeScope — FA25" },
-      { "src": "/Projects/P3.webp", "caption": "Next-Up — FA25" }
+      { "src": "/OpenSource/gallery-xarray-sql.png", "caption": "Xarray-SQL" },
+      { "src": "/OpenSource/gallery-marin.png", "caption": "Marin" }
     ],
     "points": {
       "Build in Public": "All DS3 open-source projects are publicly available on GitHub — explore, fork, and build on top of our work.",
@@ -14,24 +12,21 @@
       "Community-Driven": "Projects are maintained by DS3 members and open to contributions from anyone in the community."
     }
   },
-  "repos": [
+  "projects": [
     {
-      "title": "DS3 Website",
-      "description": "The official DS3 club website — built with React, TypeScript, and Tailwind. The very site you're on.",
-      "github": "https://github.com/ds3ucsd/ds3-website",
-      "tags": ["React", "TypeScript", "Tailwind"]
+      "title": "Xarray-SQL (MEDIUM)",
+      "description": "Contribute to Xarray-SQL, an open-source library that enables SQL-style querying over xarray datasets—the core structure for large labeled scientific data such as satellite imagery, climate fields, and geospatial time series (workflows comparable to Google Earth Engine). Work directly with Alex. Tech: Python, SQL. Workload ~6–7 hrs/week. Prerequisites: DSC 100 or graduate equivalent.",
+      "mentor": "Alex Merose",
+      "github_repository": "https://github.com/alxmrs/xarray-sql",
+      "presentation_slides": null,
+      "website": "https://alxmrs.github.io/xarray-sql/"
     },
     {
-      "title": "DataHacks Starter Kit",
-      "description": "Starter notebooks, datasets, and infrastructure used for DS3's annual DataHacks hackathon.",
-      "github": "https://github.com/ds3ucsd/datahacks",
-      "tags": ["Python", "Jupyter", "Pandas"]
-    },
-    {
-      "title": "ML Workshop Notebooks",
-      "description": "A collection of Jupyter notebooks from DS3 workshops covering EDA, Scikit-Learn, LLMs, and more.",
-      "github": "https://github.com/ds3ucsd/ml-workshops",
-      "tags": ["Python", "Jupyter", "ML"]
+      "title": "Marin – LLMs (HARD)",
+      "description": "Contribute to Marin, a frontier open-source framework for experimenting with, training, and evaluating LLMs with 32+ billion parameters—benchmarking, scaling experiments, and contributor workflows. Exclusive Marin developer access; pair with senior developers on issues and features. Tech: LLMs, Python, PyTorch. Workload ~6–8 hrs/week. Prerequisites: strong Python and ML experience, LLM familiarity. Two teams, eight people total.",
+      "github_repository": "https://github.com/marin-community/marin/blob/main/docs%2Ftutorials%2Fsubmitting-speedrun.md",
+      "presentation_slides": null,
+      "website": "https://marin.community"
     }
   ]
 }

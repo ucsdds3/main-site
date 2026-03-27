@@ -42,7 +42,7 @@ const SelectTeam = ({ team, setTeam }: SelectTeamProps) => {
 
         <Button
           onClick={() => {
-            navigate("/join-us");
+            navigate({ pathname: "/", hash: "#get-involved" });
           }}
         >
           JOIN US

@@ -8,10 +8,10 @@ const Stats = () => {
   const isInView = useInView(ref, { once: true });
 
   const stats = [
-    { title: "DataHacks Attendees", value: 700, color: "#F58134" },
-    { title: "Workshops Hosted",    value: 100, color: "#19B5CA" },
-    { title: "Active Members",      value: 500, color: "#a78bfa" },
-    { title: "Projects Completed",  value: 50,  color: "var(--obs-text-primary)" },
+    { title: "DataHacks Registrants", value: 1000, color: "#F58134" },
+    { title: "Workshops Hosted",       value: 100, color: "#19B5CA" },
+    { title: "Active Members",         value: 600, color: "#a78bfa" },
+    { title: "Projects Completed",     value: 50,  color: "var(--obs-text-primary)" },
   ];
 
   return (

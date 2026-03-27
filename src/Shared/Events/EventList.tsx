@@ -56,15 +56,6 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
         border: "1px dashed rgba(128,128,128,0.2)",
         borderRadius: "0.75rem",
       }}>
-        <span style={{
-          fontFamily: "ui-monospace, monospace",
-          fontSize: "0.65rem",
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          color: "#F58134",
-        }}>
-          Nothing scheduled yet
-        </span>
         <p style={{
           fontFamily: "'DM Serif Display', Georgia, serif",
           fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
@@ -72,9 +63,9 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
           color: "var(--obs-text-primary)",
           textAlign: "center",
           margin: 0,
-          opacity: 0.7,
+          opacity: 0.75,
         }}>
-          Check our social media for the latest updates
+          Nothing there yet
         </p>
       </div>
     );

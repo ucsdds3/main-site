@@ -108,12 +108,15 @@
     "title": "LeetCode Sessions",
     "subtitle": "Data Structures. Algorithms. SQL. ML.",
     "name": "LeetCode Sessions",
-    "image": "/GetInvolved/pf-events-img.webp",
+    "image": "/Events/LC-Popular.png",
+    "galleryImageFit": "contain",
+    "galleryPadding": "clamp(1rem, 4vw, 2.5rem)",
     "photoPool": [
-      {
-        "src": "/Events/leetcode-session.mp4",
-        "caption": "LeetCode Session"
-      }
+      { "src": "/Events/LC-Popular.png", "caption": "LeetCode Popular" },
+      { "src": "/Events/LC-Dynamic_Programming.png", "caption": "LeetCode Dynamic Programming" },
+      { "src": "/Events/LC-Arrays.png", "caption": "LeetCode Arrays" },
+      { "src": "/Events/LC-BST.png", "caption": "LeetCode BST" },
+      { "src": "/Events/LC-BST_Traversal.png", "caption": "LeetCode BST Traversal" }
     ],
     "points": {
       "Structured Interview Preparation": "Work through core data structures and algorithm patterns modeled after real technical interviews.",

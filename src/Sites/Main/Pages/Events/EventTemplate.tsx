@@ -40,8 +40,8 @@ export default function EventTemplate({ team }: { team: TeamType }) {
       >
         <About {...team} />
 
-        {/* Section header */}
-        {team.title !== "Upcoming Events" && (
+        {/* Section header + calendar list — not shown on GBM or LeetCode Sessions */}
+        {team.title !== "GBM" && team.title !== "LeetCode Sessions" && team.title !== "Upcoming Events" && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +73,9 @@ export default function EventTemplate({ team }: { team: TeamType }) {
           </motion.div>
         )}
 
-        <EventList tag={teamEventTagMap[team.title as keyof typeof teamEventTagMap] || "All"} />
+        {team.title !== "GBM" && team.title !== "LeetCode Sessions" && (
+          <EventList tag={teamEventTagMap[team.title as keyof typeof teamEventTagMap] || "All"} />
+        )}
       </div>
     </Page>
   );

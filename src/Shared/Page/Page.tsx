@@ -7,14 +7,12 @@ import sleepyLight from "src/Assets/Images/under_construction_light.png";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import ScrollArrow from "./ScrollArrow";
 
 interface PageProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
-  scrollRef?: React.RefObject<HTMLDivElement>;
 }
 
-const Page = ({ children, scrollRef, ...props }: PageProps) => {
+const Page = ({ children, ...props }: PageProps) => {
   const { isDark } = useTheme();
 
   const bg = isDark
@@ -58,7 +56,6 @@ const Page = ({ children, scrollRef, ...props }: PageProps) => {
         <Navbar />
 
         <div className="flex flex-col items-center min-h-[80vh]" {...props}>
-          {scrollRef && <ScrollArrow ref={scrollRef} />}
           {children || (
             <>
               <h2 className="text-center hero-text-shadow my-10 text-[clamp(2rem,10vw,4rem)]">
