@@ -1,6 +1,7 @@
 import { motion, type Variants } from "framer-motion";
 import { Link } from "react-router";
 
+import { useSiteHandler } from "src/Hooks/useSiteHandler";
 import Section from "src/Shared/Page/Section";
 import useImagePreloader from "src/Hooks/useImagepreload";
 
@@ -28,7 +29,10 @@ const imgVariants: Variants = {
 const ACCENT = ["#19B5CA", "#F58134"];
 const ACCENT_GLOW = ["rgba(25,181,202,", "rgba(245,129,52,"];
 
+const HASH_LINK = /^\/#([\w-]+)$/;
+
 const AboutUs = () => {
+  const { navigate } = useSiteHandler();
   const { imageStates } = useImagePreloader(data.map((d) => d.image));
 
   return (
@@ -107,6 +111,7 @@ const AboutUs = () => {
             const accent = ACCENT[index % 2];
             const accentGlow = ACCENT_GLOW[index % 2];
             const linkClass = `obs-link ${isEven ? "obs-link-teal" : "obs-link-orange"}`;
+            const hashMatch = HASH_LINK.exec(section.link);
 
             return (
               <motion.div
@@ -137,15 +142,25 @@ const AboutUs = () => {
                   <div style={{ width: "100%", height: 1, background: "linear-gradient(90deg,var(--obs-border) 0%,transparent 100%)" }} />
 
                   {/* Body — inherits site font, no Albert Sans */}
-                  <p className="font-body font-light fl-text-base/lg leading-[1.85] text-[var(--obs-text-muted)] m-0">
+                  <p className="font-body font-light fl-text-base/lg leading-[1.85] text-(--obs-text-muted) m-0">
                     {section.content}
                   </p>
 
                   {/* CTA */}
                   <div>
-                    <Link to={section.link} className={linkClass}>
-                      {section.button}
-                    </Link>
+                    {hashMatch ? (
+                      <button
+                        type="button"
+                        className={linkClass}
+                        onClick={() => navigate({ pathname: "/", hash: hashMatch[1] })}
+                      >
+                        {section.button}
+                      </button>
+                    ) : (
+                      <Link to={section.link} className={linkClass}>
+                        {section.button}
+                      </Link>
+                    )}
                   </div>
                 </div>
 
