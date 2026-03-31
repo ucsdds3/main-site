@@ -152,7 +152,7 @@ const OurPartners = () => {
     <div className="mx-auto flex w-full max-w-[1300px] flex-col px-[clamp(1.25rem,4vw,3rem)] py-[clamp(2.5rem,5vw,5rem)]">
       {/* ── Editorial header ── */}
       <div className="obs-section-header-border-loose mb-[clamp(2.5rem,4vw,4rem)]">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <div className="flex flex-wrap items-end justify-center md:justify-between gap-6">
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -168,7 +168,7 @@ const OurPartners = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="m-0 max-w-[380px] text-right text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.7] text-(--obs-text-primary) opacity-[0.68]"
+            className="m-0 max-w-[380px] text-center md:text-right text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.7] text-(--obs-text-primary) opacity-[0.68]"
           >
             Interested in working with us? Reach out at{" "}
             <SafeLink
