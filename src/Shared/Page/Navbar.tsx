@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { useLocation } from "react-router";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 
-import { useTheme } from "src/Hooks/useTheme";
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 
@@ -13,12 +10,10 @@ import Links from "./Links";
 const Navbar = () => {
   const { authState } = useAuthStore();
   const { subdomain, navigate } = useSiteHandler();
-  const { isDark, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = useLocation().pathname;
 
-  const bg      = isDark ? "rgba(5,8,15,0.92)"      : "rgba(242,237,230,0.92)";
-  const border  = isDark ? "rgba(255,255,255,0.07)"  : "rgba(10,20,50,0.1)";
+  const bg = "rgba(5,8,15,0.92)";
+  const border = "rgba(255,255,255,0.07)";
 
   return (
     <nav
@@ -47,13 +42,6 @@ const Navbar = () => {
             <img src="/logo.webp" alt="Logo" className="w-10 transition-all duration-500" />
           </button>
 
-          {pathname !== "/admin" && (
-            <label className="toggle text-base-content" id="theme-toggle">
-              <input type="checkbox" checked={isDark} onChange={toggleTheme} />
-              <MdLightMode aria-label="disabled" />
-              <MdDarkMode aria-label="enabled" />
-            </label>
-          )}
         </div>
 
         {/* Mobile menu button */}
