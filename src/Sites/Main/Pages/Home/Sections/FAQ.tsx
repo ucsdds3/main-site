@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import Section from "src/Shared/Page/Section";
+import { IoIosArrowDown } from "react-icons/io";
 
 const FAQ = ({ faq }: { faq: Record<string, string> }) => {
   const entries = Object.entries(faq);
@@ -74,7 +75,7 @@ const FAQ = ({ faq }: { faq: Record<string, string> }) => {
                     transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                   }}
                 >
-                  ↓
+                  <IoIosArrowDown />
                 </span>
               </button>
               <AnimatePresence initial={false}>
