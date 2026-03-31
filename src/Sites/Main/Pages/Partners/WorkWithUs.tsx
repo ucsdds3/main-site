@@ -105,7 +105,7 @@ const WorkWithUs = () => {
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.85rem" }}>
           <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
           <span style={{
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.65rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
@@ -116,7 +116,7 @@ const WorkWithUs = () => {
         </div>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
           <h2 style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontFamily: "var(--font-heading)",
             fontSize: "clamp(2rem, 4vw, 3.5rem)",
             fontWeight: 400,
             color: "var(--obs-text-primary)",
@@ -131,7 +131,7 @@ const WorkWithUs = () => {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.65rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -181,7 +181,7 @@ const WorkWithUs = () => {
               background: "rgba(128,128,128,0.04)",
             }}>
               <span style={{
-                fontFamily: "ui-monospace, monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.6rem",
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
@@ -192,7 +192,7 @@ const WorkWithUs = () => {
                 {tier.label}
               </span>
               <h3 style={{
-                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: "clamp(1.1rem, 1.6vw, 1.45rem)",
                 fontWeight: 400,
                 color: "var(--obs-text-primary)",
@@ -226,7 +226,7 @@ const WorkWithUs = () => {
                     }} />
                     <div>
                       <p style={{
-                        fontFamily: "'DM Serif Display', Georgia, serif",
+                        fontFamily: "var(--font-heading)",
                         fontSize: "clamp(0.95rem, 1.3vw, 1.1rem)",
                         fontWeight: 400,
                         color: "var(--obs-text-primary)",

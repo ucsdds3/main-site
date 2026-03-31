@@ -31,7 +31,7 @@ const WhereWeBeen = () => {
         />
         <span
           style={{
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.68rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",

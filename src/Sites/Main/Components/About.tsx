@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 import { TeamType } from "src/Utils/types.ts";
+import { ChevronRightNextIcon } from "src/Shared/icons/ChevronRightNextIcon";
+import { PadlockExploreIcon } from "src/Shared/icons/PadlockExploreIcon";
 
 export interface AboutProps extends TeamType {
   noAbout?: boolean;
@@ -63,7 +65,7 @@ const About = ({
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.85rem" }}>
           <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
           <span style={{
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.65rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
@@ -73,7 +75,7 @@ const About = ({
           </span>
         </div>
         <h2 style={{
-          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontFamily: "var(--font-heading)",
           fontSize: "clamp(2rem, 3.5vw, 3rem)",
           fontWeight: 400,
           color: "var(--obs-text-primary)",
@@ -188,14 +190,8 @@ const About = ({
                       zIndex: 10,
                     }}
                   >
-                    <svg
-                      width="13" height="13" viewBox="0 0 24 24" fill="none"
-                      style={{ color: "#F58134", flexShrink: 0 }}
-                    >
-                      <path d="M9 11V6a3 3 0 0 1 6 0v5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                      <path d="M15 11h.01M9 11H8a3 3 0 0 0-3 3v1a7 7 0 0 0 14 0v-4a1 1 0 0 0-2 0v-1a1 1 0 0 0-2 0v-1a1 1 0 0 0-1-1Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "0.58rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.8)", whiteSpace: "nowrap" }}>
+                    <PadlockExploreIcon className="shrink-0 text-[#F58134]" />
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.58rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.8)", whiteSpace: "nowrap" }}>
                       Click to explore
                     </span>
                   </motion.div>
@@ -220,7 +216,7 @@ const About = ({
                 }}
               >
                 <span style={{
-                  fontFamily: "ui-monospace, monospace",
+                  fontFamily: "var(--font-mono)",
                   fontSize: "0.62rem",
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
@@ -228,9 +224,7 @@ const About = ({
                 }}>
                   Next photo
                 </span>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: "rgba(255,255,255,0.9)" }}>
-                  <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                <ChevronRightNextIcon className="text-white/90" />
               </motion.div>
             )}
 
@@ -274,7 +268,7 @@ const About = ({
               >
                 <div style={{ width: 12, height: 1.5, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
                 <span style={{
-                  fontFamily: "ui-monospace, monospace",
+                  fontFamily: "var(--font-mono)",
                   fontSize: "0.75rem",
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
@@ -321,7 +315,7 @@ const About = ({
                 )}
                 <div>
                   <p style={{
-                    fontFamily: "'DM Serif Display', Georgia, serif",
+                    fontFamily: "var(--font-heading)",
                     fontSize: "clamp(1.25rem, 1.5vw, 1.6rem)",
                     fontWeight: 400,
                     color: "var(--obs-text-primary)",
@@ -346,11 +340,6 @@ const About = ({
         </div>
       </div>
 
-      <style>{`
-        @media (max-width: 768px) {
-          .about-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </motion.div>
   );
 };

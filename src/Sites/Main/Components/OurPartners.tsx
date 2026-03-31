@@ -5,6 +5,12 @@ import { useTheme } from "src/Hooks/useTheme";
 
 import partners from "../Data/partners.json";
 
+const partnerDisplayNames = partners.displayNames as Record<string, string>;
+
+function partnerFullName(shortKey: string): string {
+  return partnerDisplayNames[shortKey] ?? shortKey;
+}
+
 const DEPARTMENT_KEYS = [
   "SCIDS", "Basement", "Scripps", "COGS",
   "Rady School of Management", "CSE",
@@ -75,7 +81,7 @@ const OurPartners = () => {
     >
       <div style={{ width: 22, height: 2, background: color, borderRadius: 2, flexShrink: 0 }} />
       <span style={{
-        fontFamily: "ui-monospace, monospace",
+        fontFamily: "var(--font-mono)",
         fontSize: "0.75rem",
         letterSpacing: "0.22em",
         textTransform: "uppercase",
@@ -104,6 +110,7 @@ const OurPartners = () => {
     >
       {entries.map(([name, entry], index) => {
         const { src, href } = typeof entry === "string" ? { src: entry, href: undefined } : entry;
+        const fullName = partnerFullName(name);
         const isUploadedDarkVariant = isDark && src in darkLogoScaleByFile;
         const showPreloadPlaceholder = isUploadedDarkVariant && !imageStates[src];
         const logoContent = (
@@ -120,8 +127,7 @@ const OurPartners = () => {
             )}
             <img
               src={src}
-              alt={name}
-              title={name}
+              alt={fullName}
               style={getLogoStyle(src)}
               loading={isUploadedDarkVariant ? "eager" : "lazy"}
             />
@@ -131,13 +137,25 @@ const OurPartners = () => {
         <motion.div
           key={name}
           className="partner-logo-cell"
+          title={fullName}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: index * 0.04 }}
         >
           {href ? (
-            <SafeLink href={href} style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+            <SafeLink
+              href={href}
+              style={{
+                flex: 1,
+                alignSelf: "stretch",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                minHeight: "100%",
+              }}
+            >
               {logoContent}
             </SafeLink>
           ) : (
@@ -217,7 +235,7 @@ const OurPartners = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontFamily: "var(--font-heading)",
               fontSize: "clamp(3rem, 7vw, 6rem)",
               fontWeight: 400,
               lineHeight: 0.95,
@@ -280,7 +298,7 @@ const OurPartners = () => {
       {/* ── Disclaimer ── */}
       <p style={{
         marginTop: "2.5rem",
-        fontFamily: "ui-monospace, monospace",
+        fontFamily: "var(--font-mono)",
         fontSize: "0.7rem",
         lineHeight: 1.75,
         letterSpacing: "0.04em",

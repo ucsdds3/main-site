@@ -85,7 +85,7 @@ const ProjectCard = ({ project }: { project: ConsultingProject }) => {
 
       {/* Title */}
       <h3 style={{
-        fontFamily: "'DM Serif Display', Georgia, serif",
+        fontFamily: "var(--font-heading)",
         fontSize: "clamp(1.45rem, 2vw, 1.9rem)",
         fontWeight: 400,
         color: "var(--obs-text-primary)",
@@ -125,7 +125,7 @@ const ConsultingProjects = () => {
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.7rem" }}>
           <div style={{ width: 22, height: 2, background: "#19B5CA", borderRadius: 2 }} />
           <span style={{
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.72rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
@@ -133,7 +133,7 @@ const ConsultingProjects = () => {
           }}>Past work</span>
         </div>
         <h2 style={{
-          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontFamily: "var(--font-heading)",
           fontSize: "clamp(2rem, 3.4vw, 3.1rem)",
           fontWeight: 400,
           color: "var(--obs-text-primary)",

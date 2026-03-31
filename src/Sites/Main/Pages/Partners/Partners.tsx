@@ -3,7 +3,7 @@ import Page from "src/Shared/Page/Page";
 import OurPartners from "../../Components/OurPartners";
 import WorkWithUs from "./WorkWithUs";
 
-const ContactUs = lazy(() => import("src/Shared/Sections/ContactUs"));
+const ContactUs = lazy(() => import("src/Sites/Main/Pages/Consulting/Sections/ContactUs"));
 
 const Partners = () => {
   return (

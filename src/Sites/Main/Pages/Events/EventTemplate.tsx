@@ -52,7 +52,7 @@ export default function EventTemplate({ team }: { team: TeamType }) {
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
               <div style={{ width: 28, height: 2, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
               <span style={{
-                fontFamily: "ui-monospace, monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.68rem",
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
@@ -62,7 +62,7 @@ export default function EventTemplate({ team }: { team: TeamType }) {
               </span>
             </div>
             <h2 style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontFamily: "var(--font-heading)",
               fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
               fontWeight: 400,
               color: "var(--obs-text-primary)",

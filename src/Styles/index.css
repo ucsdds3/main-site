@@ -1,9 +1,26 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* ── Global font variables ── */
+:root {
+  --font-heading: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Albert Sans', 'Darker Grotesque', sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}
+
 /* Global font settings */
 * {
-  font-family: 'Darker Grotesque', sans-serif;
+  font-family: var(--font-body);
+}
+
+/* ── Utility keyframes for shared components ── */
+@keyframes hc-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes hc-fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @plugin "daisyui" {

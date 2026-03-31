@@ -32,6 +32,7 @@ const HoverCard = ({
 }: HoverCardProps) => {
   const { imageStates } = useImagePreloader([image ? image : ""]);
   const [showLinks, setShowLinks] = useState(false);
+  const imageLoaded = image ? imageStates[image] : false;
 
   const placementConfig = {
     1: { color: "bg-yellow-500", text: "1st" },
@@ -44,13 +45,34 @@ const HoverCard = ({
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <div
-        className={`skeleton relative group ${imgClassName} ${link ? "cursor-pointer" : ""}`}
+        className={`relative group ${imgClassName} ${link ? "cursor-pointer" : ""}`}
         onClick={() => {
           if (links) setShowLinks(!showLinks);
           else if (link) window.open(link, "_blank");
         }}
-        style={{ width: size, height: size }}
+        style={{
+          width: size,
+          height: size,
+          borderRadius: "1rem",
+          overflow: "hidden",
+          background: "var(--obs-surface, rgba(128,128,128,0.08))",
+        }}
       >
+        {/* Skeleton pulse while loading */}
+        {image && !imageLoaded && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "1rem",
+              background:
+                "linear-gradient(90deg, var(--obs-surface, rgba(128,128,128,0.06)) 0%, rgba(128,128,128,0.12) 50%, var(--obs-surface, rgba(128,128,128,0.06)) 100%)",
+              backgroundSize: "200% 100%",
+              animation: "hc-shimmer 1.6s ease-in-out infinite",
+            }}
+          />
+        )}
+
         {placement && placement <= 3 && (
           <div
             className={`absolute top-2 left-2 text-white font-bold px-4 py-1 rounded-full z-10 ${placementBand.color}`}
@@ -59,12 +81,16 @@ const HoverCard = ({
           </div>
         )}
 
-        {image && imageStates[image] && (
+        {image && imageLoaded && (
           <img
-            src={image || "/"}
+            src={image}
             className="size-full object-cover rounded-2xl"
+            loading="lazy"
+            decoding="async"
+            style={{
+              animation: "hc-fadeIn 0.35s ease-out forwards",
+            }}
             onError={e => (e.currentTarget.style.display = "none")}
-            onLoad={e => (e.currentTarget.style.display = "block")}
           />
         )}
 
@@ -101,22 +127,37 @@ const HoverCard = ({
       </div>
 
       <div
-        className="text-lg text-center flex flex-col gap-2"
+        className="text-center flex flex-col gap-1.5"
         style={{ width: `calc(${size} * 0.95)` }}
       >
         {title && (
           <span
-            className="text-2xl"
             style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontFamily: "var(--font-heading)",
               fontWeight: 400,
+              fontSize: "clamp(1.35rem, 2.8vw, 1.85rem)",
               letterSpacing: "-0.01em",
+              lineHeight: 1.2,
+              display: "block",
             }}
           >
             {title}
           </span>
         )}
-        {description && <span className="text-xl opacity-75 font-medium">{description}</span>}
+        {description && (
+          <span
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "clamp(1.05rem, 1.35vw, 1.2rem)",
+              fontWeight: 500,
+              lineHeight: 1.35,
+              color: "var(--obs-text-primary)",
+              opacity: 0.82,
+            }}
+          >
+            {description}
+          </span>
+        )}
       </div>
     </div>
   );

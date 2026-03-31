@@ -33,12 +33,12 @@ const Footer = () => {
         }}
       >
         {/* Left: logo + name */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
-          <img src="/logo.webp" alt="DS3 Logo" style={{ width: 36, opacity: 0.9 }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "clamp(0.65rem, 1.2vw, 1rem)" }}>
+          <img src="/logo.webp" alt="DS3 Logo" style={{ width: "clamp(28px, 3vw, 42px)", opacity: 0.9, flexShrink: 0 }} />
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <span style={{
-              fontFamily: "ui-monospace, monospace",
-              fontSize: "0.72rem",
+              fontFamily: "var(--font-mono)",
+              fontSize: "clamp(0.62rem, 0.8vw, 0.88rem)",
               letterSpacing: "0.2em",
               textTransform: "uppercase",
               color: textPrimary,
@@ -47,8 +47,8 @@ const Footer = () => {
               Data Science Student Society (DS3) @ UC San Diego
             </span>
             <span style={{
-              fontFamily: "ui-monospace, monospace",
-              fontSize: "0.58rem",
+              fontFamily: "var(--font-mono)",
+              fontSize: "clamp(0.5rem, 0.6vw, 0.72rem)",
               letterSpacing: "0.12em",
               color: textFaint,
             }}>
@@ -58,7 +58,7 @@ const Footer = () => {
         </div>
 
         {/* Right: social icons */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "clamp(0.25rem, 0.5vw, 0.45rem)" }}>
           {socialMedia.map((media, index) => (
             <SafeLink
               key={index}
@@ -68,12 +68,12 @@ const Footer = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: 34,
-                height: 34,
+                width: "clamp(30px, 3.2vw, 42px)",
+                height: "clamp(30px, 3.2vw, 42px)",
                 borderRadius: "50%",
                 border: `1px solid ${border}`,
                 color: textFaint,
-                fontSize: "1rem",
+                fontSize: "clamp(0.85rem, 1.1vw, 1.25rem)",
                 transition: "color 0.2s ease, border-color 0.2s ease, background 0.2s ease",
               }}
               onMouseEnter={e => {

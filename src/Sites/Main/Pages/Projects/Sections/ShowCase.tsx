@@ -5,12 +5,14 @@ import { FaFilePowerpoint, FaGithub, FaGlobe } from "react-icons/fa";
 import HoverCard from "src/Shared/Components/HoverCard";
 import Paginate from "src/Shared/Components/Paginate";
 
+import { ORANGE_SELECT_CHEVRON_DATA_URL } from "src/Shared/icons/orangeSelectChevronDataUrl";
+
 import projectsData from "../Data/projects.json";
 
 const PER_PAGE = 4;
 
 const selectStyle: React.CSSProperties = {
-  fontFamily: "ui-monospace, monospace",
+  fontFamily: "var(--font-mono)",
   fontSize: "0.68rem",
   letterSpacing: "0.12em",
   textTransform: "uppercase",
@@ -22,7 +24,7 @@ const selectStyle: React.CSSProperties = {
   cursor: "pointer",
   appearance: "none",
   WebkitAppearance: "none",
-  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F58134' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
+  backgroundImage: ORANGE_SELECT_CHEVRON_DATA_URL,
   backgroundRepeat: "no-repeat",
   backgroundPosition: "right 0.6rem center",
   minWidth: "11rem",
@@ -47,11 +49,17 @@ const ShowCase = () => {
   const end = start + PER_PAGE;
   const pageProjects = sortedProjects.slice(start, end);
 
-  const createLinks = (project: (typeof projects)[YearType][0]) => [
-    { title: "GitHub", href: project.github_repository, icon: <FaGithub />, color: "#11B3C9" },
-    { title: "Presentation", href: project.presentation_slides, icon: <FaFilePowerpoint />, color: "#F58134" },
-    { title: "Website", href: project.website, icon: <FaGlobe />, color: "#222222" },
-  ];
+  const createLinks = (project: (typeof projects)[YearType][0]) => {
+    const raw = [
+      { title: "GitHub", href: project.github_repository, icon: <FaGithub />, color: "#11B3C9" },
+      { title: "Presentation", href: project.presentation_slides, icon: <FaFilePowerpoint />, color: "#F58134" },
+      { title: "Website", href: project.website, icon: <FaGlobe />, color: "#222222" },
+    ];
+    return raw.filter(
+      (l): l is { title: string; href: string; icon: (typeof raw)[0]["icon"]; color: string } =>
+        typeof l.href === "string" && l.href.length > 0,
+    );
+  };
 
   return (
     <div style={{ width: "100%" }}>
@@ -74,7 +82,7 @@ const ShowCase = () => {
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.7rem" }}>
             <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.65rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -82,7 +90,7 @@ const ShowCase = () => {
             }}>Ranked by score</span>
           </div>
           <h2 style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontFamily: "var(--font-heading)",
             fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
             fontWeight: 400,
             color: "var(--obs-text-primary)",
@@ -95,7 +103,7 @@ const ShowCase = () => {
         <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "flex-end" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.58rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -110,7 +118,7 @@ const ShowCase = () => {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.58rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -140,6 +148,7 @@ const ShowCase = () => {
           >
             <HoverCard
               {...project}
+              image={project.image ?? undefined}
               placement={page === 1 ? start + index + 1 : undefined}
               links={createLinks(project)}
               size="clamp(160px, 20vw, 280px)"

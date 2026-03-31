@@ -43,7 +43,7 @@ const Board = () => {
           >
             <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.65rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -59,7 +59,7 @@ const Board = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: "clamp(3rem, 7vw, 6rem)",
                 fontWeight: 400,
                 lineHeight: 0.95,
@@ -77,7 +77,7 @@ const Board = () => {
               transition={{ delay: 0.3 }}
               onClick={() => navigate({ pathname: "/", hash: "#get-involved" })}
               style={{
-                fontFamily: "ui-monospace, monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.65rem",
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
@@ -109,7 +109,7 @@ const Board = () => {
               key={t}
               onClick={() => setTeam(t)}
               style={{
-                fontFamily: "ui-monospace, monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.62rem",
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
@@ -140,10 +140,10 @@ const Board = () => {
             style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
           >
             {/* Team name + description */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxWidth: 640 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 720 }}>
               <h2 style={{
-                fontFamily: "'DM Serif Display', Georgia, serif",
-                fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)",
+                fontFamily: "var(--font-heading)",
+                fontSize: "clamp(1.85rem, 2.8vw, 2.5rem)",
                 fontWeight: 400,
                 color: "var(--obs-text-primary)",
                 margin: 0,
@@ -152,11 +152,13 @@ const Board = () => {
                 {unbreakable(team)} Team
               </h2>
               <p style={{
-                fontSize: "clamp(0.88rem, 1.1vw, 1rem)",
+                fontFamily: "var(--font-body)",
+                fontSize: "clamp(1.05rem, 1.45vw, 1.22rem)",
+                fontWeight: 400,
                 color: "var(--obs-text-primary)",
-                opacity: 0.58,
+                opacity: 0.78,
                 margin: 0,
-                lineHeight: 1.7,
+                lineHeight: 1.65,
               }}>
                 {teams[team as keyof typeof teams]}
               </p>
@@ -169,11 +171,11 @@ const Board = () => {
               gap: "clamp(1rem, 2vw, 1.5rem)",
             }}>
               {filteredMembers.map((member, index) => (
-                <Suspense key={index} fallback={<div style={{ width: "100%", aspectRatio: "1" }} />}>
+                <Suspense key={member.name} fallback={<div style={{ width: "100%", aspectRatio: "1" }} />}>
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.6), ease: [0.22, 1, 0.36, 1] }}
                   >
                     <HoverCard
                       title={member.name}

@@ -12,7 +12,7 @@ const Section = memo(function Section({ title, className, children, ref, ...prop
   return (
     <section
       className={twMerge(
-        "flex flex-col items-center w-[90vw] lg:w-[80vw] py-[clamp(5rem,6vw,10rem)] gap-10",
+        "mx-auto flex w-full max-w-[min(92vw,1280px)] flex-col items-center px-4 sm:px-5 md:px-6 lg:max-w-[80vw] lg:px-0 py-[clamp(5rem,6vw,10rem)] gap-10",
         className
       )}
       ref={ref}
@@ -21,7 +21,7 @@ const Section = memo(function Section({ title, className, children, ref, ...prop
       {title && (
         <h2
           style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontFamily: "var(--font-heading)",
             fontSize: "clamp(2.7rem, 7vw, 4rem)",
             fontWeight: 400,
             letterSpacing: "-0.01em",

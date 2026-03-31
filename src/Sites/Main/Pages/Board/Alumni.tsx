@@ -2,6 +2,7 @@ import { Suspense, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import Page from "src/Shared/Page/Page";
+import { SearchMagnifyingGlassIcon } from "src/Shared/icons/SearchMagnifyingGlassIcon";
 import HoverCard from "src/Shared/Components/HoverCard";
 import Paginate from "src/Shared/Components/Paginate";
 import { unbreakable } from "src/Utils/functions";
@@ -50,7 +51,7 @@ const Alumni = () => {
           >
             <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.65rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -66,7 +67,7 @@ const Alumni = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: "clamp(3rem, 7vw, 6rem)",
                 fontWeight: 400,
                 lineHeight: 0.95,
@@ -106,7 +107,7 @@ const Alumni = () => {
         >
           {/* Result count */}
           <span style={{
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.62rem",
             letterSpacing: "0.18em",
             textTransform: "uppercase",
@@ -118,28 +119,14 @@ const Alumni = () => {
 
           {/* Search input */}
           <div style={{ position: "relative" }}>
-            <svg
-              width="13" height="13" viewBox="0 0 24 24" fill="none"
-              style={{
-                position: "absolute",
-                left: "0.75rem",
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "var(--obs-text-primary)",
-                opacity: 0.35,
-                pointerEvents: "none",
-              }}
-            >
-              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-              <path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
+            <SearchMagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--obs-text-primary)] opacity-[0.35]" />
             <input
               type="text"
               placeholder="Search alumni..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               style={{
-                fontFamily: "ui-monospace, monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.72rem",
                 letterSpacing: "0.1em",
                 padding: "0.5rem 1rem 0.5rem 2.25rem",
@@ -200,14 +187,14 @@ const Alumni = () => {
             borderRadius: "0.75rem",
           }}>
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.62rem",
               letterSpacing: "0.2em",
               textTransform: "uppercase",
               color: "#F58134",
             }}>No results</span>
             <p style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontFamily: "var(--font-heading)",
               fontSize: "clamp(1.2rem, 2vw, 1.6rem)",
               fontWeight: 400,
               color: "var(--obs-text-primary)",

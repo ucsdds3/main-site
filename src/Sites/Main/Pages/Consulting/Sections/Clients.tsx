@@ -28,7 +28,7 @@ const Clients = () => {
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.7rem" }}>
           <div style={{ width: 22, height: 2, background: "#a78bfa", borderRadius: 2 }} />
           <span style={{
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.72rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
@@ -36,7 +36,7 @@ const Clients = () => {
           }}>Who we've worked with</span>
         </div>
         <h2 style={{
-          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontFamily: "var(--font-heading)",
           fontSize: "clamp(2rem, 3.4vw, 3.1rem)",
           fontWeight: 400,
           color: "var(--obs-text-primary)",

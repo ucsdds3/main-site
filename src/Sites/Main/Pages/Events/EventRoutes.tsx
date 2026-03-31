@@ -1,4 +1,5 @@
 import EventPage from "src/Shared/Events/EventPage";
+import type { TeamType } from "src/Utils/types";
 
 import eventsData from "./Data/events.json";
 import EventTemplate from "./EventTemplate";
@@ -15,7 +16,7 @@ export function getEventRoutes() {
       { path: "workshops", element: <EventTemplate team={workshops} /> },
       { path: "social", element: <EventTemplate team={social} /> },
       { path: "professional", element: <EventTemplate team={professional} /> },
-      { path: "leetcode", element: <EventTemplate team={leetcode} /> }
+      { path: "leetcode", element: <EventTemplate team={leetcode as TeamType} /> }
     ],
   };
 }

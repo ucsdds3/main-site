@@ -3,12 +3,14 @@ import { motion } from "framer-motion";
 import { FaGithub, FaFilePowerpoint, FaGlobe } from "react-icons/fa";
 
 import projectsData from "../Data/projects.json";
+import { ChevronDownSmallIcon } from "src/Shared/icons/ChevronDownSmallIcon";
+import { ORANGE_SELECT_CHEVRON_DATA_URL } from "src/Shared/icons/orangeSelectChevronDataUrl";
 
 const INITIAL_SHOW = 6;
 
 
 const selectStyle: React.CSSProperties = {
-  fontFamily: "ui-monospace, monospace",
+  fontFamily: "var(--font-mono)",
   fontSize: "0.68rem",
   letterSpacing: "0.12em",
   textTransform: "uppercase",
@@ -20,7 +22,7 @@ const selectStyle: React.CSSProperties = {
   cursor: "pointer",
   appearance: "none",
   WebkitAppearance: "none",
-  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F58134' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
+  backgroundImage: ORANGE_SELECT_CHEVRON_DATA_URL,
   backgroundRepeat: "no-repeat",
   backgroundPosition: "right 0.6rem center",
   minWidth: "11rem",
@@ -124,7 +126,7 @@ const ProjectCard = ({ project, rank }: { project: Project; rank: number }) => {
             borderRadius: "2rem",
             background: badge.bg,
             color: "#fff",
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.6rem",
             fontWeight: 700,
             letterSpacing: "0.1em",
@@ -137,7 +139,7 @@ const ProjectCard = ({ project, rank }: { project: Project; rank: number }) => {
 
       {/* Title */}
       <h3 style={{
-        fontFamily: "'DM Serif Display', Georgia, serif",
+        fontFamily: "var(--font-heading)",
         fontSize: "clamp(1.1rem, 1.6vw, 1.4rem)",
         fontWeight: 400,
         color: "var(--obs-text-primary)",
@@ -206,7 +208,7 @@ const Gallery = () => {
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.7rem" }}>
             <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.65rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -214,7 +216,7 @@ const Gallery = () => {
             }}>Ranked by score</span>
           </div>
           <h2 style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontFamily: "var(--font-heading)",
             fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
             fontWeight: 400,
             color: "var(--obs-text-primary)",
@@ -227,7 +229,7 @@ const Gallery = () => {
         {!isWinter && (
           <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.58rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -253,7 +255,7 @@ const Gallery = () => {
             key={y}
             onClick={() => { setShowAll(false); setYear(y); if (y === "Winter 2026") setOrder("Projects"); }}
             style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.62rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -278,7 +280,7 @@ const Gallery = () => {
         <div style={{
           padding: "4rem 2rem",
           textAlign: "center",
-          fontFamily: "ui-monospace, monospace",
+          fontFamily: "var(--font-mono)",
           fontSize: "0.72rem",
           letterSpacing: "0.18em",
           textTransform: "uppercase",
@@ -311,7 +313,7 @@ const Gallery = () => {
               display: "flex",
               alignItems: "center",
               gap: "0.5rem",
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.68rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -328,9 +330,7 @@ const Gallery = () => {
             onMouseLeave={e => { e.currentTarget.style.opacity = "0.6"; e.currentTarget.style.borderColor = "var(--obs-border, rgba(128,128,128,0.25))"; }}
           >
             Show More
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <ChevronDownSmallIcon className="text-[var(--obs-text-primary)]" />
           </button>
         </div>
       )}

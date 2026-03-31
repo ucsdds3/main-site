@@ -127,14 +127,14 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
                   {/* Accent line */}
                   <div style={{ display:"flex", alignItems:"center", gap:"0.6rem" }}>
                     <div style={{ width:20, height:2, background:"#19B5CA", borderRadius:2, flexShrink:0 }} />
-                    <span style={{ fontFamily:"ui-monospace,monospace", fontSize:"0.62rem", letterSpacing:"0.2em", textTransform:"uppercase", color:"#19B5CA" }}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize:"0.62rem", letterSpacing:"0.2em", textTransform:"uppercase", color:"#19B5CA" }}>
                       Testimonial
                     </span>
                   </div>
 
                   <h4
                     style={{
-                      fontFamily: "'DM Serif Display', Georgia, serif",
+                      fontFamily: "var(--font-heading)",
                       fontSize: "clamp(1.3rem, 2.2vw, 2rem)",
                       fontWeight: 400,
                       color: "var(--obs-text-primary)",
@@ -150,7 +150,7 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
 
                   <p
                     style={{
-                      fontFamily: "'Albert Sans', sans-serif",
+                      fontFamily: "var(--font-body)",
                       fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)",
                       lineHeight: 1.85,
                       color: "var(--obs-text-muted)",
@@ -164,7 +164,7 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
 
                   <p
                     style={{
-                      fontFamily: "ui-monospace, monospace",
+                      fontFamily: "var(--font-mono)",
                       fontSize: "0.72rem",
                       letterSpacing: "0.12em",
                       color: "var(--obs-text-faint)",

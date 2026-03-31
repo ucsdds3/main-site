@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Page from "src/Shared/Page/Page";
 import { EventTagType, tagColor } from "src/Utils/types";
 
+import { ORANGE_SELECT_CHEVRON_DATA_URL } from "src/Shared/icons/orangeSelectChevronDataUrl";
+
 import useEvents from "./useEvents";
 import EventCalendar from "./EventCalendar";
 import EventList from "./EventList";
@@ -12,7 +14,7 @@ type TimeType = "Past" | "Upcoming" | "All";
 type ViewType = "Cards" | "Calendar";
 
 const selectStyle: React.CSSProperties = {
-  fontFamily: "ui-monospace, monospace",
+  fontFamily: "var(--font-mono)",
   fontSize: "0.68rem",
   letterSpacing: "0.12em",
   textTransform: "uppercase" as const,
@@ -24,7 +26,7 @@ const selectStyle: React.CSSProperties = {
   cursor: "pointer",
   appearance: "none" as const,
   WebkitAppearance: "none" as const,
-  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F58134' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
+  backgroundImage: ORANGE_SELECT_CHEVRON_DATA_URL,
   backgroundRepeat: "no-repeat",
   backgroundPosition: "right 0.6rem center",
   minWidth: "9rem",
@@ -56,7 +58,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
           width: "100%",
           maxWidth: 1300,
           margin: "0 auto",
-          padding: "clamp(4rem, 7vw, 7rem) clamp(1.25rem, 4vw, 3rem) clamp(2.5rem, 5vw, 5rem)",
+          padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3rem) clamp(2.5rem, 5vw, 5rem)",
           display: "flex",
           flexDirection: "column",
           gap: "clamp(2rem, 4vw, 3rem)",
@@ -72,7 +74,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
           >
             <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.65rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -89,7 +91,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
                 fontWeight: 400,
                 lineHeight: 0.95,
@@ -105,7 +107,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
             <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "flex-end" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                 <span style={{
-                  fontFamily: "ui-monospace, monospace",
+                  fontFamily: "var(--font-mono)",
                   fontSize: "0.55rem",
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
@@ -127,7 +129,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
                       type="button"
                       onClick={() => setView(v)}
                       style={{
-                        fontFamily: "ui-monospace, monospace",
+                        fontFamily: "var(--font-mono)",
                         fontSize: "0.68rem",
                         letterSpacing: "0.12em",
                         textTransform: "uppercase",
@@ -179,7 +181,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
               ).map(({ label, value, options, onChange }) => (
                 <div key={label} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                   <span style={{
-                    fontFamily: "ui-monospace, monospace",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "0.55rem",
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
@@ -218,7 +220,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
             {error ? (
               <div style={{ display: "flex", justifyContent: "center", padding: "3rem 1rem" }}>
                 <div style={{
-                  fontFamily: "ui-monospace, monospace",
+                  fontFamily: "var(--font-mono)",
                   fontSize: "0.72rem",
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
@@ -231,7 +233,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
             ) : loading ? (
               <div style={{ display: "flex", justifyContent: "center", padding: "3rem 1rem" }}>
                 <span style={{
-                  fontFamily: "ui-monospace, monospace",
+                  fontFamily: "var(--font-mono)",
                   fontSize: "0.72rem",
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
