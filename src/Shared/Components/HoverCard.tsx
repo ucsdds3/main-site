@@ -130,34 +130,8 @@ const HoverCard = ({
         className="text-center flex flex-col gap-1.5"
         style={{ width: `calc(${size} * 0.95)` }}
       >
-        {title && (
-          <span
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontWeight: 400,
-              fontSize: "clamp(1.35rem, 2.8vw, 1.85rem)",
-              letterSpacing: "-0.01em",
-              lineHeight: 1.2,
-              display: "block",
-            }}
-          >
-            {title}
-          </span>
-        )}
-        {description && (
-          <span
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "clamp(1.05rem, 1.35vw, 1.2rem)",
-              fontWeight: 500,
-              lineHeight: 1.35,
-              color: "var(--obs-text-primary)",
-              opacity: 0.82,
-            }}
-          >
-            {description}
-          </span>
-        )}
+        {title && <span className="text-fluid-card-title">{title}</span>}
+        {description && <span className="text-fluid-card-body">{description}</span>}
       </div>
     </div>
   );

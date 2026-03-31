@@ -123,7 +123,7 @@ const AboutUs = () => {
                   {/* Section label */}
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                     <div style={{ width: 28, height: 2, background: accent, borderRadius: 2, boxShadow: `0 0 8px ${accentGlow}0.7)`, flexShrink: 0 }} />
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: accent }}>
+                    <span className="text-eyebrow" style={{ color: accent }}>
                       {section.section}
                     </span>
                   </div>
@@ -137,7 +137,7 @@ const AboutUs = () => {
                   <div style={{ width: "100%", height: 1, background: "linear-gradient(90deg,var(--obs-border) 0%,transparent 100%)" }} />
 
                   {/* Body — inherits site font, no Albert Sans */}
-                  <p style={{ fontSize: "clamp(0.95rem,1.2vw,1.05rem)", lineHeight: 1.85, color: "var(--obs-text-muted)", fontWeight: 300, margin: 0 }}>
+                  <p className="font-body font-light fl-text-base/lg leading-[1.85] text-[var(--obs-text-muted)] m-0">
                     {section.content}
                   </p>
 

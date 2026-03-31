@@ -44,21 +44,12 @@ function toCalendarEvents(events: EventType[]): EventInput[] {
 function renderEventContent(eventInfo: EventContentArg) {
   return (
     <div style={{ overflow: "hidden" }}>
-      <div
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.58rem",
-          letterSpacing: "0.1em",
-          opacity: 0.85,
-        }}
-      >
+      <div className="font-mono text-[0.58rem] tracking-[0.1em] opacity-[0.85]">
         {eventInfo.timeText}
       </div>
       <div
+        className="font-body text-[0.74rem] leading-tight"
         style={{
-          fontFamily: "var(--font-body)",
-          fontSize: "0.74rem",
-          lineHeight: 1.2,
           whiteSpace: "nowrap",
           textOverflow: "ellipsis",
           overflow: "hidden",
@@ -326,16 +317,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
             )}
             <div style={{ padding: "1.1rem 1.15rem 1.2rem", display: "flex", flexDirection: "column", gap: "0.9rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.75rem" }}>
-                <h3
-                  style={{
-                    margin: 0,
-                    fontFamily: "var(--font-heading)",
-                    fontWeight: 400,
-                    fontSize: "clamp(1.35rem, 2.3vw, 1.9rem)",
-                    lineHeight: 1.2,
-                    color: "var(--obs-text-primary)",
-                  }}
-                >
+                <h3 className="text-fluid-card-title m-0 text-[var(--obs-text-primary)]">
                   {selectedEvent.name}
                 </h3>
                 <button className="obs-event-modal-close" onClick={() => setSelectedEvent(null)}>

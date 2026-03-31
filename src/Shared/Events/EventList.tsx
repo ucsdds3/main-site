@@ -56,15 +56,7 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
         border: "1px dashed rgba(128,128,128,0.2)",
         borderRadius: "0.75rem",
       }}>
-        <p style={{
-          fontFamily: "var(--font-heading)",
-          fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
-          fontWeight: 400,
-          color: "var(--obs-text-primary)",
-          textAlign: "center",
-          margin: 0,
-          opacity: 0.75,
-        }}>
+        <p className="font-heading font-normal fl-text-xl/3xl text-center text-[var(--obs-text-primary)] m-0 opacity-75">
           Nothing there yet
         </p>
       </div>
@@ -73,12 +65,7 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
 
   return (
     <>
-      <div style={{
-        width: "100%",
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(clamp(260px, 28vw, 360px), 1fr))",
-        gap: "clamp(1rem, 2vw, 1.5rem)",
-      }}>
+      <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(clamp(260px,28vw,360px),1fr))] fl-gap-4/6">
         {loading
           ? newArray(4).map((_, index) => (
               <EventCard key={index} event={{} as EventType} delay={0.1 * index} />

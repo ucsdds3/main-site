@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "src/Utils/cn";
 import { TeamType } from "src/Utils/types.ts";
 import { ChevronRightNextIcon } from "src/Shared/icons/ChevronRightNextIcon";
 import { PadlockExploreIcon } from "src/Shared/icons/PadlockExploreIcon";
