@@ -19,7 +19,7 @@ const Section = memo(function Section({ title, className, children, ref, ...prop
       {...props}
     >
       {title && (
-        <h2 className="text-fluid-section-title m-0 text-center leading-[1.05] tracking-tight text-[var(--obs-text-primary)]">
+        <h2 className="text-fluid-section-title m-0 text-center leading-[1.05] tracking-tight text-(--obs-text-primary)">
           {title}
         </h2>
       )}

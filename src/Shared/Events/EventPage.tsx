@@ -90,7 +90,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
             {/* Filter controls */}
             <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "flex-end" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-                <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-[var(--obs-text-primary)] opacity-40">
+                <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-40">
                   View
                 </span>
                 <div style={{
@@ -157,12 +157,12 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
                     ] as const)
               ).map(({ label, value, options, onChange }) => (
                 <div key={label} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-                  <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-[var(--obs-text-primary)] opacity-40">
+                  <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-40">
                     {label}
                   </span>
                   <select
                     value={value}
-                    className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-[var(--obs-text-primary)]"
+                    className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-(--obs-text-primary)"
                     style={selectStyle}
                     onChange={e => onChange(e.target.value)}
                   >
@@ -190,13 +190,13 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
           <>
             {error ? (
               <div style={{ display: "flex", justifyContent: "center", padding: "3rem 1rem" }}>
-                <div className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[var(--obs-text-primary)] opacity-60">
+                <div className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-(--obs-text-primary) opacity-60">
                   {error}
                 </div>
               </div>
             ) : loading ? (
               <div style={{ display: "flex", justifyContent: "center", padding: "3rem 1rem" }}>
-                <span className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[var(--obs-text-primary)] opacity-60">
+                <span className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-(--obs-text-primary) opacity-60">
                   Loading…
                 </span>
               </div>

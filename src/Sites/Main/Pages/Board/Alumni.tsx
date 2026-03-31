@@ -119,7 +119,7 @@ const Alumni = () => {
 
           {/* Search input */}
           <div style={{ position: "relative" }}>
-            <SearchMagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--obs-text-primary)] opacity-[0.35]" />
+            <SearchMagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-(--obs-text-primary) opacity-[0.35]" />
             <input
               type="text"
               placeholder="Search alumni..."

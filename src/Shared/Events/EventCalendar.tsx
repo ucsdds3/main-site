@@ -317,7 +317,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
             )}
             <div style={{ padding: "1.1rem 1.15rem 1.2rem", display: "flex", flexDirection: "column", gap: "0.9rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.75rem" }}>
-                <h3 className="text-fluid-card-title m-0 text-[var(--obs-text-primary)]">
+                <h3 className="text-fluid-card-title m-0 text-(--obs-text-primary)">
                   {selectedEvent.name}
                 </h3>
                 <button className="obs-event-modal-close" onClick={() => setSelectedEvent(null)}>
