@@ -10,7 +10,7 @@ import Consulting from "./Pages/Consulting/Consulting";
 import Partners from "./Pages/Partners/Partners";
 
 const DataHacksRedirect = () => {
-  window.location.replace("https://datahacks.ds3ucsd.com/");
+  window.open("https://datahacks.ds3ucsd.com/", "_blank");
   return null;
 };
 
