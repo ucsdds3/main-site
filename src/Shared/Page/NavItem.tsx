@@ -62,8 +62,8 @@ const NavItem = ({ label, data }: NavItemProps) => {
         onMouseEnter={e => (e.currentTarget.style.color = textHover)}
         onMouseLeave={e => (e.currentTarget.style.color = textColor)}
         onClick={() =>
-          (data as string)?.startsWith("http")
-            ? window.open(data as string, "_blank")
+          typeof data === "string" && data.startsWith("http")
+            ? window.open(data, "_blank")
             : navigate(parseData(data!))
         }
       >
