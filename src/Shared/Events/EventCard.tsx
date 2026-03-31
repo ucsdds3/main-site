@@ -144,7 +144,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           )}
 
           {/* Title */}
-          <h3 className="font-heading font-normal fl-text-lg/xl leading-tight text-[var(--obs-text-primary)] m-0 line-clamp-3">
+          <h3 className="font-heading font-normal fl-text-lg/xl leading-tight text-(--obs-text-primary) m-0 line-clamp-3">
             {name ?? <div className="obs-skel" style={{ height: 24, width: "70%" }} />}
           </h3>
 
@@ -158,7 +158,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
                 </span>
               )}
               {location && (
-                <span className="font-mono text-[0.62rem] tracking-[0.08em] text-[var(--obs-text-faint)]">
+                <span className="font-mono text-[0.62rem] tracking-[0.08em] text-(--obs-text-faint)">
                   {location}
                 </span>
               )}
@@ -170,7 +170,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
 
           {/* Description */}
           {description ? (
-            <p className="font-body font-light fl-text-sm/base leading-[1.75] text-[var(--obs-text-muted)] m-0 line-clamp-4 flex-1">
+            <p className="font-body font-light fl-text-sm/base leading-[1.75] text-(--obs-text-muted) m-0 line-clamp-4 flex-1">
               {description}
             </p>
           ) : (

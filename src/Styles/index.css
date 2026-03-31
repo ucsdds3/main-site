@@ -87,7 +87,7 @@
   }
 
   .text-fluid-card-body {
-    @apply font-body font-medium fl-text-base/lg leading-snug text-[var(--obs-text-primary)] opacity-[0.82];
+    @apply font-body font-medium fl-text-base/lg leading-snug text-(--obs-text-primary) opacity-[0.82];
   }
 
   /* Large landing hero headlines */

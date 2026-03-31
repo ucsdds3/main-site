@@ -56,7 +56,7 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
         border: "1px dashed rgba(128,128,128,0.2)",
         borderRadius: "0.75rem",
       }}>
-        <p className="font-heading font-normal fl-text-xl/3xl text-center text-[var(--obs-text-primary)] m-0 opacity-75">
+        <p className="font-heading font-normal fl-text-xl/3xl text-center text-(--obs-text-primary) m-0 opacity-75">
           Nothing there yet
         </p>
       </div>

@@ -10,7 +10,7 @@ const Services = () => {
           <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
           <span className="text-eyebrow text-eyebrow-orange">What we offer</span>
         </div>
-        <h2 className="text-fluid-section-title m-0 leading-tight text-[var(--obs-text-primary)]">Our Services</h2>
+        <h2 className="text-fluid-section-title m-0 leading-tight text-(--obs-text-primary)">Our Services</h2>
       </motion.div>
       <style>{".flip-card{perspective:1000px;height:clamp(260px,28vw,340px)}.flip-card-inner{position:relative;width:100%;height:100%;transition:transform 0.55s cubic-bezier(0.22,1,0.36,1);transform-style:preserve-3d}.flip-card:hover .flip-card-inner{transform:rotateY(180deg)}.flip-card-front,.flip-card-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:.75rem;border:1px solid var(--obs-border,rgba(128,128,128,0.18));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(1.45rem,2.2vw,2rem);gap:1rem}.flip-card-front{background:transparent;transition:border-color 0.25s ease}.flip-card:hover .flip-card-front{border-color:#F58134}.flip-card-back{background:rgba(245,129,52,0.07);border-color:rgba(245,129,52,0.35);transform:rotateY(180deg);text-align:center}"}</style>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "clamp(1rem, 2vw, 1.5rem)", justifyContent: "center" }}>
@@ -19,11 +19,11 @@ const Services = () => {
             <div className="flip-card-inner">
               <div className="flip-card-front">
                 <img src={service.icon} alt={service.title} className="fl-size-[74px/112px] object-contain" />
-                <p className="m-0 text-center font-heading font-normal leading-snug text-[var(--obs-text-primary)] fl-text-xl/2xl">{service.title}</p>
+                <p className="m-0 text-center font-heading font-normal leading-snug text-(--obs-text-primary) fl-text-xl/2xl">{service.title}</p>
               </div>
               <div className="flip-card-back">
                 <span className="font-mono text-[0.78rem] font-normal uppercase tracking-[0.18em] text-[#F58134]">{service.title}</span>
-                <p className="m-0 font-body leading-[1.65] text-[var(--obs-text-primary)] opacity-75 fl-text-lg/xl">{service.description}</p>
+                <p className="m-0 font-body leading-[1.65] text-(--obs-text-primary) opacity-75 fl-text-lg/xl">{service.description}</p>
               </div>
             </div>
           </motion.div>

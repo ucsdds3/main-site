@@ -330,7 +330,7 @@ const Gallery = () => {
             onMouseLeave={e => { e.currentTarget.style.opacity = "0.6"; e.currentTarget.style.borderColor = "var(--obs-border, rgba(128,128,128,0.25))"; }}
           >
             Show More
-            <ChevronDownSmallIcon className="text-[var(--obs-text-primary)]" />
+            <ChevronDownSmallIcon className="text-(--obs-text-primary)" />
           </button>
         </div>
       )}
