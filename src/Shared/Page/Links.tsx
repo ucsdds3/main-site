@@ -30,24 +30,11 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
 
       {(!isMembers || !isAuthed) ? (
         <button
+          type="button"
           onClick={() =>
             navigate({ pathname: "/", subdomain: subdomain === "main" ? "members" : "main" })
           }
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.68rem",
-            fontWeight: 500,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            padding: "0.55rem 1.4rem",
-            borderRadius: "9999px",
-            border: "1px solid rgba(25,181,202,0.45)",
-            background: "rgba(25,181,202,0.1)",
-            color: "#19B5CA",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-            whiteSpace: "nowrap",
-          }}
+          className="font-mono whitespace-nowrap rounded-full border border-[rgba(25,181,202,0.45)] bg-[rgba(25,181,202,0.1)] px-[1.4rem] py-[0.55rem] text-[0.68rem] font-medium uppercase tracking-[0.18em] text-[#19B5CA] transition-all duration-200 cursor-pointer"
           onMouseEnter={e => {
             e.currentTarget.style.background = "rgba(25,181,202,0.2)"
             e.currentTarget.style.borderColor = "rgba(25,181,202,0.75)"

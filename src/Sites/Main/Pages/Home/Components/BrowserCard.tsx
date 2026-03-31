@@ -239,20 +239,7 @@ const BrowserCard = memo(function BrowserCard({
           }}
         >
           {/* Title */}
-          <h4
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(1.2rem, 1.6vw, 1.5rem)",
-              fontWeight: 400,
-              lineHeight: 1.2,
-              color: "var(--obs-text-primary)",
-              margin: 0,
-              display: "-webkit-box",
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-            }}
-          >
+          <h4 className="font-heading font-normal fl-text-xl/2xl leading-tight text-[var(--obs-text-primary)] m-0 line-clamp-3">
             {title}
           </h4>
 
@@ -261,20 +248,7 @@ const BrowserCard = memo(function BrowserCard({
 
           {/* Description or skeleton */}
           {description ? (
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "clamp(0.82rem, 1vw, 0.92rem)",
-                lineHeight: 1.75,
-                color: "var(--obs-text-muted)",
-                fontWeight: 300,
-                margin: 0,
-                display: "-webkit-box",
-                WebkitLineClamp: 4,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-            >
+            <p className="font-body font-light fl-text-sm/base leading-[1.75] text-[var(--obs-text-muted)] m-0 line-clamp-4">
               {description}
             </p>
           ) : (

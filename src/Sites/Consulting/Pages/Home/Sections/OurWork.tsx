@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "src/Utils/cn";
 
 import Section from "src/Shared/Page/Section";
 import HoverCard from "src/Shared/Components/HoverCard";

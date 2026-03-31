@@ -73,7 +73,6 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           display: inline-flex; align-items: center;
           padding: 0.2rem 0.65rem;
           border-radius: 9999px;
-          font-family: var(--font-mono);
           font-size: 0.58rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
@@ -83,7 +82,6 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           display: inline-flex; align-items: center; gap: 0.4rem;
           padding: 0.55rem 1.25rem;
           border-radius: 9999px;
-          font-family: var(--font-mono);
           font-size: 0.65rem;
           font-weight: 500;
           letter-spacing: 0.14em;
@@ -132,13 +130,13 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
               {tags.map(tag => {
                 const c = TAG_ACCENT[tag as string] ?? TAG_ACCENT.Default;
                 return (
-                  <span key={tag} className="obs-tag" style={{ color: c, borderColor: `${c}44`, background: `${c}12` }}>
+                  <span key={tag} className="obs-tag font-mono" style={{ color: c, borderColor: `${c}44`, background: `${c}12` }}>
                     {tag}
                   </span>
                 );
               })}
               {points && (
-                <span className="obs-tag" style={{ color: "var(--obs-text-faint)", borderColor: "var(--obs-border)", background: "transparent" }}>
+                <span className="obs-tag font-mono" style={{ color: "var(--obs-text-faint)", borderColor: "var(--obs-border)", background: "transparent" }}>
                   {points} pts
                 </span>
               )}
@@ -146,18 +144,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           )}
 
           {/* Title */}
-          <h3 style={{
-            fontFamily: "var(--font-heading)",
-            fontSize: "clamp(1.1rem, 1.5vw, 1.35rem)",
-            fontWeight: 400,
-            lineHeight: 1.25,
-            color: "var(--obs-text-primary)",
-            margin: 0,
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-          }}>
+          <h3 className="font-heading font-normal fl-text-lg/xl leading-tight text-[var(--obs-text-primary)] m-0 line-clamp-3">
             {name ?? <div className="obs-skel" style={{ height: 24, width: "70%" }} />}
           </h3>
 
@@ -165,13 +152,13 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           {(start || location) && (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
               {start && (
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.1em", color: accent }}>
+                <span className="font-mono text-[0.65rem] tracking-[0.1em]" style={{ color: accent }}>
                   {formatDate(start)}
                   {end && ` · ${formatTime(start)} – ${formatTime(end)}`}
                 </span>
               )}
               {location && (
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.08em", color: "var(--obs-text-faint)" }}>
+                <span className="font-mono text-[0.62rem] tracking-[0.08em] text-[var(--obs-text-faint)]">
                   {location}
                 </span>
               )}
@@ -183,19 +170,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
 
           {/* Description */}
           {description ? (
-            <p style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "clamp(0.82rem, 1vw, 0.9rem)",
-              lineHeight: 1.75,
-              color: "var(--obs-text-muted)",
-              fontWeight: 300,
-              margin: 0,
-              display: "-webkit-box",
-              WebkitLineClamp: 4,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              flex: 1,
-            }}>
+            <p className="font-body font-light fl-text-sm/base leading-[1.75] text-[var(--obs-text-muted)] m-0 line-clamp-4 flex-1">
               {description}
             </p>
           ) : (
@@ -209,17 +184,12 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           {/* Footer */}
           <div style={{ marginTop: "auto", paddingTop: "0.5rem" }}>
             {attended_at ? (
-              <span style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.62rem",
-                letterSpacing: "0.1em",
-                color: "#19B5CA",
-              }}>
+              <span className="font-mono text-[0.62rem] tracking-[0.1em] text-[#19B5CA]">
                 ✓ Checked in · {new Date(attended_at).toLocaleString("en-US", { timeZone: "America/Los_Angeles" })}
               </span>
             ) : (
               start && end && (
-                <SafeLink href={generateCalendarLink(event)} className="obs-cal-btn">
+                <SafeLink href={generateCalendarLink(event)} className="obs-cal-btn font-mono">
                   + Add to Calendar
                 </SafeLink>
               )

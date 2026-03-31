@@ -1,11 +1,19 @@
 @import "tailwindcss";
+
+@plugin "fluid-tailwindcss" {
+  minViewport: 375;
+  maxViewport: 1440;
+  useRem: true;
+  checkAccessibility: true;
+}
+
 @plugin "daisyui";
 
-/* ── Global font variables ── */
-:root {
-  --font-heading: 'DM Serif Display', Georgia, serif;
-  --font-body: 'Albert Sans', 'Darker Grotesque', sans-serif;
-  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+/* ── Theme: font stacks (Tailwind utilities + CSS variables) ── */
+@theme {
+  --font-heading: "DM Serif Display", Georgia, serif;
+  --font-body: "Albert Sans", "Darker Grotesque", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 
 /* Global font settings */
@@ -114,6 +122,40 @@
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@layer components {
+  /* Card / hover titles (e.g. HoverCard, project tiles) */
+  .text-fluid-card-title {
+    @apply font-heading font-normal fl-text-xl/3xl tracking-tight leading-tight block;
+  }
+
+  .text-fluid-card-body {
+    @apply font-body font-medium fl-text-base/lg leading-snug text-[var(--obs-text-primary)] opacity-[0.82];
+  }
+
+  /* Large landing hero headlines */
+  .text-fluid-hero {
+    @apply font-heading font-normal fl-text-6xl/7xl leading-none tracking-tight;
+  }
+
+  /* Section / page display titles */
+  .text-fluid-section-title {
+    @apply font-heading font-normal fl-text-4xl/6xl leading-tight tracking-tight;
+  }
+
+  /* Mono eyebrow labels (accent via modifiers) */
+  .text-eyebrow {
+    @apply font-mono uppercase tracking-[0.22em] text-[0.68rem];
+  }
+
+  .text-eyebrow-cyan {
+    @apply text-[#19B5CA];
+  }
+
+  .text-eyebrow-orange {
+    @apply text-[#F58134];
+  }
+}
 
 .bg-base-400 {
   background-color: var(--color-base-400);

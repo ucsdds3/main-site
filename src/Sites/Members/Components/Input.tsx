@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "src/Utils/cn";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;

@@ -19,62 +19,34 @@ const Footer = () => {
         WebkitBackdropFilter: "blur(16px)",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1600,
-          margin: "0 auto",
-          padding: "2rem clamp(1.25rem, 3vw, 2.5rem)",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "2rem",
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="mx-auto flex max-w-[1600px] flex-row flex-wrap items-center justify-between gap-8 py-8 fl-px-5/10">
         {/* Left: logo + name */}
-        <div style={{ display: "flex", alignItems: "center", gap: "clamp(0.65rem, 1.2vw, 1rem)" }}>
-          <img src="/logo.webp" alt="DS3 Logo" style={{ width: "clamp(28px, 3vw, 42px)", opacity: 0.9, flexShrink: 0 }} />
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <span style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "clamp(0.62rem, 0.8vw, 0.88rem)",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: textPrimary,
-              fontWeight: 500,
-            }}>
+        <div className="flex items-center fl-gap-2/4">
+          <img src="/logo.webp" alt="DS3 Logo" className="shrink-0 opacity-90 fl-size-[28px/42px]" />
+          <div className="flex flex-col gap-0.5">
+            <span
+              className="font-mono font-medium uppercase tracking-[0.2em] fl-text-xs/sm"
+              style={{ color: textPrimary }}
+            >
               Data Science Student Society (DS3) @ UC San Diego
             </span>
-            <span style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "clamp(0.5rem, 0.6vw, 0.72rem)",
-              letterSpacing: "0.12em",
-              color: textFaint,
-            }}>
+            <span className="font-mono tracking-[0.12em] fl-text-xs/sm" style={{ color: textFaint }}>
               © 2026 All Rights Reserved
             </span>
           </div>
         </div>
 
         {/* Right: social icons */}
-        <div style={{ display: "flex", alignItems: "center", gap: "clamp(0.25rem, 0.5vw, 0.45rem)" }}>
+        <div className="flex items-center fl-gap-1/2">
           {socialMedia.map((media, index) => (
             <SafeLink
               key={index}
               title={media.title}
               href={media.link}
+              className="flex items-center justify-center rounded-full border transition-colors duration-200 fl-size-[30px/42px] fl-text-sm/xl"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "clamp(30px, 3.2vw, 42px)",
-                height: "clamp(30px, 3.2vw, 42px)",
-                borderRadius: "50%",
-                border: `1px solid ${border}`,
+                borderColor: border,
                 color: textFaint,
-                fontSize: "clamp(0.85rem, 1.1vw, 1.25rem)",
-                transition: "color 0.2s ease, border-color 0.2s ease, background 0.2s ease",
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.color = "#19B5CA"

@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "src/Utils/cn";
 
 import Section from "src/Shared/Page/Section";
 import Button from "src/Shared/Components/Button";

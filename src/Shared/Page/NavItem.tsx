@@ -1,5 +1,5 @@
 import { IoIosArrowUp } from 'react-icons/io'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { useSiteHandler } from 'src/Hooks/useSiteHandler'
@@ -38,26 +38,22 @@ const NavItem = ({ label, data }: NavItemProps) => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const linkStyle = {
-    fontFamily: "var(--font-mono)",
-    fontSize: "0.72rem",
-    letterSpacing: "0.14em",
-    textTransform: "uppercase" as const,
+  const linkStyle: CSSProperties = {
     color: textColor,
     background: "none",
     border: "none",
     cursor: "pointer",
     padding: "0.25rem 0",
     transition: "color 0.2s ease",
-    display: "flex",
-    alignItems: "center",
-    gap: "0.35rem",
-    whiteSpace: "nowrap" as const,
   }
+  const linkClass =
+    "font-mono text-[0.72rem] uppercase tracking-[0.14em] flex items-center gap-[0.35rem] whitespace-nowrap"
 
   if (typeof data === 'string' || (data as NavigateProps)?.hash || (data as NavigateProps)?.subdomain) {
     return (
       <button
+        type="button"
+        className={linkClass}
         style={linkStyle}
         onMouseEnter={e => (e.currentTarget.style.color = textHover)}
         onMouseLeave={e => (e.currentTarget.style.color = textColor)}
@@ -129,22 +125,12 @@ const NavItem = ({ label, data }: NavItemProps) => {
             {Object.entries(data as object).map(([itemLabel, pathname]) => (
               <li key={itemLabel}>
                 <button
+                  type="button"
+                  className="w-full whitespace-nowrap rounded-lg border-none bg-transparent px-[0.85rem] py-[0.55rem] text-left font-mono text-[0.68rem] uppercase tracking-[0.12em] transition-[background,color] duration-150"
                   onClick={() => { navigate({ pathname }); setIsOpen(false) }}
                   style={{
-                    width: "100%",
-                    textAlign: "left",
-                    padding: "0.55rem 0.85rem",
-                    borderRadius: "0.5rem",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.68rem",
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
                     color: textColor,
-                    background: "none",
-                    border: "none",
                     cursor: "pointer",
-                    transition: "background 0.15s ease, color 0.15s ease",
-                    whiteSpace: "nowrap",
                   }}
                   onMouseEnter={e => {
                     e.currentTarget.style.background = itemHoverBg

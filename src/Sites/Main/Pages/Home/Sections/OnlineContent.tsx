@@ -19,9 +19,7 @@ const OnlineContent = () => {
         style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}
       >
         <div style={{ width: 28, height: 2, background: "#19B5CA", borderRadius: 2, flexShrink: 0 }} />
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#19B5CA" }}>
-          Latest Work
-        </span>
+        <span className="text-eyebrow text-eyebrow-cyan">Latest Work</span>
       </motion.div>
 
       {/* Description */}
@@ -30,16 +28,7 @@ const OnlineContent = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)",
-          lineHeight: 1.8,
-          color: "var(--obs-text-muted)",
-          fontWeight: 300,
-          maxWidth: 520,
-          textAlign: "center",
-          marginBottom: "3rem",
-        }}
+        className="font-body font-light fl-text-base/lg leading-[1.8] text-[var(--obs-text-muted)] max-w-[520px] text-center mb-12"
       >
         Read our latest articles and check out our newest podcast episodes to keep up with evolving field of data science!
       </motion.p>
@@ -50,7 +39,7 @@ const OnlineContent = () => {
           width: "100%",
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 480px), 1fr))",
-          gap: "clamp(1.25rem, 2.5vw, 2rem)",
+          gap: "var(--tw-gap, 1.5rem)",
           marginBottom: "3rem",
         }}
       >
@@ -83,20 +72,10 @@ const OnlineContent = () => {
           <button
             key={label}
             onClick={() => window.open(url, "_blank")}
+            className="font-mono rounded-full px-10 py-[0.85rem] text-[0.78rem] font-medium uppercase tracking-[0.18em] text-[var(--obs-text-primary)] backdrop-blur-sm transition-all duration-[250ms] cursor-pointer"
             style={{
-              padding: "0.85rem 2.5rem",
-              borderRadius: "9999px",
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.78rem",
-              fontWeight: 500,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--obs-text-primary)",
               background: "var(--obs-surface)",
               border: `1px solid ${accent}0.35)`,
-              backdropFilter: "blur(8px)",
-              cursor: "pointer",
-              transition: "all 0.25s ease",
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget;

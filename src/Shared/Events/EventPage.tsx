@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { motion } from "framer-motion";
 
 import Page from "src/Shared/Page/Page";
@@ -13,7 +13,7 @@ import EventList from "./EventList";
 type TimeType = "Past" | "Upcoming" | "All";
 type ViewType = "Cards" | "Calendar";
 
-const selectStyle: React.CSSProperties = {
+const selectStyle: CSSProperties = {
   fontFamily: "var(--font-mono)",
   fontSize: "0.68rem",
   letterSpacing: "0.12em",
@@ -54,15 +54,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
   return (
     <Page>
       <div
-        style={{
-          width: "100%",
-          maxWidth: 1300,
-          margin: "0 auto",
-          padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3rem) clamp(2.5rem, 5vw, 5rem)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "clamp(2rem, 4vw, 3rem)",
-        }}
+        className="mx-auto flex w-full max-w-[1300px] flex-col fl-gap-8/12 fl-px-5/12 fl-py-10/20"
       >
         {/* Header */}
         <div style={{ borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))", paddingBottom: "clamp(1.5rem, 3vw, 2.5rem)" }}>
@@ -73,15 +65,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
             style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}
           >
             <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
-            <span style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "#F58134",
-            }}>
-              On the calendar
-            </span>
+            <span className="text-eyebrow text-eyebrow-orange">On the calendar</span>
           </motion.div>
 
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
@@ -106,14 +90,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
             {/* Filter controls */}
             <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "flex-end" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-                <span style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.55rem",
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: "var(--obs-text-primary)",
-                  opacity: 0.4,
-                }}>
+                <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-[var(--obs-text-primary)] opacity-40">
                   View
                 </span>
                 <div style={{
@@ -180,18 +157,12 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
                     ] as const)
               ).map(({ label, value, options, onChange }) => (
                 <div key={label} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-                  <span style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.55rem",
-                    letterSpacing: "0.18em",
-                    textTransform: "uppercase",
-                    color: "var(--obs-text-primary)",
-                    opacity: 0.4,
-                  }}>
+                  <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-[var(--obs-text-primary)] opacity-40">
                     {label}
                   </span>
                   <select
                     value={value}
+                    className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-[var(--obs-text-primary)]"
                     style={selectStyle}
                     onChange={e => onChange(e.target.value)}
                   >
@@ -219,27 +190,13 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
           <>
             {error ? (
               <div style={{ display: "flex", justifyContent: "center", padding: "3rem 1rem" }}>
-                <div style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.72rem",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: "var(--obs-text-primary)",
-                  opacity: 0.6,
-                }}>
+                <div className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[var(--obs-text-primary)] opacity-60">
                   {error}
                 </div>
               </div>
             ) : loading ? (
               <div style={{ display: "flex", justifyContent: "center", padding: "3rem 1rem" }}>
-                <span style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.72rem",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: "var(--obs-text-primary)",
-                  opacity: 0.6,
-                }}>
+                <span className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[var(--obs-text-primary)] opacity-60">
                   Loading…
                 </span>
               </div>
