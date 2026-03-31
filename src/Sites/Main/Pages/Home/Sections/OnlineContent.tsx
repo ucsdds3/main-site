@@ -19,7 +19,7 @@ const OnlineContent = () => {
         style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}
       >
         <div style={{ width: 28, height: 2, background: "#19B5CA", borderRadius: 2, flexShrink: 0 }} />
-        <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#19B5CA" }}>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#19B5CA" }}>
           Latest Work
         </span>
       </motion.div>
@@ -31,7 +31,7 @@ const OnlineContent = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          fontFamily: "'Albert Sans', sans-serif",
+          fontFamily: "var(--font-body)",
           fontSize: "clamp(1.05rem, 1.3vw, 1.15rem)",
           lineHeight: 1.8,
           color: "var(--obs-text-muted)",
@@ -86,7 +86,7 @@ const OnlineContent = () => {
             style={{
               padding: "0.85rem 2.5rem",
               borderRadius: "9999px",
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.78rem",
               fontWeight: 500,
               letterSpacing: "0.18em",

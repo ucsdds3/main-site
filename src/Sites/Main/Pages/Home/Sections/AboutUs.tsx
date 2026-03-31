@@ -59,7 +59,7 @@ const AboutUs = () => {
           display: inline-block;
           padding: 0.85rem 2rem;
           border-radius: 9999px;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.72rem;
           font-weight: 500;
           letter-spacing: 0.18em;
@@ -123,13 +123,13 @@ const AboutUs = () => {
                   {/* Section label */}
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                     <div style={{ width: 28, height: 2, background: accent, borderRadius: 2, boxShadow: `0 0 8px ${accentGlow}0.7)`, flexShrink: 0 }} />
-                    <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: accent }}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", letterSpacing: "0.22em", textTransform: "uppercase", color: accent }}>
                       {section.section}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h2 style={{ fontFamily: "'DM Serif Display', Georgia, serif", fontSize: "clamp(2rem,3.2vw,3rem)", fontWeight: 400, lineHeight: 1.1, color: "var(--obs-text-primary)", margin: 0 }}>
+                  <h2 style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(2rem,3.2vw,3rem)", fontWeight: 400, lineHeight: 1.1, color: "var(--obs-text-primary)", margin: 0 }}>
                     {section.title}
                   </h2>
 

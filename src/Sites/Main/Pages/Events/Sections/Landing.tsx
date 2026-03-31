@@ -37,7 +37,7 @@ const Landing = ({ title, subtitle }: LandingProps) => {
           <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
           <span
             style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.65rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -54,7 +54,7 @@ const Landing = ({ title, subtitle }: LandingProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontFamily: "var(--font-heading)",
             fontSize: "clamp(3.5rem, 8vw, 7rem)",
             fontWeight: 400,
             lineHeight: 0.95,

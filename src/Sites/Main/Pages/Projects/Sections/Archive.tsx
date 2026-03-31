@@ -3,13 +3,16 @@ import { motion } from "framer-motion";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 import Paginate from "src/Shared/Components/Paginate";
+import type { ProjectType } from "src/Utils/types";
+
+import { ORANGE_SELECT_CHEVRON_DATA_URL } from "src/Shared/icons/orangeSelectChevronDataUrl";
 
 import projectsData from "../Data/projects.json";
 
 const PER_PAGE = 4;
 
 const selectStyle: React.CSSProperties = {
-  fontFamily: "ui-monospace, monospace",
+  fontFamily: "var(--font-mono)",
   fontSize: "0.68rem",
   letterSpacing: "0.12em",
   textTransform: "uppercase",
@@ -21,7 +24,7 @@ const selectStyle: React.CSSProperties = {
   cursor: "pointer",
   appearance: "none",
   WebkitAppearance: "none",
-  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F58134' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
+  backgroundImage: ORANGE_SELECT_CHEVRON_DATA_URL,
   backgroundRepeat: "no-repeat",
   backgroundPosition: "right 0.6rem center",
   minWidth: "9rem",
@@ -33,13 +36,12 @@ function normalizeLink(raw: string | null | undefined) {
 }
 
 const Archive = () => {
-  const archive = projectsData.archive;
-  type YearType = keyof typeof archive;
-  const years = Object.keys(archive).reverse() as YearType[];
-  const [year, setYear] = useState<YearType>(years[0]);
+  const archive = projectsData.archive as Record<string, ProjectType[]>;
+  const years = Object.keys(archive).reverse();
+  const [year, setYear] = useState<string>(() => years[0] ?? "");
   const [page, setPage] = useState(1);
 
-  const yearProjects = archive[year];
+  const yearProjects = year ? archive[year] ?? [] : [];
   const numPages = Math.ceil(yearProjects.length / PER_PAGE);
   const start = (page - 1) * PER_PAGE;
   const pageProjects = yearProjects.slice(start, start + PER_PAGE);
@@ -65,7 +67,7 @@ const Archive = () => {
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.7rem" }}>
             <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
             <span style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.65rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -73,7 +75,7 @@ const Archive = () => {
             }}>Past work</span>
           </div>
           <h2 style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontFamily: "var(--font-heading)",
             fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
             fontWeight: 400,
             color: "var(--obs-text-primary)",
@@ -84,7 +86,7 @@ const Archive = () => {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
           <span style={{
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.58rem",
             letterSpacing: "0.18em",
             textTransform: "uppercase",
@@ -92,7 +94,10 @@ const Archive = () => {
             opacity: 0.45,
           }}>Year</span>
           <select value={year} style={selectStyle}
-            onChange={e => { setPage(1); setYear(e.target.value as YearType); }}>
+            onChange={e => {
+              setPage(1);
+              setYear(e.target.value);
+            }}>
             {years.map((y, i) => (
               <option
                 key={i}
@@ -115,7 +120,7 @@ const Archive = () => {
         gridTemplateColumns: "repeat(auto-fill, minmax(clamp(260px, 28vw, 380px), 1fr))",
         gap: "clamp(1rem, 2vw, 1.5rem)",
       }}>
-        {pageProjects.map((project, index) => (
+        {pageProjects.map((project: ProjectType, index: number) => (
           <motion.div
             key={`${year}-${page}-${index}`}
             initial={{ opacity: 0, y: 10 }}
@@ -136,7 +141,7 @@ const Archive = () => {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span
                 style={{
-                  fontFamily: "ui-monospace, monospace",
+                  fontFamily: "var(--font-mono)",
                   fontSize: "0.58rem",
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
@@ -180,7 +185,7 @@ const Archive = () => {
             </div>
 
             <h3 style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontFamily: "var(--font-heading)",
               fontSize: "clamp(1.05rem, 1.45vw, 1.32rem)",
               fontWeight: 400,
               color: "var(--obs-text-primary)",
@@ -205,7 +210,7 @@ const Archive = () => {
               {"placement" in project && typeof project.placement === "number" && (
                 <span
                   style={{
-                    fontFamily: "ui-monospace, monospace",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "0.58rem",
                     letterSpacing: "0.12em",
                     textTransform: "uppercase",
@@ -226,7 +231,7 @@ const Archive = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
-                    fontFamily: "ui-monospace, monospace",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "0.58rem",
                     letterSpacing: "0.12em",
                     textTransform: "uppercase",

@@ -15,7 +15,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
 
   return (
     <div
-      className={`w-full lg:w-auto items-center flex-col lg:flex lg:flex-row gap-6 lg:gap-8 ${
+      className={`w-full lg:w-auto flex-col items-stretch lg:items-center lg:flex lg:flex-row gap-4 lg:gap-8 ${
         menuOpen ? "flex" : "hidden"
       }`}
       style={{ paddingTop: menuOpen ? "0.5rem" : 0 }}
@@ -34,7 +34,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
             navigate({ pathname: "/", subdomain: subdomain === "main" ? "members" : "main" })
           }
           style={{
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.68rem",
             fontWeight: 500,
             letterSpacing: "0.18em",

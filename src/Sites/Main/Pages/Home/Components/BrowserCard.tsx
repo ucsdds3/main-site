@@ -71,7 +71,7 @@ const BrowserCard = memo(function BrowserCard({
           border-radius: 9999px;
           background: rgba(128,128,128,0.14);
           border: 1px solid var(--obs-border);
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.7rem;
           color: var(--obs-text-muted);
           overflow: hidden;
@@ -131,10 +131,11 @@ const BrowserCard = memo(function BrowserCard({
         .obs-cta {
           display: inline-flex;
           align-items: center;
-          gap: 0.4rem;
-          padding: 0.6rem 1.4rem;
+          justify-content: center;
+          gap: 0.55rem;
+          padding: 0.6rem 1.35rem 0.6rem 1.4rem;
           border-radius: 9999px;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.68rem;
           font-weight: 500;
           letter-spacing: 0.16em;
@@ -146,6 +147,7 @@ const BrowserCard = memo(function BrowserCard({
           transition: background 0.2s ease, border-color 0.2s ease,
                       box-shadow 0.2s ease, transform 0.2s ease;
           align-self: flex-start;
+          line-height: 1;
         }
         .obs-cta:hover {
           background: rgba(25,181,202,0.2);
@@ -155,9 +157,17 @@ const BrowserCard = memo(function BrowserCard({
           color: #fff;
         }
         .obs-cta-arrow {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          font-size: 1.15rem;
+          font-weight: 500;
+          line-height: 1;
+          margin-top: 0.05em;
           transition: transform 0.2s ease;
         }
-        .obs-cta:hover .obs-cta-arrow { transform: translateX(3px); }
+        .obs-cta:hover .obs-cta-arrow { transform: translateX(4px); }
       `}</style>
 
       <motion.div
@@ -231,7 +241,7 @@ const BrowserCard = memo(function BrowserCard({
           {/* Title */}
           <h4
             style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontFamily: "var(--font-heading)",
               fontSize: "clamp(1.2rem, 1.6vw, 1.5rem)",
               fontWeight: 400,
               lineHeight: 1.2,
@@ -253,7 +263,7 @@ const BrowserCard = memo(function BrowserCard({
           {description ? (
             <p
               style={{
-                fontFamily: "'Albert Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "clamp(0.82rem, 1vw, 0.92rem)",
                 lineHeight: 1.75,
                 color: "var(--obs-text-muted)",

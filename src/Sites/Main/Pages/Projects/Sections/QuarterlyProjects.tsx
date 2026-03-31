@@ -2,13 +2,15 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 
+import { ORANGE_SELECT_CHEVRON_DATA_URL } from "src/Shared/icons/orangeSelectChevronDataUrl";
+
 import projectsData from "../Data/projects.json";
 
 type QuarterKey = keyof typeof projectsData.projects;
 type QuarterProject = (typeof projectsData.projects)[QuarterKey][number];
 
 const selectStyle: React.CSSProperties = {
-  fontFamily: "ui-monospace, monospace",
+  fontFamily: "var(--font-mono)",
   fontSize: "0.68rem",
   letterSpacing: "0.12em",
   textTransform: "uppercase",
@@ -20,7 +22,7 @@ const selectStyle: React.CSSProperties = {
   cursor: "pointer",
   appearance: "none",
   WebkitAppearance: "none",
-  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F58134' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
+  backgroundImage: ORANGE_SELECT_CHEVRON_DATA_URL,
   backgroundRepeat: "no-repeat",
   backgroundPosition: "right 0.6rem center",
   minWidth: "11rem",
@@ -71,7 +73,7 @@ const QuarterlyProjects = () => {
             <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
             <span
               style={{
-                fontFamily: "ui-monospace, monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.65rem",
                 letterSpacing: "0.22em",
                 textTransform: "uppercase",
@@ -83,7 +85,7 @@ const QuarterlyProjects = () => {
           </div>
           <h2
             style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontFamily: "var(--font-heading)",
               fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
               fontWeight: 400,
               color: "var(--obs-text-primary)",
@@ -98,7 +100,7 @@ const QuarterlyProjects = () => {
         <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
           <span
             style={{
-              fontFamily: "ui-monospace, monospace",
+              fontFamily: "var(--font-mono)",
               fontSize: "0.58rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -147,7 +149,7 @@ const QuarterlyProjects = () => {
             <p
               style={{
                 margin: 0,
-                fontFamily: "ui-monospace, monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.7rem",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
@@ -212,7 +214,7 @@ const QuarterlyProjects = () => {
 
               <h3
                 style={{
-                  fontFamily: "'DM Serif Display', Georgia, serif",
+                  fontFamily: "var(--font-heading)",
                   fontSize: "clamp(1.05rem, 1.45vw, 1.32rem)",
                   fontWeight: 400,
                   color: "var(--obs-text-primary)",
@@ -240,7 +242,7 @@ const QuarterlyProjects = () => {
                 {project.mentor && (
                   <span
                     style={{
-                      fontFamily: "ui-monospace, monospace",
+                      fontFamily: "var(--font-mono)",
                       fontSize: "0.58rem",
                       letterSpacing: "0.12em",
                       textTransform: "uppercase",
@@ -261,7 +263,7 @@ const QuarterlyProjects = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
-                      fontFamily: "ui-monospace, monospace",
+                      fontFamily: "var(--font-mono)",
                       fontSize: "0.58rem",
                       letterSpacing: "0.12em",
                       textTransform: "uppercase",

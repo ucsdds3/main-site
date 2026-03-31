@@ -39,7 +39,6 @@ const Landing = () => {
   const borderFaint    = isDark ? "rgba(255,255,255,0.07)" : "rgba(10,20,50,0.08)";
   const learnMoreColor = isDark ? "rgba(255,255,255,0.4)"  : "rgba(10,20,50,0.4)";
   const learnMoreHover = isDark ? "rgba(255,255,255,0.85)" : "rgba(10,20,50,0.85)";
-  const ds3Label       = isDark ? "#ffffff"                : "rgba(10,20,50,1)";
   const blob1          = isDark
     ? "radial-gradient(circle, rgba(25,181,202,0.12) 0%, transparent 70%)"
     : "radial-gradient(circle, rgba(25,181,202,0.08) 0%, transparent 70%)";
@@ -66,25 +65,24 @@ const Landing = () => {
         style={{ width: 500, height: 500, borderRadius: "50%", background: blob2, bottom: "0", right: "5%" }}
       />
 
-      {/* ── Decorative large label ── */}
+      {/* ── Decorative watermark logo ── */}
       <motion.div
         style={{ y: bgY }}
         aria-hidden
-        className="pointer-events-none select-none absolute right-[15.5rem] top-1/2 -translate-y-1/2"
+        className="pointer-events-none select-none absolute right-[6%] sm:right-[16%] top-1/2 -translate-y-1/2 w-[min(42vw,18rem)] sm:w-[min(36vw,20rem)] opacity-[0.1]"
       >
-        <motion.p
-          style={{ color: ds3Label, fontFamily: "sans-serif" }}
-          className="text-[clamp(6rem,14vw,16rem)] font-black leading-none opacity-[0.03] tracking-tighter"
-          animate={{ y: [0, -14, 0] }}
+        <motion.img
+          src="/logo.webp"
+          alt=""
+          className="w-full h-auto object-contain"
+          animate={{ y: [0, -10, 0] }}
           transition={{
             duration: 4.8,
             ease: "easeInOut",
             repeat: Infinity,
             repeatType: "loop",
           }}
-        >
-          DS3
-        </motion.p>
+        />
       </motion.div>
 
       {/* ── Main content ── */}

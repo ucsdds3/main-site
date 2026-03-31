@@ -57,7 +57,7 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
         borderRadius: "0.75rem",
       }}>
         <p style={{
-          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontFamily: "var(--font-heading)",
           fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
           fontWeight: 400,
           color: "var(--obs-text-primary)",

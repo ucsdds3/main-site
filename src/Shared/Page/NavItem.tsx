@@ -39,7 +39,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
   }, [])
 
   const linkStyle = {
-    fontFamily: "ui-monospace, monospace",
+    fontFamily: "var(--font-mono)",
     fontSize: "0.72rem",
     letterSpacing: "0.14em",
     textTransform: "uppercase" as const,
@@ -98,11 +98,6 @@ const NavItem = ({ label, data }: NavItemProps) => {
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              position: "absolute",
-              top: "calc(100% + 10px)",
-              left: "50%",
-              transform: "translateX(-50%)",
-              minWidth: 160,
               background: dropdownBg,
               border: `1px solid ${dropdownBorder}`,
               borderRadius: "0.75rem",
@@ -116,8 +111,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
               listStyle: "none",
               margin: 0,
             }}
-            // Mobile: stack vertically, no absolute
-            className="lg:absolute static left-auto transform-none lg:left-1/2 lg:-translate-x-1/2"
+            className="relative mt-2 w-full min-w-0 lg:absolute lg:mt-0 lg:top-[calc(100%+10px)] lg:left-1/2 lg:w-max lg:min-w-[160px] lg:-translate-x-1/2"
           >
             {/* Small arrow pointer */}
             <div style={{
@@ -141,7 +135,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
                     textAlign: "left",
                     padding: "0.55rem 0.85rem",
                     borderRadius: "0.5rem",
-                    fontFamily: "ui-monospace, monospace",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "0.68rem",
                     letterSpacing: "0.12em",
                     textTransform: "uppercase",

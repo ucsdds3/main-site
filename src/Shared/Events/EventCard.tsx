@@ -73,7 +73,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           display: inline-flex; align-items: center;
           padding: 0.2rem 0.65rem;
           border-radius: 9999px;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.58rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
@@ -83,7 +83,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           display: inline-flex; align-items: center; gap: 0.4rem;
           padding: 0.55rem 1.25rem;
           border-radius: 9999px;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.65rem;
           font-weight: 500;
           letter-spacing: 0.14em;
@@ -147,7 +147,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
 
           {/* Title */}
           <h3 style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontFamily: "var(--font-heading)",
             fontSize: "clamp(1.1rem, 1.5vw, 1.35rem)",
             fontWeight: 400,
             lineHeight: 1.25,
@@ -165,13 +165,13 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           {(start || location) && (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
               {start && (
-                <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "0.65rem", letterSpacing: "0.1em", color: accent }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.1em", color: accent }}>
                   {formatDate(start)}
                   {end && ` · ${formatTime(start)} – ${formatTime(end)}`}
                 </span>
               )}
               {location && (
-                <span style={{ fontFamily: "ui-monospace, monospace", fontSize: "0.62rem", letterSpacing: "0.08em", color: "var(--obs-text-faint)" }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.08em", color: "var(--obs-text-faint)" }}>
                   {location}
                 </span>
               )}
@@ -184,7 +184,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           {/* Description */}
           {description ? (
             <p style={{
-              fontFamily: "'Albert Sans', sans-serif",
+              fontFamily: "var(--font-body)",
               fontSize: "clamp(0.82rem, 1vw, 0.9rem)",
               lineHeight: 1.75,
               color: "var(--obs-text-muted)",
@@ -210,7 +210,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           <div style={{ marginTop: "auto", paddingTop: "0.5rem" }}>
             {attended_at ? (
               <span style={{
-                fontFamily: "ui-monospace, monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "0.62rem",
                 letterSpacing: "0.1em",
                 color: "#19B5CA",

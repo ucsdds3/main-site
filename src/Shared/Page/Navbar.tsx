@@ -28,7 +28,7 @@ const Navbar = () => {
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
       }}
-      className="sticky top-0 w-full z-50 flex flex-col lg:flex-row items-center justify-between px-6 py-4"
+      className="sticky top-0 w-full z-50 flex flex-col lg:flex-row items-stretch lg:items-center justify-between px-6 py-4"
     >
       {/* Top bar */}
       <div className="w-full lg:w-auto flex items-center justify-between">

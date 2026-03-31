@@ -29,7 +29,7 @@ const GetInvolved = () => {
           flexShrink: 0,
         }} />
         <span style={{
-          fontFamily: "ui-monospace, monospace",
+          fontFamily: "var(--font-mono)",
           fontSize: "0.78rem",
           letterSpacing: "0.22em",
           textTransform: "uppercase",

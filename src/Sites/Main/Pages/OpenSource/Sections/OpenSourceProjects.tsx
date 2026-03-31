@@ -83,7 +83,7 @@ const ProjectCard = ({ project }: { project: OpenSourceProject }) => {
       </div>
 
       <h3 style={{
-        fontFamily: "'DM Serif Display', Georgia, serif",
+        fontFamily: "var(--font-heading)",
         fontSize: "clamp(1.1rem, 1.6vw, 1.4rem)",
         fontWeight: 400,
         color: "var(--obs-text-primary)",
@@ -122,7 +122,7 @@ const OpenSourceProjects = () => {
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.7rem" }}>
           <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
           <span style={{
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: "0.65rem",
             letterSpacing: "0.22em",
             textTransform: "uppercase",
@@ -130,7 +130,7 @@ const OpenSourceProjects = () => {
           }}>Past work</span>
         </div>
         <h2 style={{
-          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontFamily: "var(--font-heading)",
           fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
           fontWeight: 400,
           color: "var(--obs-text-primary)",

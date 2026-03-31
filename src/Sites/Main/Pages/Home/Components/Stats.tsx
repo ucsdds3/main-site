@@ -45,7 +45,7 @@ const Stats = () => {
           >
             <span
               style={{
-                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontFamily: "var(--font-heading)",
                 fontSize: "clamp(2.8rem, 4vw, 4rem)",
                 fontWeight: 400,
                 color: stat.color,
@@ -56,7 +56,7 @@ const Stats = () => {
 
             <span
               style={{
-                fontFamily: "ui-monospace, monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: "clamp(0.6rem, 0.8vw, 0.7rem)",
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",

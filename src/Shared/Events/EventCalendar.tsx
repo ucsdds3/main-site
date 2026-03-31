@@ -46,7 +46,7 @@ function renderEventContent(eventInfo: EventContentArg) {
     <div style={{ overflow: "hidden" }}>
       <div
         style={{
-          fontFamily: "ui-monospace, monospace",
+          fontFamily: "var(--font-mono)",
           fontSize: "0.58rem",
           letterSpacing: "0.1em",
           opacity: 0.85,
@@ -56,7 +56,7 @@ function renderEventContent(eventInfo: EventContentArg) {
       </div>
       <div
         style={{
-          fontFamily: "'Albert Sans', sans-serif",
+          fontFamily: "var(--font-body)",
           fontSize: "0.74rem",
           lineHeight: 1.2,
           whiteSpace: "nowrap",
@@ -101,6 +101,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
     <div
       style={{
         width: "100%",
+        minWidth: 0,
         border: "1px solid var(--obs-border, rgba(128,128,128,0.2))",
         borderRadius: "1rem",
         background: "var(--obs-surface, transparent)",
@@ -108,6 +109,11 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
       }}
     >
       <style>{`
+        .obs-event-cal-scroll {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          min-width: 0;
+        }
         .fc {
           --fc-border-color: rgba(255, 255, 255, 0.14);
           --fc-page-bg-color: rgba(5, 10, 24, 0.82);
@@ -129,7 +135,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
           padding: 0.95rem 0.9rem 0.35rem;
         }
         .fc .fc-toolbar-title {
-          font-family: 'DM Serif Display', Georgia, serif;
+          font-family: var(--font-heading);
           font-size: clamp(1.45rem, 2vw, 1.9rem);
           font-weight: 400;
           color: var(--obs-text-primary);
@@ -144,7 +150,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
         }
         .fc .fc-col-header-cell-cushion {
           color: rgba(255, 255, 255, 0.62);
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.64rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
@@ -152,7 +158,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
         }
         .fc .fc-daygrid-day-number {
           color: rgba(255, 255, 255, 0.78);
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.72rem;
           padding: 0.25rem 0.4rem 0 0;
         }
@@ -171,6 +177,42 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
         }
         .fc .fc-daygrid-day-frame {
           min-height: 8.4rem;
+        }
+        @media (max-width: 639px) {
+          .obs-event-cal-scroll .fc {
+            min-width: 520px;
+          }
+          .fc .fc-toolbar {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: stretch;
+            padding: 0.65rem 0.5rem 0.35rem;
+          }
+          .fc .fc-toolbar-chunk {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+          }
+          .fc .fc-toolbar-title {
+            font-size: 1.1rem !important;
+            text-align: center;
+          }
+          .fc .fc-daygrid-day-frame {
+            min-height: 5rem !important;
+          }
+          .fc .fc-col-header-cell-cushion {
+            font-size: 0.56rem;
+            letter-spacing: 0.08em;
+            padding: 0.45rem 0.1rem;
+          }
+          .fc .fc-daygrid-day-number {
+            font-size: 0.62rem;
+            padding: 0.2rem 0.25rem 0 0;
+          }
+          .fc .fc-daygrid-event {
+            margin-top: 0.1rem;
+            margin-bottom: 0.1rem;
+          }
         }
         .fc-theme-standard td,
         .fc-theme-standard th {
@@ -202,14 +244,14 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
           color: var(--obs-text-primary);
           border-radius: 9999px;
           padding: 0.35rem 0.7rem;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.62rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           cursor: pointer;
         }
         .obs-event-modal-meta {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.66rem;
           letter-spacing: 0.1em;
           text-transform: uppercase;
@@ -229,7 +271,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
           gap: 0.4rem;
           padding: 0.55rem 1.25rem;
           border-radius: 9999px;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-mono);
           font-size: 0.65rem;
           font-weight: 500;
           letter-spacing: 0.14em;
@@ -246,25 +288,27 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
           box-shadow: 0 6px 20px rgba(25,181,202,0.15);
         }
       `}</style>
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        events={toCalendarEvents(events)}
-        headerToolbar={{
-          left: "prev,next",
-          center: "title",
-          right: "",
-        }}
-        fixedWeekCount={false}
-        showNonCurrentDates
-        dayMaxEventRows={false}
-        dayMaxEvents={false}
-        height="auto"
-        eventDisplay="block"
-        eventOrder="start,-duration,title"
-        eventContent={renderEventContent}
-        eventClick={handleEventClick}
-      />
+      <div className="obs-event-cal-scroll">
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          events={toCalendarEvents(events)}
+          headerToolbar={{
+            left: "prev,next",
+            center: "title",
+            right: "",
+          }}
+          fixedWeekCount={false}
+          showNonCurrentDates
+          dayMaxEventRows={false}
+          dayMaxEvents={false}
+          height="auto"
+          eventDisplay="block"
+          eventOrder="start,-duration,title"
+          eventContent={renderEventContent}
+          eventClick={handleEventClick}
+        />
+      </div>
       {selectedEvent && (
         <div className="obs-event-modal-overlay" onClick={() => setSelectedEvent(null)}>
           <div className="obs-event-modal" onClick={e => e.stopPropagation()}>
@@ -285,7 +329,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
                 <h3
                   style={{
                     margin: 0,
-                    fontFamily: "'DM Serif Display', Georgia, serif",
+                    fontFamily: "var(--font-heading)",
                     fontWeight: 400,
                     fontSize: "clamp(1.35rem, 2.3vw, 1.9rem)",
                     lineHeight: 1.2,

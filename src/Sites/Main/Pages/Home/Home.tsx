@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <Page>
       <Landing />
-      <div>
+      <div className="flex w-full min-w-0 flex-col items-center">
         <Suspense>
           <AboutUs />
           <GetInvolved />
