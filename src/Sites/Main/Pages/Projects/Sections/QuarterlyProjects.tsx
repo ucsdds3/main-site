@@ -54,7 +54,7 @@ const QuarterlyProjects = () => {
           </span>
           <select
             value={quarter}
-            className="obs-select min-w-[11rem] text-(--obs-text-primary)"
+            className="obs-select min-w-44 text-(--obs-text-primary)"
             onChange={e => setQuarter(e.target.value as SelectQuarter)}
           >
             {quarters.map((q, i) => (
@@ -108,13 +108,13 @@ const QuarterlyProjects = () => {
                 {project.title}
               </h3>
 
-              <p className="m-0 flex-grow text-[clamp(0.82rem,1vw,0.92rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.55]">
+              <p className="m-0 grow text-[clamp(0.82rem,1vw,0.92rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.55]">
                 {project.description}
               </p>
 
               <div className="mt-auto flex flex-wrap gap-[0.4rem]">
                 {project.mentor && (
-                  <span className="rounded-[2rem] border border-[rgba(245,129,52,0.3)] bg-[rgba(245,129,52,0.08)] px-[0.55rem] py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#F58134]">
+                  <span className="rounded-4xl border border-[rgba(245,129,52,0.3)] bg-[rgba(245,129,52,0.08)] px-[0.55rem] py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#F58134]">
                     Mentor: {project.mentor}
                   </span>
                 )}
@@ -124,7 +124,7 @@ const QuarterlyProjects = () => {
                     href={githubLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-[2rem] border border-(--obs-border) px-[0.55rem] py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-(--obs-text-primary) no-underline opacity-75"
+                    className="rounded-4xl border border-(--obs-border) px-[0.55rem] py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-(--obs-text-primary) no-underline opacity-75"
                   >
                     GitHub
                   </a>

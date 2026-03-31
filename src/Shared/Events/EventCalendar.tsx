@@ -44,7 +44,7 @@ function toCalendarEvents(events: EventType[]): EventInput[] {
 function renderEventContent(eventInfo: EventContentArg) {
   return (
     <div className="overflow-hidden">
-      <div className="font-mono text-[0.58rem] tracking-[0.1em] opacity-[0.85]">
+      <div className="font-mono text-[0.58rem] tracking-widest opacity-[0.85]">
         {eventInfo.timeText}
       </div>
       <div

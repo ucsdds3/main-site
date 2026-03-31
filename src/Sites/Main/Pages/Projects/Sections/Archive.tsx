@@ -75,7 +75,7 @@ const Archive = () => {
             className="flex flex-col gap-4 rounded-xl border border-(--obs-border) p-[clamp(1.25rem,2vw,1.75rem)] transition-[border-color] duration-[0.25s] hover:border-[#F58134]"
           >
             <div className="flex items-center justify-between">
-              <span className="rounded-[2rem] border border-(--obs-border) px-[0.58rem] py-[0.22rem] font-mono text-[0.58rem] uppercase tracking-[0.12em] text-(--obs-text-primary) opacity-[0.78]">
+              <span className="rounded-4xl border border-(--obs-border) px-[0.58rem] py-[0.22rem] font-mono text-[0.58rem] uppercase tracking-[0.12em] text-(--obs-text-primary) opacity-[0.78]">
                 {year}
               </span>
 
@@ -99,13 +99,13 @@ const Archive = () => {
               {project.title}
             </h3>
 
-            <p className="m-0 flex-grow text-[clamp(0.82rem,1vw,0.92rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.55]">
+            <p className="m-0 grow text-[clamp(0.82rem,1vw,0.92rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.55]">
               {project.description}
             </p>
 
             <div className="mt-auto flex flex-wrap gap-[0.4rem]">
               {"placement" in project && typeof project.placement === "number" && (
-                <span className="rounded-[2rem] border border-[rgba(245,129,52,0.3)] bg-[rgba(245,129,52,0.08)] px-[0.55rem] py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#F58134]">
+                <span className="rounded-4xl border border-[rgba(245,129,52,0.3)] bg-[rgba(245,129,52,0.08)] px-[0.55rem] py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#F58134]">
                   Placement: #{project.placement}
                 </span>
               )}
@@ -115,7 +115,7 @@ const Archive = () => {
                   href={normalizeLink("link" in project ? (project.link as string | undefined) : undefined)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-[2rem] border border-(--obs-border) px-[0.55rem] py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-(--obs-text-primary) no-underline opacity-75"
+                  className="rounded-4xl border border-(--obs-border) px-[0.55rem] py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-(--obs-text-primary) no-underline opacity-75"
                 >
                   View Project
                 </a>

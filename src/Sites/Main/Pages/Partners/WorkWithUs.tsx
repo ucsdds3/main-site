@@ -107,7 +107,7 @@ const WorkWithUs = () => {
             href="https://drive.google.com/drive/folders/1SsWNyer200v3aojhCbK2VQhe33dcAXy6?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block shrink-0 cursor-pointer rounded-[2rem] border border-[#F58134] bg-[rgba(245,129,52,0.08)] px-[1.4rem] py-[0.6rem] font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#F58134] no-underline transition-colors duration-200 hover:bg-[rgba(245,129,52,0.18)]"
+            className="inline-block shrink-0 cursor-pointer rounded-4xl border border-[#F58134] bg-[rgba(245,129,52,0.08)] px-[1.4rem] py-[0.6rem] font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#F58134] no-underline transition-colors duration-200 hover:bg-[rgba(245,129,52,0.18)]"
           >
             View Sponsor Packet →
           </a>

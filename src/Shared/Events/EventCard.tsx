@@ -155,7 +155,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           {(start || location) && (
             <div className="flex flex-col gap-[0.2rem]">
               {start && (
-                <span className="font-mono text-[0.65rem] tracking-[0.1em]" style={{ color: accent }}>
+                <span className="font-mono text-[0.65rem] tracking-widest" style={{ color: accent }}>
                   {formatDate(start)}
                   {end && ` · ${formatTime(start)} – ${formatTime(end)}`}
                 </span>
@@ -187,7 +187,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           {/* Footer */}
           <div className="mt-auto pt-2">
             {attended_at ? (
-              <span className="font-mono text-[0.62rem] tracking-[0.1em] text-[#19B5CA]">
+              <span className="font-mono text-[0.62rem] tracking-widest text-[#19B5CA]">
                 ✓ Checked in · {new Date(attended_at).toLocaleString("en-US", { timeZone: "America/Los_Angeles" })}
               </span>
             ) : (

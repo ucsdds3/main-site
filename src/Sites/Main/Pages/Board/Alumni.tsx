@@ -84,7 +84,7 @@ const Alumni = () => {
               placeholder="Search alumni..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-[clamp(180px,20vw,260px)] rounded-[2rem] border border-(--obs-border) bg-transparent py-2 pl-9 pr-4 font-mono text-[0.72rem] tracking-[0.1em] text-(--obs-text-primary) outline-none transition-[border-color] duration-200 focus:border-[#F58134]"
+              className="w-[clamp(180px,20vw,260px)] rounded-4xl border border-(--obs-border) bg-transparent py-2 pl-9 pr-4 font-mono text-[0.72rem] tracking-widest text-(--obs-text-primary) outline-none transition-[border-color] duration-200 focus:border-[#F58134]"
             />
           </div>
         </motion.div>

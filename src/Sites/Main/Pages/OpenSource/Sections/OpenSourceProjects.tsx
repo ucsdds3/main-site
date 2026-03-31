@@ -59,7 +59,7 @@ const ProjectCard = ({ project }: { project: OpenSourceProject }) => {
         {project.title}
       </h3>
 
-      <p className="m-0 flex-grow text-[clamp(0.82rem,1vw,0.92rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.58]">
+      <p className="m-0 grow text-[clamp(0.82rem,1vw,0.92rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.58]">
         {project.description}
       </p>
     </motion.div>
