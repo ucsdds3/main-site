@@ -25,6 +25,7 @@
     "embla-carousel": "^8.6.0",
     "embla-carousel-auto-scroll": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
+    "fluid-tailwindcss": "^1.0.9",
     "framer-motion": "^12.7.3",
     "qr-code-styling": "^1.9.2",
     "react": "^19.0.0",
