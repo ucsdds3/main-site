@@ -68,6 +68,8 @@ const NavItem = ({ label, data }: NavItemProps) => {
     <div ref={dropdownRef} style={{ position: "relative" }} className="w-full lg:w-auto">
       {/* Trigger */}
       <button
+        type="button"
+        className={linkClass}
         style={linkStyle}
         onMouseEnter={e => (e.currentTarget.style.color = textHover)}
         onMouseLeave={e => (e.currentTarget.style.color = textColor)}
