@@ -9,11 +9,6 @@ import OpenSource from "./Pages/OpenSource/OpenSource";
 import Consulting from "./Pages/Consulting/Consulting";
 import Partners from "./Pages/Partners/Partners";
 
-const DataHacksRedirect = () => {
-  window.open("https://datahacks.ds3ucsd.com/", "_blank");
-  return null;
-};
-
 const Main = () => {
   const eventRoute = getEventRoutes();
 
@@ -32,7 +27,6 @@ const Main = () => {
       <Route path="/projects" element={<Projects />} />
       <Route path="/opensource" element={<OpenSource />} />
       <Route path="/consulting" element={<Consulting />} />
-      <Route path="/datahacks" element={<DataHacksRedirect />} />
       <Route path="/partners" element={<Partners />} />
     </Routes>
   );
