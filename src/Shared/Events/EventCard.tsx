@@ -25,81 +25,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
   const formatDate = (d: string) => new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
   return (
-    <>
-      <style>{`
-        .obs-ecard {
-          position: relative;
-          background: var(--obs-surface);
-          border: 1px solid var(--obs-border);
-          border-radius: 1.25rem;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-        }
-        .obs-ecard:hover {
-          border-color: var(--obs-border-mid);
-          transform: translateY(-4px);
-          box-shadow: 0 24px 60px rgba(0,0,0,0.35);
-        }
-        .obs-ecard-img {
-          width: 100%; aspect-ratio: 16/9;
-          overflow: hidden; position: relative;
-          background: var(--obs-surface);
-          flex-shrink: 0;
-        }
-        .obs-ecard-img img {
-          width: 100%; height: 100%; object-fit: cover; display: block;
-          transition: transform 0.5s ease;
-        }
-        .obs-ecard:hover .obs-ecard-img img { transform: scale(1.04); }
-        .obs-ecard-img-overlay {
-          position: absolute; inset: 0;
-          background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.45) 100%);
-          pointer-events: none;
-        }
-        .obs-skel {
-          background: linear-gradient(90deg, var(--obs-surface) 0%, var(--obs-border) 50%, var(--obs-surface) 100%);
-          background-size: 200% 100%;
-          animation: obs-shimmer 1.8s ease-in-out infinite;
-          border-radius: 6px;
-        }
-        @keyframes obs-shimmer {
-          0%   { background-position: -200% 0; }
-          100% { background-position:  200% 0; }
-        }
-        .obs-tag {
-          display: inline-flex; align-items: center;
-          padding: 0.2rem 0.65rem;
-          border-radius: 9999px;
-          font-size: 0.58rem;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          border: 1px solid;
-        }
-        .obs-cal-btn {
-          display: inline-flex; align-items: center; gap: 0.4rem;
-          padding: 0.55rem 1.25rem;
-          border-radius: 9999px;
-          font-size: 0.65rem;
-          font-weight: 500;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          text-decoration: none;
-          transition: all 0.2s ease;
-          border: 1px solid rgba(25,181,202,0.35);
-          background: rgba(25,181,202,0.08);
-          color: #19B5CA;
-        }
-        .obs-cal-btn:hover {
-          background: rgba(25,181,202,0.18);
-          border-color: rgba(25,181,202,0.7);
-          box-shadow: 0 6px 20px rgba(25,181,202,0.15);
-        }
-      `}</style>
-
-      <motion.div
+    <motion.div
         className="obs-ecard"
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -200,7 +126,6 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           </div>
         </div>
       </motion.div>
-    </>
   );
 };
 
