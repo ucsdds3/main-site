@@ -27,17 +27,7 @@ export default function EventTemplate({ team }: { team: TeamType }) {
         headerImg={team.headerImg}
       />
 
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 1300,
-          margin: "0 auto",
-          padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3rem)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "clamp(3rem, 5vw, 5rem)",
-        }}
-      >
+      <div className="mx-auto flex w-full max-w-[1300px] flex-col gap-[clamp(3rem,5vw,5rem)] px-[clamp(1.25rem,4vw,3rem)] py-[clamp(2.5rem,5vw,5rem)]">
         <About {...team} />
 
         {/* Section header + calendar list — not shown on GBM or LeetCode Sessions */}
@@ -47,27 +37,13 @@ export default function EventTemplate({ team }: { team: TeamType }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
+            className="flex flex-col gap-3"
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-              <div style={{ width: 28, height: 2, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
-              <span style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.68rem",
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "#F58134",
-              }}>
-                On the calendar
-              </span>
+            <div className="flex items-center gap-3">
+              <div className="h-0.5 w-7 shrink-0 rounded-sm bg-[#F58134]" />
+              <span className="text-eyebrow text-eyebrow-orange">On the calendar</span>
             </div>
-            <h2 style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
-              fontWeight: 400,
-              color: "var(--obs-text-primary)",
-              margin: 0,
-            }}>
+            <h2 className="text-fluid-subsection-title m-0 text-(--obs-text-primary)">
               Upcoming {team.title}
             </h2>
           </motion.div>

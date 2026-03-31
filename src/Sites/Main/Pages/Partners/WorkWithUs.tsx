@@ -86,68 +86,28 @@ const TIERS = [
 
 const WorkWithUs = () => {
   return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: 1300,
-        margin: "0 auto",
-        padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3rem)",
-      }}
-    >
+    <div className="mx-auto w-full max-w-[1300px] px-[clamp(1.25rem,4vw,3rem)] py-[clamp(2.5rem,5vw,5rem)]">
       {/* Section header */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        style={{ marginBottom: "clamp(2.5rem, 4vw, 4rem)" }}
+        className="mb-[clamp(2.5rem,4vw,4rem)]"
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.85rem" }}>
-          <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
-          <span style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.65rem",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "#F58134",
-          }}>
-            Partnerships
-          </span>
+        <div className="mb-[0.85rem] flex items-center gap-[0.6rem]">
+          <div className="obs-accent-bar-orange" />
+          <span className="text-eyebrow text-eyebrow-orange">Partnerships</span>
         </div>
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
-          <h2 style={{
-            fontFamily: "var(--font-heading)",
-            fontSize: "clamp(2rem, 4vw, 3.5rem)",
-            fontWeight: 400,
-            color: "var(--obs-text-primary)",
-            margin: 0,
-            lineHeight: 1.0,
-            letterSpacing: "-0.01em",
-          }}>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <h2 className="m-0 font-heading text-[clamp(2rem,4vw,3.5rem)] font-normal leading-none tracking-tight text-(--obs-text-primary)">
             Work With Us
           </h2>
           <a
             href="https://drive.google.com/drive/folders/1SsWNyer200v3aojhCbK2VQhe33dcAXy6?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              padding: "0.6rem 1.4rem",
-              borderRadius: "2rem",
-              border: "1px solid #F58134",
-              background: "rgba(245,129,52,0.08)",
-              color: "#F58134",
-              cursor: "pointer",
-              flexShrink: 0,
-              transition: "background 0.2s ease",
-              textDecoration: "none",
-              display: "inline-block",
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = "rgba(245,129,52,0.18)")}
-            onMouseLeave={e => (e.currentTarget.style.background = "rgba(245,129,52,0.08)")}
+            className="inline-block shrink-0 cursor-pointer rounded-[2rem] border border-[#F58134] bg-[rgba(245,129,52,0.08)] px-[1.4rem] py-[0.6rem] font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#F58134] no-underline transition-colors duration-200 hover:bg-[rgba(245,129,52,0.18)]"
           >
             View Sponsor Packet →
           </a>
@@ -155,12 +115,7 @@ const WorkWithUs = () => {
       </motion.div>
 
       {/* Tier columns */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(clamp(260px, 28vw, 360px), 1fr))",
-        gap: "clamp(1.25rem, 2.5vw, 2rem)",
-        alignItems: "start",
-      }}>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(clamp(260px,28vw,360px),1fr))] items-start gap-[clamp(1.25rem,2.5vw,2rem)]">
         {TIERS.map((tier, ti) => (
           <motion.div
             key={ti}
@@ -168,80 +123,38 @@ const WorkWithUs = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: ti * 0.1, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              border: "1px solid var(--obs-border, rgba(128,128,128,0.18))",
-              borderRadius: "0.875rem",
-              overflow: "hidden",
-            }}
+            className="overflow-hidden rounded-[0.875rem] border border-(--obs-border)"
           >
             {/* Tier header */}
-            <div style={{
-              padding: "clamp(1.25rem, 2vw, 1.75rem)",
-              borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.12))",
-              background: "rgba(128,128,128,0.04)",
-            }}>
-              <span style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.6rem",
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                color: tier.color,
-                display: "block",
-                marginBottom: "0.5rem",
-              }}>
+            <div className="border-b border-(--obs-border) bg-[rgba(128,128,128,0.04)] p-[clamp(1.25rem,2vw,1.75rem)]">
+              <span
+                className="mb-2 block font-mono text-[0.6rem] uppercase tracking-[0.2em]"
+                style={{ color: tier.color }}
+              >
                 {tier.label}
               </span>
-              <h3 style={{
-                fontFamily: "var(--font-heading)",
-                fontSize: "clamp(1.1rem, 1.6vw, 1.45rem)",
-                fontWeight: 400,
-                color: "var(--obs-text-primary)",
-                margin: 0,
-                lineHeight: 1.2,
-              }}>
+              <h3 className="m-0 font-heading text-[clamp(1.1rem,1.6vw,1.45rem)] font-normal leading-tight text-(--obs-text-primary)">
                 {tier.heading}
               </h3>
             </div>
 
             {/* Offerings */}
-            <div style={{ padding: "clamp(1rem, 1.5vw, 1.5rem)", display: "flex", flexDirection: "column" }}>
+            <div className="flex flex-col p-[clamp(1rem,1.5vw,1.5rem)]">
               {tier.offerings.map((item, oi) => (
                 <div key={oi}>
                   {oi > 0 && (
-                    <div style={{
-                      height: 1,
-                      background: "var(--obs-border, rgba(128,128,128,0.1))",
-                      margin: "clamp(0.85rem, 1.2vw, 1.1rem) 0",
-                    }} />
+                    <div className="my-[clamp(0.85rem,1.2vw,1.1rem)] h-px bg-(--obs-border)" />
                   )}
-                  <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                    <div style={{
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      background: tier.color,
-                      flexShrink: 0,
-                      marginTop: "0.45rem",
-                      opacity: 0.7,
-                    }} />
+                  <div className="flex items-start gap-3">
+                    <div
+                      className="mt-[0.45rem] size-1.5 shrink-0 rounded-full opacity-70"
+                      style={{ background: tier.color }}
+                    />
                     <div>
-                      <p style={{
-                        fontFamily: "var(--font-heading)",
-                        fontSize: "clamp(0.95rem, 1.3vw, 1.1rem)",
-                        fontWeight: 400,
-                        color: "var(--obs-text-primary)",
-                        margin: "0 0 0.25rem 0",
-                        lineHeight: 1.25,
-                      }}>
+                      <p className="mb-1 font-heading text-[clamp(0.95rem,1.3vw,1.1rem)] font-normal leading-snug text-(--obs-text-primary)">
                         {item.title}
                       </p>
-                      <p style={{
-                        fontSize: "clamp(0.78rem, 0.95vw, 0.88rem)",
-                        color: "var(--obs-text-primary)",
-                        opacity: 0.55,
-                        margin: 0,
-                        lineHeight: 1.65,
-                      }}>
+                      <p className="m-0 text-[clamp(0.78rem,0.95vw,0.88rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.55]">
                         {item.description}
                       </p>
                     </div>

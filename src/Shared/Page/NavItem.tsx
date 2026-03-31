@@ -73,7 +73,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
   }
 
   return (
-    <div ref={dropdownRef} style={{ position: "relative" }} className="w-full lg:w-auto">
+    <div ref={dropdownRef} className="relative w-full lg:w-auto">
       {/* Trigger */}
       <button
         type="button"

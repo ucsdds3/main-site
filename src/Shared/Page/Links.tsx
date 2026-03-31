@@ -1,5 +1,6 @@
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
+import { twMerge } from "src/Utils/cn";
 
 import navData from "./Data/navbar.json";
 import NavItem from "./NavItem";
@@ -15,10 +16,10 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
 
   return (
     <div
-      className={`w-full lg:w-auto flex-col items-stretch lg:items-center lg:flex lg:flex-row gap-4 lg:gap-8 ${
-        menuOpen ? "flex" : "hidden"
-      }`}
-      style={{ paddingTop: menuOpen ? "0.5rem" : 0 }}
+      className={twMerge(
+        "w-full flex-col items-stretch gap-4 lg:w-auto lg:flex lg:flex-row lg:items-center lg:gap-8",
+        menuOpen ? "flex pt-2" : "hidden pt-0"
+      )}
     >
       {Object.entries(links).map(([label, data], index) => (
         <NavItem key={index} label={label} data={data as string | Record<string, string>} />

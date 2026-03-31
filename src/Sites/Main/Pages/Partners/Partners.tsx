@@ -9,9 +9,9 @@ const Partners = () => {
   return (
     <Page>
       <WorkWithUs />
-      <div style={{ height: 1, background: "var(--obs-border, rgba(128,128,128,0.15))", maxWidth: 1300, margin: "0 auto", width: "calc(100% - clamp(2.5rem, 8vw, 6rem))" }} />
+      <div className="mx-auto h-px w-[calc(100%-clamp(2.5rem,8vw,6rem))] max-w-[1300px] bg-(--obs-border)" />
       <OurPartners />
-      <div style={{ height: 1, background: "var(--obs-border, rgba(128,128,128,0.15))", maxWidth: 1300, margin: "0 auto", width: "calc(100% - clamp(2.5rem, 8vw, 6rem))" }} />
+      <div className="mx-auto h-px w-[calc(100%-clamp(2.5rem,8vw,6rem))] max-w-[1300px] bg-(--obs-border)" />
       <Suspense>
         <ContactUs type="partners" />
       </Suspense>

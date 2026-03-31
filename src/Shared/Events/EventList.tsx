@@ -46,17 +46,8 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
 
   if (!loading && sortedEvents.length === 0) {
     return (
-      <div style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "0.75rem",
-        padding: "4rem 2rem",
-        border: "1px dashed rgba(128,128,128,0.2)",
-        borderRadius: "0.75rem",
-      }}>
-        <p className="font-heading font-normal fl-text-xl/3xl text-center text-(--obs-text-primary) m-0 opacity-75">
+      <div className="obs-list-empty-panel">
+        <p className="m-0 text-center font-heading font-normal fl-text-xl/3xl text-(--obs-text-primary) opacity-75">
           Nothing there yet
         </p>
       </div>
@@ -76,7 +67,7 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
       </div>
 
       {numPages > 1 && (
-        <div style={{ marginTop: "2rem" }}>
+        <div className="mt-8">
           <Paginate page={page} numPages={numPages} setPage={setPage} />
         </div>
       )}
