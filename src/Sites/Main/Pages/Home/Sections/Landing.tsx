@@ -235,16 +235,6 @@ const Landing = () => {
             ))}
           </motion.div>
         </motion.div>
-
-        {/* Right: Dino + floating card */}
-        <div className="relative flex-shrink-0 flex items-end justify-center lg:items-end">
-          {/* Glow plate behind dino */}
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full blur-3xl"
-            style={{ width: 300, height: 80, background: "rgba(25,181,202,0.18)" }}
-          />
-        </div>
       </div>
     </div>
   );
