@@ -87,15 +87,7 @@ const About = ({
       </div>
 
       {/* Image + points */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "clamp(2rem, 4vw, 4rem)",
-          alignItems: "center",
-        }}
-        className="about-grid"
-      >
+      <div className="about-grid grid grid-cols-1 items-center gap-[clamp(2rem,4vw,4rem)] md:grid-cols-2">
         {/* Clickable image with caption */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           <div

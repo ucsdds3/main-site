@@ -110,7 +110,7 @@ const Landing = () => {
                 className="inline-block w-1.5 h-1.5 rounded-full animate-pulse"
                 style={{ background: "#19B5CA" }}
               />
-              Student Organization · UC San Diego
+              DS3 @ UC San Diego
             </span>
           </motion.div>
 
