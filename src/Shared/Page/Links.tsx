@@ -28,6 +28,10 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
         <NavItem label="Admin" data="/admin" />
       )}
 
+      {isMembers && (
+        <NavItem label="Main Site" data={{ pathname: "/", subdomain: "main" }} />
+      )}
+
       {(!isMembers || !isAuthed) ? (
         <button
           type="button"
@@ -46,7 +50,7 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
             e.currentTarget.style.boxShadow = "none"
           }}
         >
-          {subdomain === "main" ? "Login / Sign up" : "Main Site"}
+          {subdomain === "main" ? isAuthed ? "Members" : "Sign In" : "Main Site"}
         </button>
       ) : (
         <Avatar />
