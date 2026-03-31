@@ -76,7 +76,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 fontFamily: "var(--font-heading)",
-                fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
+                fontSize: "clamp(2.8rem, 4.5vw, 5rem)",
                 fontWeight: 400,
                 lineHeight: 0.95,
                 color: "var(--obs-text-primary)",
