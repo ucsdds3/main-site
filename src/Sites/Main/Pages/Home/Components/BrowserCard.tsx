@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 import { newArray } from "src/Utils/functions.tsx";
 import SafeLink from "src/Shared/Components/SafeLink";
+import { IoIosArrowForward } from "react-icons/io";
 
 interface BrowserCardProps {
   title: string;
@@ -239,7 +240,7 @@ const BrowserCard = memo(function BrowserCard({
           }}
         >
           {/* Title */}
-          <h4 className="font-heading font-normal fl-text-xl/2xl leading-tight text-[var(--obs-text-primary)] m-0 line-clamp-3">
+          <h4 className="font-heading font-normal fl-text-xl/2xl leading-tight text-(--obs-text-primary) m-0 line-clamp-3">
             {title}
           </h4>
 
@@ -248,7 +249,7 @@ const BrowserCard = memo(function BrowserCard({
 
           {/* Description or skeleton */}
           {description ? (
-            <p className="font-body font-light fl-text-sm/base leading-[1.75] text-[var(--obs-text-muted)] m-0 line-clamp-4">
+            <p className="font-body font-light fl-text-sm/base leading-[1.75] text-(--obs-text-muted) m-0 line-clamp-4">
               {description}
             </p>
           ) : (
@@ -269,7 +270,7 @@ const BrowserCard = memo(function BrowserCard({
               {link ? (
                 <SafeLink href={link} className="obs-cta">
                   {linkText}
-                  <span className="obs-cta-arrow">→</span>
+                  <span className="obs-cta-arrow"><IoIosArrowForward /></span>
                 </SafeLink>
               ) : (
                 <div className="obs-skel" style={{ height: 34, width: 100, borderRadius: 9999 }} />

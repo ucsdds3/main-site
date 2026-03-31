@@ -28,7 +28,7 @@ const OnlineContent = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="font-body font-light fl-text-base/lg leading-[1.8] text-[var(--obs-text-muted)] max-w-[520px] text-center mb-12"
+        className="font-body font-light fl-text-base/lg leading-[1.8] text-(--obs-text-muted) max-w-[520px] text-center mb-12"
       >
         Read our latest articles and check out our newest podcast episodes to keep up with evolving field of data science!
       </motion.p>
@@ -72,7 +72,7 @@ const OnlineContent = () => {
           <button
             key={label}
             onClick={() => window.open(url, "_blank")}
-            className="font-mono rounded-full px-10 py-[0.85rem] text-[0.78rem] font-medium uppercase tracking-[0.18em] text-[var(--obs-text-primary)] backdrop-blur-sm transition-all duration-[250ms] cursor-pointer"
+            className="font-mono rounded-full px-10 py-[0.85rem] text-[0.78rem] font-medium uppercase tracking-[0.18em] text-(--obs-text-primary) backdrop-blur-sm transition-all duration-250 cursor-pointer"
             style={{
               background: "var(--obs-surface)",
               border: `1px solid ${accent}0.35)`,
