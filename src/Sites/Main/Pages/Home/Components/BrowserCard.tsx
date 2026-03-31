@@ -268,9 +268,8 @@ const BrowserCard = memo(function BrowserCard({
           {!notEvent && (
             <div style={{ marginTop: "auto", paddingTop: "0.5rem" }}>
               {link ? (
-                <SafeLink href={link} className="obs-cta">
-                  {linkText}
-                  <span className="obs-cta-arrow"><IoIosArrowForward /></span>
+                <SafeLink href={link} className="obs-cta flex items-center gap-1">
+                  {linkText} <IoIosArrowForward />
                 </SafeLink>
               ) : (
                 <div className="obs-skel" style={{ height: 34, width: 100, borderRadius: 9999 }} />

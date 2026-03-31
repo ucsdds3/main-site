@@ -3,6 +3,7 @@ import Section from "src/Shared/Page/Section";
 
 import BrowserCard from "../Components/BrowserCard";
 import onlineContent from "../Data/onlineContent.json";
+import { IoIosArrowForward } from "react-icons/io";
 
 const OnlineContent = () => {
   // Show only first 4 articles in a 2-col grid — more breathing room per card
@@ -66,8 +67,8 @@ const OnlineContent = () => {
         className="flex flex-wrap justify-center gap-4"
       >
         {[
-          { label: "View Articles →", url: "https://medium.com/ds3ucsd", accent: "rgba(25,181,202," },
-          { label: "View Podcasts →", url: "https://www.youtube.com/@ds3atucsd", accent: "rgba(245,129,52," },
+          { label: "View Articles", url: "https://medium.com/ds3ucsd", accent: "rgba(25,181,202," },
+          { label: "View Podcasts", url: "https://www.youtube.com/@ds3atucsd", accent: "rgba(245,129,52," },
         ].map(({ label, url, accent }) => (
           <button
             key={label}
@@ -94,7 +95,7 @@ const OnlineContent = () => {
               el.style.boxShadow = "none";
             }}
           >
-            {label}
+            <span className="flex items-center gap-1">{label} <IoIosArrowForward /></span>
           </button>
         ))}
       </motion.div>
