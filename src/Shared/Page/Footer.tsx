@@ -12,11 +12,10 @@ const Footer = () => {
 
   return (
     <footer
+      className="backdrop-blur-[16px]"
       style={{
         background: bg,
         borderTop: `1px solid ${border}`,
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
       }}
     >
       <div className="mx-auto flex max-w-[1600px] flex-row flex-wrap items-center justify-between gap-8 py-8 fl-px-5/10">

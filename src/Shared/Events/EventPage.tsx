@@ -1,10 +1,9 @@
-import { useMemo, useState, type CSSProperties } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 
 import Page from "src/Shared/Page/Page";
 import { EventTagType, tagColor } from "src/Utils/types";
-
-import { ORANGE_SELECT_CHEVRON_DATA_URL } from "src/Shared/icons/orangeSelectChevronDataUrl";
+import { twMerge } from "src/Utils/cn";
 
 import useEvents from "./useEvents";
 import EventCalendar from "./EventCalendar";
@@ -12,25 +11,6 @@ import EventList from "./EventList";
 
 type TimeType = "Past" | "Upcoming" | "All";
 type ViewType = "Cards" | "Calendar";
-
-const selectStyle: CSSProperties = {
-  fontFamily: "var(--font-mono)",
-  fontSize: "0.68rem",
-  letterSpacing: "0.12em",
-  textTransform: "uppercase" as const,
-  background: "transparent",
-  border: "1px solid var(--obs-border, rgba(128,128,128,0.25))",
-  borderRadius: "0.375rem",
-  padding: "0.45rem 2rem 0.45rem 0.75rem",
-  color: "var(--obs-text-primary)",
-  cursor: "pointer",
-  appearance: "none" as const,
-  WebkitAppearance: "none" as const,
-  backgroundImage: ORANGE_SELECT_CHEVRON_DATA_URL,
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "right 0.6rem center",
-  minWidth: "9rem",
-};
 
 export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: TimeType }) {
   const [tag, setTag] = useState<EventTagType | "All">("All");
@@ -53,71 +33,46 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
 
   return (
     <Page>
-      <div
-        className="mx-auto flex w-full max-w-[1300px] flex-col fl-gap-8/12 fl-px-5/12 fl-py-10/20"
-      >
+      <div className="mx-auto flex w-full max-w-[1300px] flex-col fl-gap-8/12 fl-px-5/12 fl-py-10/20">
         {/* Header */}
-        <div style={{ borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))", paddingBottom: "clamp(1.5rem, 3vw, 2.5rem)" }}>
+        <div className="obs-section-header-border">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}
+            className="obs-eyebrow-row"
           >
-            <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
+            <div className="obs-accent-bar-orange" />
             <span className="text-eyebrow text-eyebrow-orange">On the calendar</span>
           </motion.div>
 
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
+          <div className="flex flex-wrap items-end justify-between gap-6">
             <motion.h1
               key={`${time}-${tag}`}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                fontFamily: "var(--font-heading)",
-                fontSize: "clamp(2.8rem, 4.5vw, 5rem)",
-                fontWeight: 400,
-                lineHeight: 0.95,
-                color: "var(--obs-text-primary)",
-                margin: 0,
-                letterSpacing: "-0.02em",
-              }}
+              className="text-fluid-page-hero"
             >
               {titleTime} {titleTag}
             </motion.h1>
 
             {/* Filter controls */}
-            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "flex-end" }}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+            <div className="flex flex-wrap items-end gap-3">
+              <div className="flex flex-col gap-[0.3rem]">
                 <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-40">
                   View
                 </span>
-                <div style={{
-                  display: "inline-flex",
-                  borderRadius: "9999px",
-                  border: "1px solid var(--obs-border, rgba(128,128,128,0.25))",
-                  overflow: "hidden",
-                  background: "transparent",
-                }}>
+                <div className="inline-flex overflow-hidden rounded-full border border-(--obs-border) bg-transparent">
                   {(["Cards", "Calendar"] as const).map(v => (
                     <button
                       key={v}
                       type="button"
                       onClick={() => setView(v)}
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: "0.68rem",
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        padding: "0.45rem 0.9rem",
-                        border: "none",
-                        cursor: "pointer",
-                        background: view === v ? "rgba(245,129,52,0.14)" : "transparent",
-                        color: view === v ? "var(--obs-text-primary)" : "var(--obs-text-primary)",
-                        opacity: view === v ? 1 : 0.55,
-                        transition: "background 0.15s ease, opacity 0.15s ease",
-                      }}
+                      className={twMerge(
+                        "cursor-pointer border-0 px-[0.9rem] py-[0.45rem] font-mono text-[0.68rem] uppercase tracking-[0.12em] text-(--obs-text-primary) transition-[background,opacity] duration-150",
+                        view === v ? "bg-[rgba(245,129,52,0.14)] opacity-100" : "bg-transparent opacity-55"
+                      )}
                     >
                       {v}
                     </button>
@@ -156,25 +111,17 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
                       },
                     ] as const)
               ).map(({ label, value, options, onChange }) => (
-                <div key={label} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                <div key={label} className="flex flex-col gap-[0.3rem]">
                   <span className="font-mono text-[0.55rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-40">
                     {label}
                   </span>
                   <select
                     value={value}
-                    className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-(--obs-text-primary)"
-                    style={selectStyle}
+                    className="obs-select text-(--obs-text-primary)"
                     onChange={e => onChange(e.target.value)}
                   >
                     {options.map((opt: string) => (
-                      <option
-                        key={opt}
-                        value={opt}
-                        style={{
-                          backgroundColor: "#020815",
-                          color: "rgba(255,255,255,0.9)",
-                        }}
-                      >
+                      <option key={opt} value={opt}>
                         {opt}
                       </option>
                     ))}
@@ -189,13 +136,13 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
         {view === "Calendar" ? (
           <>
             {error ? (
-              <div style={{ display: "flex", justifyContent: "center", padding: "3rem 1rem" }}>
+              <div className="obs-empty-state-center">
                 <div className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-(--obs-text-primary) opacity-60">
                   {error}
                 </div>
               </div>
             ) : loading ? (
-              <div style={{ display: "flex", justifyContent: "center", padding: "3rem 1rem" }}>
+              <div className="obs-empty-state-center">
                 <span className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-(--obs-text-primary) opacity-60">
                   Loading…
                 </span>

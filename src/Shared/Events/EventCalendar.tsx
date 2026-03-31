@@ -43,17 +43,12 @@ function toCalendarEvents(events: EventType[]): EventInput[] {
 
 function renderEventContent(eventInfo: EventContentArg) {
   return (
-    <div style={{ overflow: "hidden" }}>
+    <div className="overflow-hidden">
       <div className="font-mono text-[0.58rem] tracking-[0.1em] opacity-[0.85]">
         {eventInfo.timeText}
       </div>
       <div
-        className="font-body text-[0.74rem] leading-tight"
-        style={{
-          whiteSpace: "nowrap",
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-        }}
+        className="truncate font-body text-[0.74rem] leading-tight"
         title={eventInfo.event.title}
       >
         {eventInfo.event.title}
@@ -89,16 +84,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        minWidth: 0,
-        border: "1px solid var(--obs-border, rgba(128,128,128,0.2))",
-        borderRadius: "1rem",
-        background: "var(--obs-surface, transparent)",
-        overflow: "hidden",
-      }}
-    >
+    <div className="obs-cal-shell">
       <style>{`
         .obs-event-cal-scroll {
           overflow-x: auto;
@@ -307,16 +293,11 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
               <img
                 src={selectedEvent.image}
                 alt={selectedEvent.name}
-                style={{
-                  width: "100%",
-                  maxHeight: "280px",
-                  objectFit: "cover",
-                  display: "block",
-                }}
+                className="block max-h-[280px] w-full object-cover"
               />
             )}
-            <div style={{ padding: "1.1rem 1.15rem 1.2rem", display: "flex", flexDirection: "column", gap: "0.9rem" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.75rem" }}>
+            <div className="flex flex-col gap-[0.9rem] px-[1.15rem] pb-[1.2rem] pt-[1.1rem]">
+              <div className="flex items-center justify-between gap-3">
                 <h3 className="text-fluid-card-title m-0 text-(--obs-text-primary)">
                   {selectedEvent.name}
                 </h3>
@@ -334,7 +315,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
               )}
 
               {selectedEvent.location && (
-                <div className="obs-event-modal-meta" style={{ color: "rgba(255,255,255,0.7)" }}>
+                <div className="obs-event-modal-meta text-white/70">
                   {selectedEvent.location}
                 </div>
               )}

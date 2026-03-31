@@ -112,6 +112,96 @@
   .text-eyebrow-orange {
     @apply text-[#F58134];
   }
+
+  /* Subsection titles (project gallery, showcase headers) */
+  .text-fluid-subsection-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 400;
+    color: var(--obs-text-primary);
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  /* Page hero (events, dense marketing pages) — matches former inline clamp */
+  .text-fluid-page-hero {
+    font-family: var(--font-heading);
+    font-size: clamp(2.8rem, 4.5vw, 5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    color: var(--obs-text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  /* Section header: bottom border + fluid padding (events, projects, board, …) */
+  .obs-section-header-border {
+    @apply border-b border-(--obs-border) pb-[clamp(1.5rem,3vw,2.5rem)];
+  }
+
+  .obs-section-header-border-loose {
+    @apply border-b border-(--obs-border) pb-[clamp(1.5rem,3vw,3rem)];
+  }
+
+  /* Eyebrow row + accent bars */
+  .obs-eyebrow-row {
+    @apply mb-4 flex items-center gap-[0.6rem];
+  }
+
+  .obs-accent-bar-orange {
+    @apply h-0.5 w-[22px] shrink-0 rounded-sm bg-[#F58134];
+  }
+
+  .obs-accent-bar-cyan {
+    @apply h-0.5 w-[28px] shrink-0 rounded-sm bg-[#19B5CA];
+  }
+
+  /* Centered loading / error rows */
+  .obs-empty-state-center {
+    @apply flex justify-center px-4 py-12;
+  }
+
+  /* Empty list panel (dashed border) */
+  .obs-list-empty-panel {
+    @apply flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[rgba(128,128,128,0.2)] px-8 py-16;
+  }
+
+  /* FullCalendar + modals shell */
+  .obs-cal-shell {
+    @apply w-full min-w-0 overflow-hidden rounded-2xl border border-(--obs-border);
+    background: var(--obs-surface, transparent);
+  }
+
+  /* Horizontal fade divider */
+  .obs-divider-fade {
+    height: 1px;
+    background: linear-gradient(90deg, var(--obs-border), transparent);
+  }
+
+  /* Native select — chevron matches src/Shared/icons/orangeSelectChevronDataUrl.ts */
+  .obs-select {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: 1px solid var(--obs-border, rgba(128, 128, 128, 0.25));
+    border-radius: 0.375rem;
+    padding: 0.45rem 2rem 0.45rem 0.75rem;
+    color: var(--obs-text-primary);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F58134' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    min-width: 9rem;
+  }
+
+  .obs-select option {
+    background-color: #020815;
+    color: rgba(255, 255, 255, 0.9);
+  }
 }
 
 .bg-base-400 {

@@ -77,16 +77,10 @@ const OurPartners = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
-      style={{ display: "flex", alignItems: "center", gap: "0.65rem", marginBottom: "1.25rem" }}
+      className="mb-5 flex items-center gap-[0.65rem]"
     >
-      <div style={{ width: 22, height: 2, background: color, borderRadius: 2, flexShrink: 0 }} />
-      <span style={{
-        fontFamily: "var(--font-mono)",
-        fontSize: "0.75rem",
-        letterSpacing: "0.22em",
-        textTransform: "uppercase",
-        color,
-      }}>
+      <div className="h-0.5 w-[22px] shrink-0 rounded-sm" style={{ background: color }} />
+      <span className="font-mono text-[0.75rem] uppercase tracking-[0.22em]" style={{ color }}>
         {label}
       </span>
     </motion.div>
@@ -114,14 +108,10 @@ const OurPartners = () => {
         const isUploadedDarkVariant = isDark && src in darkLogoScaleByFile;
         const showPreloadPlaceholder = isUploadedDarkVariant && !imageStates[src];
         const logoContent = (
-          <div style={{ position: "relative", width: "100%", display: "flex", justifyContent: "center" }}>
+          <div className="relative flex w-full justify-center">
             {showPreloadPlaceholder && (
               <div
-                className="partner-logo-preload"
-                style={{
-                  width: "72%",
-                  height: variant === "club" ? "30px" : "44px",
-                }}
+                className={`partner-logo-preload w-[72%] ${variant === "club" ? "h-[30px]" : "h-[44px]"}`}
                 aria-hidden="true"
               />
             )}
@@ -146,15 +136,7 @@ const OurPartners = () => {
           {href ? (
             <SafeLink
               href={href}
-              style={{
-                flex: 1,
-                alignSelf: "stretch",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-                minHeight: "100%",
-              }}
+              className="flex min-h-full w-full flex-1 items-center justify-center self-stretch"
             >
               {logoContent}
             </SafeLink>
@@ -167,16 +149,7 @@ const OurPartners = () => {
   );
 
   return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: 1300,
-        margin: "0 auto",
-        padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3rem)",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className="mx-auto flex w-full max-w-[1300px] flex-col px-[clamp(1.25rem,4vw,3rem)] py-[clamp(2.5rem,5vw,5rem)]">
       <style>{`
         .partner-logo-cell {
           display: flex;
@@ -227,22 +200,14 @@ const OurPartners = () => {
       `}</style>
 
       {/* ── Editorial header ── */}
-      <div style={{ borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))", marginBottom: "clamp(2.5rem, 4vw, 4rem)", paddingBottom: "clamp(1.5rem, 3vw, 3rem)" }}>
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
+      <div className="obs-section-header-border-loose mb-[clamp(2.5rem,4vw,4rem)]">
+        <div className="flex flex-wrap items-end justify-between gap-6">
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(3rem, 7vw, 6rem)",
-              fontWeight: 400,
-              lineHeight: 0.95,
-              color: "var(--obs-text-primary)",
-              margin: 0,
-              letterSpacing: "-0.02em",
-            }}
+            className="m-0 font-heading text-[clamp(3rem,7vw,6rem)] font-normal leading-[0.95] tracking-tight text-(--obs-text-primary)"
           >
             Our Partners
           </motion.h1>
@@ -252,25 +217,12 @@ const OurPartners = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            style={{
-              fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)",
-              color: "var(--obs-text-primary)",
-              opacity: 0.68,
-              margin: 0,
-              maxWidth: 380,
-              lineHeight: 1.7,
-              textAlign: "right",
-            }}
+            className="m-0 max-w-[380px] text-right text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.7] text-(--obs-text-primary) opacity-[0.68]"
           >
             Interested in working with us? Reach out at{" "}
             <SafeLink
               href="mailto:ds3@ucsd.edu"
-              style={{
-                color: "#19B5CA",
-                textDecoration: "none",
-                borderBottom: "1px solid rgba(25,181,202,0.35)",
-                paddingBottom: 1,
-              }}
+              className="border-b border-[rgba(25,181,202,0.35)] pb-px text-[#19B5CA] no-underline"
             >
               ds3@ucsd.edu
             </SafeLink>
@@ -283,30 +235,20 @@ const OurPartners = () => {
       <SectionLabel label="Industry Partners" color="#F58134" />
       <LogoGrid entries={industry} />
 
-      <div style={{ height: "clamp(2.5rem, 4vw, 4rem)" }} />
+      <div className="h-[clamp(2.5rem,4vw,4rem)]" />
 
       {/* ── Departments ── */}
       <SectionLabel label="On-Campus & Department Partners" color="#19B5CA" delay={0.05} />
       <LogoGrid entries={department} delay={0.1} />
 
-      <div style={{ height: "clamp(2.5rem, 4vw, 4rem)" }} />
+      <div className="h-[clamp(2.5rem,4vw,4rem)]" />
 
       {/* ── Clubs ── */}
       <SectionLabel label="Club Partners" color="#a78bfa" delay={0.05} />
       <LogoGrid entries={clubs} delay={0.1} variant="club" />
 
       {/* ── Disclaimer ── */}
-      <p style={{
-        marginTop: "2.5rem",
-        fontFamily: "var(--font-mono)",
-        fontSize: "0.7rem",
-        lineHeight: 1.75,
-        letterSpacing: "0.04em",
-        color: "var(--obs-text-faint)",
-        textAlign: "center",
-        maxWidth: 620,
-        alignSelf: "center",
-      }}>
+      <p className="mx-auto mt-10 max-w-[620px] self-center text-center font-mono text-[0.7rem] leading-[1.75] tracking-[0.04em] text-(--obs-text-faint)">
         Partnerships listed do not imply sponsorship or official endorsement.
         They indicate that DS3 has worked with the listed organization or its employee(s) in some
         capacity within the past 365 days — including but not limited to sponsorship, workshops,

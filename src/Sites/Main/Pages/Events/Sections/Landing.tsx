@@ -9,43 +9,17 @@ interface LandingProps {
 
 const Landing = ({ title, subtitle }: LandingProps) => {
   return (
-    <Section
-      style={{
-        width: "100%",
-        minHeight: "42vh",
-        display: "flex",
-        alignItems: "flex-end",
-        padding: 0,
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 1300,
-          margin: "0 auto",
-          padding: "clamp(6rem, 10vw, 10rem) clamp(1.25rem, 4vw, 3rem) clamp(2rem, 3vw, 3rem)",
-          borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))",
-        }}
-      >
+    <Section className="!max-w-none flex min-h-[42vh] w-full !flex-col !justify-end !p-0 !px-0 !py-0">
+      <div className="mx-auto w-full max-w-[1300px] border-b border-(--obs-border) px-[clamp(1.25rem,4vw,3rem)] pb-[clamp(2rem,3vw,3rem)] pt-[clamp(6rem,10vw,10rem)]">
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}
+          className="mb-[1.1rem] flex items-center gap-[0.6rem]"
         >
-          <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2, flexShrink: 0 }} />
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "#F58134",
-            }}
-          >
-            {subtitle}
-          </span>
+          <div className="obs-accent-bar-orange shrink-0" />
+          <span className="text-eyebrow text-eyebrow-orange">{subtitle}</span>
         </motion.div>
 
         {/* Title */}
@@ -53,15 +27,7 @@ const Landing = ({ title, subtitle }: LandingProps) => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            fontFamily: "var(--font-heading)",
-            fontSize: "clamp(3.5rem, 8vw, 7rem)",
-            fontWeight: 400,
-            lineHeight: 0.95,
-            color: "var(--obs-text-primary)",
-            margin: 0,
-            letterSpacing: "-0.02em",
-          }}
+          className="text-fluid-hero m-0 text-(--obs-text-primary) tracking-tight"
         >
           {title}
         </motion.h1>

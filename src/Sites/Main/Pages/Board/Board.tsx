@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import Page from "src/Shared/Page/Page";
 import { formatMemberLinks, unbreakable } from "src/Utils/functions.tsx";
 import { MemberType } from "src/Utils/types.ts";
+import { twMerge } from "src/Utils/cn";
 
 import teams from "./Data/teams.json";
 import members from "./Data/board.json";
@@ -22,51 +23,25 @@ const Board = () => {
 
   return (
     <Page>
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 1300,
-          margin: "0 auto",
-          padding: "clamp(5rem, 9vw, 9rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 5vw, 5rem)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "clamp(2.5rem, 4vw, 4rem)",
-        }}
-      >
+      <div className="mx-auto flex w-full max-w-[1300px] flex-col gap-[clamp(2.5rem,4vw,4rem)] px-[clamp(1.25rem,4vw,3rem)] pb-[clamp(3rem,5vw,5rem)] pt-[clamp(5rem,9vw,9rem)]">
         {/* ── Hero header ── */}
-        <div style={{ borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))", paddingBottom: "clamp(1.5rem, 3vw, 3rem)" }}>
+        <div className="obs-section-header-border-loose">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}
+            className="obs-eyebrow-row"
           >
-            <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
-            <span style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "#F58134",
-            }}>
-              The people behind DS3
-            </span>
+            <div className="obs-accent-bar-orange" />
+            <span className="text-eyebrow text-eyebrow-orange">The people behind DS3</span>
           </motion.div>
 
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
+          <div className="flex flex-wrap items-end justify-between gap-6">
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                fontFamily: "var(--font-heading)",
-                fontSize: "clamp(3rem, 7vw, 6rem)",
-                fontWeight: 400,
-                lineHeight: 0.95,
-                color: "var(--obs-text-primary)",
-                margin: 0,
-                letterSpacing: "-0.02em",
-              }}
+              className="m-0 font-heading text-[clamp(3rem,7vw,6rem)] font-normal leading-[0.95] tracking-tight text-(--obs-text-primary)"
             >
               Our Board
             </motion.h1>
@@ -75,21 +50,9 @@ const Board = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
+              type="button"
               onClick={() => navigate({ pathname: "/", hash: "#get-involved" })}
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.65rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                padding: "0.6rem 1.4rem",
-                borderRadius: "2rem",
-                border: "1px solid #F58134",
-                background: "rgba(245,129,52,0.08)",
-                color: "#F58134",
-                cursor: "pointer",
-                transition: "background 0.2s ease",
-                flexShrink: 0,
-              }}
+              className="shrink-0 cursor-pointer rounded-[2rem] border border-[#F58134] bg-[rgba(245,129,52,0.08)] px-[1.4rem] py-[0.6rem] font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#F58134] transition-colors duration-200"
               whileHover={{ background: "rgba(245,129,52,0.18)" }}
             >
               Join Us →
@@ -102,27 +65,19 @@ const Board = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}
+          className="flex flex-wrap gap-2"
         >
           {teamKeys.map(t => (
             <button
               key={t}
+              type="button"
               onClick={() => setTeam(t)}
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.62rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                padding: "0.35rem 0.9rem",
-                borderRadius: "2rem",
-                border: "1px solid",
-                borderColor: t === team ? "#F58134" : "var(--obs-border, rgba(128,128,128,0.25))",
-                background: t === team ? "rgba(245,129,52,0.12)" : "transparent",
-                color: t === team ? "#F58134" : "var(--obs-text-primary)",
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-                opacity: t === team ? 1 : 0.55,
-              }}
+              className={twMerge(
+                "cursor-pointer rounded-[2rem] border px-[0.9rem] py-[0.35rem] font-mono text-[0.62rem] uppercase tracking-[0.18em] transition-all duration-200",
+                t === team
+                  ? "border-[#F58134] bg-[rgba(245,129,52,0.12)] text-[#F58134] opacity-100"
+                  : "border-(--obs-border) bg-transparent text-(--obs-text-primary) opacity-55"
+              )}
             >
               {t}
             </button>
@@ -137,41 +92,22 @@ const Board = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
+            className="flex flex-col gap-8"
           >
             {/* Team name + description */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 720 }}>
-              <h2 style={{
-                fontFamily: "var(--font-heading)",
-                fontSize: "clamp(1.85rem, 2.8vw, 2.5rem)",
-                fontWeight: 400,
-                color: "var(--obs-text-primary)",
-                margin: 0,
-                lineHeight: 1.15,
-              }}>
+            <div className="flex max-w-[720px] flex-col gap-3">
+              <h2 className="m-0 font-heading text-[clamp(1.85rem,2.8vw,2.5rem)] font-normal leading-[1.15] text-(--obs-text-primary)">
                 {unbreakable(team)} Team
               </h2>
-              <p style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "clamp(1.05rem, 1.45vw, 1.22rem)",
-                fontWeight: 400,
-                color: "var(--obs-text-primary)",
-                opacity: 0.78,
-                margin: 0,
-                lineHeight: 1.65,
-              }}>
+              <p className="m-0 font-body text-[clamp(1.05rem,1.45vw,1.22rem)] font-normal leading-[1.65] text-(--obs-text-primary) opacity-[0.78]">
                 {teams[team as keyof typeof teams]}
               </p>
             </div>
 
             {/* Member grid */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-              gap: "clamp(1rem, 2vw, 1.5rem)",
-            }}>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-[clamp(1rem,2vw,1.5rem)]">
               {filteredMembers.map((member, index) => (
-                <Suspense key={member.name} fallback={<div style={{ width: "100%", aspectRatio: "1" }} />}>
+                <Suspense key={member.name} fallback={<div className="aspect-square w-full" />}>
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}

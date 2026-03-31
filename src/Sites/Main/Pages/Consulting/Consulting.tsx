@@ -8,27 +8,15 @@ const Services = lazy(() => import("./Sections/Services.tsx"));
 const ConsultingProjects = lazy(() => import("./Sections/ConsultingProjects.tsx"));
 const Clients = lazy(() => import("./Sections/Clients.tsx"));
 
-const Divider = () => (
-  <div style={{ height: 1, background: "var(--obs-border, rgba(128,128,128,0.15))" }} />
-);
+const Divider = () => <div className="h-px bg-(--obs-border)" />;
 
 const Consulting = () => {
   return (
     <Page>
       <Landing />
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 1300,
-          margin: "0 auto",
-          padding: "clamp(2.5rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3rem)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "clamp(3rem, 5vw, 5rem)",
-        }}
-      >
+      <div className="mx-auto flex w-full max-w-[1300px] flex-col gap-[clamp(3rem,5vw,5rem)] px-[clamp(1.25rem,4vw,3rem)] py-[clamp(2.5rem,5vw,5rem)]">
         <Suspense>
-        <Services />
+          <Services />
           <Divider />
           <About {...consultingData.about} />
           <Divider />

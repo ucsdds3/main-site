@@ -30,51 +30,25 @@ const Alumni = () => {
 
   return (
     <Page>
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 1300,
-          margin: "0 auto",
-          padding: "clamp(5rem, 9vw, 9rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 5vw, 5rem)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "clamp(2rem, 4vw, 3.5rem)",
-        }}
-      >
+      <div className="mx-auto flex w-full max-w-[1300px] flex-col gap-[clamp(2rem,4vw,3.5rem)] px-[clamp(1.25rem,4vw,3rem)] pb-[clamp(3rem,5vw,5rem)] pt-[clamp(5rem,9vw,9rem)]">
         {/* Hero header */}
-        <div style={{ borderBottom: "1px solid var(--obs-border, rgba(128,128,128,0.2))", paddingBottom: "clamp(1.5rem, 3vw, 3rem)" }}>
+        <div className="obs-section-header-border-loose">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1rem" }}
+            className="obs-eyebrow-row"
           >
-            <div style={{ width: 22, height: 2, background: "#F58134", borderRadius: 2 }} />
-            <span style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "#F58134",
-            }}>
-              Where are they now
-            </span>
+            <div className="obs-accent-bar-orange" />
+            <span className="text-eyebrow text-eyebrow-orange">Where are they now</span>
           </motion.div>
 
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem" }}>
+          <div className="flex flex-wrap items-end justify-between gap-6">
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                fontFamily: "var(--font-heading)",
-                fontSize: "clamp(3rem, 7vw, 6rem)",
-                fontWeight: 400,
-                lineHeight: 0.95,
-                color: "var(--obs-text-primary)",
-                margin: 0,
-                letterSpacing: "-0.02em",
-              }}
+              className="m-0 font-heading text-[clamp(3rem,7vw,6rem)] font-normal leading-[0.95] tracking-tight text-(--obs-text-primary)"
             >
               Alumni
             </motion.h1>
@@ -83,15 +57,7 @@ const Alumni = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              style={{
-                fontSize: "clamp(0.85rem, 1.1vw, 1rem)",
-                color: "var(--obs-text-primary)",
-                opacity: 0.55,
-                margin: 0,
-                maxWidth: 420,
-                lineHeight: 1.7,
-                textAlign: "right",
-              }}
+              className="m-0 max-w-[420px] text-right text-[clamp(0.85rem,1.1vw,1rem)] leading-[1.7] text-(--obs-text-primary) opacity-[0.55]"
             >
               Our alumni are a vital part of our community — a source of inspiration and motivation for our current members.
             </motion.p>
@@ -103,43 +69,22 @@ const Alumni = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}
+          className="flex flex-wrap items-center justify-between gap-4"
         >
           {/* Result count */}
-          <span style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.62rem",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "var(--obs-text-primary)",
-            opacity: 0.4,
-          }}>
+          <span className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-[0.4]">
             {alumni.length} {alumni.length === 1 ? "member" : "members"}
           </span>
 
           {/* Search input */}
-          <div style={{ position: "relative" }}>
+          <div className="relative">
             <SearchMagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-(--obs-text-primary) opacity-[0.35]" />
             <input
               type="text"
               placeholder="Search alumni..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.72rem",
-                letterSpacing: "0.1em",
-                padding: "0.5rem 1rem 0.5rem 2.25rem",
-                background: "transparent",
-                border: "1px solid var(--obs-border, rgba(128,128,128,0.25))",
-                borderRadius: "2rem",
-                color: "var(--obs-text-primary)",
-                outline: "none",
-                width: "clamp(180px, 20vw, 260px)",
-                transition: "border-color 0.2s ease",
-              }}
-              onFocus={e => (e.currentTarget.style.borderColor = "#F58134")}
-              onBlur={e => (e.currentTarget.style.borderColor = "var(--obs-border, rgba(128,128,128,0.25))")}
+              className="w-[clamp(180px,20vw,260px)] rounded-[2rem] border border-(--obs-border) bg-transparent py-2 pl-9 pr-4 font-mono text-[0.72rem] tracking-[0.1em] text-(--obs-text-primary) outline-none transition-[border-color] duration-200 focus:border-[#F58134]"
             />
           </div>
         </motion.div>
@@ -147,13 +92,9 @@ const Alumni = () => {
         {/* Grid */}
         {pageAlumni.length > 0 ? (
           <>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
-              gap: "clamp(1rem, 2vw, 1.5rem)",
-            }}>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-[clamp(1rem,2vw,1.5rem)]">
               {pageAlumni.map((member, index) => (
-                <Suspense key={`${page}-${index}`} fallback={<div style={{ aspectRatio: "1" }} />}>
+                <Suspense key={`${page}-${index}`} fallback={<div className="aspect-square" />}>
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -171,36 +112,15 @@ const Alumni = () => {
             </div>
 
             {numPages > 1 && (
-              <div style={{ marginTop: "0.5rem" }}>
+              <div className="mt-2">
                 <Paginate numPages={numPages} page={page} setPage={setPage} />
               </div>
             )}
           </>
         ) : (
-          <div style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "0.6rem",
-            padding: "4rem 2rem",
-            border: "1px dashed var(--obs-border, rgba(128,128,128,0.2))",
-            borderRadius: "0.75rem",
-          }}>
-            <span style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.62rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "#F58134",
-            }}>No results</span>
-            <p style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(1.2rem, 2vw, 1.6rem)",
-              fontWeight: 400,
-              color: "var(--obs-text-primary)",
-              opacity: 0.5,
-              margin: 0,
-            }}>
+          <div className="flex flex-col items-center gap-[0.6rem] rounded-xl border border-dashed border-(--obs-border) px-8 py-16">
+            <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-[#F58134]">No results</span>
+            <p className="m-0 font-heading text-[clamp(1.2rem,2vw,1.6rem)] font-normal text-(--obs-text-primary) opacity-50">
               No alumni found for "{search}"
             </p>
           </div>

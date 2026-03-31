@@ -16,9 +16,9 @@ const OnlineContent = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}
+        className="mb-5 flex items-center gap-3"
       >
-        <div style={{ width: 28, height: 2, background: "#19B5CA", borderRadius: 2, flexShrink: 0 }} />
+        <div className="obs-accent-bar-cyan" />
         <span className="text-eyebrow text-eyebrow-cyan">Latest Work</span>
       </motion.div>
 
@@ -63,7 +63,7 @@ const OnlineContent = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}
+        className="flex flex-wrap justify-center gap-4"
       >
         {[
           { label: "View Articles →", url: "https://medium.com/ds3ucsd", accent: "rgba(25,181,202," },

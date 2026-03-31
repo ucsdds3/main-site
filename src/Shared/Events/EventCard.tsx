@@ -107,7 +107,10 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
         transition={{ type: "spring", stiffness: 90, damping: 22, delay }}
       >
         {/* Accent top line */}
-        <div style={{ height: 2, background: `linear-gradient(90deg, ${accent}, transparent)`, flexShrink: 0 }} />
+        <div
+          className="h-0.5 shrink-0"
+          style={{ background: `linear-gradient(90deg, ${accent}, transparent)` }}
+        />
 
         {/* Image */}
         <div className="obs-ecard-img">
@@ -117,16 +120,16 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
               <div className="obs-ecard-img-overlay" />
             </>
           ) : (
-            <div className="obs-skel" style={{ width: "100%", height: "100%" }} />
+            <div className="obs-skel h-full w-full" />
           )}
         </div>
 
         {/* Body */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", padding: "1.1rem 1.25rem 1.25rem", flex: 1 }}>
+        <div className="flex flex-1 flex-col gap-3 px-5 pb-5 pt-[1.1rem]">
 
           {/* Tags */}
           {tags && tags.length > 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            <div className="flex flex-wrap gap-[0.4rem]">
               {tags.map(tag => {
                 const c = TAG_ACCENT[tag as string] ?? TAG_ACCENT.Default;
                 return (
@@ -136,7 +139,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
                 );
               })}
               {points && (
-                <span className="obs-tag font-mono" style={{ color: "var(--obs-text-faint)", borderColor: "var(--obs-border)", background: "transparent" }}>
+                <span className="obs-tag border-(--obs-border) bg-transparent font-mono text-(--obs-text-faint)">
                   {points} pts
                 </span>
               )}
@@ -145,12 +148,12 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
 
           {/* Title */}
           <h3 className="font-heading font-normal fl-text-lg/xl leading-tight text-(--obs-text-primary) m-0 line-clamp-3">
-            {name ?? <div className="obs-skel" style={{ height: 24, width: "70%" }} />}
+            {name ?? <div className="obs-skel h-6 w-[70%]" />}
           </h3>
 
           {/* Date / location */}
           {(start || location) && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+            <div className="flex flex-col gap-[0.2rem]">
               {start && (
                 <span className="font-mono text-[0.65rem] tracking-[0.1em]" style={{ color: accent }}>
                   {formatDate(start)}
@@ -166,7 +169,7 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
           )}
 
           {/* Divider */}
-          <div style={{ height: 1, background: "linear-gradient(90deg, var(--obs-border), transparent)" }} />
+          <div className="obs-divider-fade" />
 
           {/* Description */}
           {description ? (
@@ -174,15 +177,15 @@ const EventCard = ({ event, delay }: { event: EventType; delay: number }) => {
               {description}
             </p>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", flex: 1 }}>
+            <div className="flex flex-1 flex-col gap-[0.4rem]">
               {newArray(3).map((_, i) => (
-                <div key={i} className="obs-skel" style={{ height: 10, width: i === 2 ? "55%" : "100%" }} />
+                <div key={i} className={i === 2 ? "obs-skel h-2.5 w-[55%]" : "obs-skel h-2.5 w-full"} />
               ))}
             </div>
           )}
 
           {/* Footer */}
-          <div style={{ marginTop: "auto", paddingTop: "0.5rem" }}>
+          <div className="mt-auto pt-2">
             {attended_at ? (
               <span className="font-mono text-[0.62rem] tracking-[0.1em] text-[#19B5CA]">
                 ✓ Checked in · {new Date(attended_at).toLocaleString("en-US", { timeZone: "America/Los_Angeles" })}
