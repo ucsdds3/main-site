@@ -150,55 +150,6 @@ const OurPartners = () => {
 
   return (
     <div className="mx-auto flex w-full max-w-[1300px] flex-col px-[clamp(1.25rem,4vw,3rem)] py-[clamp(2.5rem,5vw,5rem)]">
-      <style>{`
-        .partner-logo-cell {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          padding: 2.15rem 2.25rem;
-          border-right: 1px solid var(--obs-border);
-          border-bottom: 1px solid var(--obs-border);
-          transition: background 0.25s ease;
-        }
-        .partner-logo-cell:hover { background: var(--obs-surface); }
-        .partner-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(clamp(100px, 20vw, 200px), 1fr));
-          border-top: 1px solid var(--obs-border);
-          border-left: 1px solid var(--obs-border);
-          width: 100%;
-        }
-        .partner-logo-cell img {
-          width: 100%;
-          height: 92px;
-          object-fit: contain;
-          opacity: 0.82;
-          transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
-        }
-        .partner-logo-preload {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          border-radius: 0.55rem;
-          background: linear-gradient(
-            90deg,
-            rgba(255,255,255,0.04) 0%,
-            rgba(255,255,255,0.12) 50%,
-            rgba(255,255,255,0.04) 100%
-          );
-          background-size: 220% 100%;
-          animation: logo-preload-shimmer 1.15s ease-in-out infinite;
-        }
-        @keyframes logo-preload-shimmer {
-          0% { background-position: -160% 0; }
-          100% { background-position: 160% 0; }
-        }
-        .club-grid .partner-logo-cell img { height: 58px; }
-        .partner-logo-cell:hover img { opacity: 1; }
-      `}</style>
-
       {/* ── Editorial header ── */}
       <div className="obs-section-header-border-loose mb-[clamp(2.5rem,4vw,4rem)]">
         <div className="flex flex-wrap items-end justify-between gap-6">

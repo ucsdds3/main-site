@@ -9,49 +9,7 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
   const { imageStates } = useImagePreloader(images.map((d) => d.image));
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Albert+Sans:wght@300;400;500&display=swap');
-
-        .slide-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          border: 1px solid var(--obs-border-mid);
-          background: var(--obs-surface);
-          color: var(--obs-text-muted);
-          cursor: pointer;
-          flex-shrink: 0;
-          transition: border-color 0.25s ease, color 0.25s ease,
-                      background 0.25s ease, transform 0.25s ease;
-          backdrop-filter: blur(8px);
-          z-index: 10;
-        }
-        .slide-btn:hover {
-          border-color: rgba(25,181,202,0.5);
-          color: #19B5CA;
-          background: rgba(25,181,202,0.08);
-          transform: scale(1.08);
-        }
-
-        .obs-skel-sq {
-          background: linear-gradient(90deg,
-            var(--obs-surface) 0%,
-            var(--obs-border) 50%,
-            var(--obs-surface) 100%);
-          background-size: 200% 100%;
-          animation: obs-shimmer 1.8s ease-in-out infinite;
-        }
-        @keyframes obs-shimmer {
-          0%   { background-position: -200% 0; }
-          100% { background-position:  200% 0; }
-        }
-      `}</style>
-
-      <div
+    <div
         style={{
           width: "100%",
           display: "flex",
@@ -184,8 +142,7 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
         <button className="slide-btn" onClick={() => emblaApi?.scrollNext()} aria-label="Next">
           <IoIosArrowForward size={16} />
         </button>
-      </div>
-    </>
+    </div>
   );
 };
 

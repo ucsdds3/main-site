@@ -15,13 +15,7 @@ const Stats = () => {
   ];
 
   return (
-    <>
-      <style>{`
-        .stat-divider { border-left: 1px solid var(--obs-border); }
-        @media (max-width: 1023px) { .stat-divider { border-left: none; border-top: 1px solid var(--obs-border); } }
-      `}</style>
-
-      <div
+    <div
         ref={ref}
         className="grid grid-cols-2 lg:grid-cols-4 w-full max-w-5xl"
         style={{
@@ -69,7 +63,6 @@ const Stats = () => {
           </div>
         ))}
       </div>
-    </>
   );
 };
 
