@@ -66,7 +66,7 @@ const ShowCase = () => {
             </span>
             <select
               value={order}
-              className="obs-select min-w-[11rem] text-(--obs-text-primary)"
+              className="obs-select min-w-44 text-(--obs-text-primary)"
               onChange={e => { setPage(1); setOrder(e.target.value as "Projects" | "Presentation"); }}
             >
               <option value="Projects">Project Points</option>
@@ -79,7 +79,7 @@ const ShowCase = () => {
             </span>
             <select
               value={year}
-              className="obs-select min-w-[11rem] text-(--obs-text-primary)"
+              className="obs-select min-w-44 text-(--obs-text-primary)"
               onChange={e => { setPage(1); setYear(e.target.value as YearType); }}
             >
               {years.map((y, i) => <option key={i}>{y}</option>)}

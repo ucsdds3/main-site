@@ -74,7 +74,7 @@ const ProjectCard = ({ project, rank }: { project: Project; rank: number }) => {
 
         {badge && (
           <div
-            className="rounded-[2rem] px-[0.65rem] py-0.5 font-mono text-[0.6rem] font-bold uppercase tracking-[0.1em] text-white"
+            className="rounded-4xl px-[0.65rem] py-0.5 font-mono text-[0.6rem] font-bold uppercase tracking-widest text-white"
             style={{ background: badge.bg }}
           >
             {badge.text}
@@ -88,7 +88,7 @@ const ProjectCard = ({ project, rank }: { project: Project; rank: number }) => {
       </h3>
 
       {/* Description */}
-      <p className="m-0 flex-grow text-[clamp(0.82rem,1vw,0.92rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.58]">
+      <p className="m-0 grow text-[clamp(0.82rem,1vw,0.92rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.58]">
         {project.description}
       </p>
     </motion.div>
@@ -143,7 +143,7 @@ const Gallery = () => {
             </span>
             <select
               value={order}
-              className="obs-select min-w-[11rem] text-(--obs-text-primary)"
+              className="obs-select min-w-44 text-(--obs-text-primary)"
               onChange={e => { setShowAll(false); setOrder(e.target.value as "Projects" | "Presentation"); }}
             >
               <option value="Projects">Project Points</option>
@@ -161,7 +161,7 @@ const Gallery = () => {
             type="button"
             onClick={() => { setShowAll(false); setYear(y); if (y === "Winter 2026") setOrder("Projects"); }}
             className={twMerge(
-              "cursor-pointer rounded-[2rem] border px-[0.85rem] py-[0.3rem] font-mono text-[0.62rem] uppercase tracking-[0.18em] transition-all duration-200",
+              "cursor-pointer rounded-4xl border px-[0.85rem] py-[0.3rem] font-mono text-[0.62rem] uppercase tracking-[0.18em] transition-all duration-200",
               y === year
                 ? "border-[#F58134] bg-[rgba(245,129,52,0.12)] text-[#F58134] opacity-100"
                 : "border-(--obs-border) bg-transparent text-(--obs-text-primary) opacity-50"
@@ -195,7 +195,7 @@ const Gallery = () => {
           <button
             type="button"
             onClick={() => setShowAll(true)}
-            className="flex cursor-pointer items-center gap-2 rounded-[2rem] border border-(--obs-border) bg-transparent px-6 py-[0.6rem] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-60 transition-[opacity,border-color] duration-200 hover:border-[#F58134] hover:opacity-100"
+            className="flex cursor-pointer items-center gap-2 rounded-4xl border border-(--obs-border) bg-transparent px-6 py-[0.6rem] font-mono text-[0.68rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-60 transition-[opacity,border-color] duration-200 hover:border-[#F58134] hover:opacity-100"
           >
             Show More
             <ChevronDownSmallIcon className="text-(--obs-text-primary)" />

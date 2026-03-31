@@ -139,7 +139,7 @@ const About = ({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 4 }}
                     transition={{ delay: 0.6, duration: 0.4 }}
-                    className="pointer-events-none absolute bottom-2.5 right-2.5 z-10 flex items-center gap-[0.35rem] rounded-[2rem] bg-[rgba(0,0,0,0.55)] px-2 py-[0.3rem] pl-2 backdrop-blur-[6px]"
+                    className="pointer-events-none absolute bottom-2.5 right-2.5 z-10 flex items-center gap-[0.35rem] rounded-4xl bg-[rgba(0,0,0,0.55)] px-2 py-[0.3rem] pl-2 backdrop-blur-[6px]"
                   >
                     <PadlockExploreIcon className="shrink-0 text-[#F58134]" />
                     <span className="whitespace-nowrap font-mono text-[0.58rem] uppercase tracking-[0.15em] text-white/80">

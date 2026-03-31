@@ -52,7 +52,7 @@ const Board = () => {
               transition={{ delay: 0.3 }}
               type="button"
               onClick={() => navigate({ pathname: "/", hash: "#get-involved" })}
-              className="shrink-0 cursor-pointer rounded-[2rem] border border-[#F58134] bg-[rgba(245,129,52,0.08)] px-[1.4rem] py-[0.6rem] font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#F58134] transition-colors duration-200"
+              className="shrink-0 cursor-pointer rounded-4xl border border-[#F58134] bg-[rgba(245,129,52,0.08)] px-[1.4rem] py-[0.6rem] font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#F58134] transition-colors duration-200"
               whileHover={{ background: "rgba(245,129,52,0.18)" }}
             >
               Join Us →
@@ -73,7 +73,7 @@ const Board = () => {
               type="button"
               onClick={() => setTeam(t)}
               className={twMerge(
-                "cursor-pointer rounded-[2rem] border px-[0.9rem] py-[0.35rem] font-mono text-[0.62rem] uppercase tracking-[0.18em] transition-all duration-200",
+                "cursor-pointer rounded-4xl border px-[0.9rem] py-[0.35rem] font-mono text-[0.62rem] uppercase tracking-[0.18em] transition-all duration-200",
                 t === team
                   ? "border-[#F58134] bg-[rgba(245,129,52,0.12)] text-[#F58134] opacity-100"
                   : "border-(--obs-border) bg-transparent text-(--obs-text-primary) opacity-55"

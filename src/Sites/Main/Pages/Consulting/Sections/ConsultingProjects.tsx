@@ -62,7 +62,7 @@ const ProjectCard = ({ project }: { project: ConsultingProject }) => {
       </h3>
 
       {/* Description */}
-      <p className="m-0 flex-grow text-[clamp(1.05rem,1.25vw,1.2rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.58]">
+      <p className="m-0 grow text-[clamp(1.05rem,1.25vw,1.2rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.58]">
         {project.description}
       </p>
     </motion.div>
