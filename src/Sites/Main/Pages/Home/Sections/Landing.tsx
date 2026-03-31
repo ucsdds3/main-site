@@ -4,6 +4,7 @@ import { useRef } from "react";
 
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
 import { useTheme } from "src/Hooks/useTheme";
+import { IoIosArrowForward } from "react-icons/io";
 
 /* ─────────────────────────────────────────
    Revamped DS3 Landing — "Dark Observatory"
@@ -37,7 +38,7 @@ const Landing = () => {
   const textMuted      = isDark ? "rgba(255,255,255,0.55)" : "rgba(10,20,50,0.55)";
   const textFaint      = isDark ? "rgba(255,255,255,0.35)" : "rgba(10,20,50,0.35)";
   const borderFaint    = isDark ? "rgba(255,255,255,0.07)" : "rgba(10,20,50,0.08)";
-  const learnMoreColor = isDark ? "rgba(255,255,255,0.4)"  : "rgba(10,20,50,0.4)";
+  const learnMoreColor = isDark ? "rgba(255,255,255,0.7)"  : "rgba(10,20,50,0.4)";
   const learnMoreHover = isDark ? "rgba(255,255,255,0.85)" : "rgba(10,20,50,0.85)";
   const blob1          = isDark
     ? "radial-gradient(circle, rgba(25,181,202,0.12) 0%, transparent 70%)"
@@ -202,7 +203,7 @@ const Landing = () => {
               onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = learnMoreHover; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = learnMoreColor; }}
             >
-              Partner With Us →
+              <span className="flex items-center gap-1">Partner With Us <IoIosArrowForward /></span>
             </button>
           </motion.div>
 
