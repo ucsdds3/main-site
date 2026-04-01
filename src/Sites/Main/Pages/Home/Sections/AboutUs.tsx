@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { motion, type Variants } from "framer-motion";
 import { Link } from "react-router";
 
@@ -31,14 +32,22 @@ const ACCENT_GLOW = ["rgba(25,181,202,", "rgba(245,129,52,"];
 
 const HASH_LINK = /^\/#([\w-]+)$/;
 
+function aboutRowAccentVars(accent: string, accentGlow: string): CSSProperties {
+  return {
+    "--au-accent": accent,
+    "--au-glow": `${accentGlow}0.7)`,
+    "--au-radial": `${accentGlow}0.1)`,
+  } as CSSProperties;
+}
+
 const AboutUs = () => {
   const { navigate } = useSiteHandler();
   const { imageStates } = useImagePreloader(data.map((d) => d.image));
 
   return (
-    <div id="about-us-root" style={{ position: "relative" }}>
+    <div id="about-us-root" className="relative">
       <Section title="About Us">
-        <div style={{ marginTop: "3.5rem", display: "flex", flexDirection: "column", gap: "clamp(5rem,9vw,8rem)" }}>
+        <div className="mt-14 flex flex-col gap-[clamp(5rem,9vw,8rem)]">
           {data.map((section, index) => {
             const isEven = index % 2 === 0;
             const accent = ACCENT[index % 2];
@@ -54,32 +63,25 @@ const AboutUs = () => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 className={`about-row ${isEven ? "about-row-even" : "about-row-odd"}`}
+                style={aboutRowAccentVars(accent, accentGlow)}
               >
                 {/* ── Text column ── */}
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "1.4rem" }}>
-
-                  {/* Section label */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                    <div style={{ width: 28, height: 2, background: accent, borderRadius: 2, boxShadow: `0 0 8px ${accentGlow}0.7)`, flexShrink: 0 }} />
-                    <span className="text-eyebrow" style={{ color: accent }}>
-                      {section.section}
-                    </span>
+                <div className="flex flex-1 flex-col justify-center gap-[1.4rem]">
+                  <div className="flex items-center gap-3">
+                    <div className="about-us-accent-bar" />
+                    <span className="text-eyebrow about-us-eyebrow-text">{section.section}</span>
                   </div>
 
-                  {/* Title */}
-                  <h2 style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(2rem,3.2vw,3rem)", fontWeight: 400, lineHeight: 1.1, color: "var(--obs-text-primary)", margin: 0 }}>
+                  <h2 className="m-0 font-heading text-[clamp(2rem,3.2vw,3rem)] font-normal leading-tight text-(--obs-text-primary)">
                     {section.title}
                   </h2>
 
-                  {/* Rule */}
-                  <div style={{ width: "100%", height: 1, background: "linear-gradient(90deg,var(--obs-border) 0%,transparent 100%)" }} />
+                  <div className="obs-divider-fade w-full" />
 
-                  {/* Body — inherits site font, no Albert Sans */}
-                  <p className="font-body font-light fl-text-base/lg leading-[1.85] text-(--obs-text-muted) m-0">
+                  <p className="font-body m-0 font-light fl-text-base/lg leading-[1.85] text-(--obs-text-muted)">
                     {section.content}
                   </p>
 
-                  {/* CTA */}
                   <div>
                     {hashMatch ? (
                       <button
@@ -97,24 +99,19 @@ const AboutUs = () => {
                   </div>
                 </div>
 
-                {/* ── Image column ── */}
-                <motion.div variants={imgVariants} style={{ flex: 1, display: "flex", alignItems: "center" }}>
-                  <div style={{
-                    position: "relative",
-                    width: "100%",
-                    aspectRatio: "16/9",
-                    borderRadius: "1rem",
-                    overflow: "hidden",
-                    border: "1px solid var(--obs-border)",
-                    boxShadow: "0 24px 64px rgba(0,0,0,0.5), inset 0 1px 0 var(--obs-surface)",
-                  }}>
-                    <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,var(--obs-surface) 0%,transparent 50%)", zIndex: 1, pointerEvents: "none" }} />
-                    <div aria-hidden style={{ position: "absolute", top: 0, left: 0, width: "50%", height: "50%", background: `radial-gradient(circle at 0% 0%,${accentGlow}0.1) 0%,transparent 65%)`, zIndex: 1, pointerEvents: "none" }} />
+                <motion.div variants={imgVariants} className="flex flex-1 items-center">
+                  <div className="about-us-image-frame">
+                    <div aria-hidden className="about-us-image-glint" />
+                    <div aria-hidden className="about-us-image-radial" />
 
                     {imageStates[section.image] ? (
-                      <img src={section.image} alt={section.section} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                      <img
+                        src={section.image}
+                        alt={section.section}
+                        className="block size-full object-cover"
+                      />
                     ) : (
-                      <div className="img-skeleton" style={{ width: "100%", height: "100%" }} />
+                      <div className="img-skeleton size-full" />
                     )}
                   </div>
                 </motion.div>

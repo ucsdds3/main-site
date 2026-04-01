@@ -28,7 +28,6 @@ const BrowserCard = memo(function BrowserCard({
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3atucsd.com");
   const [imageError, setImageError] = useState(false);
-  const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
@@ -38,33 +37,18 @@ const BrowserCard = memo(function BrowserCard({
         transition={{ type: "spring", stiffness: 90, damping: 22, delay }}
         className={`obs-card ${compact ? "obs-card-compact" : ""} ${notEvent ? "obs-card-clickable" : ""} w-full`}
         onClick={notEvent ? () => navigate(link?.replace("www.ds3atucsd.com", "") || "") : undefined}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
       >
         {/* ── Top bar ── */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "0.85rem 1rem 0.75rem",
-            borderBottom: "1px solid var(--obs-surface)",
-          }}
-        >
+        <div className="obs-card-topbar">
           <div className="obs-urlbar w-full">
-            <span
-              className="obs-urlbar-dot"
-              style={{ background: hovered ? "#19B5CA" : "var(--obs-text-faint)" }}
-            />
+            <span className="obs-urlbar-dot" />
             {link || "ds3atucsd.com"}
           </div>
 
           <div className="obs-tl">
-            <span style={{ background: "#F58134", boxShadow: hovered ? "0 0 6px rgba(245,129,52,0.7)" : "none" }} />
-            <span style={{ background: "#19B5CA", boxShadow: hovered ? "0 0 6px rgba(25,181,202,0.7)" : "none" }} />
-            <span style={{ background: "rgba(255,255,255,0.15)" }} />
+            <span className="obs-tl-light-orange" />
+            <span className="obs-tl-light-cyan" />
+            <span className="obs-tl-light-muted" />
           </div>
         </div>
 
@@ -82,22 +66,13 @@ const BrowserCard = memo(function BrowserCard({
               <div className="obs-img-overlay" />
             </>
           ) : (
-            <div className="obs-skel" style={{ width: "100%", height: "100%" }} />
+            <div className="obs-skel size-full" />
           )}
         </div>
 
         {/* ── Body ── */}
         <div
-          className="obs-body"
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.75rem",
-            padding: compact ? "0.95rem 1.1rem 1.1rem" : "1.1rem 1.25rem 1.25rem",
-            flex: 1,
-          }}
+          className={`obs-card-body ${compact ? "obs-card-body--compact" : ""}`}
         >
           {/* Title */}
           <h4 className="font-heading font-normal fl-text-xl/2xl leading-tight text-(--obs-text-primary) m-0 line-clamp-3">
@@ -105,7 +80,7 @@ const BrowserCard = memo(function BrowserCard({
           </h4>
 
           {/* Divider */}
-          <div style={{ height: 1, background: "linear-gradient(90deg, var(--obs-border) 0%, transparent 100%)" }} />
+          <div className="obs-divider-fade" />
 
           {/* Description or skeleton */}
           {description ? (
@@ -113,12 +88,11 @@ const BrowserCard = memo(function BrowserCard({
               {description}
             </p>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+            <div className="flex flex-col gap-[0.4rem]">
               {newArray(3).map((_, i) => (
                 <div
                   key={i}
-                  className="obs-skel"
-                  style={{ height: 10, width: i === 2 ? "60%" : "100%" }}
+                  className={`obs-skel h-2.5 ${i === 2 ? "w-[60%]" : "w-full"}`}
                 />
               ))}
             </div>
@@ -126,13 +100,13 @@ const BrowserCard = memo(function BrowserCard({
 
           {/* CTA */}
           {!notEvent && (
-            <div style={{ marginTop: "auto", paddingTop: "0.5rem" }}>
+            <div className="mt-auto pt-2">
               {link ? (
                 <SafeLink href={link} className="obs-cta w-fit flex items-center gap-1">
                   {linkText} <IoIosArrowForward />
                 </SafeLink>
               ) : (
-                <div className="obs-skel" style={{ height: 34, width: 100, borderRadius: 9999 }} />
+                <div className="obs-skel h-[34px] w-[100px] rounded-full" />
               )}
             </div>
           )}

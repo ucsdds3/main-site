@@ -6,12 +6,10 @@ import onlineContent from "../Data/onlineContent.json";
 import { IoIosArrowForward } from "react-icons/io";
 
 const OnlineContent = () => {
-  // Show only first 4 articles in a 2-col grid — more breathing room per card
   const featured = onlineContent.slice(0, 4);
 
   return (
     <Section title="Online Content" className="gap-0">
-      {/* Sub-label */}
       <motion.div
         initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -23,27 +21,17 @@ const OnlineContent = () => {
         <span className="text-eyebrow text-eyebrow-cyan">Latest Work</span>
       </motion.div>
 
-      {/* Description */}
       <motion.p
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="font-body font-light fl-text-base/lg leading-[1.8] text-(--obs-text-muted) max-w-[520px] text-center mb-12"
+        className="mb-12 max-w-[520px] text-center font-body font-light fl-text-base/lg leading-[1.8] text-(--obs-text-muted)"
       >
         Read our latest articles and check out our newest podcast episodes to keep up with evolving field of data science!
       </motion.p>
 
-      {/* 2-col card grid */}
-      <div
-        style={{
-          width: "100%",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 480px), 1fr))",
-          gap: "var(--tw-gap, 1.5rem)",
-          marginBottom: "3rem",
-        }}
-      >
+      <div className="mb-12 grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,480px),1fr))] gap-6">
         {featured.map((content, index) => (
           <BrowserCard
             key={content.title}
@@ -58,7 +46,6 @@ const OnlineContent = () => {
         ))}
       </div>
 
-      {/* CTAs */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -66,38 +53,24 @@ const OnlineContent = () => {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="flex flex-wrap justify-center gap-4"
       >
-        {[
-          { label: "View Articles", url: "https://medium.com/ds3ucsd", accent: "rgba(25,181,202," },
-          { label: "View Podcasts", url: "https://www.youtube.com/@ds3atucsd", accent: "rgba(245,129,52," },
-        ].map(({ label, url, accent }) => (
-          <button
-            key={label}
-            onClick={() => window.open(url, "_blank")}
-            className="font-mono rounded-full px-10 py-[0.85rem] text-[0.78rem] font-medium uppercase tracking-[0.18em] text-(--obs-text-primary) backdrop-blur-sm transition-all duration-250 cursor-pointer"
-            style={{
-              background: "var(--obs-surface)",
-              border: `1px solid ${accent}0.35)`,
-            }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget;
-              el.style.background = `${accent}0.1)`;
-              el.style.borderColor = `${accent}0.65)`;
-              el.style.color = "var(--obs-text-primary)";
-              el.style.transform = "translateY(-2px)";
-              el.style.boxShadow = `0 12px 36px ${accent}0.15)`;
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget;
-              el.style.background = "var(--obs-surface)";
-              el.style.borderColor = `${accent}0.35)`;
-              el.style.color = "var(--obs-text-primary)";
-              el.style.transform = "translateY(0)";
-              el.style.boxShadow = "none";
-            }}
-          >
-            <span className="flex items-center gap-1">{label} <IoIosArrowForward /></span>
-          </button>
-        ))}
+        <button
+          type="button"
+          onClick={() => window.open("https://medium.com/ds3ucsd", "_blank")}
+          className="obs-online-cta obs-online-cta--cyan"
+        >
+          <span className="flex items-center gap-1">
+            View Articles <IoIosArrowForward />
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={() => window.open("https://www.youtube.com/@ds3atucsd", "_blank")}
+          className="obs-online-cta obs-online-cta--orange"
+        >
+          <span className="flex items-center gap-1">
+            View Podcasts <IoIosArrowForward />
+          </span>
+        </button>
       </motion.div>
     </Section>
   );

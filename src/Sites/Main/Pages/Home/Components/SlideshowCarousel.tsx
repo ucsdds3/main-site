@@ -9,139 +9,66 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
   const { imageStates } = useImagePreloader(images.map((d) => d.image));
 
   return (
-    <div
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          gap: "clamp(0.75rem, 2vw, 1.5rem)",
-          minHeight: "clamp(340px, 45vw, 480px)",
-          padding: "0 clamp(0.5rem, 2vw, 1.5rem)",
-        }}
+    <div className="flex w-full min-h-[clamp(340px,45vw,480px)] items-center gap-[clamp(0.75rem,2vw,1.5rem)] px-[clamp(0.5rem,2vw,1.5rem)]">
+      <button className="slide-btn" type="button" onClick={() => emblaApi?.scrollPrev()} aria-label="Previous">
+        <IoIosArrowBack size={16} />
+      </button>
+
+      <div
+        ref={emblaRef}
+        className="min-h-[clamp(340px,45vw,480px)] w-full overflow-hidden"
       >
-        {/* Prev */}
-        <button className="slide-btn" onClick={() => emblaApi?.scrollPrev()} aria-label="Previous">
-          <IoIosArrowBack size={16} />
-        </button>
-
-        {/* Embla viewport */}
-        <div
-          ref={emblaRef}
-          style={{ overflow: "hidden", width: "100%", minHeight: "clamp(340px, 45vw, 480px)" }}
-        >
-          <div style={{ display: "flex" }}>
-            {images.map((data, i) => (
-              <div
-                key={i}
-                style={{
-                  flexShrink: 0,
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: "clamp(2rem, 5vw, 5rem)",
-                  padding: "0 clamp(0.5rem, 2vw, 2rem)",
-                }}
-                className="flex-col md:flex-row"
-              >
-                {/* Image */}
-                <div style={{ flexShrink: 0 }}>
-                  {imageStates[data.image] ? (
-                    <div
-                      style={{
-                        position: "relative",
-                        width: "clamp(200px, 22vw, 300px)",
-                        aspectRatio: "1/1",
-                        borderRadius: "1rem",
-                        overflow: "hidden",
-                        border: "1px solid var(--obs-border)",
-                        boxShadow: "0 20px 50px rgba(0,0,0,0.45)",
-                        flexShrink: 0,
-                      }}
-                    >
-                      {/* glint */}
-                      <div style={{ position:"absolute", inset:0, background:"linear-gradient(135deg,var(--obs-border) 0%,transparent 50%)", zIndex:1, pointerEvents:"none" }} />
-                      <img
-                        src={data.image}
-                        alt={data.title}
-                        style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}
-                      />
-                    </div>
-                  ) : (
-                    <div
-                      className="obs-skel-sq"
-                      style={{
-                        width: "clamp(200px, 22vw, 300px)",
-                        aspectRatio: "1/1",
-                        borderRadius: "1rem",
-                        flexShrink: 0,
-                      }}
+        <div className="flex">
+          {images.map((data, i) => (
+            <div
+              key={i}
+              className="flex w-full shrink-0 flex-col items-center gap-[clamp(2rem,5vw,5rem)] px-[clamp(0.5rem,2vw,2rem)] md:flex-row"
+            >
+              <div className="shrink-0">
+                {imageStates[data.image] ? (
+                  <div className="relative aspect-square w-[clamp(200px,22vw,300px)] shrink-0 overflow-hidden rounded-2xl border border-(--obs-border) shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
+                    <div className="obs-slideshow-glint" />
+                    <img
+                      src={data.image}
+                      alt={data.title}
+                      className="block size-full object-cover"
                     />
-                  )}
-                </div>
-
-                {/* Text */}
-                <div style={{ flex: 1, display:"flex", flexDirection:"column", gap:"1rem" }}>
-                  {/* Accent line */}
-                  <div style={{ display:"flex", alignItems:"center", gap:"0.6rem" }}>
-                    <div style={{ width:20, height:2, background:"#19B5CA", borderRadius:2, flexShrink:0 }} />
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize:"0.62rem", letterSpacing:"0.2em", textTransform:"uppercase", color:"#19B5CA" }}>
-                      Testimonial
-                    </span>
                   </div>
-
-                  <h4
-                    style={{
-                      fontFamily: "var(--font-heading)",
-                      fontSize: "clamp(1.3rem, 2.2vw, 2rem)",
-                      fontWeight: 400,
-                      color: "var(--obs-text-primary)",
-                      lineHeight: 1.2,
-                      margin: 0,
-                    }}
-                  >
-                    {data.title}
-                  </h4>
-
-                  {/* Divider */}
-                  <div style={{ height:1, background:"linear-gradient(90deg,var(--obs-border),transparent)" }} />
-
-                  <p
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)",
-                      lineHeight: 1.85,
-                      color: "var(--obs-text-muted)",
-                      fontWeight: 300,
-                      margin: 0,
-                      fontStyle: "italic",
-                    }}
-                  >
-                    {data.description}
-                  </p>
-
-                  <p
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.72rem",
-                      letterSpacing: "0.12em",
-                      color: "var(--obs-text-faint)",
-                      margin: 0,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    — {data.author}
-                  </p>
-                </div>
+                ) : (
+                  <div className="obs-skel-sq aspect-square w-[clamp(200px,22vw,300px)] shrink-0 rounded-2xl" />
+                )}
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Next */}
-        <button className="slide-btn" onClick={() => emblaApi?.scrollNext()} aria-label="Next">
-          <IoIosArrowForward size={16} />
-        </button>
+              <div className="flex flex-1 flex-col gap-4">
+                <div className="flex items-center gap-[0.6rem]">
+                  <div className="h-0.5 w-5 shrink-0 rounded-sm bg-[#19B5CA]" />
+                  <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-[#19B5CA]">
+                    Testimonial
+                  </span>
+                </div>
+
+                <h4 className="m-0 font-heading text-[clamp(1.3rem,2.2vw,2rem)] font-normal leading-tight text-(--obs-text-primary)">
+                  {data.title}
+                </h4>
+
+                <div className="obs-divider-fade" />
+
+                <p className="m-0 font-body text-[clamp(0.9rem,1.3vw,1.05rem)] font-light italic leading-[1.85] text-(--obs-text-muted)">
+                  {data.description}
+                </p>
+
+                <p className="m-0 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-(--obs-text-faint)">
+                  — {data.author}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button className="slide-btn" type="button" onClick={() => emblaApi?.scrollNext()} aria-label="Next">
+        <IoIosArrowForward size={16} />
+      </button>
     </div>
   );
 };
