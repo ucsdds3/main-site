@@ -10,7 +10,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css}\"",
     "preview": "vite preview",
-    "optimize-images": "node scripts/optimize-images.mjs"
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "graph": "depcruise --no-config --include-only \"^src\" --output-type dot src | dot -T svg > dependencygraph.svg"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -53,6 +54,7 @@
     "@types/react-router-hash-link": "^2.4.9",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "daisyui": "^5.1.8",
+    "dependency-cruiser": "^16.10.4",
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
