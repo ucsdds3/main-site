@@ -5,6 +5,13 @@ import BrowserCard from "../Components/BrowserCard";
 import onlineContent from "../Data/onlineContent.json";
 import { IoIosArrowForward } from "react-icons/io";
 
+const CTA_BASE =
+  "inline-flex cursor-pointer items-center justify-center rounded-full border px-10 py-[0.85rem] font-mono text-[0.78rem] font-medium uppercase tracking-[0.18em] text-(--obs-text-primary) backdrop-blur-sm transition-all duration-200";
+
+const CTA_CYAN = `${CTA_BASE} border-[rgba(25,181,202,0.35)] bg-(--obs-surface) hover:-translate-y-0.5 hover:border-[rgba(25,181,202,0.65)] hover:bg-[rgba(25,181,202,0.1)] hover:shadow-[0_12px_36px_rgba(25,181,202,0.15)]`;
+
+const CTA_ORANGE = `${CTA_BASE} border-[rgba(245,129,52,0.35)] bg-(--obs-surface) hover:-translate-y-0.5 hover:border-[rgba(245,129,52,0.65)] hover:bg-[rgba(245,129,52,0.1)] hover:shadow-[0_12px_36px_rgba(245,129,52,0.15)]`;
+
 const OnlineContent = () => {
   const featured = onlineContent.slice(0, 4);
 
@@ -53,11 +60,7 @@ const OnlineContent = () => {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="flex flex-wrap justify-center gap-4"
       >
-        <button
-          type="button"
-          onClick={() => window.open("https://medium.com/ds3ucsd", "_blank")}
-          className="obs-online-cta obs-online-cta--cyan"
-        >
+        <button type="button" onClick={() => window.open("https://medium.com/ds3ucsd", "_blank")} className={CTA_CYAN}>
           <span className="flex items-center gap-1">
             View Articles <IoIosArrowForward />
           </span>
@@ -65,7 +68,7 @@ const OnlineContent = () => {
         <button
           type="button"
           onClick={() => window.open("https://www.youtube.com/@ds3atucsd", "_blank")}
-          className="obs-online-cta obs-online-cta--orange"
+          className={CTA_ORANGE}
         >
           <span className="flex items-center gap-1">
             View Podcasts <IoIosArrowForward />

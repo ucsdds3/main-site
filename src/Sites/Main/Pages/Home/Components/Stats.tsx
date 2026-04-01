@@ -24,7 +24,7 @@ const Stats = () => {
         <div
           key={index}
           className={`relative flex flex-col items-center justify-center gap-2 px-6 py-8 ${
-            index > 0 ? "stat-divider" : ""
+            index > 0 ? "max-lg:border-t max-lg:border-(--obs-border) lg:border-l lg:border-(--obs-border)" : ""
           }`}
         >
           <span

@@ -67,30 +67,6 @@
     cursor: pointer;
   }
 
-  .obs-card-topbar {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.85rem 1rem 0.75rem;
-    border-bottom: 1px solid var(--obs-surface);
-  }
-
-  .obs-card-body {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.1rem 1.25rem 1.25rem;
-  }
-
-  .obs-card-body--compact {
-    padding: 0.95rem 1.1rem 1.1rem;
-  }
-
   .obs-urlbar {
     display: flex;
     align-items: center;
@@ -115,52 +91,6 @@
     border-radius: 50%;
     flex-shrink: 0;
     opacity: 0.7;
-  }
-
-  .obs-card .obs-urlbar-dot {
-    background: var(--obs-text-faint);
-    transition: background 0.2s ease;
-  }
-
-  .obs-card:hover .obs-urlbar-dot {
-    background: #19b5ca;
-  }
-
-  .obs-tl {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    flex-shrink: 0;
-  }
-  .obs-tl span {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: block;
-  }
-
-  .obs-tl-light-orange {
-    background: #f58134;
-    box-shadow: none;
-    transition: box-shadow 0.2s ease;
-  }
-
-  .obs-card:hover .obs-tl-light-orange {
-    box-shadow: 0 0 6px rgba(245, 129, 52, 0.7);
-  }
-
-  .obs-tl-light-cyan {
-    background: #19b5ca;
-    box-shadow: none;
-    transition: box-shadow 0.2s ease;
-  }
-
-  .obs-card:hover .obs-tl-light-cyan {
-    box-shadow: 0 0 6px rgba(25, 181, 202, 0.7);
-  }
-
-  .obs-tl-light-muted {
-    background: rgba(255, 255, 255, 0.15);
   }
 
   .obs-img-wrap {
@@ -231,20 +161,6 @@
     box-shadow: 0 6px 24px rgba(25, 181, 202, 0.2);
     transform: translateY(-1px);
     color: #fff;
-  }
-  .obs-cta-arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 1.15rem;
-    font-weight: 500;
-    line-height: 1;
-    margin-top: 0.05em;
-    transition: transform 0.2s ease;
-  }
-  .obs-cta:hover .obs-cta-arrow {
-    transform: translateX(4px);
   }
 
   /* ── EventCard ── */
@@ -516,70 +432,11 @@
       filter 0.3s ease,
       transform 0.3s ease;
   }
-  .partner-logo-preload {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 0.55rem;
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      rgba(255, 255, 255, 0.12) 50%,
-      rgba(255, 255, 255, 0.04) 100%
-    );
-    background-size: 220% 100%;
-    animation: logo-preload-shimmer 1.15s ease-in-out infinite;
-  }
   .club-grid .partner-logo-cell img {
     height: 58px;
   }
   .partner-logo-cell:hover img {
     opacity: 1;
-  }
-
-  /* ── Consulting Services flip cards ── */
-  .flip-card {
-    perspective: 1000px;
-    height: clamp(260px, 28vw, 340px);
-  }
-  .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-    transform-style: preserve-3d;
-  }
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-  .flip-card-front,
-  .flip-card-back {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    border-radius: 0.75rem;
-    border: 1px solid var(--obs-border, rgba(128, 128, 128, 0.18));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(1.45rem, 2.2vw, 2rem);
-    gap: 1rem;
-  }
-  .flip-card-front {
-    background: transparent;
-    transition: border-color 0.25s ease;
-  }
-  .flip-card:hover .flip-card-front {
-    border-color: #f58134;
-  }
-  .flip-card-back {
-    background: rgba(245, 129, 52, 0.07);
-    border-color: rgba(245, 129, 52, 0.35);
-    transform: rotateY(180deg);
-    text-align: center;
   }
 
   /* ── About Us ── */
@@ -589,21 +446,6 @@
   #about-us-root [class*="Section"] {
     background: transparent !important;
     background-color: transparent !important;
-  }
-
-  .about-row {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(2rem, 4vw, 3.5rem);
-    width: 100%;
-  }
-  @media (min-width: 1024px) {
-    .about-row-even {
-      flex-direction: row-reverse;
-    }
-    .about-row-odd {
-      flex-direction: row;
-    }
   }
 
   .obs-link {
@@ -653,148 +495,4 @@
     background: linear-gradient(135deg, var(--obs-surface) 0%, rgba(255, 255, 255, 0.02) 100%);
   }
 
-  /* Set on each about row: --au-accent, --au-glow, --au-radial (see AboutUs.tsx) */
-  .about-us-accent-bar {
-    width: 28px;
-    height: 2px;
-    border-radius: 2px;
-    flex-shrink: 0;
-    background: var(--au-accent);
-    box-shadow: 0 0 8px var(--au-glow);
-  }
-
-  .about-us-eyebrow-text {
-    color: var(--au-accent);
-  }
-
-  .about-us-image-frame {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: 1rem;
-    overflow: hidden;
-    border: 1px solid var(--obs-border);
-    box-shadow:
-      0 24px 64px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 var(--obs-surface);
-  }
-
-  .about-us-image-glint {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(135deg, var(--obs-surface) 0%, transparent 50%);
-  }
-
-  .about-us-image-radial {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 50%;
-    z-index: 1;
-    pointer-events: none;
-    background: radial-gradient(circle at 0% 0%, var(--au-radial) 0%, transparent 65%);
-  }
-
-  /* ── OnlineContent CTAs (replaces inline hover handlers) ── */
-  .obs-online-cta {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--obs-text-primary);
-    backdrop-filter: blur(8px);
-    cursor: pointer;
-    border-radius: 9999px;
-    padding: 0.85rem 2.5rem;
-    background: var(--obs-surface);
-    transition:
-      background 0.2s ease,
-      border-color 0.2s ease,
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-  }
-
-  .obs-online-cta--cyan {
-    border: 1px solid rgba(25, 181, 202, 0.35);
-  }
-
-  .obs-online-cta--cyan:hover {
-    background: rgba(25, 181, 202, 0.1);
-    border-color: rgba(25, 181, 202, 0.65);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 36px rgba(25, 181, 202, 0.15);
-  }
-
-  .obs-online-cta--orange {
-    border: 1px solid rgba(245, 129, 52, 0.35);
-  }
-
-  .obs-online-cta--orange:hover {
-    background: rgba(245, 129, 52, 0.1);
-    border-color: rgba(245, 129, 52, 0.65);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 36px rgba(245, 129, 52, 0.15);
-  }
-
-  /* ── Stats ── */
-  .stat-divider {
-    border-left: 1px solid var(--obs-border);
-  }
-  @media (max-width: 1023px) {
-    .stat-divider {
-      border-left: none;
-      border-top: 1px solid var(--obs-border);
-    }
-  }
-
-  /* ── SlideshowCarousel ── */
-  .slide-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--obs-border-mid);
-    background: var(--obs-surface);
-    color: var(--obs-text-muted);
-    cursor: pointer;
-    flex-shrink: 0;
-    transition:
-      border-color 0.25s ease,
-      color 0.25s ease,
-      background 0.25s ease,
-      transform 0.25s ease;
-    backdrop-filter: blur(8px);
-    z-index: 10;
-  }
-  .slide-btn:hover {
-    border-color: rgba(25, 181, 202, 0.5);
-    color: #19b5ca;
-    background: rgba(25, 181, 202, 0.08);
-    transform: scale(1.08);
-  }
-
-  .obs-skel-sq {
-    background: linear-gradient(
-      90deg,
-      var(--obs-surface) 0%,
-      var(--obs-border) 50%,
-      var(--obs-surface) 100%
-    );
-    background-size: 200% 100%;
-    animation: obs-shimmer 1.8s ease-in-out infinite;
-  }
-
-  .obs-slideshow-glint {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(135deg, var(--obs-border) 0%, transparent 50%);
-  }
 }
