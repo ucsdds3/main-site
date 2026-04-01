@@ -52,10 +52,13 @@ export function useSiteHandler() {
     }
 
     if (hash) {
-      setTimeout(() => {
-        const element = document.getElementById(hash);
+      const id = hash.startsWith("#") ? hash.slice(1) : hash;
+      const scrollToTarget = () => {
+        const element = document.getElementById(id);
         if (element) element.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+      };
+      setTimeout(scrollToTarget, 100);
+      setTimeout(scrollToTarget, 400);
     }
   };
 

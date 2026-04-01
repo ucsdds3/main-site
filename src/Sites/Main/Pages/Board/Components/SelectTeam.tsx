@@ -2,7 +2,6 @@ import { useNavigate } from "react-router";
 
 import { unbreakable } from "src/Utils/functions.tsx";
 import Button from "src/Shared/Components/Button";
-import Star from "src/Shared/Components/Star";
 
 import teams from "../Data/teams.json";
 
@@ -43,16 +42,12 @@ const SelectTeam = ({ team, setTeam }: SelectTeamProps) => {
 
         <Button
           onClick={() => {
-            navigate("/join-us");
+            navigate({ pathname: "/", hash: "#get-involved" });
           }}
         >
           JOIN US
         </Button>
 
-        <div className="relative h-[40px]">
-          <Star size={1.4} className="absolute top-0 left-3/8" />
-          <Star size={1.2} className="absolute bottom-0 right-1/4" />
-        </div>
       </div>
 
       {/* Mobile */}

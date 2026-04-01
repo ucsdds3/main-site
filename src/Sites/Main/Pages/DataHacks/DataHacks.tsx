@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef } from "react";
+import { lazy, Suspense } from "react";
 
 import Page from "src/Shared/Page/Page.tsx";
 import datahacks from "./Data/datahacks.json";
@@ -9,12 +9,10 @@ const Gallery = lazy(() => import("../../Components/Gallery.tsx"));
 const ShowCase = lazy(() => import("./Sections/ShowCase.tsx"));
 
 const DataHacks = () => {
-  const scrollRef = useRef<HTMLDivElement>(null!);
-
   return (
-    <Page scrollRef={scrollRef}>
+    <Page>
       <Landing />
-      <div className="w-full flex flex-col items-center" ref={scrollRef}>
+      <div className="w-full flex flex-col items-center">
         <Suspense>
           <About {...datahacks.about} />
           <ShowCase />

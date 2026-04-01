@@ -1,0 +1,68 @@
+{
+  "about": {
+    "name": "Consulting",
+    "image": "/Consulting/inaturalist.png",
+    "photoPool": [
+      { "src": "/Consulting/inaturalist.png", "caption": "iNaturalist Platform: Database for Natural Reserve System Projects" },
+      { "src": "/Consulting/powerPlantTour1.png", "caption": "CER: UCSD Power Plant Tour (with Honda and UCLA)" },
+      { "src": "/Consulting/powerPlantTour2.png", "caption": "CER: UCSD Power Plant Tour (with Honda and UCLA)" }
+    ],
+    "points": {
+      "Real-World Impact": "We work directly with companies, research groups, and nonprofits to solve meaningful data science problems with tangible outcomes.",
+      "Student-Led, Mentor-Backed": "Projects are led by DS3 members and supported by experienced mentors — bridging academic rigor with industry practice.",
+      "End-to-End Delivery": "From scoping and EDA to model development and final presentation, we own the full project lifecycle."
+    }
+  },
+  "services": [
+    {
+      "title": "Data Analytics",
+      "icon": "/Consulting/Data_Analytics.webp",
+      "description": "Turn raw data into actionable insight. We build dashboards, run EDA, and deliver clear reports that drive decisions."
+    },
+    {
+      "title": "Machine Learning",
+      "icon": "/Consulting/MLOPS.webp",
+      "description": "From classification to forecasting, we design and deploy ML pipelines tailored to your organization's needs."
+    },
+    {
+      "title": "Cloud Solutions",
+      "icon": "/Consulting/Model_Design.webp",
+      "description": "Architecture and tooling on AWS, GCP, or Azure — designed for scale, cost-efficiency, and reliability."
+    },
+    {
+      "title": "Web Development",
+      "icon": "/Consulting/Solutions_Architecture.webp",
+      "description": "Data-driven web apps and internal tools built with modern frameworks, from prototypes to production."
+    }
+  ],
+  "projects": [
+    {
+      "title": "SD City Nature Challenge",
+      "description": "Analyzing biodiversity data from the San Diego City Nature Challenge to uncover trends in local wildlife and habitat health.",
+      "mentor": "Ishaan Gosain",
+      "github_repository": "https://github.com/Igosain08/Sd-City-Nature---DS3-Consulting-Project",
+      "presentation_slides": null,
+      "website": null
+    },
+    {
+      "title": "Energy Transitions Dashboard",
+      "description": "Interactive dashboard tracking global energy transitions, EV adoption impact, and GDP correlations across countries.",
+      "mentor": "Claudine",
+      "github_repository": "https://github.com/k-shiroma-code/Energy-Dashboard-DS3",
+      "presentation_slides": "https://www.canva.com/design/DAHCYSfJg2s/3S7UKksQ3-09FAk075h9TA/edit?utm_content=DAHCYSfJg2s&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+      "website": "https://k-shiroma-code.github.io/Energy-Dashboard-DS3/htmlfile/ev_gdp_impact_by_country.html"
+    },
+    {
+      "title": "Energy Optimization",
+      "description": "Building optimization models to improve energy consumption efficiency and reduce costs through data-driven analysis.",
+      "mentor": "Dylan",
+      "github_repository": "https://github.com/v1zhu/Energy_Optimization",
+      "presentation_slides": null,
+      "website": null
+    }
+  ],
+  "clients": [
+    { "name": "UCSD Center for Energy Research", "logo": "/Consulting/cer.png" },
+    { "name": "UCSD Natural Reserve System", "logo": "/Consulting/nrs.png" }
+  ]
+}

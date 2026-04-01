@@ -1,0 +1,32 @@
+{
+  "about": {
+    "name": "Open Source",
+    "image": "/OpenSource/gallery-xarray-sql.png",
+    "photoPool": [
+      { "src": "/OpenSource/gallery-xarray-sql.png", "caption": "Xarray-SQL" },
+      { "src": "/OpenSource/gallery-marin.png", "caption": "Marin" }
+    ],
+    "points": {
+      "Build in Public": "All DS3 open-source projects are publicly available on GitHub — explore, fork, and build on top of our work.",
+      "Learn by Contributing": "Contributing to real codebases is one of the best ways to grow as an engineer. Every PR counts.",
+      "Community-Driven": "Projects are maintained by DS3 members and open to contributions from anyone in the community."
+    }
+  },
+  "projects": [
+    {
+      "title": "Xarray-SQL (MEDIUM)",
+      "description": "Contribute to Xarray-SQL, an open-source library that enables SQL-style querying over xarray datasets—the core structure for large labeled scientific data such as satellite imagery, climate fields, and geospatial time series (workflows comparable to Google Earth Engine). Work directly with Alex. Tech: Python, SQL. Workload ~6–7 hrs/week. Prerequisites: DSC 100 or graduate equivalent.",
+      "mentor": "Alex Merose",
+      "github_repository": "https://github.com/alxmrs/xarray-sql",
+      "presentation_slides": null,
+      "website": "https://alxmrs.github.io/xarray-sql/"
+    },
+    {
+      "title": "Marin – LLMs (HARD)",
+      "description": "Contribute to Marin, a frontier open-source framework for experimenting with, training, and evaluating LLMs with 32+ billion parameters—benchmarking, scaling experiments, and contributor workflows. Exclusive Marin developer access; pair with senior developers on issues and features. Tech: LLMs, Python, PyTorch. Workload ~6–8 hrs/week. Prerequisites: strong Python and ML experience, LLM familiarity. Two teams, eight people total.",
+      "github_repository": "https://github.com/marin-community/marin/blob/main/docs%2Ftutorials%2Fsubmitting-speedrun.md",
+      "presentation_slides": null,
+      "website": "https://marin.community"
+    }
+  ]
+}

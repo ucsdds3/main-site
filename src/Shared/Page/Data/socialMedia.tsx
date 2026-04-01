@@ -1,4 +1,4 @@
-import { FaDiscord, FaSpotify, FaInstagram, FaGithub, FaLinkedin } from "react-icons/fa6";
+import { FaDiscord, FaSpotify, FaInstagram, FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa6";
 import { FaMedium } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 
@@ -9,14 +9,19 @@ export default [
     icon: <FaDiscord />
   },
   {
-    title: "Spotify",
-    link: "https://open.spotify.com/show/7yHiQn4eqjy2EAzRNEmQdf",
-    icon: <FaSpotify />
-  },
-  {
     title: "Instagram",
     link: "https://www.instagram.com/ds3atucsd/?hl=en",
     icon: <FaInstagram />
+  },
+  {
+    title: "Linkedin",
+    link: "https://www.linkedin.com/company/data-science-student-society-at-ucsd/",
+    icon: <FaLinkedin />
+  },
+  {
+    title: "Mail",
+    link: "mailto:ds3@ucsd.edu",
+    icon: <IoMail />
   },
   {
     title: "Medium",
@@ -29,13 +34,13 @@ export default [
     icon: <FaGithub />
   },
   {
-    title: "Linkedin",
-    link: "https://www.linkedin.com/company/data-science-student-society-at-ucsd/",
-    icon: <FaLinkedin />
+    title: "Youtube",
+    link: "https://www.youtube.com/@ds3atucsd",
+    icon: <FaYoutube />
   },
   {
-    title: "Mail",
-    link: "mailto:ds3@ucsd.edu",
-    icon: <IoMail />
-  }
+    title: "Spotify",
+    link: "https://open.spotify.com/show/7yHiQn4eqjy2EAzRNEmQdf",
+    icon: <FaSpotify />
+  },
 ]
