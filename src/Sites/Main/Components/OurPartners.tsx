@@ -111,7 +111,7 @@ const OurPartners = () => {
           <div className="relative flex w-full justify-center">
             {showPreloadPlaceholder && (
               <div
-                className={`partner-logo-preload w-[72%] ${variant === "club" ? "h-[30px]" : "h-[44px]"}`}
+                className={`absolute left-1/2 top-1/2 w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-[0.55rem] bg-size-[220%_100%] animate-[logo-preload-shimmer_1.15s_ease-in-out_infinite] bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0.12)_50%,rgba(255,255,255,0.04)_100%)] ${variant === "club" ? "h-[30px]" : "h-[44px]"}`}
                 aria-hidden="true"
               />
             )}

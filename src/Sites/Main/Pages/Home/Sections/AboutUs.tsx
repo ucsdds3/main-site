@@ -62,14 +62,14 @@ const AboutUs = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
-                className={`about-row ${isEven ? "about-row-even" : "about-row-odd"}`}
+                className={`flex w-full flex-col gap-[clamp(2rem,4vw,3.5rem)] ${isEven ? "lg:flex-row-reverse" : "lg:flex-row"}`}
                 style={aboutRowAccentVars(accent, accentGlow)}
               >
                 {/* ── Text column ── */}
                 <div className="flex flex-1 flex-col justify-center gap-[1.4rem]">
                   <div className="flex items-center gap-3">
-                    <div className="about-us-accent-bar" />
-                    <span className="text-eyebrow about-us-eyebrow-text">{section.section}</span>
+                    <div className="h-0.5 w-7 shrink-0 rounded-sm bg-(--au-accent) shadow-[0_0_8px_var(--au-glow)]" />
+                    <span className="text-eyebrow text-(--au-accent)">{section.section}</span>
                   </div>
 
                   <h2 className="m-0 font-heading text-[clamp(2rem,3.2vw,3rem)] font-normal leading-tight text-(--obs-text-primary)">
@@ -100,9 +100,15 @@ const AboutUs = () => {
                 </div>
 
                 <motion.div variants={imgVariants} className="flex flex-1 items-center">
-                  <div className="about-us-image-frame">
-                    <div aria-hidden className="about-us-image-glint" />
-                    <div aria-hidden className="about-us-image-radial" />
+                  <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-(--obs-border) shadow-[0_24px_64px_rgba(0,0,0,0.5),inset_0_1px_0_var(--obs-surface)]">
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 z-1 bg-[linear-gradient(135deg,var(--obs-surface)_0%,transparent_50%)]"
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute left-0 top-0 z-1 h-1/2 w-1/2 bg-[radial-gradient(circle_at_0%_0%,var(--au-radial)_0%,transparent_65%)]"
+                    />
 
                     {imageStates[section.image] ? (
                       <img

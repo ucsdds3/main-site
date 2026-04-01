@@ -35,20 +35,20 @@ const BrowserCard = memo(function BrowserCard({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ type: "spring", stiffness: 90, damping: 22, delay }}
-        className={`obs-card ${compact ? "obs-card-compact" : ""} ${notEvent ? "obs-card-clickable" : ""} w-full`}
+        className={`group obs-card ${compact ? "obs-card-compact" : ""} ${notEvent ? "obs-card-clickable" : ""} w-full`}
         onClick={notEvent ? () => navigate(link?.replace("www.ds3atucsd.com", "") || "") : undefined}
       >
         {/* ── Top bar ── */}
-        <div className="obs-card-topbar">
+        <div className="relative z-10 flex items-center justify-between border-b border-(--obs-surface) px-4 pb-3 pt-[0.85rem]">
           <div className="obs-urlbar w-full">
-            <span className="obs-urlbar-dot" />
+            <span className="obs-urlbar-dot bg-(--obs-text-faint) transition-colors group-hover:bg-[#19b5ca]" />
             {link || "ds3atucsd.com"}
           </div>
 
-          <div className="obs-tl">
-            <span className="obs-tl-light-orange" />
-            <span className="obs-tl-light-cyan" />
-            <span className="obs-tl-light-muted" />
+          <div className="flex shrink-0 items-center gap-1.5">
+            <span className="block h-2.5 w-2.5 shrink-0 rounded-full bg-[#f58134] shadow-none transition-shadow group-hover:shadow-[0_0_6px_rgba(245,129,52,0.7)]" />
+            <span className="block h-2.5 w-2.5 shrink-0 rounded-full bg-[#19b5ca] shadow-none transition-shadow group-hover:shadow-[0_0_6px_rgba(25,181,202,0.7)]" />
+            <span className="block h-2.5 w-2.5 shrink-0 rounded-full bg-white/15" />
           </div>
         </div>
 
@@ -72,7 +72,9 @@ const BrowserCard = memo(function BrowserCard({
 
         {/* ── Body ── */}
         <div
-          className={`obs-card-body ${compact ? "obs-card-body--compact" : ""}`}
+          className={`relative z-10 flex flex-1 flex-col gap-3 ${
+            compact ? "px-[1.1rem] pb-[1.1rem] pt-[0.95rem]" : "px-5 pb-5 pt-[1.1rem]"
+          }`}
         >
           {/* Title */}
           <h4 className="font-heading font-normal fl-text-xl/2xl leading-tight text-(--obs-text-primary) m-0 line-clamp-3">
@@ -102,7 +104,10 @@ const BrowserCard = memo(function BrowserCard({
           {!notEvent && (
             <div className="mt-auto pt-2">
               {link ? (
-                <SafeLink href={link} className="obs-cta w-fit flex items-center gap-1">
+                <SafeLink
+                  href={link}
+                  className="obs-cta flex w-fit items-center gap-1 [&_svg]:transition-transform [&_svg]:duration-200 group-hover:[&_svg]:translate-x-1"
+                >
                   {linkText} <IoIosArrowForward />
                 </SafeLink>
               ) : (

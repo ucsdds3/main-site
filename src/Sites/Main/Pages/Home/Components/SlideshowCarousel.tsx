@@ -4,13 +4,16 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import useImagePreloader from "src/Hooks/useImagepreload";
 import { cardData } from "src/Utils/types";
 
+const SLIDE_BTN =
+  "z-10 flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-(--obs-border-mid) bg-(--obs-surface) text-(--obs-text-muted) backdrop-blur-md transition-all duration-200 hover:scale-[1.08] hover:border-[rgba(25,181,202,0.5)] hover:bg-[rgba(25,181,202,0.08)] hover:text-[#19b5ca]";
+
 const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const { imageStates } = useImagePreloader(images.map((d) => d.image));
 
   return (
     <div className="flex w-full min-h-[clamp(340px,45vw,480px)] items-center gap-[clamp(0.75rem,2vw,1.5rem)] px-[clamp(0.5rem,2vw,1.5rem)]">
-      <button className="slide-btn" type="button" onClick={() => emblaApi?.scrollPrev()} aria-label="Previous">
+      <button type="button" className={SLIDE_BTN} onClick={() => emblaApi?.scrollPrev()} aria-label="Previous">
         <IoIosArrowBack size={16} />
       </button>
 
@@ -27,7 +30,10 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
               <div className="shrink-0">
                 {imageStates[data.image] ? (
                   <div className="relative aspect-square w-[clamp(200px,22vw,300px)] shrink-0 overflow-hidden rounded-2xl border border-(--obs-border) shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
-                    <div className="obs-slideshow-glint" />
+                    <div
+                      className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(135deg,var(--obs-border)_0%,transparent_50%)]"
+                      aria-hidden
+                    />
                     <img
                       src={data.image}
                       alt={data.title}
@@ -35,7 +41,7 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
                     />
                   </div>
                 ) : (
-                  <div className="obs-skel-sq aspect-square w-[clamp(200px,22vw,300px)] shrink-0 rounded-2xl" />
+                  <div className="obs-skel aspect-square w-[clamp(200px,22vw,300px)] shrink-0 rounded-2xl" />
                 )}
               </div>
 
@@ -66,7 +72,7 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
         </div>
       </div>
 
-      <button className="slide-btn" type="button" onClick={() => emblaApi?.scrollNext()} aria-label="Next">
+      <button type="button" className={SLIDE_BTN} onClick={() => emblaApi?.scrollNext()} aria-label="Next">
         <IoIosArrowForward size={16} />
       </button>
     </div>
