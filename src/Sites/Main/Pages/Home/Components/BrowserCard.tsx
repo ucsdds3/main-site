@@ -53,7 +53,7 @@ const BrowserCard = memo(function BrowserCard({
             borderBottom: "1px solid var(--obs-surface)",
           }}
         >
-          <div className="obs-urlbar">
+          <div className="obs-urlbar w-full">
             <span
               className="obs-urlbar-dot"
               style={{ background: hovered ? "#19B5CA" : "var(--obs-text-faint)" }}
