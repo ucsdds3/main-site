@@ -128,7 +128,7 @@ const BrowserCard = memo(function BrowserCard({
           {!notEvent && (
             <div style={{ marginTop: "auto", paddingTop: "0.5rem" }}>
               {link ? (
-                <SafeLink href={link} className="obs-cta flex items-center gap-1">
+                <SafeLink href={link} className="obs-cta w-fit flex items-center gap-1">
                   {linkText} <IoIosArrowForward />
                 </SafeLink>
               ) : (
