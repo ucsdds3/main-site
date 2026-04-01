@@ -67,6 +67,30 @@
     cursor: pointer;
   }
 
+  .obs-card-topbar {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem 0.75rem;
+    border-bottom: 1px solid var(--obs-surface);
+  }
+
+  .obs-card-body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.1rem 1.25rem 1.25rem;
+  }
+
+  .obs-card-body--compact {
+    padding: 0.95rem 1.1rem 1.1rem;
+  }
+
   .obs-urlbar {
     display: flex;
     align-items: center;
@@ -93,6 +117,15 @@
     opacity: 0.7;
   }
 
+  .obs-card .obs-urlbar-dot {
+    background: var(--obs-text-faint);
+    transition: background 0.2s ease;
+  }
+
+  .obs-card:hover .obs-urlbar-dot {
+    background: #19b5ca;
+  }
+
   .obs-tl {
     display: flex;
     gap: 6px;
@@ -104,6 +137,30 @@
     height: 10px;
     border-radius: 50%;
     display: block;
+  }
+
+  .obs-tl-light-orange {
+    background: #f58134;
+    box-shadow: none;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .obs-card:hover .obs-tl-light-orange {
+    box-shadow: 0 0 6px rgba(245, 129, 52, 0.7);
+  }
+
+  .obs-tl-light-cyan {
+    background: #19b5ca;
+    box-shadow: none;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .obs-card:hover .obs-tl-light-cyan {
+    box-shadow: 0 0 6px rgba(25, 181, 202, 0.7);
+  }
+
+  .obs-tl-light-muted {
+    background: rgba(255, 255, 255, 0.15);
   }
 
   .obs-img-wrap {
@@ -596,6 +653,93 @@
     background: linear-gradient(135deg, var(--obs-surface) 0%, rgba(255, 255, 255, 0.02) 100%);
   }
 
+  /* Set on each about row: --au-accent, --au-glow, --au-radial (see AboutUs.tsx) */
+  .about-us-accent-bar {
+    width: 28px;
+    height: 2px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    background: var(--au-accent);
+    box-shadow: 0 0 8px var(--au-glow);
+  }
+
+  .about-us-eyebrow-text {
+    color: var(--au-accent);
+  }
+
+  .about-us-image-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--obs-border);
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 var(--obs-surface);
+  }
+
+  .about-us-image-glint {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(135deg, var(--obs-surface) 0%, transparent 50%);
+  }
+
+  .about-us-image-radial {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(circle at 0% 0%, var(--au-radial) 0%, transparent 65%);
+  }
+
+  /* ── OnlineContent CTAs (replaces inline hover handlers) ── */
+  .obs-online-cta {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--obs-text-primary);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    border-radius: 9999px;
+    padding: 0.85rem 2.5rem;
+    background: var(--obs-surface);
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .obs-online-cta--cyan {
+    border: 1px solid rgba(25, 181, 202, 0.35);
+  }
+
+  .obs-online-cta--cyan:hover {
+    background: rgba(25, 181, 202, 0.1);
+    border-color: rgba(25, 181, 202, 0.65);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px rgba(25, 181, 202, 0.15);
+  }
+
+  .obs-online-cta--orange {
+    border: 1px solid rgba(245, 129, 52, 0.35);
+  }
+
+  .obs-online-cta--orange:hover {
+    background: rgba(245, 129, 52, 0.1);
+    border-color: rgba(245, 129, 52, 0.65);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px rgba(245, 129, 52, 0.15);
+  }
+
   /* ── Stats ── */
   .stat-divider {
     border-left: 1px solid var(--obs-border);
@@ -644,5 +788,13 @@
     );
     background-size: 200% 100%;
     animation: obs-shimmer 1.8s ease-in-out infinite;
+  }
+
+  .obs-slideshow-glint {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(135deg, var(--obs-border) 0%, transparent 50%);
   }
 }
