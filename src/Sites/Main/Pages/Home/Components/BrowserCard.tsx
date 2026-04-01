@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 import { newArray } from "src/Utils/functions.tsx";
 import SafeLink from "src/Shared/Components/SafeLink";
+import { IoIosArrowForward } from "react-icons/io";
 
 interface BrowserCardProps {
   title: string;
@@ -12,6 +13,7 @@ interface BrowserCardProps {
   description?: string;
   delay?: number;
   linkText?: string;
+  compact?: boolean;
 }
 
 const BrowserCard = memo(function BrowserCard({
@@ -21,6 +23,7 @@ const BrowserCard = memo(function BrowserCard({
   description,
   delay = 0,
   linkText = "View",
+  compact = false,
 }: BrowserCardProps) {
   const navigate = useNavigate();
   const notEvent = link?.startsWith("www.ds3atucsd.com");
@@ -28,78 +31,92 @@ const BrowserCard = memo(function BrowserCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        type: "spring",
-        stiffness: 100,
-        damping: 20,
-        delay,
-      }}
-      className={`relative w-full h-full pt-6 px-10 pb-6 rounded-2xl bg-base-400 border border-[var(--initial-border-color)] hover:border-[var(--border-color)] duration-150 flex flex-col gap-2 group ${
-        notEvent ? "cursor-pointer" : ""
-      }`}
-      onClick={notEvent ? () => navigate(link?.replace("www.ds3atucsd.com", "") || "") : undefined}
-    >
-      <div className="flex justify-between items-center gap-6 mb-2">
-        <span className="w-[80%] h-6 px-4  truncate rounded-full text-[var(--link-textcolor)] bg-base-300 hover:underline">
-          {link}
-        </span>
-        <div className="flex gap-2">
-          <span className="w-3 h-3 bg-[#F58134] rounded-full" />
-          <span className="w-3 h-3 bg-[#11B3C9] rounded-full" />
-          <span className="w-3 h-3 bg-[#434343] rounded-full" />
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ type: "spring", stiffness: 90, damping: 22, delay }}
+        className={`group obs-card ${compact ? "obs-card-compact" : ""} ${notEvent ? "obs-card-clickable" : ""} w-full`}
+        onClick={notEvent ? () => navigate(link?.replace("www.ds3atucsd.com", "") || "") : undefined}
+      >
+        {/* ── Top bar ── */}
+        <div className="relative z-10 flex items-center justify-between border-b border-(--obs-surface) px-4 pb-3 pt-[0.85rem]">
+          <div className="obs-urlbar w-full">
+            <span className="obs-urlbar-dot bg-(--obs-text-faint) transition-colors group-hover:bg-[#19b5ca]" />
+            {link || "ds3atucsd.com"}
+          </div>
+
+          <div className="flex shrink-0 items-center gap-1.5">
+            <span className="block h-2.5 w-2.5 shrink-0 rounded-full bg-[#f58134] shadow-none transition-shadow group-hover:shadow-[0_0_6px_rgba(245,129,52,0.7)]" />
+            <span className="block h-2.5 w-2.5 shrink-0 rounded-full bg-[#19b5ca] shadow-none transition-shadow group-hover:shadow-[0_0_6px_rgba(25,181,202,0.7)]" />
+            <span className="block h-2.5 w-2.5 shrink-0 rounded-full bg-white/15" />
+          </div>
         </div>
-      </div>
 
-      <div className="pl-2 flex flex-col">
-        <h4 className="text-4xl font-bold line-clamp-3">{title}</h4>
-      </div>
-
-      <div className="group overflow-hidden relative inline-block skeleton w-full aspect-[1.4/1] rounded-lg">
-        {image && !imageError ? (
-          <img
-            src={image}
-            alt={title}
-            crossOrigin="anonymous"
-            referrerPolicy="no-referrer"
-            className="object-cover aspect-[1.4/1] transition-transform duration-300 group-hover:scale-105"
-            onError={e => {
-              console.log("Image error", e);
-              setImageError(true);
-            }}
-            style={{ display: "block" }}
-          />
-        ) : (
-          <div className="skeleton w-full aspect-[1.4/1] rounded-lg" />
-        )}
-      </div>
-
-      {description ? (
-        <p className="text-2xl font-light my-2 line-clamp-5 text-[var(--card-textcolor)]">
-          {description}
-        </p>
-      ) : (
-        <div className="md:max-h-[35%] overflow-y-auto w-full">
-          {newArray(4).map((_, index) => (
-            <div className="h-7 m-1 w-auto skeleton" key={index} />
-          ))}
+        {/* ── Image ── */}
+        <div className="obs-img-wrap">
+          {image && !imageError ? (
+            <>
+              <img
+                src={image}
+                alt={title}
+                crossOrigin="anonymous"
+                referrerPolicy="no-referrer"
+                onError={(e) => { console.log("Image error", e); setImageError(true); }}
+              />
+              <div className="obs-img-overlay" />
+            </>
+          ) : (
+            <div className="obs-skel size-full" />
+          )}
         </div>
-      )}
 
-      {!notEvent &&
-        (link ? (
-          <SafeLink
-            href={link}
-            className="text-lg text-center font-semibold rounded-md bg-(--color-primary) self-start hover:brightness-110 mt-auto py-2 px-6"
-          >
-            {linkText}
-          </SafeLink>
-        ) : (
-          <div className="h-10 m-1 mt-auto rounded-md w-[50%] skeleton" />
-        ))}
-    </motion.div>
+        {/* ── Body ── */}
+        <div
+          className={`relative z-10 flex flex-1 flex-col gap-3 ${
+            compact ? "px-[1.1rem] pb-[1.1rem] pt-[0.95rem]" : "px-5 pb-5 pt-[1.1rem]"
+          }`}
+        >
+          {/* Title */}
+          <h4 className="font-heading font-normal fl-text-xl/2xl leading-tight text-(--obs-text-primary) m-0 line-clamp-3">
+            {title}
+          </h4>
+
+          {/* Divider */}
+          <div className="obs-divider-fade" />
+
+          {/* Description or skeleton */}
+          {description ? (
+            <p className="font-body font-light fl-text-sm/base leading-[1.75] text-(--obs-text-muted) m-0 line-clamp-4">
+              {description}
+            </p>
+          ) : (
+            <div className="flex flex-col gap-[0.4rem]">
+              {newArray(3).map((_, i) => (
+                <div
+                  key={i}
+                  className={`obs-skel h-2.5 ${i === 2 ? "w-[60%]" : "w-full"}`}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* CTA */}
+          {!notEvent && (
+            <div className="mt-auto pt-2">
+              {link ? (
+                <SafeLink
+                  href={link}
+                  className="obs-cta flex w-fit items-center gap-1 [&_svg]:transition-transform [&_svg]:duration-200 group-hover:[&_svg]:translate-x-1"
+                >
+                  {linkText} <IoIosArrowForward />
+                </SafeLink>
+              ) : (
+                <div className="obs-skel h-[34px] w-[100px] rounded-full" />
+              )}
+            </div>
+          )}
+        </div>
+      </motion.div>
   );
 });
 

@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { useLocation } from "react-router";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 
-import { useTheme } from "src/Hooks/useTheme";
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 
@@ -13,39 +10,26 @@ import Links from "./Links";
 const Navbar = () => {
   const { authState } = useAuthStore();
   const { subdomain, navigate } = useSiteHandler();
-  const { isDark, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = useLocation().pathname;
 
   return (
-    <nav
-      className="bg-[#0E1111] sticky top-0 w-full z-50 border-b border-(--color-primary) flex flex-col lg:flex-row items-center justify-between px-6 py-4"
-      data-theme="dark"
-    >
-      {/* Top bar with logo and mobile menu button */}
+    <nav className="sticky top-0 z-50 flex w-full flex-col items-stretch justify-between border-b border-[rgba(255,255,255,0.07)] bg-[rgba(5,8,15,0.92)] px-6 py-4 backdrop-blur-[16px] lg:flex-row lg:items-center">
+      {/* Top bar */}
       <div className="w-full lg:w-auto flex items-center justify-between">
         <div className="flex items-center gap-5">
           <button
-            className="space-x-2 cursor-pointer [&:hover>img]:-rotate-180"
+            type="button"
+            className="cursor-pointer border-none bg-transparent p-0 [&:hover>img]:-rotate-180"
             onClick={() =>
               navigate({
                 pathname: "/",
-                subdomain: authState == "authenticated" ? subdomain : "main",
+                subdomain: authState === "authenticated" ? subdomain : "main",
                 hash: "home",
               })
             }
           >
             <img src="/logo.webp" alt="Logo" className="w-10 transition-all duration-500" />
           </button>
-
-          {/* Theme Toggle */}
-          {!pathname.startsWith("/admin") && (
-            <label className="toggle text-base-content" id="theme-toggle">
-              <input type="checkbox" checked={isDark} onChange={toggleTheme} />
-              <MdLightMode aria-label="disabled" />
-              <MdDarkMode aria-label="enabled" />
-            </label>
-          )}
         </div>
 
         {/* Mobile menu button */}

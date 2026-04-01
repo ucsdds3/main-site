@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "src/Utils/cn";
 import { AnchorHTMLAttributes } from "react";
 
 interface SafeLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {

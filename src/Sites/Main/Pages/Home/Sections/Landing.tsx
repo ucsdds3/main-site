@@ -1,78 +1,241 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useNavigate } from "react-router";
+import { useRef } from "react";
 
-import dino from "/src/Assets/Images/dino.webp";
-import Button from "src/Shared/Components/Button";
-import Star from "src/Shared/Components/Star";
+import { useSiteHandler } from "src/Hooks/useSiteHandler";
+import { useTheme } from "src/Hooks/useTheme";
+import { IoIosArrowForward } from "react-icons/io";
 
-import starData from "../Data/stars.json";
+/* ─────────────────────────────────────────
+   Revamped DS3 Landing — "Dark Observatory"
+   ───────────────────────────────────────── */
+
+const containerVariants: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } },
+};
+
+const slideUp: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 const Landing = () => {
   const navigate = useNavigate();
-  const stars = starData.positions[Math.round(Math.random() * 4)];
+  const { navigate: navigateSite } = useSiteHandler();
+  const { isDark } = useTheme();
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 40]);
+
+  // ── Theme tokens ──
+  const textPrimary    = isDark ? "#ffffff"                : "rgba(10,20,50,0.92)";
+  const textMuted      = isDark ? "rgba(255,255,255,0.55)" : "rgba(10,20,50,0.55)";
+  const textFaint      = isDark ? "rgba(255,255,255,0.35)" : "rgba(10,20,50,0.35)";
+  const borderFaint    = isDark ? "rgba(255,255,255,0.07)" : "rgba(10,20,50,0.08)";
+  const learnMoreColor = isDark ? "rgba(255,255,255,0.7)"  : "rgba(10,20,50,0.4)";
+  const learnMoreHover = isDark ? "rgba(255,255,255,0.85)" : "rgba(10,20,50,0.85)";
+  const blob1          = isDark
+    ? "radial-gradient(circle, rgba(25,181,202,0.12) 0%, transparent 70%)"
+    : "radial-gradient(circle, rgba(25,181,202,0.08) 0%, transparent 70%)";
+  const blob2          = isDark
+    ? "radial-gradient(circle, rgba(245,129,52,0.08) 0%, transparent 70%)"
+    : "radial-gradient(circle, rgba(245,129,52,0.1)  0%, transparent 70%)";
 
   return (
-    <div className="flex flex-col lg:flex-row  items-start w-[95vw] min-h-[95vh] mx-auto" id="home">
-      <motion.div variants={starData.appearingVariants} animate="animate" className="-z-1">
-        {stars.map((star, index) => (
-          <Star
-            key={index}
-            size={star.w}
-            className="absolute"
-            style={{ top: `${star.y}%`, left: `${star.x}%` }}
-          />
-        ))}
+    <div
+      ref={heroRef}
+      id="home"
+      className="relative overflow-hidden min-h-screen w-full"
+      style={{ fontFamily: "'DM Serif Display', Georgia, serif" }}
+    >
+      {/* ── Radial glow blobs ── */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute"
+        style={{ width: 700, height: 700, borderRadius: "50%", background: blob1, top: "-15%", left: "-10%" }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute"
+        style={{ width: 500, height: 500, borderRadius: "50%", background: blob2, bottom: "0", right: "5%" }}
+      />
+
+      {/* ── Decorative watermark logo ── */}
+      <motion.div
+        style={{ y: bgY }}
+        aria-hidden
+        className="pointer-events-none select-none absolute right-[6%] sm:right-[16%] top-1/2 -translate-y-1/2 w-[min(42vw,18rem)] sm:w-[min(36vw,20rem)] opacity-[0.1]"
+      >
+        <motion.img
+          src="/logo.webp"
+          alt=""
+          className="w-full h-auto object-contain"
+          animate={{ y: [0, -10, 0] }}
+          transition={{
+            duration: 4.8,
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatType: "loop",
+          }}
+        />
       </motion.div>
 
-      <div
-        className="flex flex-col justify-center items-center md:items-start px-8 mt-[10vh] lg:mt-[20vh]"
-        id="textarea"
-      >
-        <div className="flex gap-2 font-albert-sans text-[clamp(1rem,3vw,2rem)]">
-          <div className="text-[#F58134]">LEARN,</div>
-          <div className="text-[#19B5CA]">BUILD,</div>
-          <div className="text-[#A9A9A9]">INNOVATE</div>
-          <span>WITH DATA</span>
-        </div>
+      {/* ── Main content ── */}
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between min-h-screen max-w-[1400px] mx-auto px-6 md:px-16 py-20 gap-12">
 
-        <div className="flex items-center text-center md:text-left">
-          <h1 className="text-[clamp(2.7rem,4.5vw,4rem)] font-semibold md:overflow-hidden title-short md:text-nowrap">
-            Data Science Student Society
-          </h1>
-          <h1 className="text-[clamp(2.7rem,4.5vw,4rem)] font-semibold md:block hidden title-long md:overflow-hidden">
-            DS3
-          </h1>
-          <img
-            src="/logo.webp"
-            alt="Logo"
-            className="h-[clamp(3rem,5vw,5rem)] hidden md:block caret"
-          />
-        </div>
-        <p className="mt-2 text-[clamp(1rem,3.5vw,2rem)] pb-[clamp(1rem,3vw,2rem)] font-albert-sans text-center md:text-left">
-          Expanding the horizons of data science through community, curiosity, and collaboration.
-        </p>
-        <Button
-          onClick={() => {
-            navigate("/join-us");
-          }}
+        {/* Left: Text block */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col max-w-[620px]"
         >
-          JOIN US
-        </Button>
-      </div>
+          {/* Pill badge */}
+          <motion.div variants={slideUp} className="mb-6 w-fit">
+            <span
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs tracking-[0.2em] uppercase"
+              style={{
+                border: "1px solid rgba(25,181,202,0.4)",
+                background: "rgba(25,181,202,0.08)",
+                color: "#19B5CA",
+                fontFamily: "ui-monospace, monospace",
+              }}
+            >
+              <span
+                className="inline-block w-1.5 h-1.5 rounded-full animate-pulse"
+                style={{ background: "#19B5CA" }}
+              />
+              DS3 @ UC San Diego
+            </span>
+          </motion.div>
 
-      <motion.img
-        src={dino}
-        className="w-[70vw] max-w-[30rem] mx-auto mb-6 md:w-[clamp(20rem,40vw,30rem)] md:absolute md:right-0 md:bottom-0 md:mb-10 md:mx-0 lg:w-[clamp(18rem,28vw,40rem)] lg:mt-auto p-16"
-        animate={{
-          y: [0, -20, 0],
-          rotate: [15, 10, 15],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+          {/* Headline */}
+          <motion.h1
+            variants={slideUp}
+            className="leading-[1.05] tracking-tight mb-2"
+            style={{
+              fontSize: "clamp(3rem, 6vw, 5.5rem)",
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontWeight: 400,
+              color: textPrimary,
+            }}
+          >
+            Data Science
+            <br />
+            <span
+              style={{
+                background: "linear-gradient(90deg, #19B5CA, #F58134)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Student Society
+            </span>
+          </motion.h1>
+
+          {/* Tagline trio */}
+          <motion.div
+            variants={slideUp}
+            className="flex gap-4 mt-4 mb-6"
+            style={{ fontFamily: "ui-monospace, monospace", fontSize: "clamp(0.7rem, 1.2vw, 0.9rem)" }}
+          >
+            {[
+              { label: "LEARN",    color: "#F58134" },
+              { label: "BUILD",    color: "#19B5CA" },
+              { label: "INNOVATE", color: "#A9A9A9" },
+            ].map(({ label, color }) => (
+              <span key={label} className="tracking-[0.2em]" style={{ color }}>
+                {label}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* Description */}
+          <motion.p
+            variants={slideUp}
+            className="text-[clamp(1rem,1.4vw,1.2rem)] leading-relaxed mb-10"
+            style={{ color: textMuted, fontFamily: "'Albert Sans', sans-serif", fontWeight: 300 }}
+          >
+            Expanding the horizons of AI & data science through community,
+            curiosity, and collaboration. Join a network of builders and thinkers.
+          </motion.p>
+
+          {/* CTA row */}
+          <motion.div variants={slideUp} className="flex items-center gap-6 flex-wrap">
+            <button
+              onClick={() => navigateSite({ pathname: "/", subdomain: "members" })}
+              className="group relative overflow-hidden px-8 py-3.5 rounded-full text-sm font-semibold tracking-widest uppercase transition-all duration-300"
+              style={{
+                background: "linear-gradient(135deg, #19B5CA, #0e8fa0)",
+                color: "#fff",
+                fontFamily: "ui-monospace, monospace",
+                boxShadow: "0 0 30px rgba(25,181,202,0.3)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 50px rgba(25,181,202,0.55)";
+                (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 30px rgba(25,181,202,0.3)";
+                (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+              }}
+            >
+              Sign Up
+            </button>
+
+            <button
+              onClick={() => navigate("/partners")}
+              className="text-sm tracking-widest uppercase transition-all duration-200"
+              style={{
+                color: learnMoreColor,
+                fontFamily: "ui-monospace, monospace",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = learnMoreHover; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = learnMoreColor; }}
+            >
+              <span className="flex items-center gap-1">Partner With Us <IoIosArrowForward /></span>
+            </button>
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div
+            variants={slideUp}
+            className="flex gap-8 mt-14 pt-8"
+            style={{ borderTop: `1px solid ${borderFaint}` }}
+          >
+            {[
+              { value: "600+", label: "Members" },
+              { value: "10+",  label: "Majors" },
+              { value: "20+",  label: "Projects" },
+            ].map(({ value, label }) => (
+              <div key={label}>
+                <div
+                  className="text-2xl font-semibold"
+                  style={{ fontFamily: "'DM Serif Display', Georgia, serif", color: textPrimary }}
+                >
+                  {value}
+                </div>
+                <div
+                  className="text-xs tracking-widest uppercase mt-0.5"
+                  style={{ color: textFaint, fontFamily: "ui-monospace, monospace" }}
+                >
+                  {label}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 };

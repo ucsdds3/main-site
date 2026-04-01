@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "src/Utils/cn";
 
 interface FlipCardProps {
   title: string;

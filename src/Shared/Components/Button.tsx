@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "src/Utils/cn";
 
 const buttonVariants = {
   initial: { y: 0 },
@@ -18,7 +18,10 @@ const Button = ({ onClick, children, className, btnClass, type }: ButtonProps) =
   return (
     <div className={twMerge("relative size-fit my-3", className)} onClick={onClick}>
       <motion.button
-        className={twMerge("relative z-10 border-2 rounded-full py-3 px-10 whitespace-nowrap cursor-pointer text-[clamp(1rem,1.2vw,2rem)] min-w-[clamp(8rem,12vw,15rem)] bg-(--color) border-(--color-primary) uppercase font-semibold", btnClass)}
+        className={twMerge(
+          "relative z-10 border-2 rounded-full py-3 px-10 whitespace-nowrap cursor-pointer fl-text-base/4xl fl-min-w-32/60 bg-(--color) border-(--color-primary) uppercase font-semibold",
+          btnClass
+        )}
         variants={buttonVariants}
         initial="initial"
         animate="initial"

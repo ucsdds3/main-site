@@ -16,12 +16,12 @@
 }
 
 /* Animations for numbers going up */
-@property --num700 {
+@property --num1000 {
   syntax: "<integer>";
   initial-value: 0;
   inherits: false;
 }
-@property --num500 {
+@property --num600 {
   syntax: "<integer>";
   initial-value: 0;
   inherits: false;
@@ -37,20 +37,20 @@
   inherits: false;
 }
 
-.stats-700 {
-  animation: counter700 1s forwards;
-  counter-set: num700 var(--num700);
+.stats-1000 {
+  animation: counter1000 1s forwards;
+  counter-set: num1000 var(--num1000);
 }
-.stats-700::after {
-  content: counter(num700) "+";
+.stats-1000::after {
+  content: counter(num1000) "+";
 }
 
-@keyframes counter700 {
+@keyframes counter1000 {
   from {
-    --num700: 0;
+    --num1000: 0;
   }
   to {
-    --num700: 700;
+    --num1000: 1000;
   }
 }
 
@@ -71,20 +71,20 @@
   }
 }
 
-.stats-500 {
-  animation: counter500 1s forwards;
-  counter-set: num500 var(--num500);
+.stats-600 {
+  animation: counter600 1s forwards;
+  counter-set: num600 var(--num600);
 }
-.stats-500::after {
-  content: counter(num500) "+";
+.stats-600::after {
+  content: counter(num600) "+";
 }
 
-@keyframes counter500 {
+@keyframes counter600 {
   from {
-    --num500: 0;
+    --num600: 0;
   }
   to {
-    --num500: 500;
+    --num600: 600;
   }
 }
 
@@ -103,20 +103,6 @@
   to {
     --num50: 50;
   }
-}
-
-@keyframes scrollArrow {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-.scroll-arrow {
-  animation: scrollArrow;
-  animation-timeline: view();
-  animation-range: 0 100vh;
 }
 
 @media (width >= 48rem /* 768px */) {
