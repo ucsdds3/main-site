@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { EventTagType, EventType } from "src/Utils/types";
 import Paginate from "src/Shared/Components/Paginate";
-import { usePaginate } from "src/Hooks/usePaginate";
 import { newArray } from "src/Utils/functions";
 
 import Error from "./Error";
 import EventCard from "./EventCard";
 import useEvents from "./useEvents";
+
+const PER_PAGE = 8;
 
 interface EventListProps {
   tag?: EventTagType | "All";
@@ -15,6 +17,8 @@ interface EventListProps {
 
 const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventListProps) => {
   const { events, loading, error } = useEvents();
+  const [page, setPage] = useState(1);
+
   const TagEvents = tag === "All" ? events : events.filter(event => event.tags?.includes(tag));
   const TimeEvents =
     time === "All"
@@ -24,36 +28,50 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
             ? new Date(event.start!) <= new Date()
             : new Date(event.start!) >= new Date()
         );
-  const sortedEvents = TimeEvents.sort(
+  const sortedEvents = [...TimeEvents].sort(
     (a, b) => (new Date(a.start!).getTime() - new Date(b.start!).getTime()) * (ascending ? 1 : -1)
   );
 
-  const { page, setPage, numPages, start, end } = usePaginate({
-    totalItems: sortedEvents.length,
-    numRows: 2,
-  });
+  const numPages = Math.ceil(sortedEvents.length / PER_PAGE);
+  const start = (page - 1) * PER_PAGE;
+  const pageEvents = sortedEvents.slice(start, start + PER_PAGE);
 
-  return error ? (
-    <div className="flex justify-center items-center h-[80vh]">
-      <Error message={error!} />
-    </div>
-  ) : sortedEvents.length > 0 ? (
-    <>
-      <div className="w-full grid grid-cols-[repeat(auto-fit,clamp(100px,80vw,300px))] xl:grid-cols-[repeat(auto-fit,clamp(200px,37vw,400px))] justify-center items-center gap-5 2xl:gap-x-6 my-20">
-        {loading
-          ? newArray(3).map((_, index) => (
-              <EventCard key={index} event={{} as EventType} delay={0.2 * index} />
-            ))
-          : sortedEvents
-              .slice(start, end)
-              .map((event, index) => <EventCard key={index} event={event} delay={0.2 * index} />)}
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-[40vh]">
+        <Error message={error!} />
       </div>
-      <Paginate page={page} numPages={numPages} setPage={setPage} />
+    );
+  }
+
+  if (!loading && sortedEvents.length === 0) {
+    return (
+      <div className="obs-list-empty-panel">
+        <p className="m-0 text-center font-heading font-normal fl-text-xl/3xl text-(--obs-text-primary) opacity-75">
+          Nothing there yet
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(clamp(260px,28vw,360px),1fr))] fl-gap-4/6">
+        {loading
+          ? newArray(4).map((_, index) => (
+              <EventCard key={index} event={{} as EventType} delay={0.1 * index} />
+            ))
+          : pageEvents.map((event, index) => (
+              <EventCard key={`${page}-${index}`} event={event} delay={0.08 * index} />
+            ))}
+      </div>
+
+      {numPages > 1 && (
+        <div className="mt-8">
+          <Paginate page={page} numPages={numPages} setPage={setPage} />
+        </div>
+      )}
     </>
-  ) : (
-    <span className="text-[clamp(20px,2vw,40px)] text-balance text-center p-20">
-      No events found, check our social media for the most up-to-date news!!
-    </span>
   );
 };
 

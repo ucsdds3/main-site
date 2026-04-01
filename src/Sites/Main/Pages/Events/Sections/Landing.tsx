@@ -1,5 +1,5 @@
+import { motion } from "framer-motion";
 import Section from "src/Shared/Page/Section";
-import workshopImage from "src/Assets/Images/event-landing.webp";
 
 interface LandingProps {
   title: string;
@@ -7,17 +7,31 @@ interface LandingProps {
   headerImg?: string;
 }
 
-const Landing = ({ title, subtitle, headerImg }: LandingProps) => {
-  const imageToShow = headerImg || workshopImage;
-  
+const Landing = ({ title, subtitle }: LandingProps) => {
   return (
-    <Section className="md:flex-row justify-center md:justify-between gap-[10vh] md:gap-[5vw] w-[80vw] max-w-[1300px] min-h-[60vh] md:min-h-[85vh] py-[clamp(2rem,3vw,5rem)]">
-      <div className="flex flex-col text-center md:text-left">
-        <h2 className="text-[clamp(1.3rem,1.5vw,2rem)] lg:pl-2">{subtitle}</h2>
-        <h1 className="text-[clamp(2.7rem,5vw,5rem)] font-medium leading-tight">{title}</h1>
-      </div>
+    <Section className="!max-w-none flex min-h-[42vh] w-full !flex-col !justify-end !p-0 !px-0 !py-0">
+      <div className="mx-auto w-full max-w-[1300px] border-b border-(--obs-border) px-[clamp(1.25rem,4vw,3rem)] pb-[clamp(2rem,3vw,3rem)] pt-[clamp(6rem,10vw,10rem)]">
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-[1.1rem] flex items-center gap-[0.6rem]"
+        >
+          <div className="obs-accent-bar-orange shrink-0" />
+          <span className="text-eyebrow text-eyebrow-orange">{subtitle}</span>
+        </motion.div>
 
-      <img className="w-[clamp(20rem,40%,40rem)]" src={imageToShow} alt={`Logo Image`} />
+        {/* Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+          className="text-fluid-hero m-0 text-(--obs-text-primary) tracking-tight"
+        >
+          {title}
+        </motion.h1>
+      </div>
     </Section>
   );
 };

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 import Page from "src/Shared/Page/Page";
-import ContactUs from "src/Shared/Sections/ContactUs";
+import ContactUs from "src/Sites/Main/Pages/Consulting/Sections/ContactUs";
 
 import Landing from "./Sections/Landing";
 import AboutUs from "./Sections/AboutUs";

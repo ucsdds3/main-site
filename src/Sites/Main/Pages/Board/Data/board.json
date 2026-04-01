@@ -10,16 +10,6 @@
     "linkedIn": "https://www.linkedin.com/in/ansh-bhatnagar-721286234/"
   },
   {
-    "name": "Camille Sicat",
-    "teams": ["Executive", "Internal"],
-    "role": "Vice President Internal",
-    "email": "camillesicatwork@gmail.com",
-    "image": "/Board/Camille-Sicat.webp",
-    "website": "https://iris-hep.org/fellows/couchsnail.html",
-    "resume": "https://docs.google.com/document/d/1LGcSgXJ9vzXLBio_4G5_c6AjLBx32SjOOUtJPA3-9r4/edit?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/camille-sicat-8b3267256"
-  },
-  {
     "name": "Praveen Sharma",
     "teams": ["Executive", "External"],
     "role": "Vice President External",
@@ -36,6 +26,15 @@
     "image": "/Board/Emily-Cai.webp",
     "resume": "https://drive.google.com/file/d/1SwQI84i_2ZG-tlBet91z1fiBIxRh4CmV/view?usp=sharing",
     "linkedIn": "https://www.linkedin.com/in/emily-y-cai"
+  },
+  {
+    "name": "Coleman Clougherty",
+    "teams": ["Executive", "Internal"],
+    "role": "Vice President Internal",
+    "email": "cclougherty@ucsd.edu",
+    "image": "/Board/Coleman-Clougherty.webp",
+    "resume": "https://docs.google.com/document/d/1DVgc6fgLKhfgWGFJe0jbzALBYVMX8BuXGbdQQEwESYw/edit?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/coleman-clougherty-41710a336/"
   },
   {
     "name": "Issac Roy",
@@ -68,8 +67,8 @@
   },
   {
     "name": "Kaii Bijlani",
-    "teams": ["Executive", "Projects"],
-    "role": "Projects Co-Director",
+    "teams": ["Projects"],
+    "role": "Projects Mentor",
     "email": "bijlanikaii@gmail.com",
     "image": "/Board/Kaii-Bijlani.webp",
     "resume": "https://drive.google.com/file/d/1PjfXjrJrrCZ4hSB-Wutib37VSbeoV4mV/view?usp=sharing",
@@ -78,21 +77,12 @@
   {
     "name": "Rocio Saez Aguirre",
     "teams": ["Executive", "Projects"],
-    "role": "Projects Co-Director",
+    "role": "Projects Director",
     "email": "rsaez@ucsd.edu",
     "image": "/Board/Rocio-Saez.webp",
     "website": "https://www.linkedin.com/in/rocio-saez-aguirre-0000000000/",
     "resume": "https://drive.google.com/file/d/1pEyPpEttfk4_S9G4QX0iflvRPxxb_QmA/view?usp=drive_link",
     "linkedIn": "https://www.linkedin.com/in/rocio-saez-aguirre-0000000000/"
-  },
-  {
-    "name": "Coleman Clougherty",
-    "teams": ["Executive", "Professional Events"],
-    "role": "Professional Events Co-Director",
-    "email": "cclougherty@ucsd.edu",
-    "image": "/Board/Coleman-Clougherty.webp",
-    "resume": "https://docs.google.com/document/d/1DVgc6fgLKhfgWGFJe0jbzALBYVMX8BuXGbdQQEwESYw/edit?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/coleman-clougherty-41710a336/"
   },
   {
     "name": "Annabelle Guiditta",
@@ -104,18 +94,17 @@
     "linkedIn": "https://www.linkedin.com/in/aguiditta"
   },
   {
-    "name": "Heidi Tam",
-    "teams": ["Executive", "Marketing"],
-    "role": "Marketing Co-Director",
-    "email": "hetam@ucsd.edu",
-    "image": "/Board/Heidi-Tam.webp",
-    "resume": "https://drive.google.com/file/d/1lDiImjNe28tr4Jk78HylMMfz3s7xPGOs/view?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/heiditam/"
+    "name": "Divyansh Kanodia",
+    "teams": ["Executive", "Consulting"],
+    "role": "Consulting Director",
+    "email": "dkanodia@ucsd.edu",
+    "image": "/Board/Divyansh-Kanodia.png",
+    "linkedIn": "https://www.linkedin.com/in/divyansh-kanodia-0978611a9/"
   },
   {
     "name": "Anagha Kamath",
     "teams": ["Executive", "Marketing"],
-    "role": "Marketing Co-Director",
+    "role": "Marketing Director",
     "email": "ankamath@ucsd.edu",
     "image": "/Board/Anagha-Kamath.webp",
     "website": "https://anagha166.github.io/PersonalWebsite/",
@@ -131,16 +120,6 @@
     "image": "/Board/Yagnasri-Chilukuri.webp",
     "resume": "https://docs.google.com/document/d/1y2Ve1UANgxoYe1FGuFLH5sg5ooxMiBfvB8dgyF4WHKQ/edit?usp=sharing",
     "linkedIn": "https://www.linkedin.com/in/minyoung-kim-360189222/"
-  },
-  {
-    "name": "Priya Iyer",
-    "teams": ["Executive", "Design"],
-    "role": "Design Director",
-    "email": "pliyer@ucsd.edu",
-    "image": "/Board/Priya-Iyer.webp",
-    "website": "https://www.priyaiyerdesign.com/",
-    "resume": "https://docs.google.com/document/d/1E4EXi_ZqW5GGgmmHzF-mCeOI5CED7gua_UsDJbtrSvg/edit?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/pliyer"
   },
   {
     "name": "Tijil Chhabra",
@@ -328,7 +307,7 @@
   },
   {
     "name": "Anisha Kalgi",
-    "teams": ["Online Content", "Consulting"],
+    "teams": ["Online Content"],
     "role": "Technical Team Writer",
     "email": "akalgi@ucsd.edu",
     "image": "/Board/Anisha-Kalgi.webp",
@@ -363,6 +342,22 @@
     "linkedIn": "https://www.linkedin.com/in/ishayughosh"
   },
   {
+    "name": "Daniel Mathews",
+    "teams": ["Software"],
+    "role": "Software Developer",
+    "email": "djmathews@ucsd.edu",
+    "image": "/Board/Daniel-Mathews.png"
+  },
+  {
+    "name": "Vivek Morkooth",
+    "teams": ["Software"],
+    "role": "Software Developer",
+    "email": "vmoorkoth@ucsd.edu",
+    "image": "/Board/Vivek-Morkooth.webp",
+    "resume": "https://docs.google.com/document/d/15yFV5XordCHb3LbT55ImG9EyD9frQ13ex8La4lp1L-U/edit?usp=sharing",
+    "linkedIn": "https://www.linkedin.com/in/vivek-moorkoth/"
+  },
+  {
     "name": "Nguyen Viet Minh Hieu",
     "teams": ["Software"],
     "role": "Software Developer",
@@ -382,16 +377,6 @@
     "resume": "https://docs.google.com/document/d/1j-7yepTsd-ibcEgYrAy_wuiFcnjuRKTplGuzDOj8Pvs/edit",
     "website": "https://www.kaggle.com/code/robertoecheverria/mergers-and-acquisitions-exploration-by-roberto-e/edit",
     "github": "Robert-ech"
-  },
-  {
-    "name": "Jiaqi Jin",
-    "teams": ["Software"],
-    "role": "Software Developer",
-    "email": "jij022@ucsd.edu",
-    "image": "/Board/Jiaqi-Jin.webp",
-    "linkedIn": "https://www.linkedin.com/in/jiaqi-jin-6997a8242/",
-    "resume": "https://www.canva.com/design/DAG1FXFG0iQ/KI-qBMU7M0_Yv2wZT4Pl1Q/edit",
-    "github": "https://github.com/Neptunor"
   },
   {
     "name": "Rishika Sahu",
@@ -435,49 +420,11 @@
     "github": "https://github.com/nicolastoon"
   },
   {
-    "name": "Junnian Liu",
-    "teams": ["Software"],
-    "role": "Software Developer",
-    "email": "jul215@ucsd.edu",
-    "image": "/Board/Junnian-Liu.webp",
-    "linkedIn": "https://www.linkedin.com/in/junnianl",
-    "github": "https://github.com/Junny20"
-  },
-  {
-    "name": "Chaylen Nguyen-Tran",
-    "teams": ["Design"],
-    "role": "Designer",
-    "email": "cnguyentran@ucsd.edu",
-    "image": "/Board/Chaylen-Nguyen.webp",
-    "linkedIn": "https://www.linkedin.com/in/chaylen-nguyen-tran",
-    "resume": "https://docs.google.com/document/d/16QUyxL5CTQpB8RkzoYOHIeiiTK_syNR640BmPSMMDyI/edit",
-    "github": "https://github.com/chaylennn"
-  },
-  {
-    "name": "Minsui Tang",
-    "teams": ["Design"],
-    "role": "Design Member",
-    "email": "mit024@ucsd.edu",
-    "image": "/Board/Minsui-Tang.webp",
-    "linkedIn": "https://www.linkedin.com/in/minsui-tang-0b1a6a233"
-  },
-  {
-    "name": "Ava Lin",
-    "teams": ["Design"],
-    "role": "Designer",
-    "email": "avawmlinnn3@gmail.com",
-    "image": "/Board/Ava-Lin.webp",
-    "linkedIn": "https://www.linkedin.com/in/ava-lin-9b9802224",
-    "resume": "https://drive.google.com/file/d/1kFgrg1ivkvXSmXpwF_t3Sb0f7wDIH_wS/view?usp=sharing"
-  },
-  {
-    "name": "Lydia Chin",
+    "name": "Chau Nguyen",
     "teams": ["Marketing"],
-    "role": "Historian",
-    "email": "lychin@ucsd.edu",
-    "image": "/Board/Lydia-Chin.webp",
-    "resume": "https://drive.google.com/open?id=12HhRNwpcsmXv27QYYOhFLN8QyuO_RDJd",
-    "linkedIn": "https://www.linkedin.com/in/lydia-chin-652240333"
+    "role": "Communication Internal Lead",
+    "email": "cbn009@ucsd.edu",
+    "image": "/Board/Chau-Nguyen.webp"
   },
   {
     "name": "Essie Cheng",
@@ -490,11 +437,21 @@
     "linkedIn": "https://www.linkedin.com/in/essiecheng"
   },
   {
-    "name": "Chau Nguyen",
+    "name": "Romy Ramrakhyani",
     "teams": ["Marketing"],
-    "role": "Communication Internal Lead",
-    "email": "cbn009@ucsd.edu",
-    "image": "/Board/Chau-Nguyen.webp"
+    "role": "Visual Content Coordinator",
+    "email": "rramrakhyani@ucsd.edu",
+    "image": "/Board/Romy-Ramrakhyani.webp",
+    "linkedIn": "https://www.linkedin.com/in/romy-ramrakhyani-a1787a314"
+  },
+  {
+    "name": "Lydia Chin",
+    "teams": ["Marketing"],
+    "role": "Historian",
+    "email": "lychin@ucsd.edu",
+    "image": "/Board/Lydia-Chin.webp",
+    "resume": "https://drive.google.com/open?id=12HhRNwpcsmXv27QYYOhFLN8QyuO_RDJd",
+    "linkedIn": "https://www.linkedin.com/in/lydia-chin-652240333"
   },
   {
     "name": "Alan Adams",
@@ -504,14 +461,6 @@
     "image": "/Board/Alan-Adams.webp",
     "linkedIn": "https://www.linkedin.com/in/alanb-adams/",
     "resume": "https://drive.google.com/file/d/1v_iSCN_uwRHo5HuVIRRmnvsbPcpFGcx-/view?usp=sharing"
-  },
-  {
-    "name": "Romy Ramrakhyani",
-    "teams": ["Marketing"],
-    "role": "Visual Content Coordinator",
-    "email": "rramrakhyani@ucsd.edu",
-    "image": "/Board/Romy-Ramrakhyani.webp",
-    "linkedIn": "https://www.linkedin.com/in/romy-ramrakhyani-a1787a314"
   },
   {
     "name": "Max Ha",
@@ -526,12 +475,39 @@
   {
     "name": "Alyssa Gong",
     "teams": ["Marketing"],
-    "role": "Marketing: Video Editor",
+    "role": "Video Editor",
     "email": "a1gong@ucsd.edu",
     "image": "/Board/Alyssa-Gong.webp",
     "linkedIn": "https://www.linkedin.com/in/alyssa-gong/",
     "resume": "https://drive.google.com/file/d/1oveHG1CKZLOT-n0MayzI2LCVL8LrNXCJ/view?usp=drive_link",
     "github": "https://github.com/alyssalyssalysa"
+  },
+  {
+    "name": "Chaylen Nguyen-Tran",
+    "teams": ["Marketing"],
+    "role": "Marketing Designer",
+    "email": "cnguyentran@ucsd.edu",
+    "image": "/Board/Chaylen-Nguyen.webp",
+    "linkedIn": "https://www.linkedin.com/in/chaylen-nguyen-tran",
+    "resume": "https://docs.google.com/document/d/16QUyxL5CTQpB8RkzoYOHIeiiTK_syNR640BmPSMMDyI/edit",
+    "github": "https://github.com/chaylennn"
+  },
+  {
+    "name": "Minsui Tang",
+    "teams": ["Marketing"],
+    "role": "Marketing Designer",
+    "email": "mit024@ucsd.edu",
+    "image": "/Board/Minsui-Tang.webp",
+    "linkedIn": "https://www.linkedin.com/in/minsui-tang-0b1a6a233"
+  },
+  {
+    "name": "Ava Lin",
+    "teams": ["Marketing"],
+    "role": "Marketing Designer",
+    "email": "avawmlinnn3@gmail.com",
+    "image": "/Board/Ava-Lin.webp",
+    "linkedIn": "https://www.linkedin.com/in/ava-lin-9b9802224",
+    "resume": "https://drive.google.com/file/d/1kFgrg1ivkvXSmXpwF_t3Sb0f7wDIH_wS/view?usp=sharing"
   },
   {
     "name": "Dhruv Sehgal",
@@ -715,29 +691,9 @@
     "linkedIn": "https://www.linkedin.com/in/alexander-cloninger-9b5877133/"
   },
   {
-    "name": "Kyle Shannon",
-    "teams": ["Advisors"],
-    "role": "Volunteer Faculty Advisor",
-    "email": "kshannon@ucsd.edu",
-    "image": "/Board/Kyle-Shannon.webp",
-    "website": "https://www.kmshannon.com/about/",
-    "resume": "https://s3.us-west-2.amazonaws.com/kmshannon.com/documents/kshannon_cv_web.pdf",
-    "linkedIn": "https://www.linkedin.com/in/kmshannon/"
-  },
-  {
-    "name": "Anika Thatavarthy",
-    "teams": ["Advisors"],
-    "role": "Graduate Advisor",
-    "email": "athatavarthy@ucsd.edu",
-    "image": "/Board/Anika-Thatavarthy.webp",
-    "website": "https://www.linkedin.com/in/anika-thatavarthy/",
-    "resume": "https://docs.google.com/document/d/1Mx59JBfTKTUnnei-ltQlXvBPSH023dZhpN6hqj4XufU/edit?usp=sharing",
-    "linkedIn": "https://www.linkedin.com/in/anika-thatavarthy/"
-  },
-  {
     "name": "Jingbo Shang",
     "teams": ["Advisors"],
-    "role": "Graduate Advisor",
+    "role": "CSE Faculty Advisor",
     "email": "jshang@ucsd.edu",
     "image": "/Board/Jingbo-Shang.webp",
     "website": "https://shangjingbo1226.github.io/",

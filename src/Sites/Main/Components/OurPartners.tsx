@@ -1,45 +1,215 @@
+import { motion } from "framer-motion";
 import SafeLink from "src/Shared/Components/SafeLink";
-import Section from "src/Shared/Page/Section";
+import useImagePreloader from "src/Hooks/useImagepreload.tsx";
 import { useTheme } from "src/Hooks/useTheme";
 
 import partners from "../Data/partners.json";
 
+const partnerDisplayNames = partners.displayNames as Record<string, string>;
+
+function partnerFullName(shortKey: string): string {
+  return partnerDisplayNames[shortKey] ?? shortKey;
+}
+
+const DEPARTMENT_KEYS = [
+  "SCIDS", "Basement", "Scripps", "COGS",
+  "Rady School of Management", "CSE",
+  "Jacobs School of Engineering", "BRAIN",
+];
+
+const CLUB_KEYS = [
+  "Triton Ball", "AISC", "AWS Cloud Club",
+  "Biomedical Engineering Society (BMES)", "CBC", "CSSA",
+  "DS3", "Emblem", "GDG", "Product Management Club (PMC)",
+  "Startup Incubator Club", "SUMS", "TESC",
+  "Triton Quantitative Trading (TQT)", "Triton Software Engineering (TSE)",
+];
+
 const OurPartners = () => {
   const { isDark } = useTheme();
-  const logos = isDark ? partners.dark : partners.light;
+  const logos = (isDark ? partners.dark : partners.light) as Record<string, PartnerEntry>;
+  const darkLogoFilter = "brightness(1.14) contrast(1.08) saturate(0.95)";
+  const darkLogoScaleByFile: Record<string, number> = {
+    "/Partners/amazon_dark.png": 2.2,
+    "/Partners/scripps_dark.png": 2.15,
+    "/Partners/scids_dark.png": 2.15,
+    "/Partners/jacobs_dark.png": 2.15,
+    "/Partners/basement_dark.png": 2.15,
+    "/Partners/databricks_dark.png": 2.25,
+    "/Clubs/aws_dark.png": 2.2,
+  };
+  const uploadedDarkLogos = Object.keys(darkLogoScaleByFile);
+  const { imageStates } = useImagePreloader(isDark ? uploadedDarkLogos : []);
+  const getLogoStyle = (src: string): React.CSSProperties => {
+    const isUploadedDarkVariant = isDark && src in darkLogoScaleByFile;
+    if (isUploadedDarkVariant) {
+      // Uploaded dark variants contain black fills; screen blend removes black backdrop.
+      return {
+        mixBlendMode: "screen",
+        filter: "none",
+        transform: `scale(${darkLogoScaleByFile[src] ?? 2.15})`,
+        transformOrigin: "center",
+        opacity: imageStates[src] ? undefined : 0,
+      };
+    }
+    return {
+      filter: isDark ? darkLogoFilter : "none",
+    };
+  };
 
-  return (
-    <Section title="Our Partners" className="gap-0">
-      <p className="text-2xl font-light max-w-xl text-center px-10">
-        {"Interested in hearing how we can help you? Contact us at "}
-        <SafeLink href="mailto:ds3@ucsd.edu" className="underline">
-          ds3@ucsd.edu
-        </SafeLink>
-        {" or view our sponsor package "}
-        {/* TODO: add link to sponsor package */}
-        <SafeLink
-          href="https://drive.google.com/file/d/1bMJLw3mid90WxVuFgFaFNUPnX2FJknbW/view?usp=sharing"
-          className="underline"
-        >
-          here
-        </SafeLink>
-        .
-      </p>
+  const department = Object.entries(logos).filter(([name]) => DEPARTMENT_KEYS.includes(name));
+  const clubs = Object.entries(logos).filter(([name]) => CLUB_KEYS.includes(name));
+  const industry = Object.entries(logos).filter(
+    ([name]) => !DEPARTMENT_KEYS.includes(name) && !CLUB_KEYS.includes(name)
+  );
 
-      <div className="flex flex-wrap justify-center mt-16 gap-12 sm:w-[90%]">
-        {Object.entries(logos).map(([name, path], index) => (
-          <div key={index} className="w-[200px] h-[100px] flex items-center justify-center">
+  const SectionLabel = ({
+    label,
+    color,
+    delay = 0,
+  }: {
+    label: string;
+    color: string;
+    delay?: number;
+  }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="mb-5 flex items-center gap-[0.65rem]"
+    >
+      <div className="h-0.5 w-[22px] shrink-0 rounded-sm" style={{ background: color }} />
+      <span className="font-mono text-[0.75rem] uppercase tracking-[0.22em]" style={{ color }}>
+        {label}
+      </span>
+    </motion.div>
+  );
+
+  const LogoGrid = ({
+    entries,
+    delay = 0,
+    variant = "default",
+  }: {
+    entries: [string, PartnerEntry][];
+    delay?: number;
+    variant?: "default" | "club";
+  }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={`partner-grid ${variant === "club" ? "club-grid" : ""}`}
+    >
+      {entries.map(([name, entry], index) => {
+        const { src, href } = typeof entry === "string" ? { src: entry, href: undefined } : entry;
+        const fullName = partnerFullName(name);
+        const isUploadedDarkVariant = isDark && src in darkLogoScaleByFile;
+        const showPreloadPlaceholder = isUploadedDarkVariant && !imageStates[src];
+        const logoContent = (
+          <div className="relative flex w-full justify-center">
+            {showPreloadPlaceholder && (
+              <div
+                className={`absolute left-1/2 top-1/2 w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-[0.55rem] bg-size-[220%_100%] animate-[logo-preload-shimmer_1.15s_ease-in-out_infinite] bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0.12)_50%,rgba(255,255,255,0.04)_100%)] ${variant === "club" ? "h-[30px]" : "h-[44px]"}`}
+                aria-hidden="true"
+              />
+            )}
             <img
-              src={path}
-              alt={name}
-              title={name}
-              className="max-w-full max-h-full object-contain"
+              src={src}
+              alt={fullName}
+              style={getLogoStyle(src)}
+              loading={isUploadedDarkVariant ? "eager" : "lazy"}
             />
           </div>
-        ))}
+        );
+        return (
+        <motion.div
+          key={name}
+          className="partner-logo-cell"
+          title={fullName}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: index * 0.04 }}
+        >
+          {href ? (
+            <SafeLink
+              href={href}
+              className="flex min-h-full w-full flex-1 items-center justify-center self-stretch"
+            >
+              {logoContent}
+            </SafeLink>
+          ) : (
+            logoContent
+          )}
+        </motion.div>
+      )})}
+    </motion.div>
+  );
+
+  return (
+    <div className="mx-auto flex w-full max-w-[1300px] flex-col px-[clamp(1.25rem,4vw,3rem)] py-[clamp(2.5rem,5vw,5rem)]">
+      {/* ── Editorial header ── */}
+      <div className="obs-section-header-border-loose mb-[clamp(2.5rem,4vw,4rem)]">
+        <div className="flex flex-wrap items-end justify-center md:justify-between gap-6">
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="m-0 font-heading text-[clamp(3rem,7vw,6rem)] font-normal leading-[0.95] tracking-tight text-(--obs-text-primary)"
+          >
+            Our Partners
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="m-0 max-w-[380px] text-center md:text-right text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.7] text-(--obs-text-primary) opacity-[0.68]"
+          >
+            Interested in working with us? Reach out at{" "}
+            <SafeLink
+              href="mailto:ds3@ucsd.edu"
+              className="border-b border-[rgba(25,181,202,0.35)] pb-px text-[#19B5CA] no-underline"
+            >
+              ds3@ucsd.edu
+            </SafeLink>
+            .
+          </motion.p>
+        </div>
       </div>
-    </Section>
+
+      {/* ── Industry ── */}
+      <SectionLabel label="Industry Partners" color="#F58134" />
+      <LogoGrid entries={industry} />
+
+      <div className="h-[clamp(2.5rem,4vw,4rem)]" />
+
+      {/* ── Departments ── */}
+      <SectionLabel label="On-Campus & Department Partners" color="#19B5CA" delay={0.05} />
+      <LogoGrid entries={department} delay={0.1} />
+
+      <div className="h-[clamp(2.5rem,4vw,4rem)]" />
+
+      {/* ── Clubs ── */}
+      <SectionLabel label="Club Partners" color="#a78bfa" delay={0.05} />
+      <LogoGrid entries={clubs} delay={0.1} variant="club" />
+
+      {/* ── Disclaimer ── */}
+      <p className="mx-auto mt-10 max-w-[620px] self-center text-center font-mono text-[0.7rem] leading-[1.75] tracking-[0.04em] text-(--obs-text-faint)">
+        Partnerships listed do not imply sponsorship or official endorsement.
+        They indicate that DS3 has worked with the listed organization or its employee(s) in some
+        capacity within the past 365 days — including but not limited to sponsorship, workshops,
+        DataHacks, or other collaborative events. The actions and views of DS3 do not reflect those
+        of our partners, and vice versa.
+      </p>
+    </div>
   );
 };
 
 export default OurPartners;
+
+type PartnerEntry = string | { src: string; href?: string };
