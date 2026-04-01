@@ -1,18 +1,45 @@
-import Button from "src/Shared/Components/Button";
+import { motion } from "framer-motion";
 import Section from "src/Shared/Page/Section";
 
 import BrowserCard from "../Components/BrowserCard";
 import onlineContent from "../Data/onlineContent.json";
+import { IoIosArrowForward } from "react-icons/io";
+
+const CTA_BASE =
+  "inline-flex cursor-pointer items-center justify-center rounded-full border px-10 py-[0.85rem] font-mono text-[0.78rem] font-medium uppercase tracking-[0.18em] text-(--obs-text-primary) backdrop-blur-sm transition-all duration-200";
+
+const CTA_CYAN = `${CTA_BASE} border-[rgba(25,181,202,0.35)] bg-(--obs-surface) hover:-translate-y-0.5 hover:border-[rgba(25,181,202,0.65)] hover:bg-[rgba(25,181,202,0.1)] hover:shadow-[0_12px_36px_rgba(25,181,202,0.15)]`;
+
+const CTA_ORANGE = `${CTA_BASE} border-[rgba(245,129,52,0.35)] bg-(--obs-surface) hover:-translate-y-0.5 hover:border-[rgba(245,129,52,0.65)] hover:bg-[rgba(245,129,52,0.1)] hover:shadow-[0_12px_36px_rgba(245,129,52,0.15)]`;
 
 const OnlineContent = () => {
+  const featured = onlineContent.slice(0, 4);
+
   return (
     <Section title="Online Content" className="gap-0">
-      <p className="text-2xl font-light max-w-xl text-center px-10">
-        Have something to share or want to explore more? Read our latest articles or submit your own
-        for publication!
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10">
-        {onlineContent.map((content, index) => (
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="mb-5 flex items-center gap-3"
+      >
+        <div className="obs-accent-bar-cyan" />
+        <span className="text-eyebrow text-eyebrow-cyan">Latest Work</span>
+      </motion.div>
+
+      <motion.p
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        className="mb-12 max-w-[520px] text-center font-body font-light fl-text-base/lg leading-[1.8] text-(--obs-text-muted)"
+      >
+        Read our latest articles and check out our newest podcast episodes to keep up with evolving field of data science!
+      </motion.p>
+
+      <div className="mb-12 grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,480px),1fr))] gap-6">
+        {featured.map((content, index) => (
           <BrowserCard
             key={content.title}
             image={content.image}
@@ -20,17 +47,34 @@ const OnlineContent = () => {
             description={content.description}
             link={content.link}
             delay={index * 0.1}
-            linkText="Read More"
+            linkText="View More"
+            compact
           />
         ))}
       </div>
-      <Button
-        onClick={() => {
-          window.open("https://medium.com/ds3ucsd", "_blank");
-        }}
+
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="flex flex-wrap justify-center gap-4"
       >
-        View All
-      </Button>
+        <button type="button" onClick={() => window.open("https://medium.com/ds3ucsd", "_blank")} className={CTA_CYAN}>
+          <span className="flex items-center gap-1">
+            View Articles <IoIosArrowForward />
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={() => window.open("https://www.youtube.com/@ds3atucsd", "_blank")}
+          className={CTA_ORANGE}
+        >
+          <span className="flex items-center gap-1">
+            View Podcasts <IoIosArrowForward />
+          </span>
+        </button>
+      </motion.div>
     </Section>
   );
 };

@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "src/Utils/cn";
 
 interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
@@ -12,14 +12,14 @@ const Section = memo(function Section({ title, className, children, ref, ...prop
   return (
     <section
       className={twMerge(
-        "flex flex-col items-center w-[90vw] lg:w-[80vw] py-[clamp(5rem,6vw,10rem)] gap-10",
+        "mx-auto flex w-full max-w-[min(92vw,1280px)] flex-col items-center px-4 sm:px-5 md:px-6 lg:max-w-[80vw] lg:px-0 fl-py-20/40 gap-10",
         className
       )}
       ref={ref}
       {...props}
     >
       {title && (
-        <h2 className="font-semibold text-[clamp(2.7rem,7vw,4rem)] text-center uppercase px-4">
+        <h2 className="text-fluid-section-title m-0 text-center leading-[1.05] tracking-tight text-(--obs-text-primary)">
           {title}
         </h2>
       )}

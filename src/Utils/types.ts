@@ -20,6 +20,10 @@ export type TeamType = {
   image?: string;
   headerImg?: string;
   points?: Record<string, React.ReactNode>;
+  /** Event About gallery: use `contain` to show the full image inside the frame. */
+  galleryImageFit?: "cover" | "contain";
+  /** CSS padding inside the gallery frame (shrinks image area when `contain`). */
+  galleryPadding?: string;
 };
 
 export type MemberType = {

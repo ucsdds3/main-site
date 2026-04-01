@@ -9,11 +9,15 @@
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css}\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "optimize-images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@fontsource/albert-sans": "^5.2.5",
+    "@fullcalendar/daygrid": "^6.1.20",
+    "@fullcalendar/interaction": "^6.1.20",
+    "@fullcalendar/react": "^6.1.20",
     "@supabase/supabase-js": "^2.56.1",
     "@tailwindcss/vite": "^4.1.4",
     "@types/react-router-dom": "^5.3.3",
@@ -21,6 +25,7 @@
     "embla-carousel": "^8.6.0",
     "embla-carousel-auto-scroll": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
+    "fluid-tailwindcss": "^1.0.9",
     "framer-motion": "^12.7.3",
     "qr-code-styling": "^1.9.2",
     "react": "^19.0.0",
@@ -50,6 +55,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "prettier": "^3.7.4",
+    "sharp": "^0.34.5",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.0"

@@ -2,19 +2,22 @@
   "main": {
     "Events": {
       "All Events": "/events",
-      "Upcoming": "/events/upcoming",
+      "GBM": "/events/gbm",
       "Workshops": "/events/workshops",
-      "Social": "/events/social",
-      "Professional": "/events/professional"
+      "Socials": "/events/social",
+      "Professional": "/events/professional",
+      "LeetCode Sessions": "/events/leetcode"
     },
     "Board": {
       "Board": "/board",
       "Alumni": "/board/alumni"
     },
-    "Consulting": { "subdomain": "consulting", "pathname": "/" },
-    "DataHacks": "/datahacks",
-    "Projects": "/projects",
-    "Join Us": "/join-us",
+    "Projects": {
+      "Quarterly Projects": "/projects",
+      "Consulting": "/consulting",
+      "Open-Source": "/opensource"
+    },
+    "DataHacks": "https://datahacks.ds3ucsd.com/",
     "Partners": "/partners"
   },
   "consulting": {

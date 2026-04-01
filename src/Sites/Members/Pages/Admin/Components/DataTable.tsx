@@ -1,4 +1,4 @@
-import { useState, RefObject, useEffect } from "react";
+import { useMemo, useState, RefObject, useEffect } from "react";
 import { TfiReload, TfiDownload, TfiPlus } from "react-icons/tfi";
 
 import { useAdminStore } from "../Hooks/useAdminStore";
@@ -29,6 +29,7 @@ export default function DataTable<T extends Record<string, any>>({
   canAdd = false,
 }: DataTableProps<T>) {
   const [selectedRow, setSelectedRow] = useState<T | null>(null);
+  const [search, setSearch] = useState("");
 
   const setTable = useAdminStore(state => state.setTable);
   const reload = useAdminStore(state => state.reload);
@@ -42,6 +43,23 @@ export default function DataTable<T extends Record<string, any>>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableName]);
 
+  const filteredData = useMemo(() => {
+    const visibleColumns = columns.filter(col => !col.hide);
+    const baseData =
+      tableName === "Attendance" ? data : data.filter(row => row.deleted !== true);
+
+    const q = search.trim().toLowerCase();
+    if (!q) return baseData;
+
+    return baseData.filter(row =>
+      visibleColumns.some(col => {
+        const value = row[col.key];
+        const formatted = formatCellValue(value, col.type);
+        return String(formatted ?? "").toLowerCase().includes(q);
+      })
+    );
+  }, [columns, data, search, tableName]);
+
   const handleRowSelect = (row: T | null) => {
     setSelectedRow(row);
     onRowSelect?.(row);
@@ -54,8 +72,7 @@ export default function DataTable<T extends Record<string, any>>({
 
   const handleDownload = () => {
     const visibleColumns = columns.filter(col => !col.hide);
-    const visibleData =
-      tableName === "Attendance" ? data : data.filter(row => row.deleted !== true);
+    const visibleData = filteredData;
 
     const headers = visibleColumns.map(col => formatColumnLabel(col.key));
     const rows = visibleData.map(row =>
@@ -107,12 +124,17 @@ export default function DataTable<T extends Record<string, any>>({
         </div>
         <span className="text-lg font-semibold md:ml-4 md:mr-auto order-last md:order-0">
           Found{" "}
-          {tableName === "Attendance"
-            ? data.length
-            : data.filter(row => row.deleted !== true).length}{" "}
+          {filteredData.length}{" "}
           rows
         </span>
         <div className="flex gap-2 items-center">
+          <input
+            type="text"
+            className="input input-bordered w-[220px] md:w-[280px]"
+            placeholder="Search…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
           <button
             onClick={reload}
             className="btn btn-outline hover:border-primary text-lg font-bold"
@@ -126,7 +148,7 @@ export default function DataTable<T extends Record<string, any>>({
           <button
             onClick={handleDownload}
             className="btn btn-outline hover:border-primary text-lg font-bold"
-            disabled={loading || data.length === 0}
+            disabled={loading || filteredData.length === 0}
             title="Download as CSV"
           >
             <TfiDownload />
@@ -147,7 +169,7 @@ export default function DataTable<T extends Record<string, any>>({
           <TableHeader columns={columns} />
           <TableBody
             columns={columns}
-            data={data}
+            data={filteredData}
             loading={loading}
             selectedRow={selectedRow}
             onRowSelect={handleRowSelect}
