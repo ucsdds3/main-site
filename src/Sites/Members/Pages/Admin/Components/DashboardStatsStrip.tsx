@@ -1,25 +1,13 @@
 import { useAdminStats } from "../Hooks/useAdminStats";
-import DashboardLineChart from "./DashboardLineChart";
-import DashboardPieChart from "./DashboardPieChart";
 
 export default function DashboardStatsStrip() {
   const stats = useAdminStats();
 
   return (
-    <div className="flex w-full flex-col gap-4">
-      <div className={`flex w-full flex-wrap gap-4  ${Object.keys(stats).length}`}>
-        {Object.entries(stats).map(([label, stats]) => (
-          <StatCard key={label} label={label} {...stats} />
-        ))}
-      </div>
-      <div className="flex flex-wrap flex-1 min-h-[420px] w-full items-stretch gap-0 justify-center">
-        <div className="min-w-[max(33%,300px)]  flex flex-col flex-1 min-h-0">
-          <DashboardPieChart />
-        </div>
-        <div className="min-w-[max(67%,300px)] flex flex-col flex-1 min-h-0">
-          <DashboardLineChart />
-        </div>
-      </div>
+    <div className={`flex w-full flex-wrap gap-4  ${Object.keys(stats).length}`}>
+      {Object.entries(stats).map(([label, stats]) => (
+        <StatCard key={label} label={label} {...stats} />
+      ))}
     </div>
   );
 }
