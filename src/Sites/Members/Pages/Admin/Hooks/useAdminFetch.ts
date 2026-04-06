@@ -5,6 +5,26 @@ import { supabase } from "src/Utils/supabase";
 import { convertFilterValue } from "../../../Utils/functions";
 import { useAdminStore } from "./useAdminStore";
 
+type JsonTextFilter = { colKey: string; mode: "like" | "ilike"; pattern: string };
+
+/** String form of a json/jsonb cell for text search (matches table display). */
+function jsonColumnValueAsSearchText(value: unknown): string {
+  if (value === null || value === undefined) return "";
+  return typeof value === "string" ? value : JSON.stringify(value);
+}
+
+/** Client-side LIKE/ILIKE on json columns (PostgREST cannot ilike jsonb directly). */
+function rowMatchesJsonTextFilter(row: Record<string, unknown>, f: JsonTextFilter): boolean {
+  const raw = f.pattern.trim();
+  if (!raw) return true;
+  const needle = raw.replace(/^%+/, "").replace(/%+$/g, "").trim();
+  if (!needle) return true;
+  const haystack = jsonColumnValueAsSearchText(row[f.colKey]);
+  const h = f.mode === "ilike" ? haystack.toLowerCase() : haystack;
+  const n = f.mode === "ilike" ? needle.toLowerCase() : needle;
+  return h.includes(n);
+}
+
 export function useAdminFetch() {
   const tableName = useAdminStore(state => state.tableName);
   const columns = useAdminStore(state => state.columns);
@@ -23,6 +43,7 @@ export function useAdminFetch() {
           ? "id, created_at, updated_at, member_id, event_id, points, Members(full_name, email), Events(name, start)"
           : "*";
         let query = supabase.from(tableName).select(selectStr);
+        const jsonTextFilters: JsonTextFilter[] = [];
 
         columns.forEach(col => {
           if (col.type === "qr_code" || col.join) return;
@@ -47,6 +68,18 @@ export function useAdminFetch() {
           }
 
           if (state?.filter && state.filterValue) {
+            if (
+              col.type === "json" &&
+              (state.filter === "like" || state.filter === "ilike")
+            ) {
+              jsonTextFilters.push({
+                colKey,
+                mode: state.filter,
+                pattern: state.filterValue,
+              });
+              return;
+            }
+
             const value = convertFilterValue(state.filterValue, col.type);
             if (value !== null && value !== undefined) {
               if (state.filter == "eq") query = query.eq(colKey, value);
@@ -96,6 +129,11 @@ export function useAdminFetch() {
                 start: events?.start ?? "",
               };
             });
+          }
+          if (jsonTextFilters.length > 0) {
+            resultData = resultData.filter(row =>
+              jsonTextFilters.every(f => rowMatchesJsonTextFilter(row, f))
+            );
           }
           useAdminStore.setState({ data: resultData });
         }
