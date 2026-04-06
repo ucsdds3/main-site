@@ -1,5 +1,23 @@
 import { ColumnType } from "../Pages/Admin/Utils/types";
 
+export function normalizeTeamsField(raw: unknown): Record<string, string> {
+  if (raw === null || raw === undefined) return {};
+  if (typeof raw === "string") {
+    try {
+      return normalizeTeamsField(JSON.parse(raw) as unknown);
+    } catch {
+      return {};
+    }
+  }
+  if (typeof raw !== "object" || Array.isArray(raw)) return {};
+  const out: Record<string, string> = {};
+  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
+    if (typeof v === "string" && v.trim()) out[k] = v.trim();
+  }
+  return out;
+}
+
+
 /**
  * Gets a preview URL for a PDF, handling both direct PDF links and Google Drive links
  */
