@@ -50,7 +50,7 @@ const Avatar = ({ updatable = false, data, setData }: AvatarProps) => {
   return (
     <div className="relative flex flex-col items-center">
       <div
-        className={`size-68 aspect-square flex-shrink-0 p-2 bg-base-300 radial-progress ${tier.color} ${
+        className={`size-68 aspect-square flex-shrink-0 p-2 bg-base-300 radial-progress after:bg-transparent ${tier.color} ${
           updatable && !uploadingAvatar ? "cursor-pointer" : ""
         } overflow-hidden relative`}
         style={{ "--value": progress * 100 } as React.CSSProperties}
