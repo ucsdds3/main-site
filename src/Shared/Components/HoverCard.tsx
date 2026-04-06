@@ -108,7 +108,7 @@ const HoverCard = ({
 
         {links && (
           <div
-            className={`${showLinks ? "flex" : "hidden"} md:hidden md:group-hover:flex absolute bottom-[5%] w-full gap-[5%] justify-center animate-[hoverCardAnimate_0.2s]`}
+            className={`${showLinks ? "flex" : "hidden"} md:hidden md:group-hover:flex absolute bottom-[3%] w-full gap-[3%] justify-center animate-[hoverCardAnimate_0.2s]`}
             onClick={e => e.stopPropagation()}
           >
             {links.map(({ title, href, icon, color }, index) => (

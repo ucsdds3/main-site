@@ -36,6 +36,13 @@ export type MemberType = {
   linkedIn?: string;
   resume?: string;
   bio?: string;
+  github?: string;
+  other_link?: string;
+};
+
+/** Board page: Supabase `teams` JSON as committee key → role title. */
+export type BoardMember = MemberType & {
+  teamRoles: Record<string, string>;
 };
 
 export type LinkType = {

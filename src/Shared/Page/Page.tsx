@@ -55,7 +55,7 @@ const Page = ({ children, ...props }: PageProps) => {
 
         <Navbar />
 
-        <div className="flex w-full min-w-0 flex-col items-center min-h-[80vh]" {...props}>
+        <div className="flex w-full min-w-0 flex-col items-center min-h-[82vh]" {...props}>
           {children || (
             <>
               <h2 className="text-center hero-text-shadow my-10 text-[clamp(2rem,10vw,4rem)]">
