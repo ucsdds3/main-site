@@ -123,3 +123,22 @@ export const tagColor = {
 };
 
 export type EventTagType = keyof typeof tagColor;
+
+export const COMMITTEE_TYPES = [
+  "Executive",
+  "Internal",
+  "External",
+  "Finance",
+  "Software",
+  "Workshops",
+  "Professional Events",
+  "Social Events",
+  "Projects",
+  "Consulting",
+  "Marketing",
+  "Online Content",
+  "DataHacks",
+  "Advisors",
+] as const;
+
+export type CommitteeType = (typeof COMMITTEE_TYPES)[number];

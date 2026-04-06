@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 
 import { supabase } from "src/Utils/supabase";
 import { normalizeExternalHref } from "src/Utils/functions";
+import { normalizeTeamsField } from "src/Sites/Members/Utils/functions";
 import type { BoardMember } from "src/Utils/types.ts";
 
 type MemberRow = {
@@ -16,23 +17,6 @@ type MemberRow = {
   teams: Record<string, string> | null;
   deleted: boolean | null;
 };
-
-function parseTeams(raw: unknown): Record<string, string> {
-  if (raw === null || raw === undefined) return {};
-  if (typeof raw === "string") {
-    try {
-      return parseTeams(JSON.parse(raw) as unknown);
-    } catch {
-      return {};
-    }
-  }
-  if (typeof raw !== "object" || Array.isArray(raw)) return {};
-  const out: Record<string, string> = {};
-  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
-    if (typeof v === "string" && v.trim()) out[k] = v.trim();
-  }
-  return out;
-}
 
 /** Lower rank = earlier. `Vice President` before `President` so substrings don’t collide. */
 function boardRoleTitleImportanceRank(role: string | undefined | null): number {
@@ -52,7 +36,7 @@ function compareBoardMembersForTeam(a: BoardMember, b: BoardMember, teamKey: str
 }
 
 function rowToBoardMember(row: MemberRow): BoardMember | null {
-  const teamRoles = parseTeams(row.teams);
+  const teamRoles = normalizeTeamsField(row.teams);
   if (Object.keys(teamRoles).length === 0) return null;
 
   return {

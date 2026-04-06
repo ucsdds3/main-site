@@ -78,6 +78,7 @@ export type MemberRow = {
   linkedin_link: string | null;
   other_link: string | null;
   on_mailing_list: boolean;
+  teams: Record<string, string> | null;
 };
 
 export type ItemRow = {
