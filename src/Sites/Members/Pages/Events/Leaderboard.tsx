@@ -1,7 +1,8 @@
 import { FaTrophy } from "react-icons/fa";
 
+import Page from "src/Shared/Page/Page";
 import Section from "src/Shared/Page/Section";
-import { useLeaderboard, type LeaderboardEntry } from "../Hooks/useLeaderboard";
+import { useLeaderboard, type LeaderboardEntry } from "src/Sites/Members/Hooks/useLeaderboard";
 
 const medalColors = {
   1: {
@@ -90,51 +91,56 @@ const Leaderboard = () => {
   const third = leaderboard.find(e => e.rank === 3) ?? null;
 
   return (
-    <Section className="flex flex-col items-center gap-8 pt-0!">
-      <div className="flex flex-col lg:flex-row items-stretch justify-center gap-6 w-full">
-        <div className="flex flex-1 min-w-0 flex-col items-center bg-base-300 p-8 rounded-2xl">
-          {loading ? (
-            <div className="flex gap-12 items-end py-12">
-              <div className="loading loading-spinner loading-lg text-primary" />
-            </div>
-          ) : (
-            <div className="flex h-[800px] flex-1 items-end justify-center gap-6 sm:gap-12 w-full">
-              <PodiumSlot entry={second} position={2} />
-              <PodiumSlot entry={first} position={1} />
-              <PodiumSlot entry={third} position={3} />
-            </div>
-          )}
-        </div>
-        <div className="flex flex-col bg-base-300 p-8 rounded-2xl flex-1 min-w-0 overflow-hidden">
-          {loading ? (
-            <div className="flex justify-center py-12">
-              <div className="loading loading-spinner loading-lg text-primary" />
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="table table-zebra text-xl">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th className="text-right">Points</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {leaderboard.map(entry => (
-                    <tr key={entry.rank}>
-                      <td className="font-bold">{entry.rank}</td>
-                      <td>{entry.full_name}</td>
-                      <td className="text-right text-primary font-semibold">{entry.points}</td>
+    <Page>
+      <Section
+        title="Points Leaderboard"
+        className="flex flex-col items-center gap-8 py-8!"
+      >
+        <div className="flex flex-col lg:flex-row items-stretch justify-center gap-6 w-full">
+          <div className="flex flex-1 min-w-0 flex-col items-center bg-base-300 p-8 rounded-2xl">
+            {loading ? (
+              <div className="flex gap-12 items-end py-12">
+                <div className="loading loading-spinner loading-lg text-primary" />
+              </div>
+            ) : (
+              <div className="flex h-[800px] flex-1 items-end justify-center gap-6 sm:gap-12 w-full">
+                <PodiumSlot entry={second} position={2} />
+                <PodiumSlot entry={first} position={1} />
+                <PodiumSlot entry={third} position={3} />
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col bg-base-300 p-8 rounded-2xl flex-1 min-w-0 overflow-hidden">
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <div className="loading loading-spinner loading-lg text-primary" />
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="table table-zebra text-xl">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th className="text-right">Points</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody>
+                    {leaderboard.map(entry => (
+                      <tr key={entry.rank}>
+                        <td className="font-bold">{entry.rank}</td>
+                        <td>{entry.full_name}</td>
+                        <td className="text-right text-primary font-semibold">{entry.points}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </Section>
+      </Section>
+    </Page>
   );
 };
 

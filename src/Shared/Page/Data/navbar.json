@@ -27,6 +27,9 @@
   },
   "members": {
     "Store": "/store",
-    "Events": "/events"
+    "Events": {
+      "All Events": "/events",
+      "Leaderboard": "/events/leaderboard"
+    }
   }
 }

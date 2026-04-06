@@ -6,6 +6,7 @@ import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 import Events from "src/Shared/Events/EventPage";
 
 import Auth from "./Pages/Auth/Auth";
+import Leaderboard from "./Pages/Events/Leaderboard";
 import Home from "./Pages/Home/Home";
 import Profile from "./Pages/Profile/Profile";
 import Store from "./Pages/Store/Store";
@@ -34,6 +35,7 @@ const Members = () => {
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/insights" element={<Insights />} />
       <Route path="/auth" element={<Auth />} />
+      <Route path="/events/leaderboard" element={<Leaderboard />} />
       <Route path="/events" element={<Events />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/store" element={<Store />} />
