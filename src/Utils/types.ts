@@ -137,6 +137,7 @@ export const COMMITTEE_TYPES = [
   "Consulting",
   "Marketing",
   "Online Content",
+  "Design",
   "DataHacks",
   "Advisors",
 ] as const;
