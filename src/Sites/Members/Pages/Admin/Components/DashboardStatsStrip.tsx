@@ -4,7 +4,7 @@ export default function DashboardStatsStrip() {
   const stats = useAdminStats();
 
   return (
-    <div className={`flex w-full flex-wrap gap-4 ${Object.keys(stats).length}`}>
+    <div className={`flex w-full flex-wrap gap-4  ${Object.keys(stats).length}`}>
       {Object.entries(stats).map(([label, stats]) => (
         <StatCard key={label} label={label} {...stats} />
       ))}
@@ -27,7 +27,7 @@ function StatCard({ label, value, hint, loading }: StatCardProps) {
       </div>
       {hint && !loading ? (
         <div
-          className={`mt-1 ${hint[0] === "+" ? "text-green-500" : hint[0] === "-" ? "text-red-500" : "text-primary"}`}
+          className={`mt-1 ${hint.startsWith("+") ? "text-green-500" : hint.startsWith("-") ? "text-red-500" : "text-primary"}`}
         >
           {hint}
         </div>

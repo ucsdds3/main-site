@@ -23,16 +23,19 @@ const NavItem = ({ label, data }: NavItemProps) => {
   const textColor = isDark ? "rgba(255,255,255,0.7)" : "rgba(10,20,50,0.7)";
   const textHover = isDark ? "rgba(255,255,255,0.95)" : "rgba(10,20,50,0.95)";
 
-  const parseData = (data: string | Record<string, string>) => {
-    if (typeof data === "string")
-      return data[0] === "#" ? { hash: data.slice(1) } : { pathname: data };
-    return data as NavigateProps;
+  const parseData = (value: string | Record<string, string>): NavigateProps => {
+    if (typeof value === "string") {
+      if (value[0] === "#") return { hash: value.slice(1) };
+      return { pathname: value };
+    }
+    return value as NavigateProps;
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node))
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -49,6 +52,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
   const linkClass =
     "font-mono text-[0.72rem] uppercase tracking-[0.14em] flex items-center gap-[0.35rem] whitespace-nowrap";
 
+  // Simple link (hash, subdomain, external, etc.)
   if (
     typeof data === "string" ||
     (data as NavigateProps)?.hash ||
@@ -72,6 +76,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
     );
   }
 
+  // Dropdown
   return (
     <div ref={dropdownRef} className="relative w-full lg:w-auto">
       {/* Trigger */}
@@ -145,7 +150,7 @@ const NavItem = ({ label, data }: NavItemProps) => {
                   type="button"
                   className="w-full whitespace-nowrap rounded-lg border-none bg-transparent px-[0.85rem] py-[0.55rem] text-left font-mono text-[0.68rem] uppercase tracking-[0.12em] transition-[background,color] duration-150"
                   onClick={() => {
-                    navigate({ pathname });
+                    navigate({ pathname: pathname as string });
                     setIsOpen(false);
                   }}
                   style={{

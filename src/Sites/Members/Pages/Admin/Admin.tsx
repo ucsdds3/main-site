@@ -4,7 +4,6 @@ import Page from "src/Shared/Page/Page";
 
 import EditCard from "./Components/EditCard";
 import DataTable from "./Components/DataTable";
-import DashboardStatsStrip from "./Components/DashboardStatsStrip";
 import { ColumnDefinition, AdminLevel } from "./Utils/types";
 import tablesData from "./Data/tables.json";
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
@@ -51,9 +50,7 @@ export default function AdminDashboardOnePage() {
   return (
     <Page data-theme="dark">
       <div className="mx-auto max-w-[1800px] px-6 py-8 w-full">
-        <DashboardStatsStrip />
-
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 w-full">
           <DataTable
             tableName={currentTable}
             columns={getColumns()}
