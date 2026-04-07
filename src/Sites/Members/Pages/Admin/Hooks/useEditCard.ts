@@ -3,6 +3,7 @@ import { supabase } from "src/Utils/supabase";
 import { useState, useEffect, RefObject } from "react";
 
 import { ColumnDefinition, ColumnType } from "../Utils/types";
+import { normalizeTeamsField } from "../../../Utils/functions";
 import { processFormValue, formatColumnLabel, compressImage } from "../../../Utils/functions";
 
 interface UseEditCardProps<T> {
@@ -39,6 +40,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
           else if (col.type === "boolean") defaults[col.key] = false as unknown as T[keyof T];
           else if (col.type === "number") defaults[col.key] = 0 as unknown as T[keyof T];
           else if (col.type === "array") defaults[col.key] = [] as unknown as T[keyof T];
+          else if (col.type === "json") defaults[col.key] = {} as unknown as T[keyof T];
           else defaults[col.key] = "" as unknown as T[keyof T];
         });
         setFormData(defaults);
@@ -203,6 +205,12 @@ export default function useEditCard<T extends Record<string, unknown>>({
       const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code"];
       columns.forEach(col => { if (col.join) fieldsToExclude.push(col.key as string) });
       fieldsToExclude.forEach(field => delete dataToSave[field as keyof T]);
+
+      if (Object.prototype.hasOwnProperty.call(dataToSave, "teams")) {
+        const normalized = normalizeTeamsField((dataToSave as Record<string, unknown>).teams);
+        (dataToSave as Record<string, unknown>).teams =
+          Object.keys(normalized).length > 0 ? normalized : null;
+      }
 
       columns.forEach(col => {
         if (col.type !== "date") return;

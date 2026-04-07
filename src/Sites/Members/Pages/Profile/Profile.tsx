@@ -32,7 +32,7 @@ const Profile = () => {
       <Section className="flex-col items-center justify-center gap-6">
         <form className="w-full flex flex-col gap-6" onSubmit={handleUpdateProfile}>
           <div className="flex flex-col xl:flex-row items-center justify-center gap-6">
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <Avatar updatable data={data} setData={setData} />
             </div>
 

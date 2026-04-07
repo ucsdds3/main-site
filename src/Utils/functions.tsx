@@ -1,6 +1,6 @@
 import { LinkType, MemberType, EventType } from "./types";
 import { IoMail } from "react-icons/io5";
-import { FaGlobe, FaLinkedin } from "react-icons/fa6";
+import { FaGithub, FaGlobe, FaLinkedin, FaLink } from "react-icons/fa6";
 import { IoIosDocument } from "react-icons/io";
 
 export const newArray = <T,>(length: number, value?: T): T[] =>
@@ -44,7 +44,24 @@ export const validateResumeLink = (inTalentPool: boolean, resumeLink?: string): 
   }
 };
 
-export const formatMemberLinks = ({ email, website, linkedIn, resume }: MemberType) =>
+/** Ensures external links work when stored without a scheme; keeps `mailto:` and root-relative paths. */
+export const normalizeExternalHref = (url: string | null | undefined): string | undefined => {
+  if (!url?.trim()) return undefined;
+  const t = url.trim();
+  if (/^https?:\/\//i.test(t)) return t;
+  if (t.startsWith("mailto:")) return t;
+  if (t.startsWith("/")) return t;
+  return `https://${t}`;
+};
+
+export const formatMemberLinks = ({
+  email,
+  website,
+  linkedIn,
+  resume,
+  github,
+  other_link,
+}: MemberType) =>
   [
     email && {
       title: "Email",
@@ -52,24 +69,41 @@ export const formatMemberLinks = ({ email, website, linkedIn, resume }: MemberTy
       href: `mailto:${email}`,
       color: "#F58134",
     },
-    linkedIn && {
-      title: "LinkedIn",
-      icon: <FaLinkedin />,
-      href: linkedIn,
-      color: "#11B3C9",
-    },
-    resume && {
-      title: "Resume",
-      icon: <IoIosDocument />,
-      href: resume,
-      color: "#434343",
-    },
-    website && {
-      title: "Website",
-      icon: <FaGlobe />,
-      href: website,
-      color: "#222222",
-    },
+    linkedIn &&
+      normalizeExternalHref(linkedIn) && {
+        title: "LinkedIn",
+        icon: <FaLinkedin />,
+        href: normalizeExternalHref(linkedIn)!,
+        color: "#11B3C9",
+      },
+    resume &&
+      normalizeExternalHref(resume) && {
+        title: "Resume",
+        icon: <IoIosDocument />,
+        href: normalizeExternalHref(resume)!,
+        color: "#434343",
+      },
+    (normalizeExternalHref(other_link)
+      ? {
+          title: "Link",
+          icon: <FaLink />,
+          href: normalizeExternalHref(other_link)!,
+          color: "#222222",
+        }
+      : github &&
+        normalizeExternalHref(github) && {
+          title: "GitHub",
+          icon: <FaGithub />,
+          href: normalizeExternalHref(github)!,
+          color: "#24292f",
+        }),
+    website &&
+      normalizeExternalHref(website) && {
+        title: "Website",
+        icon: <FaGlobe />,
+        href: normalizeExternalHref(website)!,
+        color: "#222222",
+      },
   ].filter(Boolean) as LinkType[];
 
 /**

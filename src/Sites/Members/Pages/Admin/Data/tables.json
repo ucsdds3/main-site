@@ -34,7 +34,8 @@
       "resume_link": { "type": "text", "optional": true },
       "github_link": { "type": "text", "optional": true },
       "linkedin_link": { "type": "text", "optional": true },
-      "other_link": { "type": "text", "optional": true }
+      "other_link": { "type": "text", "optional": true },
+      "teams": { "type": "json", "optional": true, "label": "Teams" }
     },
     "permissions": { "canAdd": [], "canEdit": ["Executive"], "canView": ["Board", "Executive"] }
   },

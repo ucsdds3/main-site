@@ -1,5 +1,12 @@
 import { RefObject } from "react";
+import toast from "react-hot-toast";
 import { TfiClose } from "react-icons/tfi";
+
+import {
+  labelToTeamKey,
+  teamKeyToLabel,
+} from "src/Sites/Main/Pages/Board/boardTeamConfig";
+import { COMMITTEE_TYPES } from "src/Utils/types";
 
 import { ColumnDefinition } from "../Utils/types";
 import useEditCard from "../Hooks/useEditCard";
@@ -10,6 +17,28 @@ import {
   convertPSTToUTC,
 } from "../../../Utils/functions";
 import EventQRCode from "./EventQRCode";
+
+const COMMITTEE_STORAGE_KEYS = new Set(COMMITTEE_TYPES.map(l => labelToTeamKey(l)));
+
+function readTeamsFormRecord(raw: unknown): Record<string, string> {
+  if (raw === null || raw === undefined) return {};
+  if (typeof raw !== "object" || Array.isArray(raw)) return {};
+  const out: Record<string, string> = {};
+  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
+    out[k] = typeof v === "string" ? v : "";
+  }
+  return out;
+}
+
+function sortTeamEntries(entries: [string, string][]): [string, string][] {
+  const order = new Map(COMMITTEE_TYPES.map((label, i) => [labelToTeamKey(label), i]));
+  return [...entries].sort((a, b) => {
+    const ia = order.has(a[0]) ? order.get(a[0])! : 1000;
+    const ib = order.has(b[0]) ? order.get(b[0])! : 1000;
+    if (ia !== ib) return ia - ib;
+    return a[0].localeCompare(b[0]);
+  });
+}
 
 export interface EditCardProps<T> {
   tableName: string;
@@ -214,6 +243,103 @@ export default function EditCard<T extends Record<string, unknown>>({
           />
         );
       case "json":
+        if (col.key === "teams") {
+          const record = readTeamsFormRecord(value);
+          const usedKeys = new Set(Object.keys(record));
+          const entries = sortTeamEntries(Object.entries(record));
+          const firstFreeLabel = COMMITTEE_TYPES.find(l => !usedKeys.has(labelToTeamKey(l)));
+          const canAddMore = firstFreeLabel !== undefined;
+
+          const commit = (next: Record<string, string>) => {
+            handleChange(col.key, next, col.type);
+          };
+
+          return (
+            <div className="space-y-2">
+              {entries.length === 0 ? (
+                <p className="text-sm text-base-content/60">No board teams assigned.</p>
+              ) : null}
+              {entries.map(([storageKey, role]) => {
+                const isKnown = COMMITTEE_STORAGE_KEYS.has(storageKey);
+                const labelsForRow = COMMITTEE_TYPES.filter(l => {
+                  const k = labelToTeamKey(l);
+                  return k === storageKey || !usedKeys.has(k);
+                });
+                return (
+                  <div key={storageKey} className="flex gap-2 items-center">
+                    <select
+                      className="select select-bordered flex-1 min-w-32"
+                      value={storageKey}
+                      onChange={e => {
+                        const newKey = e.target.value;
+                        if (newKey === storageKey) return;
+                        if (record[newKey] !== undefined) {
+                          toast.error("That team is already listed");
+                          return;
+                        }
+                        const next = { ...record };
+                        delete next[storageKey];
+                        next[newKey] = role;
+                        commit(next);
+                      }}
+                      disabled={!canModify}
+                    >
+                      {!isKnown ? (
+                        <option value={storageKey}>{teamKeyToLabel(storageKey)}</option>
+                      ) : null}
+                      {labelsForRow.map(label => {
+                        const k = labelToTeamKey(label);
+                        return (
+                          <option key={k} value={k}>
+                            {label}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    <input
+                      type="text"
+                      className="input input-bordered flex-1 min-w-32"
+                      value={role}
+                      placeholder="Role / title"
+                      onChange={e => {
+                        commit({ ...record, [storageKey]: e.target.value });
+                      }}
+                      disabled={!canModify}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-square shrink-0"
+                      aria-label="Remove team"
+                      onClick={() => {
+                        const next = { ...record };
+                        delete next[storageKey];
+                        commit(next);
+                      }}
+                      disabled={!canModify}
+                    >
+                      <TfiClose />
+                    </button>
+                  </div>
+                );
+              })}
+              <button
+                type="button"
+                className="btn btn-outline btn-sm w-full"
+                disabled={!canModify || !canAddMore}
+                onClick={() => {
+                  if (!firstFreeLabel) {
+                    toast.error("All teams are already listed");
+                    return;
+                  }
+                  const k = labelToTeamKey(firstFreeLabel);
+                  commit({ ...record, [k]: "" });
+                }}
+              >
+                Add Team
+              </button>
+            </div>
+          );
+        }
         return (
           <textarea
             className="textarea textarea-bordered w-full"
