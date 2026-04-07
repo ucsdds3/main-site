@@ -87,15 +87,35 @@
     "photoPool": [
       {
         "src": "/Events/professional-photo-2.png",
-        "caption": "2025 Career Fair"
+        "caption": "TechConnect"
       },
       {
-        "src": "/Events/professional-photo-1.png",
-        "caption": "TechConnect with InternShip"
+        "src": "/Events/professional-photo-fbi.png",
+        "caption": "2025 Career Fair - FBI"
+      },
+      {
+        "src": "/Events/professional-photo-neurocrine.png",
+        "caption": "2025 Career Fair - Neurocrine Biosciences"
+      },
+      {
+        "src": "/Events/professional-photo-edison.png",
+        "caption": "2025 Career Fair - Southern California Edison"
+      },
+      {
+        "src": "/Events/professional-photo-amazon.png",
+        "caption": "2025 Career Fair - Amazon"
       },
       {
         "src": "/Events/professional-photo-3.png",
         "caption": "LinkedIn Panel"
+      },
+      {
+        "src": "/Events/professional-photo-intern-panel.png",
+        "caption": "Intern Panel"
+      },
+      {
+        "src": "/Events/professional-photo-gtvhoops.png",
+        "caption": "DS3 x TritonBall: GTV Hoops"
       }
     ],
     "points": {
