@@ -93,7 +93,7 @@
 
   /* Large landing hero headlines */
   .text-fluid-hero {
-    @apply font-heading font-normal fl-text-6xl/7xl leading-none tracking-tight;
+    @apply font-heading font-normal fl-text-3xl/7xl leading-none tracking-tight;
   }
 
   /* Section / page display titles */
