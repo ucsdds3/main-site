@@ -9,7 +9,7 @@ interface LandingProps {
 
 const Landing = ({ title, subtitle }: LandingProps) => {
   return (
-    <Section className="!max-w-none flex min-h-[42vh] w-full !flex-col !justify-end !p-0 !px-0 !py-0">
+    <Section className="max-w-none! flex w-full flex-col! justify-end! p-0! px-0! py-0!">
       <div className="mx-auto w-full max-w-[1300px] border-b border-(--obs-border) px-[clamp(1.25rem,4vw,3rem)] pb-[clamp(2rem,3vw,3rem)] pt-[clamp(6rem,10vw,10rem)]">
         {/* Eyebrow */}
         <motion.div

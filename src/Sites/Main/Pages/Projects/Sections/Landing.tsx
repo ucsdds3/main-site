@@ -3,7 +3,7 @@ import Section from "src/Shared/Page/Section";
 
 const Landing = () => {
   return (
-    <Section className="!max-w-none flex min-h-[28vh] w-full !flex-col !justify-end !p-0 !px-0 !py-0">
+    <Section className="max-w-none! flex w-full flex-col! justify-end! p-0! px-0! py-0!">
       <div className="mx-auto w-full max-w-[1300px] border-b border-(--obs-border) px-[clamp(1.25rem,4vw,3rem)] pb-[clamp(1.5rem,2.5vw,2.5rem)] pt-[clamp(4rem,7vw,7rem)]">
         {/* Eyebrow */}
         <motion.div
