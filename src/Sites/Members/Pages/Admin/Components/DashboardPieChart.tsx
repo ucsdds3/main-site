@@ -107,17 +107,15 @@ export default function DashboardPieChart() {
           }}
           className="min-w-[150px] w-[150px]!"
         />
-        <div className="form-control flex justify-end">
           <button
             type="button"
-            className="btn btn-primary btn-md mt-6"
+            className="btn btn-primary btn-md h-12"
             onClick={handleExportPdf}
             disabled={loading || labels.length === 0}
             title="Export to PDF"
           >
             <TfiDownload className="text-xl" />
           </button>
-        </div>
       </div>
       {error && (
         <div className="text-error text-sm" title={error}>
