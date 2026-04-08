@@ -48,9 +48,9 @@ export default function AdminDashboardOnePage() {
   };
 
   return (
-    <Page data-theme="dark">
-      <div className="mx-auto max-w-[1800px] px-6 py-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 w-full">
+    <Page>
+      <div className="mx-auto w-full max-w-[1800px] px-6 py-8 font-body">
+        <div className="grid w-full grid-cols-1 gap-6 xl:grid-cols-[1fr_400px]">
           <DataTable
             tableName={currentTable}
             columns={getColumns()}

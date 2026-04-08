@@ -17,17 +17,15 @@ const Signin = () => {
         className="flex flex-col items-center justify-center w-full flex-1 py-20"
         onSubmit={handleSignin}
       >
-        <h1 className="text-center hero-text-shadow text-[clamp(2.5rem,14vw,4.5rem)]">
-          Welcome Back!
-        </h1>
+        <h1 className="text-fluid-page-hero text-center">Welcome Back!</h1>
 
-        <div className="flex flex-col items-center justify-center my-8">
+        <div className="my-8 flex flex-col items-center justify-center">
           <div className="flex flex-col gap-6">
             <Input
               label="UCSD Email"
               type="email"
               placeholder="jdoe@ucsd.edu"
-              icon={<FaEnvelope className="mr-2" />}
+              icon={<FaEnvelope className="mr-2 shrink-0 text-(--obs-text-muted)" />}
               value={data.email}
               setValue={(value: string) => setData({ ...data, email: value })}
             />
@@ -35,23 +33,17 @@ const Signin = () => {
               label="Password"
               type="password"
               placeholder="***************"
-              icon={<FaLock className="mr-2" />}
+              icon={<FaLock className="mr-2 shrink-0 text-(--obs-text-muted)" />}
               value={data.password}
               setValue={(value: string) => setData({ ...data, password: value })}
             />
           </div>
 
-          <div className="flex items-center justify-between w-full text-lg mt-2">
-            <a
-              onClick={() => setAuthState("forgot-password")}
-              className="text-blue-400 hover:underline cursor-pointer"
-            >
+          <div className="mt-2 flex w-full max-w-[300px] items-baseline justify-between gap-4 text-sm">
+            <a onClick={() => setAuthState("forgot-password")} className="obs-link">
               Forgot Password?
             </a>
-            <a
-              onClick={() => setAuthState("signup")}
-              className="text-blue-400 hover:underline cursor-pointer"
-            >
+            <a onClick={() => setAuthState("signup")} className="obs-link">
               Sign Up
             </a>
           </div>

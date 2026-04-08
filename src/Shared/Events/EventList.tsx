@@ -46,7 +46,7 @@ const EventList = ({ tag = "All", time = "Upcoming", ascending = true }: EventLi
 
   if (!loading && sortedEvents.length === 0) {
     return (
-      <div className="obs-list-empty-panel">
+      <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[rgba(128,128,128,0.2)] px-8 py-16">
         <p className="m-0 text-center font-heading font-normal fl-text-xl/3xl text-(--obs-text-primary) opacity-75">
           Nothing there yet
         </p>

@@ -1,14 +1,13 @@
 import { useMemo, useState, RefObject, useEffect } from "react";
-import { TfiReload, TfiDownload, TfiPlus } from "react-icons/tfi";
 
 import { useAdminStore } from "../Hooks/useAdminStore";
 import { useAdminFetch } from "../Hooks/useAdminFetch";
 import { ColumnDefinition } from "../Utils/types";
-import { formatColumnLabel, formatCellValue } from "../../../Utils/functions";
+import { filterAdminTableRows } from "../Utils/dataTableHelpers";
+
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
-import FilterDropdown from "./FilterDropdown";
-import SortDropdown from "./SortDropdown";
+import DataTableControls from "./DataTableControls";
 
 export interface DataTableProps<T = any> {
   tableName: string;
@@ -29,12 +28,13 @@ export default function DataTable<T extends Record<string, any>>({
   canAdd = false,
 }: DataTableProps<T>) {
   const [selectedRow, setSelectedRow] = useState<T | null>(null);
-  const [search, setSearch] = useState("");
 
   const setTable = useAdminStore(state => state.setTable);
   const reload = useAdminStore(state => state.reload);
   const data = useAdminStore(state => state.data) as T[];
   const loading = useAdminStore(state => state.loading);
+  const dataTableSearch = useAdminStore(state => state.dataTableSearch);
+  const setDataTableUiBridge = useAdminStore(state => state.setDataTableUiBridge);
 
   useAdminFetch();
 
@@ -43,22 +43,22 @@ export default function DataTable<T extends Record<string, any>>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableName]);
 
-  const filteredData = useMemo(() => {
-    const visibleColumns = columns.filter(col => !col.hide);
-    const baseData =
-      tableName === "Attendance" ? data : data.filter(row => row.deleted !== true);
+  useEffect(() => {
+    setDataTableUiBridge({
+      onTableChange,
+      clearSelection: () => {
+        setSelectedRow(null);
+        onRowSelect?.(null);
+      },
+      canAdd,
+    });
+    return () => setDataTableUiBridge(null);
+  }, [canAdd, onRowSelect, onTableChange, setDataTableUiBridge]);
 
-    const q = search.trim().toLowerCase();
-    if (!q) return baseData;
-
-    return baseData.filter(row =>
-      visibleColumns.some(col => {
-        const value = row[col.key];
-        const formatted = formatCellValue(value, col.type);
-        return String(formatted ?? "").toLowerCase().includes(q);
-      })
-    );
-  }, [columns, data, search, tableName]);
+  const filteredData = useMemo(
+    () => filterAdminTableRows(tableName, columns, data, dataTableSearch),
+    [columns, data, dataTableSearch, tableName]
+  );
 
   const handleRowSelect = (row: T | null) => {
     setSelectedRow(row);
@@ -70,102 +70,16 @@ export default function DataTable<T extends Record<string, any>>({
     onRowSelect?.(null);
   };
 
-  const handleDownload = () => {
-    const visibleColumns = columns.filter(col => !col.hide);
-    const visibleData = filteredData;
-
-    const headers = visibleColumns.map(col => formatColumnLabel(col.key));
-    const rows = visibleData.map(row =>
-      visibleColumns.map(col => {
-        const value = row[col.key];
-        const formatted = formatCellValue(value, col.type);
-        return `"${String(formatted).replace(/"/g, '""')}"`;
-      })
-    );
-
-    const csvContent = [
-      headers.map(h => `"${h.replace(/"/g, '""')}"`).join(","),
-      ...rows.map(row => row.join(",")),
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", `${tableName}_${new Date().toISOString().split("T")[0]}.csv`);
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
   if (reloadRef) {
     reloadRef.current = { reload, clearSelection };
   }
 
   return (
-    <div className="w-full bg-base-300 rounded-xl p-6 min-w-0 h-fit border border-base-content/50">
-      <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center mb-4">
-        <div className="flex items-center gap-4">
-          <select
-            className="select select-bordered text-lg font-semibold py-2 w-[200px]"
-            value={tableName}
-            onChange={e => {
-              onTableChange(e.target.value);
-              clearSelection();
-            }}
-          >
-            <option value="Events">Events</option>
-            <option value="Members">Members</option>
-            <option value="Items">Items</option>
-            <option value="Attendance">Attendance</option>
-          </select>
-        </div>
-        <span className="text-lg font-semibold md:ml-4 md:mr-auto order-last md:order-0">
-          Found{" "}
-          {filteredData.length}{" "}
-          rows
-        </span>
-        <div className="flex gap-2 items-center">
-          <input
-            type="text"
-            className="input input-bordered w-[220px] md:w-[280px]"
-            placeholder="Search…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-          <button
-            onClick={reload}
-            className="btn btn-outline hover:border-primary text-lg font-bold"
-            disabled={loading}
-            title="Reload"
-          >
-            {loading ? <span className="loading loading-spinner loading-sm" /> : <TfiReload />}
-          </button>
-          <SortDropdown />
-          <FilterDropdown />
-          <button
-            onClick={handleDownload}
-            className="btn btn-outline hover:border-primary text-lg font-bold"
-            disabled={loading || filteredData.length === 0}
-            title="Download as CSV"
-          >
-            <TfiDownload />
-          </button>
-          <button
-            onClick={clearSelection}
-            className="btn btn-primary text-lg font-bold"
-            disabled={!canAdd}
-            title="Add New"
-          >
-            <TfiPlus className="font-bold" />
-          </button>
-        </div>
-      </div>
+    <div className="obs-panel h-fit min-w-0 w-full p-6 font-body">
+      <DataTableControls />
 
-      <div className="overflow-x-auto overflow-y-auto max-h-[70vh] rounded-lg border border-base-content/30">
-        <table className="table table-zebra w-full">
+      <div className="max-h-[70vh] overflow-x-auto overflow-y-auto rounded-lg border border-(--obs-border)">
+        <table className="table w-full font-body">
           <TableHeader columns={columns} />
           <TableBody
             columns={columns}

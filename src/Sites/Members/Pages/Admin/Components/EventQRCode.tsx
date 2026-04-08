@@ -32,7 +32,10 @@ const getQRCodeOptions = (data: string, size: number) => ({
 const DOWNLOAD_SIZE = 400;
 
 const sanitizeFilename = (name: string) =>
-  name.replace(/[\/\\:*?"<>|]/g, "").replace(/\s+/g, "-").trim() || "event";
+  name
+    .replace(/[\/\\:*?"<>|]/g, "")
+    .replace(/\s+/g, "-")
+    .trim() || "event";
 
 interface EventQRCodeProps {
   password: string;
@@ -44,7 +47,9 @@ export default function EventQRCode({ password, eventName, size = 200 }: EventQR
   const containerRef = useRef<HTMLDivElement>(null);
   const qrRef = useRef<QRCodeStyling | null>(null);
 
-  const url = password ? `https://members.ds3atucsd.com?eventcode=${encodeURIComponent(password)}` : "";
+  const url = password
+    ? `https://members.ds3atucsd.com?eventcode=${encodeURIComponent(password)}`
+    : "";
 
   useEffect(() => {
     if (!url) return;
@@ -67,11 +72,14 @@ export default function EventQRCode({ password, eventName, size = 200 }: EventQR
       size >= DOWNLOAD_SIZE
         ? qrRef.current
         : new QRCodeStyling(getQRCodeOptions(url, DOWNLOAD_SIZE));
-    downloadQr?.download({ name: `${sanitizeFilename(eventName ?? "event")}-qr-code`, extension: "png" });
+    downloadQr?.download({
+      name: `${sanitizeFilename(eventName ?? "event")}-qr-code`,
+      extension: "png",
+    });
   };
 
   if (!password) {
-    return <p className="text-sm text-base-content/60">Enter a password to generate QR code</p>;
+    return <p className="text-sm text-(--obs-text-muted)">Enter a password to generate QR code</p>;
   }
 
   return (
@@ -81,7 +89,7 @@ export default function EventQRCode({ password, eventName, size = 200 }: EventQR
       tabIndex={0}
       onClick={handleClick}
       onKeyDown={e => e.key === "Enter" && handleClick()}
-      className="cursor-pointer rounded-lg border border-base-content/20 p-2 hover:border-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+      className="cursor-pointer rounded-lg border border-(--obs-border) p-2 transition-colors hover:border-[#19B5CA] focus:outline-none focus:ring-2 focus:ring-[#19B5CA]"
       title="Click to download"
     />
   );

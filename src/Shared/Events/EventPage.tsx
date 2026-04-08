@@ -35,7 +35,7 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
     <Page>
       <div className="mx-auto flex w-full max-w-[1300px] flex-col fl-gap-8/12 fl-px-5/12 fl-py-10/20">
         {/* Header */}
-        <div className="obs-section-header-border">
+        <div className="border-b border-(--obs-border) pb-[clamp(1.5rem,3vw,2.5rem)]">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -136,13 +136,13 @@ export default function EventPage({ defaultTime = "Upcoming" }: { defaultTime?: 
         {view === "Calendar" ? (
           <>
             {error ? (
-              <div className="obs-empty-state-center">
+              <div className="flex justify-center px-4 py-12">
                 <div className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-(--obs-text-primary) opacity-60">
                   {error}
                 </div>
               </div>
             ) : loading ? (
-              <div className="obs-empty-state-center">
+              <div className="flex justify-center px-4 py-12">
                 <span className="font-mono text-[0.72rem] uppercase tracking-[0.12em] text-(--obs-text-primary) opacity-60">
                   Loading…
                 </span>

@@ -17,10 +17,10 @@ const ForgotPassword = () => {
         className="flex flex-col items-center justify-center w-full flex-1 py-20"
         onSubmit={handleForgotPassword}
       >
-        <h1 className="text-center hero-text-shadow text-[clamp(2.5rem,14vw,4.5rem)]">
-          Forgot Password?
-        </h1>
-        <p className="text-center text-xl">Enter your email to receive a reset link</p>
+        <h1 className="text-fluid-page-hero text-center">Forgot Password?</h1>
+        <p className="text-center fl-text-lg/xl text-(--obs-text-muted)">
+          Enter your email to receive a reset link
+        </p>
 
         <div className="flex flex-col items-center justify-center my-4">
           <Input
@@ -29,7 +29,7 @@ const ForgotPassword = () => {
             placeholder="Email"
             value={email}
             setValue={setEmail}
-            icon={<FaEnvelope className="mr-2" />}
+            icon={<FaEnvelope className="mr-2 shrink-0 text-(--obs-text-muted)" />}
           />
         </div>
 
@@ -37,12 +37,9 @@ const ForgotPassword = () => {
           Send Reset Link
         </Button>
 
-        <p className="text-center text-lg">
-          Back to
-          <a
-            onClick={() => setAuthState("signin")}
-            className="text-blue-400 hover:underline cursor-pointer ml-1"
-          >
+        <p className="text-center fl-text-base/lg text-(--obs-text-muted)">
+          Back to{" "}
+          <a onClick={() => setAuthState("signin")} className="obs-link">
             Sign In
           </a>
         </p>

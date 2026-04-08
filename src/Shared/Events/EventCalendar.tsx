@@ -84,7 +84,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
   };
 
   return (
-    <div className="obs-cal-shell">
+    <div className="w-full min-w-0 overflow-hidden rounded-2xl border border-(--obs-border) bg-(--obs-surface,transparent)">
       <div className="obs-event-cal-scroll">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
@@ -118,7 +118,7 @@ export default function EventCalendar({ events }: { events: EventType[] }) {
             )}
             <div className="flex flex-col gap-[0.9rem] px-[1.15rem] pb-[1.2rem] pt-[1.1rem]">
               <div className="flex items-center justify-between gap-3">
-                <h3 className="text-fluid-card-title m-0 text-(--obs-text-primary)">
+                <h3 className="m-0 block font-heading font-normal fl-text-xl/3xl leading-tight tracking-tight text-(--obs-text-primary)">
                   {selectedEvent.name}
                 </h3>
                 <button className="obs-event-modal-close" onClick={() => setSelectedEvent(null)}>

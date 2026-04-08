@@ -4,7 +4,7 @@ export default function DashboardStatsStrip() {
   const stats = useAdminStats();
 
   return (
-    <div className={`flex w-full flex-wrap gap-4  ${Object.keys(stats).length}`}>
+    <div className="flex w-full flex-wrap gap-4 font-body">
       {Object.entries(stats).map(([label, stats]) => (
         <StatCard key={label} label={label} {...stats} />
       ))}
@@ -20,14 +20,14 @@ interface StatCardProps {
 }
 function StatCard({ label, value, hint, loading }: StatCardProps) {
   return (
-    <div className="flex-1 min-w-[200px] rounded-2xl bg-base-300 p-5 border border-base-content/50">
-      <div className="text-lg font-semibold tracking-wide">{label}</div>
-      <div className="mt-2 text-3xl font-semibold text-primary">
+    <div className="obs-panel min-w-[200px] flex-1 p-5 font-body">
+      <div className="text-lg font-semibold tracking-wide text-(--obs-text-muted)">{label}</div>
+      <div className="mt-2 text-3xl font-semibold text-[#F58134]">
         {loading ? <span className="loading loading-dots loading-sm" /> : value}
       </div>
       {hint && !loading ? (
         <div
-          className={`mt-1 ${hint.startsWith("+") ? "text-green-500" : hint.startsWith("-") ? "text-red-500" : "text-primary"}`}
+          className={`mt-1 ${hint.startsWith("+") ? "text-green-500" : hint.startsWith("-") ? "text-red-500" : "text-(--obs-text-muted)"}`}
         >
           {hint}
         </div>

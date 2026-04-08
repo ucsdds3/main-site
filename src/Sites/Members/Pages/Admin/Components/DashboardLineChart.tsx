@@ -11,12 +11,15 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { TfiDownload } from "react-icons/tfi";
-import { useLineChartData, type LineChartGroupBy } from "../Hooks/useLineChartData";
+import { useLineChartData } from "../Hooks/useLineChartData";
 import {
+  LINE_GROUP_BY_LABELS,
   LINE_GROUP_BY_OPTIONS,
   LINE_CHART_OPTIONS,
   exportLineChartPdf,
 } from "../Utils/chartUtils";
+import { Input } from "src/Sites/Members/Components/Input";
+import Select from "src/Sites/Members/Components/Select";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -59,49 +62,38 @@ export default function DashboardLineChart() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col flex-1 min-h-0 gap-3">
-      <div className="flex flex-wrap gap-3 w-full pl-3 shrink-0 items-end">
-        <div className="form-control flex flex-col">
-          <label htmlFor="line-chart-start" className="label">
-            <span className="label-text">Start date</span>
-          </label>
-          <input
-            id="line-chart-start"
-            type="date"
-            className="input input-bordered text-lg font-semibold py-2 w-[150px]"
-            value={startDate}
-            onChange={e => setStartDate(e.target.value)}
-          />
-        </div>
-        <div className="form-control flex flex-col">
-          <label htmlFor="line-chart-end" className="label">
-            <span className="label-text">End date</span>
-          </label>
-          <input
-            id="line-chart-end"
-            type="date"
-            className="input input-bordered text-lg font-semibold py-2 w-[150px]"
-            value={endDate}
-            onChange={e => setEndDate(e.target.value)}
-          />
-        </div>
-        <div className="form-control flex flex-col">
-          <label htmlFor="line-chart-groupby" className="label">
-            <span className="label-text">Group by</span>
-          </label>
-          <select
-            id="line-chart-groupby"
-            className="select select-bordered text-lg font-semibold py-2 w-[150px]"
-            value={groupBy}
-            onChange={e => setGroupBy(e.target.value as LineChartGroupBy)}
-          >
-            {LINE_GROUP_BY_OPTIONS.map(opt => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
+    <div className="flex h-full min-h-0 w-full flex-1 flex-col gap-3 font-body">
+      <div className="flex w-full shrink-0 flex-wrap items-end gap-3 pl-3">
+        <Input
+          label="Start date"
+          fieldId="line-chart-start"
+          type="date"
+          value={startDate}
+          setValue={setStartDate}
+          className="min-w-0 w-[150px]"
+          inputRowClassName="min-h-11 font-normal fl-text-sm/lg"
+        />
+        <Input
+          label="End date"
+          fieldId="line-chart-end"
+          type="date"
+          value={endDate}
+          setValue={setEndDate}
+          className="min-w-0 w-[150px]"
+          inputRowClassName="min-h-11 font-normal fl-text-sm/lg"
+        />
+        <Select
+          label="Group by"
+          fieldId="line-chart-groupby"
+          showPlaceholderOption={false}
+          options={LINE_GROUP_BY_OPTIONS.map(o => o.label)}
+          value={LINE_GROUP_BY_LABELS[groupBy]}
+          setValue={label => {
+            const opt = LINE_GROUP_BY_OPTIONS.find(o => o.label === label);
+            if (opt) setGroupBy(opt.value);
+          }}
+          className="min-w-[150px] w-[150px]!"
+        />
         <div className="form-control flex justify-end">
           <button
             type="button"

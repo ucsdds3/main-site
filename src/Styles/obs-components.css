@@ -33,220 +33,89 @@
 @layer components {
   /* ── BrowserCard ── */
   .obs-card {
-    position: relative;
-    background: var(--obs-surface);
-    border: 1px solid var(--obs-border);
-    border-radius: 1.25rem;
-    overflow: hidden;
-    transition:
-      border-color 0.3s ease,
-      box-shadow 0.3s ease,
-      transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    @apply relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-(--obs-border) bg-(--obs-surface) transition-[border-color,box-shadow,transform] duration-300 ease-in-out;
   }
   .obs-card::before {
+    @apply pointer-events-none absolute inset-0 z-0 rounded-[inherit];
     content: "";
-    position: absolute;
-    inset: 0;
     background: linear-gradient(135deg, var(--obs-surface) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-    border-radius: inherit;
   }
   .obs-card:hover {
-    border-color: rgba(25, 181, 202, 0.35);
-    box-shadow:
-      0 20px 60px rgba(0, 0, 0, 0.5),
-      0 0 0 1px rgba(25, 181, 202, 0.15),
-      inset 0 1px 0 var(--obs-border);
-    transform: translateY(-4px);
+    @apply -translate-y-1 border-[rgba(25,181,202,0.35)] shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_0_1px_rgba(25,181,202,0.15),inset_0_1px_0_var(--obs-border)];
   }
   .obs-card-clickable {
-    cursor: pointer;
+    @apply cursor-pointer;
   }
 
   .obs-urlbar {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0 0.75rem;
-    height: 30px;
-    border-radius: 9999px;
-    background: rgba(128, 128, 128, 0.14);
-    border: 1px solid var(--obs-border);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--obs-text-muted);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: calc(100% - 70px);
-    letter-spacing: 0.02em;
+    @apply flex h-[30px] max-w-[calc(100%-70px)] items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap rounded-full border border-(--obs-border) bg-[rgba(128,128,128,0.14)] px-3 font-mono text-[0.7rem] tracking-wide text-(--obs-text-muted);
   }
   .obs-urlbar-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    opacity: 0.7;
+    @apply size-1.5 shrink-0 rounded-full opacity-70;
   }
 
   .obs-img-wrap {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.2);
-    flex-shrink: 0;
+    @apply relative aspect-16/10 w-full shrink-0 overflow-hidden bg-black/20;
   }
   .obs-card-compact .obs-img-wrap {
-    aspect-ratio: 16 / 9;
+    @apply aspect-video;
   }
   .obs-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    background: #080e19;
+    @apply block size-full bg-[#080e19] object-contain;
   }
 
   .obs-img-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(5, 8, 15, 0.6) 100%);
-    pointer-events: none;
+    @apply pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,rgba(5,8,15,0.6)_100%)];
   }
 
   .obs-skel {
-    background: linear-gradient(
-      90deg,
-      var(--obs-surface) 0%,
-      var(--obs-border) 50%,
-      var(--obs-surface) 100%
-    );
-    background-size: 200% 100%;
+    @apply rounded-md bg-size-[200%_100%];
+    background-image: linear-gradient(90deg, var(--obs-surface) 0%, var(--obs-border) 50%, var(--obs-surface) 100%);
     animation: obs-shimmer 1.8s ease-in-out infinite;
-    border-radius: 6px;
   }
 
   .obs-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.55rem;
-    padding: 0.6rem 1.35rem 0.6rem 1.4rem;
-    border-radius: 9999px;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--obs-text-primary);
-    background: rgba(25, 181, 202, 0.1);
-    border: 1px solid rgba(25, 181, 202, 0.3);
-    transition:
-      background 0.2s ease,
-      border-color 0.2s ease,
-      box-shadow 0.2s ease,
-      transform 0.2s ease;
-    align-self: flex-start;
-    line-height: 1;
+    @apply inline-flex items-center justify-center gap-[0.55rem] self-start rounded-full border border-[rgba(25,181,202,0.3)] bg-[rgba(25,181,202,0.1)] py-[0.6rem] pl-[1.4rem] pr-[1.35rem] font-mono text-[0.68rem] font-medium uppercase leading-none tracking-[0.16em] text-(--obs-text-primary) no-underline transition-[background,border-color,box-shadow,transform] duration-200 ease-in-out;
   }
   .obs-cta:hover {
-    background: rgba(25, 181, 202, 0.2);
-    border-color: rgba(25, 181, 202, 0.65);
-    box-shadow: 0 6px 24px rgba(25, 181, 202, 0.2);
-    transform: translateY(-1px);
-    color: #fff;
+    @apply -translate-y-px border-[rgba(25,181,202,0.65)] bg-[rgba(25,181,202,0.2)] text-white shadow-[0_6px_24px_rgba(25,181,202,0.2)];
   }
 
   /* ── EventCard ── */
   .obs-ecard {
-    position: relative;
-    background: var(--obs-surface);
-    border: 1px solid var(--obs-border);
-    border-radius: 1.25rem;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    transition:
-      border-color 0.3s ease,
-      box-shadow 0.3s ease,
-      transform 0.3s ease;
+    @apply relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-(--obs-border) bg-(--obs-surface) transition-[border-color,box-shadow,transform] duration-300 ease-in-out;
   }
   .obs-ecard:hover {
-    border-color: var(--obs-border-mid);
-    transform: translateY(-4px);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    @apply -translate-y-1 border-(--obs-border-mid) shadow-[0_24px_60px_rgba(0,0,0,0.35)];
   }
   .obs-ecard-img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    position: relative;
-    background: var(--obs-surface);
-    flex-shrink: 0;
+    @apply relative aspect-video w-full shrink-0 overflow-hidden bg-(--obs-surface);
   }
   .obs-ecard-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
+    @apply block size-full object-cover transition-transform duration-500 ease-in-out;
   }
   .obs-ecard:hover .obs-ecard-img img {
-    transform: scale(1.04);
+    @apply scale-[1.04];
   }
   .obs-ecard-img-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.45) 100%);
-    pointer-events: none;
+    @apply pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_50%,rgba(0,0,0,0.45)_100%)];
   }
 
   .obs-tag {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.2rem 0.65rem;
-    border-radius: 9999px;
-    font-size: 0.58rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    border: 1px solid;
+    @apply inline-flex items-center rounded-full border border-solid py-[0.2rem] px-[0.65rem] text-[0.58rem] uppercase tracking-[0.14em];
   }
 
   .obs-cal-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.55rem 1.25rem;
-    border-radius: 9999px;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    border: 1px solid rgba(25, 181, 202, 0.35);
-    background: rgba(25, 181, 202, 0.08);
-    color: #19b5ca;
+    @apply inline-flex items-center gap-[0.4rem] rounded-full border border-[rgba(25,181,202,0.35)] bg-[rgba(25,181,202,0.08)] px-5 py-[0.55rem] font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-[#19b5ca] no-underline transition-all duration-200 ease-in-out;
   }
   .obs-cal-btn:hover {
-    background: rgba(25, 181, 202, 0.18);
-    border-color: rgba(25, 181, 202, 0.7);
-    box-shadow: 0 6px 20px rgba(25, 181, 202, 0.15);
+    @apply border-[rgba(25,181,202,0.7)] bg-[rgba(25,181,202,0.18)] shadow-[0_6px_20px_rgba(25,181,202,0.15)];
   }
 
   /* ── FullCalendar + event modal (EventCalendar) ── */
   .obs-event-cal-scroll {
-    overflow-x: auto;
+    @apply min-w-0 overflow-x-auto;
     -webkit-overflow-scrolling: touch;
-    min-width: 0;
   }
   .fc {
     --fc-border-color: rgba(255, 255, 255, 0.14);
@@ -266,177 +135,100 @@
     color: var(--obs-text-primary);
   }
   .fc .fc-toolbar {
-    padding: 0.95rem 0.9rem 0.35rem;
+    @apply px-[0.9rem] pb-[0.35rem] pt-[0.95rem];
   }
   .fc .fc-toolbar-title {
-    font-family: var(--font-heading);
-    font-size: clamp(1.45rem, 2vw, 1.9rem);
-    font-weight: 400;
-    color: var(--obs-text-primary);
+    @apply font-heading font-normal text-[clamp(1.45rem,2vw,1.9rem)] text-(--obs-text-primary);
   }
   .fc .fc-button {
-    text-transform: lowercase;
-    border-radius: 0.55rem !important;
-    box-shadow: none !important;
+    @apply rounded-[0.55rem]! lowercase shadow-none!;
   }
   .fc .fc-col-header-cell {
-    background: rgba(0, 0, 0, 0.48);
+    @apply bg-black/50;
   }
   .fc .fc-col-header-cell-cushion {
-    color: rgba(255, 255, 255, 0.62);
-    font-family: var(--font-mono);
-    font-size: 0.64rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.55rem 0;
+    @apply py-[0.55rem] font-mono text-[0.64rem] uppercase tracking-[0.12em] text-white/60;
   }
   .fc .fc-daygrid-day-number {
-    color: rgba(255, 255, 255, 0.78);
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    padding: 0.25rem 0.4rem 0 0;
+    @apply pt-1 pr-1 pb-0 pl-0 font-mono text-[0.72rem] text-white/80;
   }
   .fc .fc-daygrid-day.fc-day-today {
-    background: rgba(25, 181, 202, 0.1) !important;
+    @apply bg-[rgba(25,181,202,0.1)]!;
   }
   .fc .fc-daygrid-event {
-    border-radius: 0.45rem;
-    padding: 0.1rem 0.22rem;
-    margin-top: 0.16rem;
-    margin-bottom: 0.16rem;
-    cursor: pointer;
+    @apply my-[0.16rem] cursor-pointer rounded-[0.45rem] px-[0.22rem] py-[0.1rem];
   }
   .fc .fc-event-title {
-    font-weight: 500;
+    @apply font-medium;
   }
   .fc .fc-daygrid-day-frame {
-    min-height: 8.4rem;
+    @apply min-h-[8.4rem];
   }
   @media (max-width: 639px) {
     .obs-event-cal-scroll .fc {
-      min-width: 520px;
+      @apply min-w-[520px];
     }
     .fc .fc-toolbar {
-      flex-direction: column;
-      gap: 0.5rem;
-      align-items: stretch;
-      padding: 0.65rem 0.5rem 0.35rem;
+      @apply flex-col items-stretch gap-2 px-2 pb-[0.35rem] pt-[0.65rem];
     }
     .fc .fc-toolbar-chunk {
-      display: flex;
-      justify-content: center;
-      width: 100%;
+      @apply flex w-full justify-center;
     }
     .fc .fc-toolbar-title {
-      font-size: 1.1rem !important;
-      text-align: center;
+      @apply text-center text-[1.1rem]!;
     }
     .fc .fc-daygrid-day-frame {
-      min-height: 5rem !important;
+      @apply min-h-20!;
     }
     .fc .fc-col-header-cell-cushion {
-      font-size: 0.56rem;
-      letter-spacing: 0.08em;
-      padding: 0.45rem 0.1rem;
+      @apply px-[0.1rem] py-[0.45rem] text-[0.56rem] tracking-[0.08em];
     }
     .fc .fc-daygrid-day-number {
-      font-size: 0.62rem;
-      padding: 0.2rem 0.25rem 0 0;
+      @apply pt-0.5 pr-1 pb-0 pl-0 text-[0.62rem];
     }
     .fc .fc-daygrid-event {
-      margin-top: 0.1rem;
-      margin-bottom: 0.1rem;
+      @apply my-[0.1rem];
     }
   }
   .fc-theme-standard td,
   .fc-theme-standard th {
-    border-color: rgba(255, 255, 255, 0.14);
+    @apply border-white/15;
   }
 
   .obs-event-modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: rgba(2, 8, 21, 0.78);
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+    @apply fixed inset-0 z-9999 flex items-center justify-center bg-[rgba(2,8,21,0.78)] p-4 backdrop-blur-sm;
   }
   .obs-event-modal {
-    width: min(720px, 100%);
-    max-height: calc(100vh - 2rem);
-    overflow: auto;
-    border-radius: 1rem;
-    border: 1px solid var(--obs-border, rgba(128, 128, 128, 0.25));
-    background: rgba(8, 16, 34, 0.98);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+    @apply max-h-[calc(100vh-2rem)] w-[min(720px,100%)] overflow-auto rounded-2xl border border-(--obs-border) bg-[rgba(8,16,34,0.98)] shadow-[0_30px_70px_rgba(0,0,0,0.45)];
   }
   .obs-event-modal-close {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--obs-text-primary);
-    border-radius: 9999px;
-    padding: 0.35rem 0.7rem;
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
+    @apply cursor-pointer rounded-full border border-white/20 bg-white/5 px-[0.7rem] py-[0.35rem] font-mono text-[0.62rem] uppercase tracking-[0.12em] text-(--obs-text-primary);
   }
   .obs-event-modal-meta {
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.8);
+    @apply font-mono text-[0.66rem] uppercase tracking-widest text-white/80;
   }
   .obs-event-modal-desc {
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: var(--obs-text-muted, rgba(255, 255, 255, 0.8));
-    white-space: pre-wrap;
-    margin: 0;
+    @apply m-0 whitespace-pre-wrap font-body text-[0.95rem] leading-[1.8] text-(--obs-text-muted);
   }
 
   /* ── OurPartners ── */
   .partner-logo-cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 2.15rem 2.25rem;
-    border-right: 1px solid var(--obs-border);
-    border-bottom: 1px solid var(--obs-border);
-    transition: background 0.25s ease;
+    @apply flex items-center justify-center overflow-hidden border-b border-r border-(--obs-border) px-9 py-[2.15rem] transition-colors duration-200 ease-in-out;
   }
   .partner-logo-cell:hover {
-    background: var(--obs-surface);
+    @apply bg-(--obs-surface);
   }
   .partner-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(clamp(100px, 20vw, 200px), 1fr));
-    border-top: 1px solid var(--obs-border);
-    border-left: 1px solid var(--obs-border);
-    width: 100%;
+    @apply grid w-full border-l border-t border-(--obs-border) grid-cols-[repeat(auto-fill,minmax(clamp(100px,20vw,200px),1fr))];
   }
   .partner-logo-cell img {
-    width: 100%;
-    height: 92px;
-    object-fit: contain;
-    opacity: 0.82;
-    transition:
-      opacity 0.3s ease,
-      filter 0.3s ease,
-      transform 0.3s ease;
+    @apply h-[92px] w-full object-contain opacity-[0.82] transition-[opacity,filter,transform] duration-300 ease-in-out;
   }
   .club-grid .partner-logo-cell img {
-    height: 58px;
+    @apply h-[58px];
   }
   .partner-logo-cell:hover img {
-    opacity: 1;
+    @apply opacity-100;
   }
 
   /* ── About Us ── */
@@ -448,51 +240,29 @@
     background-color: transparent !important;
   }
 
-  .obs-link {
-    display: inline-block;
-    padding: 0.85rem 2rem;
-    border-radius: 9999px;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--obs-text-primary);
-    background: var(--obs-surface);
-    backdrop-filter: blur(8px);
-    transition:
-      background 0.25s ease,
-      border-color 0.25s ease,
-      color 0.25s ease,
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  /* Pill CTA (About Us embed) — not for inline form links; those use `.obs-link` in index.css */
+  .obs-link-pill {
+    @apply inline-block rounded-full bg-(--obs-surface) px-8 py-[0.85rem] font-mono text-[0.72rem] font-medium uppercase tracking-[0.18em] text-(--obs-text-primary) no-underline shadow-[0_4px_24px_rgba(0,0,0,0.25)] backdrop-blur-md transition-[background,border-color,color,transform,box-shadow] duration-200 ease-in-out;
   }
-  .obs-link:hover {
-    color: var(--obs-text-primary);
-    transform: translateY(-2px);
+  .obs-link-pill:hover {
+    @apply -translate-y-0.5 text-(--obs-text-primary);
   }
   .obs-link-teal {
-    border: 1px solid rgba(25, 181, 202, 0.35);
+    @apply border border-[rgba(25,181,202,0.35)];
   }
   .obs-link-teal:hover {
-    background: rgba(25, 181, 202, 0.12);
-    border-color: rgba(25, 181, 202, 0.7);
-    box-shadow: 0 12px 36px rgba(25, 181, 202, 0.18);
+    @apply border-[rgba(25,181,202,0.7)] bg-[rgba(25,181,202,0.12)] shadow-[0_12px_36px_rgba(25,181,202,0.18)];
   }
   .obs-link-orange {
-    border: 1px solid rgba(245, 129, 52, 0.35);
+    @apply border border-[rgba(245,129,52,0.35)];
   }
   .obs-link-orange:hover {
-    background: rgba(245, 129, 52, 0.12);
-    border-color: rgba(245, 129, 52, 0.7);
-    box-shadow: 0 12px 36px rgba(245, 129, 52, 0.18);
+    @apply border-[rgba(245,129,52,0.7)] bg-[rgba(245,129,52,0.12)] shadow-[0_12px_36px_rgba(245,129,52,0.18)];
   }
 
   .img-skeleton {
+    @apply bg-[linear-gradient(135deg,var(--obs-surface)_0%,rgba(255,255,255,0.02)_100%)];
     animation: about-us-img-shimmer 2s ease-in-out infinite;
-    background: linear-gradient(135deg, var(--obs-surface) 0%, rgba(255, 255, 255, 0.02) 100%);
   }
 
 }

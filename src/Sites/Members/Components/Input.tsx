@@ -2,6 +2,13 @@ import { twMerge } from "src/Utils/cn";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  /** Stable id for input + label association (use when `label` text is not unique). */
+  fieldId?: string;
+  hideLabel?: boolean;
+  /** Rendered after the input inside the obs row (e.g. submit icon button). */
+  endAdornment?: React.ReactNode;
+  /** Extra classes on the obs-input-row wrapper. */
+  inputRowClassName?: string;
   type?: string;
   textarea?: boolean;
   error?: boolean;
@@ -10,10 +17,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   setValue?: (value: string) => void;
 }
-interface TextareaProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
+interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
-  type?: string;
-  textarea?: boolean;
+  fieldId?: string;
+  hideLabel?: boolean;
   error?: boolean;
   icon?: React.ReactNode;
   className?: string;
@@ -21,20 +28,49 @@ interface TextareaProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   setValue?: (value: string) => void;
 }
 
-export const Input = ({ label, error, icon, className, value, setValue, ...props }: InputProps) => {
+function slugId(label: string) {
   return (
-    <div className={twMerge(`flex flex-col gap-2 min-w-[300px] w-[300px]`, className)}>
-      <span className="text-lg">
+    label
+      .replace(/\s+/g, "-")
+      .replace(/[^a-zA-Z0-9_-]/g, "")
+      .toLowerCase() || "field"
+  );
+}
+
+export const Input = ({
+  label,
+  fieldId,
+  hideLabel,
+  endAdornment,
+  inputRowClassName,
+  error,
+  icon,
+  className,
+  value,
+  setValue,
+  ...props
+}: InputProps) => {
+  const id = fieldId ?? slugId(label);
+
+  return (
+    <div className={twMerge(`flex min-w-[300px] w-[300px] flex-col gap-2`, className)}>
+      <span
+        className={twMerge("text-sm font-medium text-(--obs-text-muted)", hideLabel && "sr-only")}
+      >
         {label} {props.required && <span className="text-red-500">*</span>}
       </span>
-      <label className={`input w-full input-lg ${error ? "input-error" : "input-primary"}`}>
+      <label
+        className={twMerge("obs-input-row", error && "obs-input-row-error", inputRowClassName)}
+        htmlFor={id}
+      >
         {icon}
         <input
-          id={label}
+          id={id}
           value={value}
           onChange={e => setValue && setValue(e.target.value)}
           {...props}
         />
+        {endAdornment}
       </label>
     </div>
   );
@@ -42,6 +78,8 @@ export const Input = ({ label, error, icon, className, value, setValue, ...props
 
 export const TextArea = ({
   label,
+  fieldId,
+  hideLabel,
   error,
   icon,
   className,
@@ -49,26 +87,19 @@ export const TextArea = ({
   setValue,
   ...props
 }: TextareaProps) => {
+  const id = fieldId ?? slugId(label);
+
   return (
-    <div className={twMerge("flex flex-col gap-2 w-full", className)}>
-      <span className="text-lg">
+    <div className={twMerge("flex w-full flex-col gap-2", className)}>
+      <span
+        className={twMerge("text-sm font-medium text-(--obs-text-muted)", hideLabel && "sr-only")}
+      >
         {label} {props.required && <span className="text-red-500">*</span>}
       </span>
 
-      <div
-        className={twMerge(
-          "flex items-start gap-2 rounded-lg border p-3 bg-base-100",
-          error ? "border-error" : "border-primary"
-        )}
-      >
+      <div className={twMerge("obs-textarea-shell", error && "obs-textarea-shell-error")}>
         {icon}
-        <textarea
-          id={label}
-          {...props}
-          value={value}
-          onChange={e => setValue?.(e.target.value)}
-          className="w-full resize-y min-h-[80px] outline-none bg-transparent"
-        />
+        <textarea id={id} {...props} value={value} onChange={e => setValue?.(e.target.value)} />
       </div>
     </div>
   );

@@ -37,15 +37,15 @@ const Profile = () => {
             </div>
 
             {/* BASIC PROFILE CARD */}
-            <div className="w-full px-8 py-6 rounded-2xl bg-base-300 flex flex-col gap-4">
+            <div className="obs-panel flex w-full flex-col gap-4 px-8 py-6">
               {/* NAME & EMAIL */}
-              <div className="w-full flex flex-wrap gap-4">
+              <div className="flex w-full flex-wrap gap-4">
                 <Input
                   required
                   label="First Name"
                   type="text"
                   error={errors.toLowerCase().includes("name")}
-                  icon={<FaUser className="mr-2" />}
+                  icon={<FaUser className="mr-2 shrink-0 text-(--obs-text-muted)" />}
                   value={data?.full_name}
                   setValue={(value: string) => setData({ ...data, full_name: value })}
                   className="flex-1 w-full md:w-auto"
@@ -55,7 +55,7 @@ const Profile = () => {
                   label="UCSD Email"
                   type="email"
                   error={errors.toLowerCase().includes("email")}
-                  icon={<FaEnvelope className="mr-2" />}
+                  icon={<FaEnvelope className="mr-2 shrink-0 text-(--obs-text-muted)" />}
                   value={data?.email}
                   setValue={(value: string) => setData({ ...data, email: value })}
                   className="flex-1 w-full"
@@ -63,7 +63,7 @@ const Profile = () => {
               </div>
 
               {/* MAJOR & DOB */}
-              <div className="w-full flex flex-wrap gap-8 mt-4">
+              <div className="mt-4 flex w-full flex-wrap gap-8">
                 <Select
                   required
                   label="Major"
@@ -76,7 +76,7 @@ const Profile = () => {
                   required
                   label="Date of Birth"
                   type="date"
-                  icon={<FaCalendar className="mr-2" />}
+                  icon={<FaCalendar className="mr-2 shrink-0 text-(--obs-text-muted)" />}
                   value={data?.date_of_birth}
                   setValue={(value: string) => setData({ ...data, date_of_birth: value })}
                   className="flex-1 w-full"
@@ -84,7 +84,7 @@ const Profile = () => {
               </div>
 
               {/* GENDER & GRADUATION YEAR */}
-              <div className="w-full flex flex-wrap gap-8 mt-4">
+              <div className="mt-4 flex w-full flex-wrap gap-8">
                 <Select
                   required
                   label="Gender"
@@ -97,7 +97,7 @@ const Profile = () => {
                   required
                   label="Graduation Year"
                   type="number"
-                  icon={<FaGraduationCap className="mr-2" />}
+                  icon={<FaGraduationCap className="mr-2 shrink-0 text-(--obs-text-muted)" />}
                   value={data?.graduation_year?.toString()}
                   setValue={(value: string) =>
                     setData({ ...data, graduation_year: parseInt(value) })
@@ -107,15 +107,15 @@ const Profile = () => {
               </div>
 
               {/* TOGGLES */}
-              <div className="w-full flex flex-wrap gap-8 mt-4">
-                <div className="flex-1 flex items-center gap-2 ">
+              <div className="mt-4 flex w-full flex-wrap gap-8">
+                <div className="flex flex-1 items-center gap-2">
                   <input
                     type="checkbox"
                     checked={data?.in_talent_pool || false}
                     onChange={e => setData({ ...data, in_talent_pool: e.target.checked })}
                     className=" cursor-pointer toggle toggle-primary"
                   />
-                  <label className="text-base cursor-pointer gap-2 flex items-center">
+                  <label className="flex cursor-pointer items-center gap-2 text-base text-(--obs-text-primary)">
                     <span
                       className="tooltip tooltip-right"
                       data-tip="By joining our Talent Pool, you will be added to our database for potential job opportunities and collaborations."
@@ -126,14 +126,14 @@ const Profile = () => {
                   </label>
                 </div>
 
-                <div className="flex-1 flex items-center gap-2">
+                <div className="flex flex-1 items-center gap-2">
                   <input
                     type="checkbox"
                     checked={data?.on_mailing_list || false}
                     onChange={e => setData({ ...data, on_mailing_list: e.target.checked })}
                     className="cursor-pointer toggle toggle-primary"
                   />
-                  <label className="text-base cursor-pointera flex items-center gap-2">
+                  <label className="flex cursor-pointer items-center gap-2 text-base text-(--obs-text-primary)">
                     <span
                       className="tooltip tooltip-right"
                       data-tip="By enrolling in our mailing list, you will receive updates about our events and opportunities."
@@ -144,14 +144,16 @@ const Profile = () => {
                   </label>
                 </div>
 
-                <div className="flex-1 flex items-center gap-2">
+                <div className="flex flex-1 items-center gap-2">
                   <input
                     type="checkbox"
                     checked={data?.is_grad_student || false}
                     onChange={e => setData({ ...data, is_grad_student: e.target.checked })}
                     className="cursor-pointer toggle toggle-primary"
                   />
-                  <label className="text-base cursor-pointer">I am a Graduate Student</label>
+                  <label className="cursor-pointer text-base text-(--obs-text-primary)">
+                    I am a Graduate Student
+                  </label>
                 </div>
               </div>
             </div>
@@ -159,14 +161,14 @@ const Profile = () => {
 
           {/* TALENT POOL LINKS CARD */}
           {data?.in_talent_pool && (
-            <div className="w-full px-8 py-6 rounded-2xl bg-base-300 flex flex-col gap-4">
-              <div className="w-full flex flex-col md:flex-row gap-8">
-                <div className="flex-1 flex flex-col gap-4">
+            <div className="obs-panel flex w-full flex-col gap-4 px-8 py-6">
+              <div className="flex w-full flex-col gap-8 md:flex-row">
+                <div className="flex flex-1 flex-col gap-4">
                   <Input
                     label="Resume Link (PDF)"
                     type="url"
                     placeholder="https://example.com/resume.pdf"
-                    icon={<FaLink className="mr-2" />}
+                    icon={<FaLink className="mr-2 shrink-0 text-(--obs-text-muted)" />}
                     value={data?.resume_link || ""}
                     setValue={(value: string) => setData({ ...data, resume_link: value })}
                     className="flex-1 w-full"
@@ -175,7 +177,7 @@ const Profile = () => {
                     label="GitHub Profile"
                     type="url"
                     placeholder="https://github.com/username"
-                    icon={<FaGithub className="mr-2" />}
+                    icon={<FaGithub className="mr-2 shrink-0 text-(--obs-text-muted)" />}
                     value={data?.github_link || ""}
                     setValue={(value: string) => setData({ ...data, github_link: value })}
                     className="flex-1 w-full"
@@ -184,7 +186,7 @@ const Profile = () => {
                     label="LinkedIn Profile"
                     type="url"
                     placeholder="https://linkedin.com/username"
-                    icon={<FaLinkedin className="mr-2" />}
+                    icon={<FaLinkedin className="mr-2 shrink-0 text-(--obs-text-muted)" />}
                     value={data?.linkedin_link || ""}
                     setValue={(value: string) => setData({ ...data, linkedin_link: value })}
                     className="flex-1 w-full"
@@ -193,26 +195,26 @@ const Profile = () => {
                     label="Other Link"
                     type="url"
                     placeholder="Portfolio, LinkedIn, personal site, etc."
-                    icon={<FaLink className="mr-2" />}
+                    icon={<FaLink className="mr-2 shrink-0 text-(--obs-text-muted)" />}
                     value={data?.other_link || ""}
                     setValue={(value: string) => setData({ ...data, other_link: value })}
                     className="flex-1 w-full"
                   />
                 </div>
 
-                <div className="flex-1 shrink-0 overflow-hidden flex items-center justify-center">
+                <div className="flex flex-1 shrink-0 items-center justify-center overflow-hidden">
                   {previewUrl ? (
-                    <div className="w-[330px] aspect-[1/1.414] border rounded-lg pt-6">
+                    <div className="obs-panel aspect-[1/1.414] w-[330px] overflow-hidden p-0 pt-6">
                       <iframe
                         key={previewUrl}
                         src={previewUrl}
                         title="Resume Preview"
-                        className=" size-full"
+                        className="size-full"
                         allow="autoplay"
                       />
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center h-[380px] w-[300px] text-gray-400 text-center">
+                    <div className="flex h-[380px] w-[300px] items-center justify-center text-center text-(--obs-text-muted)">
                       <p>
                         Paste a public Google Drive PDF link or a direct PDF URL.{" "}
                         <span className="text-red-500 font-bold">

@@ -62,19 +62,19 @@ function PodiumSlot({
               )}
             </div>
             <span
-              className="font-semibold text-center text-base max-w-[120px] truncate"
+              className="max-w-[120px] truncate text-center text-base font-semibold text-(--obs-text-primary)"
               title={entry.full_name}
             >
               {entry.full_name}
             </span>
-            <span className="text-primary font-bold text-lg">{entry.points} pts</span>
+            <span className="text-lg font-bold text-[#F58134]">{entry.points} pts</span>
           </>
         ) : (
-          <span className="text-base-content/40 text-sm">—</span>
+          <span className="text-sm text-(--obs-text-faint)">—</span>
         )}
       </div>
       <div
-        className={`w-full min-h-16 flex flex-col items-center justify-end rounded-t-lg ${colors.podium} border border-base-content/10`}
+        className={`flex min-h-16 w-full flex-col items-center justify-end rounded-t-lg border border-(--obs-border) ${colors.podium}`}
         style={{ height: podiumHeights[position] }}
       >
         <span className="mb-1 font-bold text-sm">{position}</span>
@@ -97,7 +97,7 @@ const Leaderboard = () => {
         className="flex flex-col items-center gap-8 py-8!"
       >
         <div className="flex flex-col lg:flex-row items-stretch justify-center gap-6 w-full">
-          <div className="flex flex-1 min-w-0 flex-col items-center bg-base-300 p-8 rounded-2xl">
+          <div className="obs-panel flex min-w-0 flex-1 flex-col items-center p-8">
             {loading ? (
               <div className="flex gap-12 items-end py-12">
                 <div className="loading loading-spinner loading-lg text-primary" />
@@ -110,14 +110,14 @@ const Leaderboard = () => {
               </div>
             )}
           </div>
-          <div className="flex flex-col bg-base-300 p-8 rounded-2xl flex-1 min-w-0 overflow-hidden">
+          <div className="obs-panel flex min-w-0 flex-1 flex-col overflow-hidden p-8">
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="loading loading-spinner loading-lg text-primary" />
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="table table-zebra text-xl">
+                <table className="table text-xl text-(--obs-text-primary)">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -130,7 +130,7 @@ const Leaderboard = () => {
                       <tr key={entry.rank}>
                         <td className="font-bold">{entry.rank}</td>
                         <td>{entry.full_name}</td>
-                        <td className="text-right text-primary font-semibold">{entry.points}</td>
+                        <td className="text-right font-semibold text-[#F58134]">{entry.points}</td>
                       </tr>
                     ))}
                   </tbody>

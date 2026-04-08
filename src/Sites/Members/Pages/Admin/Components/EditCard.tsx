@@ -2,10 +2,7 @@ import { RefObject } from "react";
 import toast from "react-hot-toast";
 import { TfiClose } from "react-icons/tfi";
 
-import {
-  labelToTeamKey,
-  teamKeyToLabel,
-} from "src/Sites/Main/Pages/Board/boardTeamConfig";
+import { labelToTeamKey, teamKeyToLabel } from "src/Sites/Main/Pages/Board/boardTeamConfig";
 import { COMMITTEE_TYPES } from "src/Utils/types";
 
 import { ColumnDefinition } from "../Utils/types";
@@ -16,6 +13,10 @@ import {
   convertUTCToPST,
   convertPSTToUTC,
 } from "../../../Utils/functions";
+import { FileInput } from "src/Sites/Members/Components/FileInput";
+import { Input, TextArea } from "src/Sites/Members/Components/Input";
+import Select from "src/Sites/Members/Components/Select";
+
 import EventQRCode from "./EventQRCode";
 
 const COMMITTEE_STORAGE_KEYS = new Set(COMMITTEE_TYPES.map(l => labelToTeamKey(l)));
@@ -93,7 +94,7 @@ export default function EditCard<T extends Record<string, unknown>>({
       return (
         <div className="flex flex-col items-center justify-center gap-2">
           <EventQRCode password={password} eventName={String(formData.name ?? "")} />
-          <span className="text-xs text-base-content/60">Click to download</span>
+          <span className="text-xs text-(--obs-text-muted)">Click to download</span>
         </div>
       );
     }
@@ -107,7 +108,7 @@ export default function EditCard<T extends Record<string, unknown>>({
               <img
                 src={String(value)}
                 alt="Preview"
-                className="w-full aspect-video object-cover rounded-lg border border-base-content/20"
+                className="aspect-video w-full rounded-lg border border-(--obs-border) object-cover"
                 onError={e => {
                   (e.target as HTMLImageElement).style.display = "none";
                 }}
@@ -122,18 +123,20 @@ export default function EditCard<T extends Record<string, unknown>>({
               )}
             </div>
           )}
-          <input
+          <FileInput
             key={String(selectedRow?.id || "new")}
-            type="file"
+            label="Upload image"
+            fieldId={`ec-image-${String(col.key)}`}
+            hideLabel
             accept="image/*"
-            className="file-input file-input-bordered w-full"
+            disabled={loading || !canModify}
             onChange={e => {
               const file = e.target.files?.[0];
               if (file) {
                 handleFileUpload(col.key, file);
               }
             }}
-            disabled={loading || !canModify}
+            className="w-full min-w-0"
           />
         </div>
       );
@@ -152,12 +155,17 @@ export default function EditCard<T extends Record<string, unknown>>({
         );
       case "number":
         return (
-          <input
+          <Input
+            label={getColumnLabel(col)}
+            fieldId={`ec-${String(col.key)}`}
+            hideLabel
             type="number"
-            className="input input-bordered w-full"
-            value={(value as number) || 0}
-            onChange={e => handleChange(col.key, e.target.value, col.type)}
+            value={
+              value === null || value === undefined || value === "" ? "0" : String(value as number)
+            }
+            setValue={v => handleChange(col.key, v, col.type)}
             disabled={!canModify}
+            className="w-full min-w-0"
           />
         );
       case "date": {
@@ -165,41 +173,48 @@ export default function EditCard<T extends Record<string, unknown>>({
           const tempEnd = value as string | null | undefined;
 
           return (
-            <div className="flex gap-2 items-center">
-              <input
-                type="datetime-local"
-                className="input input-bordered w-full flex-1"
-                value={tempEnd ? convertUTCToPST(tempEnd) : ""}
-                onChange={e => {
-                  const utcValue = e.target.value ? convertPSTToUTC(e.target.value) : "";
-                  handleChange(col.key, utcValue, col.type);
-                }}
-                placeholder="Not extended"
-                disabled={!canModify}
-              />
-              {!isNew && formData.id && (
-                <button
-                  type="button"
-                  className="btn btn-primary shrink-0"
-                  onClick={() => handleExtendEventEnd()}
-                  disabled={loading}
-                >
-                  {loading ? <span className="loading loading-spinner" /> : "+5 Mins"}
-                </button>
-              )}
-            </div>
+            <Input
+              label={getColumnLabel(col)}
+              fieldId={`ec-${String(col.key)}`}
+              hideLabel
+              type="datetime-local"
+              value={tempEnd ? convertUTCToPST(tempEnd) : ""}
+              setValue={v => {
+                const utcValue = v ? convertPSTToUTC(v) : "";
+                handleChange(col.key, utcValue, col.type);
+              }}
+              placeholder="Not extended"
+              disabled={!canModify}
+              className="w-full min-w-0 flex-1"
+              inputRowClassName="flex-1"
+              endAdornment={
+                !isNew && formData.id ? (
+                  <button
+                    type="button"
+                    className="btn btn-primary shrink-0"
+                    onClick={() => handleExtendEventEnd()}
+                    disabled={loading}
+                  >
+                    {loading ? <span className="loading loading-spinner" /> : "+5 Mins"}
+                  </button>
+                ) : undefined
+              }
+            />
           );
         }
         return (
-          <input
+          <Input
+            label={getColumnLabel(col)}
+            fieldId={`ec-${String(col.key)}`}
+            hideLabel
             type="datetime-local"
-            className="input input-bordered w-full"
             value={value ? convertUTCToPST(value as string) : ""}
-            onChange={e => {
-              const utcValue = e.target.value ? convertPSTToUTC(e.target.value) : "";
+            setValue={v => {
+              const utcValue = v ? convertPSTToUTC(v) : "";
               handleChange(col.key, utcValue, col.type);
             }}
             disabled={!canModify}
+            className="w-full min-w-0"
           />
         );
       }
@@ -233,13 +248,16 @@ export default function EditCard<T extends Record<string, unknown>>({
           );
         }
         return (
-          <textarea
-            className="textarea textarea-bordered w-full"
+          <TextArea
+            label={getColumnLabel(col)}
+            fieldId={`ec-${String(col.key)}`}
+            hideLabel
             rows={3}
             value={JSON.stringify(value || [], null, 2)}
-            onChange={e => handleChange(col.key, e.target.value, col.type)}
+            setValue={v => handleChange(col.key, v, col.type)}
             placeholder='["item1", "item2"]'
             disabled={!canModify}
+            className="w-full min-w-0"
           />
         );
       case "json":
@@ -257,7 +275,7 @@ export default function EditCard<T extends Record<string, unknown>>({
           return (
             <div className="space-y-2">
               {entries.length === 0 ? (
-                <p className="text-sm text-base-content/60">No board teams assigned.</p>
+                <p className="text-sm text-(--obs-text-muted)">No board teams assigned.</p>
               ) : null}
               {entries.map(([storageKey, role]) => {
                 const isKnown = COMMITTEE_STORAGE_KEYS.has(storageKey);
@@ -267,44 +285,51 @@ export default function EditCard<T extends Record<string, unknown>>({
                 });
                 return (
                   <div key={storageKey} className="flex gap-2 items-center">
-                    <select
-                      className="select select-bordered flex-1 min-w-32"
-                      value={storageKey}
-                      onChange={e => {
-                        const newKey = e.target.value;
-                        if (newKey === storageKey) return;
-                        if (record[newKey] !== undefined) {
-                          toast.error("That team is already listed");
-                          return;
-                        }
-                        const next = { ...record };
-                        delete next[storageKey];
-                        next[newKey] = role;
-                        commit(next);
-                      }}
-                      disabled={!canModify}
+                    <label
+                      className="obs-input-row min-w-32 flex-1"
+                      htmlFor={`ec-team-pick-${storageKey}`}
                     >
-                      {!isKnown ? (
-                        <option value={storageKey}>{teamKeyToLabel(storageKey)}</option>
-                      ) : null}
-                      {labelsForRow.map(label => {
-                        const k = labelToTeamKey(label);
-                        return (
-                          <option key={k} value={k}>
-                            {label}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    <input
+                      <select
+                        id={`ec-team-pick-${storageKey}`}
+                        className="obs-select-field"
+                        value={storageKey}
+                        onChange={e => {
+                          const newKey = e.target.value;
+                          if (newKey === storageKey) return;
+                          if (record[newKey] !== undefined) {
+                            toast.error("That team is already listed");
+                            return;
+                          }
+                          const next = { ...record };
+                          delete next[storageKey];
+                          next[newKey] = role;
+                          commit(next);
+                        }}
+                        disabled={!canModify}
+                      >
+                        {!isKnown ? (
+                          <option value={storageKey}>{teamKeyToLabel(storageKey)}</option>
+                        ) : null}
+                        {labelsForRow.map(lbl => {
+                          const k = labelToTeamKey(lbl);
+                          return (
+                            <option key={k} value={k}>
+                              {lbl}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </label>
+                    <Input
+                      label="Role / title"
+                      fieldId={`ec-team-role-${storageKey}`}
+                      hideLabel
                       type="text"
-                      className="input input-bordered flex-1 min-w-32"
                       value={role}
                       placeholder="Role / title"
-                      onChange={e => {
-                        commit({ ...record, [storageKey]: e.target.value });
-                      }}
+                      setValue={v => commit({ ...record, [storageKey]: v })}
                       disabled={!canModify}
+                      className="min-w-32 flex-1"
                     />
                     <button
                       type="button"
@@ -341,31 +366,33 @@ export default function EditCard<T extends Record<string, unknown>>({
           );
         }
         return (
-          <textarea
-            className="textarea textarea-bordered w-full"
+          <TextArea
+            label={getColumnLabel(col)}
+            fieldId={`ec-${String(col.key)}`}
+            hideLabel
             rows={3}
             value={JSON.stringify(value || [], null, 2)}
-            onChange={e => handleChange(col.key, e.target.value, col.type)}
+            setValue={v => handleChange(col.key, v, col.type)}
             placeholder='["item1", "item2"]'
             disabled={!canModify}
+            className="w-full min-w-0"
           />
         );
       default:
         if (col.key === "admin_level" && col.type === "text") {
           const adminLevelOptions = ["Member", "Board", "Executive"];
           return (
-            <select
-              className="select select-bordered w-full"
+            <Select
+              label={getColumnLabel(col)}
+              fieldId={`ec-${String(col.key)}`}
+              hideLabel
+              showPlaceholderOption={false}
+              options={adminLevelOptions}
               value={String(value || "")}
-              onChange={e => handleChange(col.key, e.target.value || null, col.type)}
+              setValue={v => handleChange(col.key, v || null, col.type)}
               disabled={!canModify}
-            >
-              {adminLevelOptions.map(level => (
-                <option key={level} value={level}>
-                  {level}
-                </option>
-              ))}
-            </select>
+              className="w-full min-w-0"
+            />
           );
         }
         if (col.key === "description" && col.type === "text") {
@@ -376,13 +403,17 @@ export default function EditCard<T extends Record<string, unknown>>({
 
           return (
             <div>
-              <textarea
-                className={`textarea textarea-bordered w-full ${!isValid && descValue ? "textarea-error" : ""}`}
+              <TextArea
+                label={getColumnLabel(col)}
+                fieldId={`ec-${String(col.key)}`}
+                hideLabel
                 rows={4}
                 value={descValue}
-                onChange={e => handleChange(col.key, e.target.value, col.type)}
+                setValue={v => handleChange(col.key, v, col.type)}
                 placeholder="Enter description (minimum 100 characters)"
                 disabled={!canModify}
+                error={!isValid && !!descValue}
+                className="w-full min-w-0"
               />
               <div className="label">
                 <span className={`label-text-alt ${isValid ? "text-success" : "text-error"}`}>
@@ -394,26 +425,27 @@ export default function EditCard<T extends Record<string, unknown>>({
         }
 
         return (
-          <input
+          <Input
+            label={getColumnLabel(col)}
+            fieldId={`ec-${String(col.key)}`}
+            hideLabel
             type="text"
-            className="input input-bordered w-full"
-            value={String(value || "")}
-            onChange={e => handleChange(col.key, e.target.value, col.type)}
+            value={String(value ?? "")}
+            setValue={v => handleChange(col.key, v, col.type)}
             disabled={!canModify}
+            className="w-full min-w-0"
           />
         );
     }
   };
 
   return (
-    <div
-      className={`rounded-2xl bg-base-300 p-6 border border-base-content/50 ${canModify || "opacity-50"}`}
-    >
+    <div className={`obs-panel p-6 font-body ${canModify || "opacity-50"}`}>
       <div className="flex justify-between items-center mb-4 px-2">
-        <h3 className="font-semibold text-3xl">{isNew ? "Add New Row" : "Edit Row"}</h3>
+        <h3 className="text-fluid-subsection-title">{isNew ? "Add New Row" : "Edit Row"}</h3>
         {selectedRow && (
           <button
-            className="btn btn-sm btn-ghost text-xl font-bold"
+            className="btn btn-sm btn-ghost font-body text-xl font-semibold"
             onClick={() => reloadRef?.current?.clearSelection()}
           >
             <TfiClose />
@@ -422,15 +454,15 @@ export default function EditCard<T extends Record<string, unknown>>({
       </div>
 
       <div className="flex flex-col max-h-[70vh] gap-4">
-        <div className="space-y-4 overflow-y-auto rounded-lg border border-base-content/30 p-4">
+        <div className="space-y-4 overflow-y-auto rounded-lg border border-(--obs-border) p-4">
           {columns
             .filter(col => col.key !== "id" && col.key !== "created_at" && col.key !== "updated_at")
             .map(col => (
               <div key={String(col.key)} className="form-control flex flex-col gap-2">
                 <label className="label">
-                  <span className="label-text">
+                  <span className="label-text font-body text-sm font-medium text-(--obs-text-muted)">
                     {getColumnLabel(col)}
-                    {col.optional !== true && <span className="text-error ml-1">*</span>}
+                    {col.optional !== true && <span className="ml-1 text-error">*</span>}
                   </span>
                 </label>
                 {renderInput(col)}
@@ -441,7 +473,7 @@ export default function EditCard<T extends Record<string, unknown>>({
         <div className="flex gap-2">
           <>
             <button
-              className="btn btn-primary flex-1 btn-lg"
+              className="btn btn-primary btn-lg flex-1 font-body"
               onClick={handleSave}
               disabled={loading || !canModify}
             >
@@ -455,7 +487,7 @@ export default function EditCard<T extends Record<string, unknown>>({
             </button>
             {!isNew && (
               <button
-                className="btn btn-error btn-lg"
+                className="btn btn-error btn-lg font-body"
                 onClick={handleDelete}
                 disabled={loading || !canModify}
               >
@@ -464,7 +496,7 @@ export default function EditCard<T extends Record<string, unknown>>({
             )}
           </>
           <button
-            className="btn btn-outline btn-lg"
+            className="btn btn-outline btn-lg font-body"
             onClick={() => reloadRef?.current?.clearSelection()}
             disabled={loading}
           >

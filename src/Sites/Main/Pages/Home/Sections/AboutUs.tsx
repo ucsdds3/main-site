@@ -42,7 +42,7 @@ function aboutRowAccentVars(accent: string, accentGlow: string): CSSProperties {
 
 const AboutUs = () => {
   const { navigate } = useSiteHandler();
-  const { imageStates } = useImagePreloader(data.map((d) => d.image));
+  const { imageStates } = useImagePreloader(data.map(d => d.image));
 
   return (
     <div id="about-us-root" className="relative">
@@ -52,7 +52,7 @@ const AboutUs = () => {
             const isEven = index % 2 === 0;
             const accent = ACCENT[index % 2];
             const accentGlow = ACCENT_GLOW[index % 2];
-            const linkClass = `obs-link ${isEven ? "obs-link-teal" : "obs-link-orange"}`;
+            const linkClass = `obs-link-pill ${isEven ? "obs-link-teal" : "obs-link-orange"}`;
             const hashMatch = HASH_LINK.exec(section.link);
 
             return (

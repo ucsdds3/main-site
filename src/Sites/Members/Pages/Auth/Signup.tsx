@@ -32,16 +32,13 @@ const Signup = () => {
         className="flex flex-col items-center justify-center w-full flex-1 py-20"
         onSubmit={handleSignup}
       >
-        <h1 className="text-center hero-text-shadow text-[clamp(2.5rem,14vw,4.5rem)]">
-          Welcome to DS3!
-        </h1>
-        <p className="text-center text-xl px-4">Create an account to join the DS3 community!</p>
-        <p className="text-center text-lg mt-1">
-          Already have an account?
-          <a
-            onClick={() => setAuthState("signin")}
-            className="text-blue-400 hover:underline cursor-pointer ml-2"
-          >
+        <h1 className="text-fluid-page-hero text-center">Welcome to DS3!</h1>
+        <p className="px-4 text-center fl-text-lg/xl text-(--obs-text-muted)">
+          Create an account to join the DS3 community!
+        </p>
+        <p className="mt-1 text-center fl-text-sm text-(--obs-text-muted)">
+          Already have an account?{" "}
+          <a onClick={() => setAuthState("signin")} className="obs-link">
             Sign In
           </a>
         </p>
@@ -135,7 +132,7 @@ const Signup = () => {
                 onChange={e => setData({ ...data, in_talent_pool: e.target.checked })}
                 className="w-5 h-5 cursor-pointer"
               />
-              <label className="text-lg cursor-pointer flex items-center gap-2">
+              <label className="flex cursor-pointer items-center gap-2 text-base text-(--obs-text-primary)">
                 <span
                   className="tooltip tooltip-bottom"
                   data-tip="By joining our Talent Pool, you will be added to our database for potential job opportunities and collaborations."
@@ -153,7 +150,9 @@ const Signup = () => {
                 onChange={e => setData({ ...data, is_grad_student: e.target.checked })}
                 className="w-5 h-5 cursor-pointer"
               />
-              <label className="text-lg cursor-pointer">I am a Graduate Student</label>
+              <label className="cursor-pointer text-base text-(--obs-text-primary)">
+                I am a Graduate Student
+              </label>
             </div>
           </div>
 
@@ -199,17 +198,17 @@ const Signup = () => {
               </div>
 
               {/* RIGHT: PDF PREVIEW */}
-              <div className="flex-1 border rounded-lg overflow-hidden ">
+              <div className="obs-panel flex-1 overflow-hidden p-0">
                 {previewUrl ? (
                   <iframe
                     key={previewUrl} // IMPORTANT: forces reload when URL changes
                     src={previewUrl}
                     title="Resume Preview"
-                    className="w-[300px] aspect-[1/1.414] pt-6"
+                    className="aspect-[1/1.414] w-[300px] pt-6"
                     allow="autoplay"
                   />
                 ) : (
-                  <div className="flex items-center justify-center h-[380px] w-[300px] text-gray-400 text-center">
+                  <div className="flex h-[380px] w-[300px] items-center justify-center text-center text-(--obs-text-muted)">
                     <p>
                       Paste a public Google Drive PDF link or a direct PDF URL.{" "}
                       <span className="text-red-500 font-bold">

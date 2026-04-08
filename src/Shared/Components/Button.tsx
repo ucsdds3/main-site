@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
 import { twMerge } from "src/Utils/cn";
 
-const buttonVariants = {
-  initial: { y: 0 },
-  hover: { y: "clamp(0.3rem,1.2vw,0.6rem)" },
-};
-
 interface ButtonProps {
   onClick?: () => void;
   className?: string;
@@ -14,25 +9,27 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
 }
 
-const Button = ({ onClick, children, className, btnClass, type }: ButtonProps) => {
+/** Primary CTA — matches home hero “Sign Up” (gradient cyan, glow, lift on hover). */
+const Button = ({ onClick, children, className, btnClass, type = "button" }: ButtonProps) => {
   return (
-    <div className={twMerge("relative size-fit my-3", className)} onClick={onClick}>
-      <motion.button
-        className={twMerge(
-          "relative z-10 border-2 rounded-full py-3 px-10 whitespace-nowrap cursor-pointer fl-text-base/4xl fl-min-w-32/60 bg-(--color) border-(--color-primary) uppercase font-semibold",
-          btnClass
-        )}
-        variants={buttonVariants}
-        initial="initial"
-        animate="initial"
-        whileHover="hover"
-        type={type}
-      >
-        {children}
-      </motion.button>
-
-      <div className="absolute top-0 translate-y-[clamp(0.3rem,1.2vw,0.6rem)] border-2 size-full rounded-full bg-(--color-primary) border-(--color-primary)" />
-    </div>
+    <motion.button
+      type={type}
+      onClick={onClick}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+      className={twMerge(
+        "relative my-3 inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-full border-0 px-8 py-3.5 text-center font-mono text-sm font-semibold uppercase tracking-widest text-white transition-all duration-300",
+        "bg-gradient-to-br from-[#19B5CA] to-[#0e8fa0]",
+        "shadow-[0_0_30px_rgba(25,181,202,0.3)]",
+        "hover:-translate-y-0.5 hover:shadow-[0_0_50px_rgba(25,181,202,0.55)]",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#19B5CA]",
+        "disabled:pointer-events-none disabled:opacity-50",
+        btnClass,
+        className
+      )}
+    >
+      {children}
+    </motion.button>
   );
 };
 

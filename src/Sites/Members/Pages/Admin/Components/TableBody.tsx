@@ -29,7 +29,7 @@ export default function TableBody<T extends Record<string, any>>({
         <tr>
           <td
             colSpan={columns.filter(col => !col.hide).length}
-            className="text-center py-8 text-gray-400"
+            className="py-8 text-center font-body text-(--obs-text-muted)"
           >
             No data found
           </td>

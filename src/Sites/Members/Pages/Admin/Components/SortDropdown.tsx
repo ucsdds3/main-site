@@ -22,21 +22,21 @@ export default function SortDropdown() {
             useAdminStore.setState({ sortDraft: [...sortOrder], sortDropdownOpen: true });
           }
         }}
-        className="btn btn-outline hover:border-primary text-lg font-bold"
+        className="btn btn-outline hover:border-primary font-body fl-text-base/lg font-semibold"
         title="Sort"
       >
         <TfiArrowsVertical /> {sortOrder.length > 0 && `(${sortOrder.length})`}
       </button>
       <div
         tabIndex={0}
-        className="dropdown-content menu bg-base-200 rounded-box z-1 p-4 shadow-lg w-80 mt-2"
+        className="dropdown-content menu bg-base-200 rounded-box z-1 mt-2 w-80 p-4 font-body shadow-lg"
       >
         <div className="space-y-2">
           {sortDraft.length > 0 ? (
             sortDraft.map((row, index) => (
               <div key={index} className="flex gap-2 items-center">
                 <select
-                  className="select select-bordered flex-1"
+                  className="select select-bordered flex-1 font-body fl-text-sm/base font-normal"
                   value={row.columnKey}
                   onChange={e =>
                     useAdminStore.setState(state => ({
@@ -53,7 +53,7 @@ export default function SortDropdown() {
                   ))}
                 </select>
                 <select
-                  className="select select-bordered w-24"
+                  className="select select-bordered w-24 font-body fl-text-sm/base font-normal"
                   value={row.direction}
                   onChange={e =>
                     useAdminStore.setState(state => ({
@@ -83,10 +83,10 @@ export default function SortDropdown() {
               </div>
             ))
           ) : (
-            <p className="text-center text-base-content/60">No sorts applied</p>
+            <p className="text-center text-(--obs-text-muted)">No sorts applied</p>
           )}
         </div>
-        <div className="flex gap-2 mt-4 pt-2 border-t border-base-content/20">
+        <div className="mt-4 flex gap-2 border-t border-(--obs-border) pt-2">
           <button
             type="button"
             className="btn btn-outline hover:border-primary flex-1"

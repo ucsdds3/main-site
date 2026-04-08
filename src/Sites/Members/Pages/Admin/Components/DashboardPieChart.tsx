@@ -5,10 +5,12 @@ import { TfiDownload } from "react-icons/tfi";
 import { usePieChartData, type PieChartGrouping } from "../Hooks/usePieChartData";
 import {
   PIE_COLORS,
+  PIE_GROUP_BY_LABELS,
   EVENT_ATTENDANCE_GROUP_BY,
   MEMBERS_GROUP_BY,
   exportPieChartPdf,
 } from "../Utils/chartUtils";
+import Select from "src/Sites/Members/Components/Select";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -27,10 +29,9 @@ export default function DashboardPieChart() {
   const labels = label[effectiveGroupBy];
   const dataValues = pieChartData[effectiveGroupBy];
 
-  const handleCategoryChange = (value: string) => {
-    const nextCategory = value as "eventAttendance" | "members";
-    setCategory(nextCategory);
-    const nextOptions = nextCategory === "members" ? MEMBERS_GROUP_BY : EVENT_ATTENDANCE_GROUP_BY;
+  const handleCategoryChange = (value: "eventAttendance" | "members") => {
+    setCategory(value);
+    const nextOptions = value === "members" ? MEMBERS_GROUP_BY : EVENT_ATTENDANCE_GROUP_BY;
     setGroupBy(nextOptions[0].value);
   };
 
@@ -80,39 +81,32 @@ export default function DashboardPieChart() {
     },
   };
   return (
-    <div className="w-full h-full flex flex-col flex-1 min-h-0 gap-3 justify-center">
-      <div className="flex flex-wrap gap-3 w-full pl-3 shrink-0 items-end">
-        <div className="form-control flex flex-col">
-          <label htmlFor="pie-chart-category" className="label">
-            <span className="label-text">Category</span>
-          </label>
-          <select
-            id="pie-chart-category"
-            className="select select-bordered text-lg font-semibold py-2 w-[150px]"
-            value={category}
-            onChange={e => handleCategoryChange(e.target.value)}
-          >
-            <option value="eventAttendance">Attendance</option>
-            <option value="members">Members</option>
-          </select>
-        </div>
-        <div className="form-control flex flex-col">
-          <label htmlFor="pie-chart-groupby" className="label">
-            <span className="label-text">Group by</span>
-          </label>
-          <select
-            id="pie-chart-groupby"
-            className="select select-bordered text-lg font-semibold py-2 w-[150px]"
-            value={effectiveGroupBy}
-            onChange={e => setGroupBy(e.target.value as PieChartGrouping)}
-          >
-            {groupByOptions.map(opt => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
+    <div className="flex h-full min-h-0 w-full flex-1 flex-col justify-center gap-3 font-body">
+      <div className="flex w-full shrink-0 flex-wrap items-end gap-3 pl-3">
+        <Select
+          label="Category"
+          fieldId="pie-chart-category"
+          showPlaceholderOption={false}
+          options={["Attendance", "Members"]}
+          value={category === "eventAttendance" ? "Attendance" : "Members"}
+          setValue={label => {
+            if (label === "Attendance") handleCategoryChange("eventAttendance");
+            else if (label === "Members") handleCategoryChange("members");
+          }}
+          className="min-w-[150px] w-[150px]!"
+        />
+        <Select
+          label="Group by"
+          fieldId="pie-chart-groupby"
+          showPlaceholderOption={false}
+          options={groupByOptions.map(o => o.label)}
+          value={PIE_GROUP_BY_LABELS[effectiveGroupBy]}
+          setValue={label => {
+            const opt = groupByOptions.find(o => o.label === label);
+            if (opt) setGroupBy(opt.value);
+          }}
+          className="min-w-[150px] w-[150px]!"
+        />
         <div className="form-control flex justify-end">
           <button
             type="button"

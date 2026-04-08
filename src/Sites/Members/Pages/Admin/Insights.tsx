@@ -5,8 +5,8 @@ import DashboardPieChart from "./Components/DashboardPieChart";
 
 export default function Insights() {
   return (
-    <Page data-theme="dark">
-      <div className="mx-auto max-w-[1800px] px-6 py-8 w-full">
+    <Page>
+      <div className="mx-auto w-full max-w-[1800px] px-6 py-8 font-body">
         <div className="flex w-full flex-col gap-4">
           <DashboardStatsStrip />
           <div className="flex flex-wrap flex-1 min-h-[420px] w-full items-stretch gap-0 justify-center">

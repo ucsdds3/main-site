@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 import Section from "src/Shared/Page/Section";
 
 import { useAuthStore } from "../../../Hooks/useAuthStore";
@@ -11,43 +13,54 @@ const Header = () => {
   return (
     <Section className="flex-row flex-wrap items-center justify-center">
       <Avatar />
-      <div className="flex-1 min-h-68 p-8 rounded-2xl bg-base-300 flex flex-col gap-8">
-        <h1 className="text-[clamp(1.5rem,2vw,2.25rem)] font-bold">
-          Welcome Back, <span className="text-primary">{user?.user_metadata.full_name}</span>. Here
-          are your stats:
-        </h1>
+      <div className="obs-panel flex min-h-68 flex-1 flex-col gap-8 p-8">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="obs-eyebrow-row mb-0"
+        >
+          <div className="obs-accent-bar-cyan shrink-0" />
+          <span className="text-eyebrow text-eyebrow-cyan">Member home</span>
+        </motion.div>
 
-        <div className="flex size-full justify-around items-center min-w-[min(50vw,400px)]">
+        <motion.h1
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+          className="text-fluid-subsection-title text-balance"
+        >
+          Welcome back, <span className="text-[#19B5CA]">{user?.user_metadata.full_name}</span>.
+          Here are your stats:
+        </motion.h1>
+
+        <div className="flex min-w-[min(50vw,400px)] size-full items-center justify-around">
           <div className="flex flex-col items-center">
-            <span className="text-primary text-[clamp(1.5rem,2.5vw,3rem)] font-bold">
+            <span className="fl-text-2xl/4xl font-bold text-[#19B5CA]">
               {xp % 1000} / {xpNeeded}
             </span>
-            <span className="text-[clamp(1.25rem,2vw,1.875rem)]">Experience</span>
-            <span className="mt-4 text-[clamp(0.7rem,1.1vw,1.125rem)] text-balance text-center">
-              You're <span className="text-primary">{Math.round(progress * 100)}%</span> of the way to{" "}
-              <span className={nextTier.color}>{nextTier.name}</span> tier!
+            <span className="fl-text-lg/2xl text-(--obs-text-muted)">Experience</span>
+            <span className="mt-4 max-w-56 text-balance text-center fl-text-sm/base text-(--obs-text-muted)">
+              You&apos;re <span className="text-[#19B5CA]">{Math.round(progress * 100)}%</span> of
+              the way to <span className={nextTier.color}>{nextTier.name}</span> tier!
             </span>
           </div>
           <div className="flex flex-col items-center">
-            <span className={`${tier.color} text-[clamp(1.5rem,2.5vw,3rem)] font-bold`}>
-              {tier.name}
-            </span>
-            <span className="text-[clamp(1.25rem,2vw,1.875rem)]">Member</span>
-            <span className="mt-4 text-[clamp(0.7rem,1.1vw,1.125rem)] text-balance text-center">
+            <span className={`${tier.color} fl-text-2xl/4xl font-bold`}>{tier.name}</span>
+            <span className="fl-text-lg/2xl text-(--obs-text-muted)">Member</span>
+            <span className="mt-4 max-w-56 text-balance text-center fl-text-sm/base text-(--obs-text-muted)">
               Level up to enjoy exclusive benefits!
             </span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-primary text-[clamp(1.5rem,2.5vw,3rem)] font-bold">
-              {points}
-            </span>
-            <span className="text-[clamp(1.25rem,2vw,1.875rem)]">Points</span>
-            <span className="mt-4 text-[clamp(0.7rem,1.1vw,1.125rem)] text-balance text-center">
+            <span className="fl-text-2xl/4xl font-bold text-[#19B5CA]">{points}</span>
+            <span className="fl-text-lg/2xl text-(--obs-text-muted)">Points</span>
+            <span className="mt-4 max-w-56 text-balance text-center fl-text-sm/base text-(--obs-text-muted)">
               Buy merch in the{" "}
-              <a href="/store" className="text-blue-400 cursor-pointer underline">
+              <a href="/store" className="obs-link underline">
                 Store
               </a>
-              !
+              !<br /> (Coming Soon)
             </span>
           </div>
         </div>
