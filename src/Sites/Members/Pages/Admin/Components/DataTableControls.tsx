@@ -30,7 +30,7 @@ export default function DataTableControls() {
 
   return (
     <div className="mb-4 flex flex-col items-center justify-between gap-4 md:flex-row md:gap-0">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-center gap-4">
         <Select
           label="Data table"
           fieldId="admin-data-table-picker"
