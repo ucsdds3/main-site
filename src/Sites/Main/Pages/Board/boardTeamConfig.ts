@@ -5,9 +5,6 @@ export function labelToTeamKey(label: string): string {
   return label.trim().replace(/\s+/g, "_").toUpperCase();
 }
 
-/** Tab order and copy: label (key) → description (value). */
-export { teamsJson };
-
 function labelForTeamKey(key: string): string | undefined {
   return Object.keys(teamsJson).find(label => labelToTeamKey(label) === key);
 }
@@ -30,7 +27,7 @@ export function memberMatchesTab(
   member: { teamRoles: Record<string, string> },
   tabKey: string
 ): boolean {
-  return Object.prototype.hasOwnProperty.call(member.teamRoles, tabKey);
+  return Object.keys(member.teamRoles).map(labelToTeamKey).includes(tabKey);
 }
 
 export function roleForMemberOnTab(

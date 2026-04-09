@@ -8,6 +8,7 @@ import { twMerge } from "src/Utils/cn";
 
 import {
   boardTeamTabKeys,
+  labelToTeamKey,
   memberMatchesTab,
   roleForMemberOnTab,
   teamDescriptionForKey,
@@ -26,7 +27,7 @@ const Board = () => {
   const teamKeys = useMemo(() => {
     const keys = new Set<string>();
     for (const m of members) {
-      for (const k of Object.keys(m.teamRoles)) keys.add(k);
+      for (const k of Object.keys(m.teamRoles)) keys.add(labelToTeamKey(k));
     }
     return boardTeamTabKeys(keys);
   }, [members]);
