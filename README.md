@@ -1,6 +1,6 @@
 # 🚀 DS3 Main Site Documentation for the github workshop
 
-## 🎯 Getting Started 
+## 🎯 Getting Started with this repo
 
 1. Clone the repo with `git clone https://github.com/ucsdds3/main-site.git`
 2. Open the repo in your preferred code editor (For VSCode, use the command `code main-site`)
