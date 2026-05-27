@@ -4,7 +4,7 @@ import { useState } from "react";
 import { z } from "zod";
 
 const forgotPasswordSchema = z.object({
-  email: z.email("Invalid email format").regex(/\.edu$/, "Must be a .edu email address"),
+  email: z.email("Invalid email format"),
 });
 
 export function useForgotPassword() {

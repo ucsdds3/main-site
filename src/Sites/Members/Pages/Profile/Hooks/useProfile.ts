@@ -10,7 +10,7 @@ import { useAuthStore } from "../../../Hooks/useAuthStore";
 export function useProfile() {
   const signupSchema = z
     .object({
-      email: z.email("Invalid email format").regex(/\.edu$/, "Must be a .edu email address"),
+      email: z.email("Invalid email format"),
       full_name: z
         .string()
         .min(2, "Name must be at least 2 characters")

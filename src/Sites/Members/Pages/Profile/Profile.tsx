@@ -52,7 +52,7 @@ const Profile = () => {
                 />
                 <Input
                   required
-                  label="UCSD Email"
+                  label="Email"
                   type="email"
                   error={errors.toLowerCase().includes("email")}
                   icon={<FaEnvelope className="mr-2 shrink-0 text-(--obs-text-muted)" />}
