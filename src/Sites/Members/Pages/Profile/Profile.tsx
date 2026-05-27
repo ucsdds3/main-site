@@ -22,7 +22,7 @@ import { useProfile } from "./Hooks/useProfile";
 import { getPdfPreviewUrl } from "../../Utils/functions";
 
 const Profile = () => {
-  const { errors, data, setData, handleUpdateProfile } = useProfile();
+  const { errors, data, setData, handleUpdateProfile, pendingEmail } = useProfile();
   const { handleForgotPassword } = useForgotPassword();
 
   const previewUrl = getPdfPreviewUrl(data?.resume_link);
@@ -50,16 +50,23 @@ const Profile = () => {
                   setValue={(value: string) => setData({ ...data, full_name: value })}
                   className="flex-1 w-full md:w-auto"
                 />
-                <Input
-                  required
-                  label="Email"
-                  type="email"
-                  error={errors.toLowerCase().includes("email")}
-                  icon={<FaEnvelope className="mr-2 shrink-0 text-(--obs-text-muted)" />}
-                  value={data?.email}
-                  setValue={(value: string) => setData({ ...data, email: value })}
-                  className="flex-1 w-full"
-                />
+                <div className="flex flex-1 flex-col gap-1 w-full">
+                  <Input
+                    required
+                    label="Email"
+                    type="email"
+                    error={errors.toLowerCase().includes("email")}
+                    icon={<FaEnvelope className="mr-2 shrink-0 text-(--obs-text-muted)" />}
+                    value={data?.email}
+                    setValue={(value: string) => setData({ ...data, email: value })}
+                    className="w-full"
+                  />
+                  {pendingEmail && (
+                    <p className="px-1 text-xs text-amber-500">
+                      Confirm {pendingEmail} to finish your email change.
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* MAJOR & DOB */}

@@ -1,11 +1,37 @@
 import z from "zod";
 import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
+import { User } from "@supabase/supabase-js";
 
 import { supabase } from "src/Utils/supabase";
 import { validateResumeLink } from "src/Utils/functions";
 
 import { useAuthStore } from "../../../Hooks/useAuthStore";
+
+type ProfileData = {
+  email?: string;
+  full_name?: string;
+  major?: string;
+  date_of_birth?: string;
+  graduation_year?: number;
+  gender?: string;
+  in_talent_pool?: boolean;
+  on_mailing_list?: boolean;
+  is_grad_student?: boolean;
+  resume_link?: string;
+  github_link?: string;
+  linkedin_link?: string;
+  other_link?: string;
+  pending_email?: string | null;
+  profile_picture?: string;
+};
+
+function buildProfileData(user: User): ProfileData {
+  return {
+    ...user.user_metadata,
+    email: user.email ?? user.user_metadata?.email,
+  };
+}
 
 export function useProfile() {
   const signupSchema = z
@@ -51,17 +77,28 @@ export function useProfile() {
     });
 
   const { user, setUser } = useAuthStore();
-  const [data, setData] = useState(user?.user_metadata);
+  const [data, setData] = useState<ProfileData | undefined>(() =>
+    user ? buildProfileData(user) : undefined
+  );
   const [errors, setErrors] = useState<string>("");
   const originalDataRef = useRef<string | null>(null);
   const hasUnsavedChangesRef = useRef(false);
   const isInitializedRef = useRef(false);
   const toastIdRef = useRef<string | null>(null);
 
+  useEffect(() => {
+    if (user && !isInitializedRef.current) {
+      const profileData = buildProfileData(user);
+      setData(profileData);
+      originalDataRef.current = JSON.stringify(profileData);
+      isInitializedRef.current = true;
+    }
+  }, [user]);
+
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>): Promise<boolean> => {
     e.preventDefault();
 
-    if (!data) {
+    if (!data || !user?.email) {
       toast.error("No data to update");
       return false;
     }
@@ -75,60 +112,84 @@ export function useProfile() {
       return false;
     }
 
-    // Filter data to only include Members table fields (exclude password fields)
+    const currentAuthEmail = user.email.toLowerCase();
+    const normalizedEmail = (data.email as string).toLowerCase();
+    const emailChanged = normalizedEmail !== currentAuthEmail;
+
+    if (emailChanged) {
+      const { data: exists, error: lookupError } = await supabase.rpc(
+        "check_member_email_exists",
+        { check_email: normalizedEmail }
+      );
+
+      if (lookupError) {
+        toast.error(lookupError.message);
+        return false;
+      }
+      if (exists) {
+        toast.error("An account already exists with that email address.");
+        return false;
+      }
+    }
+
     const allowedFields = Object.keys(signupSchema.shape).filter(
       key => key !== "password" && key !== "confirm_password"
     );
     const memberUpdateData = Object.fromEntries(
       Object.entries(data).filter(([key]) => allowedFields.includes(key))
     );
-    const normalizedEmail = data?.email?.toLowerCase();
-    memberUpdateData.email = normalizedEmail;
+
+    if (emailChanged) {
+      delete memberUpdateData.email;
+    } else {
+      memberUpdateData.email = normalizedEmail;
+    }
 
     const { error: memberError } = await supabase
       .from("Members")
       .update(memberUpdateData)
-      .eq("email", (user?.email ?? data?.email)?.toLowerCase());
+      .eq("email", currentAuthEmail);
     if (memberError) {
       toast.error(memberError.message);
       return false;
     }
 
-    const { error: userError, data: updatedUser } = await supabase.auth.updateUser({
-      email: normalizedEmail,
-      data: { ...data, email: normalizedEmail },
-    });
+    const confirmedEmail = user.email;
+    const metadataUpdate = emailChanged
+      ? { ...data, email: confirmedEmail, pending_email: normalizedEmail }
+      : { ...data, email: normalizedEmail };
+
+    const { error: userError, data: updatedUser } = await supabase.auth.updateUser(
+      emailChanged
+        ? { email: normalizedEmail, data: metadataUpdate }
+        : { data: metadataUpdate }
+    );
     if (userError) {
       toast.error(userError.message);
       return false;
     }
 
-    // Update local state and auth store with the updated user
     if (updatedUser?.user) {
-      const updatedMetadata = updatedUser.user.user_metadata;
-      if (updatedMetadata) {
-        setData(updatedMetadata);
-        originalDataRef.current = JSON.stringify(updatedMetadata);
-      }
+      const formData = emailChanged
+        ? { ...metadataUpdate, email: confirmedEmail }
+        : { ...metadataUpdate, email: normalizedEmail };
+      setData(formData);
+      originalDataRef.current = JSON.stringify(formData);
       setUser(updatedUser.user);
       hasUnsavedChangesRef.current = false;
     }
 
-    if (user?.email && data?.email && user.email !== data.email) {
+    setErrors("");
+    if (emailChanged) {
       toast.success(
         "Profile updated. Check your new email inbox and click the confirmation link to complete the email change.",
         { duration: 6000 }
       );
-    } else toast.success("Profile updated successfully");
+    } else {
+      toast.success("Profile updated successfully");
+    }
     return true;
   };
-
-  useEffect(() => {
-    if (data && !isInitializedRef.current) {
-      originalDataRef.current = JSON.stringify(data);
-      isInitializedRef.current = true;
-    }
-  }, [data]);
 
   useEffect(() => {
     if (data && originalDataRef.current && isInitializedRef.current) {
@@ -158,7 +219,6 @@ export function useProfile() {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const result = await handleUpdateProfile(e);
     if (result === true) {
-      // Dismiss the unsaved changes toast immediately by ID
       toast.dismiss("unsaved-changes");
       toastIdRef.current = null;
     }
@@ -169,5 +229,6 @@ export function useProfile() {
     errors,
     setData,
     handleUpdateProfile: handleFormSubmit,
+    pendingEmail: user?.new_email ?? null,
   };
 }
