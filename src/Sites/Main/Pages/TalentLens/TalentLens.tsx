@@ -1,84 +1,54 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
-import { FiAlertCircle, FiArrowRight, FiBriefcase, FiSearch, FiSliders } from "react-icons/fi";
+import { useSearchParams } from "react-router";
+import {
+  FiAlertCircle,
+  FiArrowRight,
+  FiBookmark,
+  FiBriefcase,
+  FiClipboard,
+  FiDownload,
+  FiSearch,
+  FiSliders,
+  FiX,
+} from "react-icons/fi";
 
 import Page from "src/Shared/Page/Page";
 
 import { searchTalentLens } from "./api";
-import type {
-  TalentLensCandidateResult,
-  TalentLensEvidenceChunk,
-  TalentLensInputMode,
-  TalentLensSearchResponse,
+import CandidateCard from "./components/CandidateCard";
+import CandidateDetailModal from "./components/CandidateDetailModal";
+import SavedCandidatesPanel from "./components/SavedCandidatesPanel";
+import SearchSuggestions, {
+  buildSuggestionItems,
+  type SuggestionItem,
+} from "./components/SearchSuggestions";
+import GraduationYearFilterPanel from "./components/GraduationYearFilter";
+import { Chip, FieldLabel } from "./components/ui";
+import { GRADUATION_YEAR_SELECT_OPTIONS, skillSuggestions, suggestedSearches } from "./constants";
+import { useRecentQueries } from "./hooks/useRecentQueries";
+import { useResultKeyboardNav } from "./hooks/useResultKeyboardNav";
+import { useSavedCandidates } from "./hooks/useSavedCandidates";
+import { getCandidateStorageId } from "./storage";
+import {
+  EMPTY_GRADUATION_YEAR_FILTER,
+  type GraduationYearFilter,
+  type SearchTimingMeta,
+  type TalentLensCandidateResult,
+  type TalentLensInputMode,
+  type TalentLensSearchResponse,
 } from "./types";
-
-const suggestedSearches = [
-  "React, TypeScript, machine learning",
-  "Find students with Python, NLP, and research experience",
-  "Data science intern with SQL, dashboards, and communication skills",
-];
-
-const percentFormatter = new Intl.NumberFormat("en-US", {
-  maximumFractionDigits: 0,
-  style: "percent",
-});
-
-const formatScore = (score: number | null | undefined) => {
-  if (typeof score !== "number" || Number.isNaN(score)) {
-    return "N/A";
-  }
-
-  return percentFormatter.format(score > 1 ? score / 100 : score);
-};
-
-const compactList = (items: string[] | null | undefined) =>
-  Array.isArray(items) ? items.filter(Boolean) : [];
-
-const getEvidenceText = (chunk: string | TalentLensEvidenceChunk) =>
-  typeof chunk === "string" ? chunk : chunk.text || "";
-
-const formatStatus = (status: string | Record<string, unknown> | null | undefined) => {
-  if (!status) return "";
-  if (typeof status === "string") return status;
-
-  const entries = Object.entries(status)
-    .filter(([, value]) => value !== null && value !== undefined && value !== "")
-    .map(([key, value]) => `${key}: ${String(value)}`);
-
-  return entries.join(", ");
-};
-
-const FieldLabel = ({ children }: { children: ReactNode }) => (
-  <span className="text-sm font-medium text-(--obs-text-muted)">{children}</span>
-);
-
-const Chip = ({
-  children,
-  tone = "neutral",
-}: {
-  children: ReactNode;
-  tone?: "cyan" | "orange" | "neutral";
-}) => {
-  const toneClass =
-    tone === "cyan"
-      ? "border-[#19B5CA]/35 bg-[#19B5CA]/10 text-[#8eeaf4]"
-      : tone === "orange"
-        ? "border-[#F58134]/35 bg-[#F58134]/10 text-[#ffbd89]"
-        : "border-(--obs-border-mid) bg-(--obs-surface) text-(--obs-text-primary)";
-
-  return (
-    <span className={`rounded-md border px-2.5 py-1 text-xs font-medium ${toneClass}`}>
-      {children}
-    </span>
-  );
-};
-
-const ScoreTile = ({ label, value }: { label: string; value: string }) => (
-  <div className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2">
-    <div className="text-xs text-(--obs-text-muted)">{label}</div>
-    <div className="mt-1 text-lg font-semibold text-(--obs-text-primary)">{value}</div>
-  </div>
-);
+import {
+  collectGraduationYearOptions,
+  exportCandidatesCsv,
+  filterCandidatesByGradYear,
+  formatEngineMode,
+  formatRetrievalBackend,
+  getCandidateContact,
+  getSearchTopK,
+  isGraduationYearFilterActive,
+  msFormatter,
+} from "./utils";
 
 const EmptyState = ({ onPickSearch }: { onPickSearch: (search: string) => void }) => (
   <section className="rounded-lg border border-dashed border-(--obs-border-mid) bg-(--obs-surface) p-6">
@@ -141,157 +111,250 @@ const ErrorState = ({ message }: { message: string }) => (
   </section>
 );
 
-const CandidateCard = ({ candidate }: { candidate: TalentLensCandidateResult }) => {
-  const matchedSkills = compactList(candidate.matched_skills);
-  const evidenceChunks = (candidate.top_evidence_chunks || [])
-    .map(chunk => getEvidenceText(chunk))
-    .filter(Boolean)
-    .slice(0, 3);
-  const matchedRequirements = compactList(candidate.grok_matched_requirements);
-  const missingRequirements = compactList(candidate.grok_missing_requirements);
-  const weaknessFlags = compactList(candidate.grok_weakness_flags);
-  const displayName = candidate.full_name || candidate.filename || `Candidate ${candidate.rank}`;
-  const hardFilterStatus = formatStatus(candidate.hard_filter_status);
-
-  return (
-    <article className="rounded-lg border border-(--obs-border) bg-[rgba(255,255,255,0.045)] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.18)]">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <Chip tone="orange">Rank {candidate.rank}</Chip>
-            {candidate.company_match_status ? <Chip>{candidate.company_match_status}</Chip> : null}
-            {candidate.grok_status ? <Chip tone="cyan">{candidate.grok_status}</Chip> : null}
-          </div>
-          <h3 className="mt-3 text-2xl font-semibold leading-tight text-(--obs-text-primary)">
-            {displayName}
-          </h3>
-          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-(--obs-text-muted)">
-            {candidate.major ? <span>{candidate.major}</span> : null}
-            {candidate.graduation_year ? <span>Class of {candidate.graduation_year}</span> : null}
-            {candidate.page_count ? <span>{candidate.page_count} resume page(s)</span> : null}
-          </div>
-        </div>
-        <div className="grid min-w-[220px] grid-cols-2 gap-2">
-          <ScoreTile label="Overall" value={formatScore(candidate.score)} />
-          <ScoreTile label="Semantic" value={formatScore(candidate.semantic_score)} />
-        </div>
-      </div>
-
-      {matchedSkills.length ? (
-        <div className="mt-5">
-          <p className="text-sm font-semibold text-(--obs-text-primary)">Matched skills</p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {matchedSkills.map(skill => (
-              <Chip key={skill} tone="cyan">
-                {skill}
-              </Chip>
-            ))}
-          </div>
-        </div>
-      ) : null}
-
-      {candidate.grok_summary ? (
-        <div className="mt-5 rounded-lg border border-[#19B5CA]/20 bg-[#19B5CA]/10 p-4">
-          <p className="text-sm font-semibold text-(--obs-text-primary)">AI fit summary</p>
-          <p className="mt-2 text-sm leading-6 text-(--obs-text-muted)">{candidate.grok_summary}</p>
-        </div>
-      ) : null}
-
-      {evidenceChunks.length ? (
-        <div className="mt-5">
-          <p className="text-sm font-semibold text-(--obs-text-primary)">
-            Why this candidate matched
-          </p>
-          <div className="mt-3 space-y-3">
-            {evidenceChunks.map((chunk, index) => (
-              <blockquote
-                key={`${candidate.candidate_id}-evidence-${index}`}
-                className="rounded-lg border-l-2 border-[#F58134] bg-(--obs-surface) px-4 py-3 text-sm leading-6 text-(--obs-text-muted)"
-              >
-                {chunk}
-              </blockquote>
-            ))}
-          </div>
-        </div>
-      ) : null}
-
-      {matchedRequirements.length || missingRequirements.length || weaknessFlags.length ? (
-        <div className="mt-5 grid gap-3 md:grid-cols-3">
-          {matchedRequirements.length ? (
-            <RequirementList title="Requirements met" items={matchedRequirements} tone="cyan" />
-          ) : null}
-          {missingRequirements.length ? (
-            <RequirementList title="Missing" items={missingRequirements} tone="orange" />
-          ) : null}
-          {weaknessFlags.length ? (
-            <RequirementList title="Watchouts" items={weaknessFlags} />
-          ) : null}
-        </div>
-      ) : null}
-
-      {hardFilterStatus ? (
-        <p className="mt-5 text-xs text-(--obs-text-faint)">Filter status: {hardFilterStatus}</p>
-      ) : null}
-    </article>
-  );
-};
-
-const RequirementList = ({
-  title,
-  items,
-  tone = "neutral",
-}: {
-  title: string;
-  items: string[];
-  tone?: "cyan" | "orange" | "neutral";
-}) => (
-  <div className="rounded-lg border border-(--obs-border) bg-(--obs-surface) p-3">
-    <p className="text-sm font-semibold text-(--obs-text-primary)">{title}</p>
-    <div className="mt-2 flex flex-wrap gap-2">
-      {items.slice(0, 6).map(item => (
-        <Chip key={item} tone={tone}>
-          {item}
-        </Chip>
-      ))}
-    </div>
-  </div>
-);
-
 const TalentLens = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [inputMode, setInputMode] = useState<TalentLensInputMode>("Skills");
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [topK, setTopK] = useState(5);
   const [minScore, setMinScore] = useState(0);
+  const [gradYearFilter, setGradYearFilter] = useState<GraduationYearFilter>(
+    EMPTY_GRADUATION_YEAR_FILTER
+  );
   const [recruiterCompany, setRecruiterCompany] = useState("");
   const [recruiterJobTitle, setRecruiterJobTitle] = useState("");
   const [response, setResponse] = useState<TalentLensSearchResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [actionMessage, setActionMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [lastSearchMeta, setLastSearchMeta] = useState<SearchTimingMeta | null>(null);
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const [detailCandidate, setDetailCandidate] = useState<TalentLensCandidateResult | null>(null);
+  const [isSavedPanelOpen, setIsSavedPanelOpen] = useState(false);
+  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
+  const [suggestionActiveIndex, setSuggestionActiveIndex] = useState(0);
 
-  const results = useMemo(() => response?.results ?? [], [response]);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const jdTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const suggestionsListboxId = "talentlens-search-suggestions";
+
+  const { recentQueries, addRecentQuery } = useRecentQueries();
+  const { saved, isSaved, toggleSaved, unsave, clearAll, findSaved } = useSavedCandidates();
+
+  const rawResults = useMemo(() => response?.results ?? [], [response]);
+  const gradYearFilterActive = isGraduationYearFilterActive(gradYearFilter);
+  const graduationYearOptions = useMemo(
+    () =>
+      rawResults.length
+        ? collectGraduationYearOptions(rawResults)
+        : [...GRADUATION_YEAR_SELECT_OPTIONS],
+    [rawResults]
+  );
+  const results = useMemo(
+    () => filterCandidatesByGradYear(rawResults, gradYearFilter).slice(0, topK),
+    [gradYearFilter, rawResults, topK]
+  );
   const engineStatus = response?.engine_status;
+  const engineModeLabel = formatEngineMode(engineStatus?.mode_label);
+  const retrievalBackendLabel = formatRetrievalBackend(engineStatus?.retrieval_backend);
+
+  const effectiveQuery = useMemo(() => {
+    if (inputMode === "Job Description") return query.trim();
+    return [...selectedSkills, query.trim()].filter(Boolean).join(", ");
+  }, [inputMode, query, selectedSkills]);
+
+  const suggestionItems = useMemo(
+    () => buildSuggestionItems(query, inputMode, recentQueries),
+    [inputMode, query, recentQueries]
+  );
+
+  const openCandidate = useCallback((candidate: TalentLensCandidateResult) => {
+    setDetailCandidate(candidate);
+    const id = getCandidateStorageId(candidate);
+    setSearchParams(
+      prev => {
+        const next = new URLSearchParams(prev);
+        next.set("candidate", id);
+        return next;
+      },
+      { replace: true }
+    );
+  }, [setSearchParams]);
+
+  const closeDetail = useCallback(() => {
+    setDetailCandidate(null);
+    setSearchParams(
+      prev => {
+        const next = new URLSearchParams(prev);
+        next.delete("candidate");
+        return next;
+      },
+      { replace: true }
+    );
+  }, [setSearchParams]);
+
+  const resolveCandidateById = useCallback(
+    (candidateId: string) => {
+      const fromResults = results.find(item => getCandidateStorageId(item) === candidateId);
+      if (fromResults) return fromResults;
+      return findSaved(candidateId) ?? null;
+    },
+    [findSaved, results]
+  );
+
+  useEffect(() => {
+    const candidateId = searchParams.get("candidate");
+    if (!candidateId) {
+      setDetailCandidate(null);
+      return;
+    }
+    const candidate = resolveCandidateById(candidateId);
+    if (candidate) setDetailCandidate(candidate);
+  }, [resolveCandidateById, searchParams]);
+
+  useEffect(() => {
+    if (!results.length) {
+      setFocusedIndex(0);
+      return;
+    }
+    setFocusedIndex(current => Math.min(current, results.length - 1));
+  }, [results.length]);
+
+  const { setCardRef } = useResultKeyboardNav({
+    results,
+    isEnabled: results.length > 0 && !isLoading && !detailCandidate,
+    focusedIndex,
+    setFocusedIndex,
+    onOpen: openCandidate,
+    suggestionsOpen: isSuggestionsOpen,
+  });
+
+  const applySuggestion = (item: SuggestionItem) => {
+    if (item.type === "recent" && item.inputMode !== inputMode) {
+      setInputMode(item.inputMode);
+    }
+    setQuery(item.query);
+    setIsSuggestionsOpen(false);
+    setSuggestionActiveIndex(0);
+  };
+
+  const handleSearchFieldKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (!isSuggestionsOpen || !suggestionItems.length) {
+      if (event.key === "Escape") setIsSuggestionsOpen(false);
+      return;
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setSuggestionActiveIndex(prev => (prev + 1) % suggestionItems.length);
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setSuggestionActiveIndex(
+        prev => (prev - 1 + suggestionItems.length) % suggestionItems.length
+      );
+      return;
+    }
+
+    if (event.key === "Enter" && suggestionActiveIndex >= 0) {
+      event.preventDefault();
+      applySuggestion(suggestionItems[suggestionActiveIndex]);
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setIsSuggestionsOpen(false);
+    }
+  };
+
+  const toggleSkill = (skill: string) => {
+    setSelectedSkills(current =>
+      current.includes(skill) ? current.filter(item => item !== skill) : [...current, skill]
+    );
+  };
+
+  const handleClear = () => {
+    setQuery("");
+    setSelectedSkills([]);
+    setRecruiterCompany("");
+    setRecruiterJobTitle("");
+    setGradYearFilter(EMPTY_GRADUATION_YEAR_FILTER);
+    setResponse(null);
+    setError(null);
+    setActionMessage(null);
+    setLastSearchMeta(null);
+    setFocusedIndex(0);
+    closeDetail();
+  };
+
+  const exportContacts = () => {
+    if (!results.length) return;
+    exportCandidatesCsv(results);
+    setActionMessage("Exported candidate contact CSV.");
+  };
+
+  const copyEmails = async () => {
+    const emails = Array.from(
+      new Set(results.map(candidate => getCandidateContact(candidate).email).filter(Boolean))
+    );
+
+    if (!emails.length) {
+      setActionMessage("No emails were found in these results.");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(emails.join(", "));
+      setActionMessage(`Copied ${emails.length} email${emails.length === 1 ? "" : "s"}.`);
+    } catch {
+      setActionMessage(`Emails: ${emails.join(", ")}`);
+    }
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSuggestionsOpen(false);
 
-    if (!query.trim()) {
+    if (!effectiveQuery) {
       setError("Enter skills, experience, or a job description before searching.");
       return;
     }
 
     setIsLoading(true);
     setError(null);
+    setActionMessage(null);
+    setLastSearchMeta(null);
+    closeDetail();
+
+    const started = performance.now();
 
     try {
       const searchResponse = await searchTalentLens({
-        query: query.trim(),
-        top_k: topK,
+        query: effectiveQuery,
+        top_k: getSearchTopK(topK, gradYearFilter),
         min_score: minScore,
         input_mode: inputMode,
-        recruiter_company: recruiterCompany.trim() || null,
-        recruiter_job_title: recruiterJobTitle.trim() || null,
+        recruiter_company: inputMode === "Job Description" ? recruiterCompany.trim() || null : null,
+        recruiter_job_title:
+          inputMode === "Job Description" ? recruiterJobTitle.trim() || null : null,
       });
       setResponse(searchResponse);
+      setFocusedIndex(0);
+      const filteredCount = filterCandidatesByGradYear(searchResponse.results, gradYearFilter).slice(
+        0,
+        topK
+      ).length;
+      setLastSearchMeta({
+        count: filteredCount,
+        elapsedMs: Math.round(performance.now() - started),
+        totalBeforeFilter: gradYearFilterActive ? searchResponse.results.length : undefined,
+      });
+      addRecentQuery(effectiveQuery, inputMode);
     } catch (searchError) {
       setResponse(null);
       setError(searchError instanceof Error ? searchError.message : "Search failed unexpectedly.");
@@ -299,6 +362,50 @@ const TalentLens = () => {
       setIsLoading(false);
     }
   };
+
+  const openSavedCandidate = (candidateId: string) => {
+    const candidate = resolveCandidateById(candidateId);
+    if (candidate) openCandidate(candidate);
+  };
+
+  const resultsSummary = useMemo(() => {
+    if (lastSearchMeta) {
+      const countLabel = `${lastSearchMeta.count} result${lastSearchMeta.count === 1 ? "" : "s"}`;
+      const filteredNote =
+        gradYearFilterActive &&
+        lastSearchMeta.totalBeforeFilter !== undefined &&
+        lastSearchMeta.totalBeforeFilter !== lastSearchMeta.count
+          ? ` (from ${lastSearchMeta.totalBeforeFilter} before graduation filter)`
+          : gradYearFilterActive && response
+            ? ` (graduation year filter active)`
+            : "";
+      return `${countLabel}${filteredNote} in ${msFormatter.format(lastSearchMeta.elapsedMs)} ms`;
+    }
+    if (results.length) {
+      return `${results.length} ranked candidate${results.length === 1 ? "" : "s"} returned`;
+    }
+    if (response && rawResults.length && gradYearFilterActive) {
+      return "No candidates match the graduation year filter.";
+    }
+    return "Results will appear here after a search.";
+  }, [gradYearFilterActive, lastSearchMeta, rawResults.length, response, results.length]);
+
+  const searchFieldWrapper = (children: ReactNode) => (
+    <div className="relative">
+      {children}
+      <SearchSuggestions
+        isOpen={isSuggestionsOpen}
+        inputValue={query}
+        inputMode={inputMode}
+        recentQueries={recentQueries}
+        activeIndex={suggestionActiveIndex}
+        listboxId={suggestionsListboxId}
+        onSelect={applySuggestion}
+        onActiveIndexChange={setSuggestionActiveIndex}
+        onClose={() => setIsSuggestionsOpen(false)}
+      />
+    </div>
+  );
 
   return (
     <Page>
@@ -339,91 +446,200 @@ const TalentLens = () => {
             className="rounded-lg border border-(--obs-border) bg-[rgba(255,255,255,0.05)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.22)]"
             onSubmit={handleSubmit}
           >
-            <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
-              <label className="flex flex-col gap-2">
-                <FieldLabel>Search query</FieldLabel>
-                <textarea
-                  className="min-h-40 resize-y rounded-lg border border-(--obs-border) bg-(--obs-surface) px-4 py-3 text-base leading-7 text-(--obs-text-primary) outline-none transition placeholder:text-(--obs-text-faint) focus:border-[#19B5CA]/55"
-                  value={query}
-                  onChange={event => setQuery(event.target.value)}
-                  placeholder={`React, TypeScript, machine learning\nFind students with Python, NLP, and research experience\nPaste a job description here...`}
-                />
-              </label>
-
-              <div className="grid gap-4">
-                <label className="flex flex-col gap-2">
-                  <FieldLabel>Input mode</FieldLabel>
-                  <select
-                    className="obs-select w-full"
-                    value={inputMode}
-                    onChange={event => setInputMode(event.target.value as TalentLensInputMode)}
-                  >
-                    <option value="Skills">Skills</option>
-                    <option value="Job Description">Job Description</option>
-                  </select>
-                </label>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <label className="flex flex-col gap-2">
-                    <FieldLabel>Top K</FieldLabel>
-                    <input
-                      className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none focus:border-[#19B5CA]/55"
-                      type="number"
-                      min={1}
-                      max={20}
-                      value={topK}
-                      onChange={event => setTopK(Number(event.target.value))}
-                    />
-                  </label>
-                  <label className="flex flex-col gap-2">
-                    <FieldLabel>Min score</FieldLabel>
-                    <input
-                      className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none focus:border-[#19B5CA]/55"
-                      type="number"
-                      min={0}
-                      max={1}
-                      step={0.05}
-                      value={minScore}
-                      onChange={event => setMinScore(Number(event.target.value))}
-                    />
-                  </label>
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-3 border-b border-(--obs-border) pb-5 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p className="text-lg font-semibold text-(--obs-text-primary)">Search setup</p>
+                  <p className="mt-1 text-sm text-(--obs-text-muted)">
+                    Choose a skills search or paste a full job description.
+                  </p>
                 </div>
-
-                <label className="flex flex-col gap-2">
-                  <FieldLabel>Recruiter company</FieldLabel>
-                  <input
-                    className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none placeholder:text-(--obs-text-faint) focus:border-[#19B5CA]/55"
-                    value={recruiterCompany}
-                    onChange={event => setRecruiterCompany(event.target.value)}
-                    placeholder="Optional"
-                  />
-                </label>
-
-                <label className="flex flex-col gap-2">
-                  <FieldLabel>Recruiter job title</FieldLabel>
-                  <input
-                    className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none placeholder:text-(--obs-text-faint) focus:border-[#19B5CA]/55"
-                    value={recruiterJobTitle}
-                    onChange={event => setRecruiterJobTitle(event.target.value)}
-                    placeholder="Optional"
-                  />
-                </label>
+                <div className="grid grid-cols-2 rounded-lg border border-(--obs-border) bg-(--obs-surface) p-1">
+                  {(["Skills", "Job Description"] as TalentLensInputMode[]).map(mode => (
+                    <button
+                      key={mode}
+                      type="button"
+                      className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
+                        inputMode === mode
+                          ? "bg-[#19B5CA] text-[#061019]"
+                          : "text-(--obs-text-muted) hover:text-(--obs-text-primary)"
+                      }`}
+                      onClick={() => {
+                        setInputMode(mode);
+                        setActionMessage(null);
+                        setIsSuggestionsOpen(false);
+                      }}
+                    >
+                      {mode}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            <div className="mt-5 flex flex-col gap-3 border-t border-(--obs-border) pt-5 md:flex-row md:items-center md:justify-between">
-              <div className="flex items-center gap-2 text-sm text-(--obs-text-muted)">
-                <FiSliders aria-hidden />
-                <span>Scores and evidence are returned by the TalentLens API.</span>
+              {inputMode === "Skills" ? (
+                <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
+                  <div className="flex flex-col gap-4">
+                    <label className="flex flex-col gap-2">
+                      <FieldLabel>Skills or experience</FieldLabel>
+                      {searchFieldWrapper(
+                        <input
+                          ref={searchInputRef}
+                          className="w-full rounded-lg border border-(--obs-border) bg-(--obs-surface) px-4 py-3 text-base text-(--obs-text-primary) outline-none transition placeholder:text-(--obs-text-faint) focus:border-[#19B5CA]/55"
+                          value={query}
+                          onChange={event => {
+                            setQuery(event.target.value);
+                            setSuggestionActiveIndex(0);
+                          }}
+                          onFocus={() => setIsSuggestionsOpen(true)}
+                          onBlur={() => setTimeout(() => setIsSuggestionsOpen(false), 150)}
+                          onKeyDown={handleSearchFieldKeyDown}
+                          placeholder="React, TypeScript, machine learning"
+                          role="combobox"
+                          aria-expanded={isSuggestionsOpen}
+                          aria-controls={suggestionsListboxId}
+                          aria-autocomplete="list"
+                        />
+                      )}
+                    </label>
+
+                    <div>
+                      <div className="flex items-center justify-between gap-3">
+                        <FieldLabel>Skill filters</FieldLabel>
+                        {selectedSkills.length ? (
+                          <button
+                            type="button"
+                            className="text-xs font-semibold text-[#F58134] hover:underline"
+                            onClick={() => setSelectedSkills([])}
+                          >
+                            Clear skills
+                          </button>
+                        ) : null}
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {skillSuggestions.map(skill => {
+                          const isActive = selectedSkills.includes(skill);
+                          return (
+                            <button
+                              key={skill}
+                              type="button"
+                              className={`rounded-md border px-3 py-2 text-sm transition ${
+                                isActive
+                                  ? "border-[#19B5CA]/55 bg-[#19B5CA]/15 text-[#8eeaf4]"
+                                  : "border-(--obs-border) bg-transparent text-(--obs-text-muted) hover:border-[#19B5CA]/45 hover:text-(--obs-text-primary)"
+                              }`}
+                              onClick={() => toggleSkill(skill)}
+                            >
+                              {skill}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid content-start gap-4">
+                    <div className="rounded-lg border border-(--obs-border) bg-(--obs-surface) p-4">
+                      <p className="text-sm font-semibold text-(--obs-text-primary)">
+                        Query sent to TalentLens
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-(--obs-text-muted)">
+                        {effectiveQuery || "Select chips or type skills to build a search."}
+                      </p>
+                    </div>
+                    <SearchControls
+                      topK={topK}
+                      minScore={minScore}
+                      gradYearFilter={gradYearFilter}
+                      graduationYearOptions={graduationYearOptions}
+                      setTopK={setTopK}
+                      setMinScore={setMinScore}
+                      setGradYearFilter={setGradYearFilter}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
+                  <label className="flex flex-col gap-2">
+                    <FieldLabel>Job description</FieldLabel>
+                    {searchFieldWrapper(
+                      <textarea
+                        ref={jdTextareaRef}
+                        className="min-h-56 w-full resize-y rounded-lg border border-(--obs-border) bg-(--obs-surface) px-4 py-3 text-base leading-7 text-(--obs-text-primary) outline-none transition placeholder:text-(--obs-text-faint) focus:border-[#19B5CA]/55"
+                        value={query}
+                        onChange={event => {
+                          setQuery(event.target.value);
+                          setSuggestionActiveIndex(0);
+                        }}
+                        onFocus={() => setIsSuggestionsOpen(true)}
+                        onBlur={() => setTimeout(() => setIsSuggestionsOpen(false), 150)}
+                        onKeyDown={handleSearchFieldKeyDown}
+                        placeholder="Paste a job description or requirements..."
+                        role="combobox"
+                        aria-expanded={isSuggestionsOpen}
+                        aria-controls={suggestionsListboxId}
+                        aria-autocomplete="list"
+                      />
+                    )}
+                  </label>
+
+                  <div className="grid content-start gap-4">
+                    <label className="flex flex-col gap-2">
+                      <FieldLabel>Recruiter company</FieldLabel>
+                      <input
+                        className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none placeholder:text-(--obs-text-faint) focus:border-[#19B5CA]/55"
+                        value={recruiterCompany}
+                        onChange={event => setRecruiterCompany(event.target.value)}
+                        placeholder="Optional company override"
+                      />
+                    </label>
+
+                    <label className="flex flex-col gap-2">
+                      <FieldLabel>Recruiter job title</FieldLabel>
+                      <input
+                        className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none placeholder:text-(--obs-text-faint) focus:border-[#19B5CA]/55"
+                        value={recruiterJobTitle}
+                        onChange={event => setRecruiterJobTitle(event.target.value)}
+                        placeholder="Optional title override"
+                      />
+                    </label>
+
+                    <SearchControls
+                      topK={topK}
+                      minScore={minScore}
+                      gradYearFilter={gradYearFilter}
+                      graduationYearOptions={graduationYearOptions}
+                      setTopK={setTopK}
+                      setMinScore={setMinScore}
+                      setGradYearFilter={setGradYearFilter}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="flex flex-col gap-3 border-t border-(--obs-border) pt-5 md:flex-row md:items-center md:justify-between">
+                <div className="flex items-center gap-2 text-sm text-(--obs-text-muted)">
+                  <FiSliders aria-hidden />
+                  <span>Scores and evidence are returned by the TalentLens API.</span>
+                </div>
+                <div className="flex flex-col gap-2 sm:flex-row">
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-(--obs-border) bg-transparent px-5 py-3 font-semibold text-(--obs-text-primary) transition hover:border-[#F58134]/50 hover:bg-[#F58134]/10"
+                    onClick={handleClear}
+                  >
+                    <FiX aria-hidden />
+                    Clear
+                  </button>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#F58134] px-5 py-3 font-semibold text-white transition hover:bg-[#f06f1d] disabled:cursor-not-allowed disabled:opacity-60"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Searching..." : "Search TalentLens"}
+                    <FiArrowRight aria-hidden />
+                  </button>
+                </div>
               </div>
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#F58134] px-5 py-3 font-semibold text-white transition hover:bg-[#f06f1d] disabled:cursor-not-allowed disabled:opacity-60"
-                disabled={isLoading}
-              >
-                {isLoading ? "Searching..." : "Search TalentLens"}
-                <FiArrowRight aria-hidden />
-              </button>
             </div>
           </form>
 
@@ -448,39 +664,94 @@ const TalentLens = () => {
                 <h2 className="text-2xl font-semibold text-(--obs-text-primary)">
                   Candidate matches
                 </h2>
-                <p className="mt-1 text-sm text-(--obs-text-muted)">
-                  {results.length
-                    ? `${results.length} ranked candidate${results.length === 1 ? "" : "s"} returned`
-                    : "Results will appear here after a search."}
-                </p>
+                <p className="mt-1 text-sm text-(--obs-text-muted)">{resultsSummary}</p>
+                {results.length ? (
+                  <p className="mt-1 text-xs text-(--obs-text-faint)">
+                    Use ↑↓ to browse, Enter to view details
+                  </p>
+                ) : null}
               </div>
-              {engineStatus ? (
-                <div className="flex flex-wrap gap-2">
-                  <Chip>{engineStatus.mode_label}</Chip>
-                  <Chip>{engineStatus.retrieval_backend}</Chip>
-                  {engineStatus.demo_mode ? <Chip tone="orange">Demo mode</Chip> : null}
-                </div>
-              ) : null}
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-2 rounded-md border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-sm font-medium text-(--obs-text-primary) transition hover:border-[#F58134]/45 hover:bg-[#F58134]/10"
+                  onClick={() => setIsSavedPanelOpen(true)}
+                >
+                  <FiBookmark aria-hidden />
+                  Saved ({saved.length})
+                </button>
+                {results.length ? (
+                  <>
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-2 rounded-md border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-sm font-medium text-(--obs-text-primary) transition hover:border-[#19B5CA]/45 hover:bg-[#19B5CA]/10"
+                      onClick={copyEmails}
+                    >
+                      <FiClipboard aria-hidden />
+                      Copy emails
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-2 rounded-md border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-sm font-medium text-(--obs-text-primary) transition hover:border-[#19B5CA]/45 hover:bg-[#19B5CA]/10"
+                      onClick={exportContacts}
+                    >
+                      <FiDownload aria-hidden />
+                      Export CSV
+                    </button>
+                  </>
+                ) : null}
+                {engineStatus ? (
+                  <>
+                    {engineModeLabel ? <Chip>{engineModeLabel}</Chip> : null}
+                    {retrievalBackendLabel ? <Chip>{retrievalBackendLabel}</Chip> : null}
+                    {engineStatus.demo_mode ? <Chip tone="orange">Demo mode</Chip> : null}
+                  </>
+                ) : null}
+              </div>
             </div>
+
+            {actionMessage ? (
+              <p className="rounded-md border border-[#19B5CA]/25 bg-[#19B5CA]/10 px-3 py-2 text-sm text-(--obs-text-primary)">
+                {actionMessage}
+              </p>
+            ) : null}
 
             {isLoading ? <LoadingState /> : null}
             {error && !isLoading ? <ErrorState message={error} /> : null}
             {!isLoading && !error && !response ? <EmptyState onPickSearch={setQuery} /> : null}
             {!isLoading && !error && response && !results.length ? (
               <section className="rounded-lg border border-(--obs-border) bg-(--obs-surface) p-6">
-                <p className="font-semibold text-(--obs-text-primary)">No matches found</p>
+                <p className="font-semibold text-(--obs-text-primary)">
+                  {rawResults.length && gradYearFilterActive
+                    ? "No candidates in this graduation year range"
+                    : "No matches found"}
+                </p>
                 <p className="mt-2 text-sm leading-6 text-(--obs-text-muted)">
-                  Try broadening the skills, reducing the minimum score, or switching input mode.
+                  {rawResults.length && gradYearFilterActive
+                    ? "Widen the graduation year range, clear the filter, or run a new search with a higher Top K."
+                    : "Try broadening the skills, reducing the minimum score, or switching input mode."}
                 </p>
               </section>
             ) : null}
 
             {!isLoading && !error && results.length ? (
               <div className="grid gap-5">
-                {results.map(candidate => (
+                {results.map((candidate, index) => (
                   <CandidateCard
-                    key={candidate.candidate_id || candidate.filename}
+                    key={getCandidateStorageId(candidate)}
                     candidate={candidate}
+                    index={index}
+                    isFocused={index === focusedIndex}
+                    isSaved={isSaved(candidate)}
+                    setCardRef={setCardRef}
+                    onOpen={() => {
+                      setFocusedIndex(index);
+                      openCandidate(candidate);
+                    }}
+                    onToggleSaved={() => {
+                      const added = toggleSaved(candidate);
+                      setActionMessage(added ? "Saved candidate." : "Removed from saved.");
+                    }}
                   />
                 ))}
               </div>
@@ -488,8 +759,80 @@ const TalentLens = () => {
           </section>
         </section>
       </main>
+
+      {detailCandidate ? (
+        <CandidateDetailModal
+          candidate={detailCandidate}
+          onClose={closeDetail}
+          onActionMessage={setActionMessage}
+        />
+      ) : null}
+
+      <SavedCandidatesPanel
+        isOpen={isSavedPanelOpen}
+        saved={saved}
+        onClose={() => setIsSavedPanelOpen(false)}
+        onOpenCandidate={candidateId => {
+          openSavedCandidate(candidateId);
+          setIsSavedPanelOpen(false);
+        }}
+        onUnsave={unsave}
+        onClearAll={clearAll}
+        onActionMessage={setActionMessage}
+      />
     </Page>
   );
 };
+
+const SearchControls = ({
+  topK,
+  minScore,
+  gradYearFilter,
+  graduationYearOptions,
+  setTopK,
+  setMinScore,
+  setGradYearFilter,
+}: {
+  topK: number;
+  minScore: number;
+  gradYearFilter: GraduationYearFilter;
+  graduationYearOptions: number[];
+  setTopK: (value: number) => void;
+  setMinScore: (value: number) => void;
+  setGradYearFilter: (value: GraduationYearFilter) => void;
+}) => (
+  <div className="flex flex-col gap-4">
+    <div className="grid grid-cols-2 gap-3">
+      <label className="flex flex-col gap-2">
+        <FieldLabel>Top K</FieldLabel>
+        <input
+          className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none focus:border-[#19B5CA]/55"
+          type="number"
+          min={1}
+          max={50}
+          value={topK}
+          onChange={event => setTopK(Number(event.target.value))}
+        />
+      </label>
+      <label className="flex flex-col gap-2">
+        <FieldLabel>Min score</FieldLabel>
+        <input
+          className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none focus:border-[#19B5CA]/55"
+          type="number"
+          min={0}
+          max={1}
+          step={0.05}
+          value={minScore}
+          onChange={event => setMinScore(Number(event.target.value))}
+        />
+      </label>
+    </div>
+    <GraduationYearFilterPanel
+      value={gradYearFilter}
+      yearOptions={graduationYearOptions}
+      onChange={setGradYearFilter}
+    />
+  </div>
+);
 
 export default TalentLens;

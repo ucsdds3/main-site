@@ -1,5 +1,16 @@
 export type TalentLensInputMode = "Skills" | "Job Description";
 
+/** Empty years + includeUnknown false = show all candidates. */
+export interface GraduationYearFilter {
+  years: number[];
+  includeUnknown: boolean;
+}
+
+export const EMPTY_GRADUATION_YEAR_FILTER: GraduationYearFilter = {
+  years: [],
+  includeUnknown: false,
+};
+
 export interface TalentLensSearchRequest {
   query: string;
   top_k: number;
@@ -31,6 +42,11 @@ export interface TalentLensCandidateResult {
   full_name: string | null;
   major: string | null;
   graduation_year: string | null;
+  email?: string | null;
+  linkedin?: string | null;
+  github?: string | null;
+  resume_link?: string | null;
+  local_resume_path?: string | null;
   matched_skills: string[];
   top_evidence_chunks: Array<string | TalentLensEvidenceChunk>;
   hard_filter_status: string | Record<string, unknown> | null;
@@ -50,4 +66,22 @@ export interface TalentLensSearchResponse {
   parsed_job_description: string | null;
   engine_status: TalentLensEngineStatus | null;
   results: TalentLensCandidateResult[];
+}
+
+export interface RecentQuery {
+  query: string;
+  inputMode: TalentLensInputMode;
+  at: number;
+}
+
+export interface SavedCandidateSnapshot {
+  candidate_id: string;
+  savedAt: number;
+  candidate: TalentLensCandidateResult;
+}
+
+export interface SearchTimingMeta {
+  count: number;
+  elapsedMs: number;
+  totalBeforeFilter?: number;
 }
