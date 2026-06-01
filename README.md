@@ -50,3 +50,17 @@ Check the depencencies listed below for this project before starting. Use these 
 - [React Icons](https://react-icons.github.io/react-icons/) - Icon Library 🖼️
 - [Daisy UI](https://daisyui.com/) - Tailwind CSS Component Library 🎯
 - [Framer Motion](https://www.framer.com/motion/) - Animation Library ✨
+
+## TalentLens API
+
+The `/talentlens` frontend route calls the TalentLens FastAPI backend through a Vite environment variable:
+
+```sh
+VITE_TALENTLENS_API_URL=http://localhost:8000
+```
+
+Use the local value above when running the backend with `uvicorn src.backend.api:app --reload`. Once the backend is deployed, replace it with the Cloud Run service URL, for example:
+
+```sh
+VITE_TALENTLENS_API_URL=https://talentlens-api-xxxxx.a.run.app
+```
