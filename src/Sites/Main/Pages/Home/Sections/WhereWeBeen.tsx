@@ -3,9 +3,11 @@ import Section from "src/Shared/Page/Section";
 
 import Carousel from "../Components/Carousel";
 import SlideshowCarousel from "../Components/SlideshowCarousel";
-import cardData from "../Data/testimonials.json";
+import { useWhereWeAreCards } from "../Hooks/useWhereWeAreCards";
 
 const WhereWeBeen = () => {
+  const { cards } = useWhereWeAreCards();
+
   return (
     <Section title="Where We Are" className="gap-8">
       <motion.div
@@ -28,7 +30,7 @@ const WhereWeBeen = () => {
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         className="w-full"
       >
-        <SlideshowCarousel images={cardData} />
+        <SlideshowCarousel images={cards} />
       </motion.div>
 
       <motion.div

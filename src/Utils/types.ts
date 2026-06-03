@@ -55,6 +55,8 @@ export type LinkType = {
 export type cardData = {
   image: string;
   title: string;
+  /** Second experience line, shown above Class of when present. */
+  subtitle?: string;
   description: string;
   author: string;
 };

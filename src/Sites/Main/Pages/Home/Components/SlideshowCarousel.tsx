@@ -59,9 +59,17 @@ const SlideshowCarousel = ({ images }: { images: cardData[] }) => {
 
                 <div className="obs-divider-fade" />
 
-                <p className="m-0 font-body text-[clamp(0.9rem,1.3vw,1.05rem)] font-light italic leading-[1.85] text-(--obs-text-muted)">
-                  {data.description}
-                </p>
+                {data.subtitle ? (
+                  <p className="m-0 font-body text-[clamp(0.85rem,1.2vw,1rem)] font-normal leading-relaxed text-(--obs-text-primary)">
+                    {data.subtitle}
+                  </p>
+                ) : null}
+
+                {data.description ? (
+                  <p className="m-0 font-body text-[clamp(0.9rem,1.3vw,1.05rem)] font-light italic leading-[1.85] text-(--obs-text-muted)">
+                    {data.description}
+                  </p>
+                ) : null}
 
                 <p className="m-0 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-(--obs-text-faint)">
                   — {data.author}

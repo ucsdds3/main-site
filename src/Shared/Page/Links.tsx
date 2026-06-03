@@ -28,7 +28,11 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       {isMembers && isAuthed && adminLevel !== "Member" && (
         <NavItem
           label="Admin"
-          data={{ Dashboard: "/admin", Insights: "/admin/insights" }}
+          data={{
+            Dashboard: "/admin",
+            Insights: "/admin/insights",
+            "Where We Are": "/admin/where-we-are",
+          }}
         />
       )}
 
