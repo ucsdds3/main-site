@@ -1,37 +1,11 @@
 import z from "zod";
 import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
-import { User } from "@supabase/supabase-js";
 
 import { supabase } from "src/Utils/supabase";
 import { validateResumeLink } from "src/Utils/functions";
 
 import { useAuthStore } from "../../../Hooks/useAuthStore";
-
-type ProfileData = {
-  email?: string;
-  full_name?: string;
-  major?: string;
-  date_of_birth?: string;
-  graduation_year?: number;
-  gender?: string;
-  in_talent_pool?: boolean;
-  on_mailing_list?: boolean;
-  is_grad_student?: boolean;
-  resume_link?: string;
-  github_link?: string;
-  linkedin_link?: string;
-  other_link?: string;
-  pending_email?: string | null;
-  profile_picture?: string;
-};
-
-function buildProfileData(user: User): ProfileData {
-  return {
-    ...user.user_metadata,
-    email: user.email ?? user.user_metadata?.email,
-  };
-}
 
 export function useProfile() {
   const signupSchema = z
@@ -77,23 +51,12 @@ export function useProfile() {
     });
 
   const { user, setUser } = useAuthStore();
-  const [data, setData] = useState<ProfileData | undefined>(() =>
-    user ? buildProfileData(user) : undefined
-  );
+  const [data, setData] = useState(user?.user_metadata);
   const [errors, setErrors] = useState<string>("");
   const originalDataRef = useRef<string | null>(null);
   const hasUnsavedChangesRef = useRef(false);
   const isInitializedRef = useRef(false);
   const toastIdRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    if (user && !isInitializedRef.current) {
-      const profileData = buildProfileData(user);
-      setData(profileData);
-      originalDataRef.current = JSON.stringify(profileData);
-      isInitializedRef.current = true;
-    }
-  }, [user]);
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>): Promise<boolean> => {
     e.preventDefault();
@@ -113,24 +76,8 @@ export function useProfile() {
     }
 
     const currentAuthEmail = user.email.toLowerCase();
-    const normalizedEmail = (data.email as string).toLowerCase();
+    const normalizedEmail = String(data.email ?? "").toLowerCase();
     const emailChanged = normalizedEmail !== currentAuthEmail;
-
-    if (emailChanged) {
-      const { data: exists, error: lookupError } = await supabase.rpc(
-        "check_member_email_exists",
-        { check_email: normalizedEmail }
-      );
-
-      if (lookupError) {
-        toast.error(lookupError.message);
-        return false;
-      }
-      if (exists) {
-        toast.error("An account already exists with that email address.");
-        return false;
-      }
-    }
 
     const allowedFields = Object.keys(signupSchema.shape).filter(
       key => key !== "password" && key !== "confirm_password"
@@ -154,15 +101,10 @@ export function useProfile() {
       return false;
     }
 
-    const confirmedEmail = user.email;
-    const metadataUpdate = emailChanged
-      ? { ...data, email: confirmedEmail, pending_email: normalizedEmail }
-      : { ...data, email: normalizedEmail };
-
     const { error: userError, data: updatedUser } = await supabase.auth.updateUser(
       emailChanged
-        ? { email: normalizedEmail, data: metadataUpdate }
-        : { data: metadataUpdate }
+        ? { email: normalizedEmail, data: { ...data, email: currentAuthEmail } }
+        : { data: { ...data, email: normalizedEmail } }
     );
     if (userError) {
       toast.error(userError.message);
@@ -170,26 +112,43 @@ export function useProfile() {
     }
 
     if (updatedUser?.user) {
-      const formData = emailChanged
-        ? { ...metadataUpdate, email: confirmedEmail }
-        : { ...metadataUpdate, email: normalizedEmail };
-      setData(formData);
-      originalDataRef.current = JSON.stringify(formData);
-      setUser(updatedUser.user);
+      const savedData = emailChanged
+        ? { ...data, email: currentAuthEmail }
+        : { ...data, email: normalizedEmail };
+
+      originalDataRef.current = JSON.stringify(savedData);
       hasUnsavedChangesRef.current = false;
+      toast.dismiss("unsaved-changes");
+      toastIdRef.current = null;
+
+      setData(savedData);
+      setUser(updatedUser.user);
     }
 
     setErrors("");
     if (emailChanged) {
       toast.success(
-        "Profile updated. Check your new email inbox and click the confirmation link to complete the email change.",
-        { duration: 6000 }
+        "Check your new email inbox and click the confirmation link to complete the email change.",
+        { duration: 8000 }
       );
     } else {
       toast.success("Profile updated successfully");
     }
     return true;
   };
+
+  useEffect(() => {
+    if (data && !isInitializedRef.current) {
+      const baselineEmail = user?.email?.toLowerCase();
+      const baseline =
+        baselineEmail != null ? { ...data, email: baselineEmail } : data;
+      if (baselineEmail != null && String(data.email ?? "").toLowerCase() !== baselineEmail) {
+        setData(baseline);
+      }
+      originalDataRef.current = JSON.stringify(baseline);
+      isInitializedRef.current = true;
+    }
+  }, [data, user?.email]);
 
   useEffect(() => {
     if (data && originalDataRef.current && isInitializedRef.current) {
@@ -229,6 +188,5 @@ export function useProfile() {
     errors,
     setData,
     handleUpdateProfile: handleFormSubmit,
-    pendingEmail: user?.new_email ?? null,
   };
 }

@@ -4,20 +4,10 @@ import { useAuthStore } from "../Sites/Members/Hooks/useAuthStore";
 import { supabase } from "../Utils/supabase";
 import { User } from "@supabase/supabase-js";
 
-async function syncMemberEmailIfConfirmed(user: User): Promise<User> {
-  const pendingEmail = user.user_metadata?.pending_email?.toLowerCase();
+async function syncMemberEmail(user: User): Promise<User> {
+  const oldEmail = user.user_metadata?.email?.toLowerCase();
   const currentEmail = user.email?.toLowerCase();
-  const metadataEmail = user.user_metadata?.email?.toLowerCase();
-
-  if (!pendingEmail || !currentEmail || currentEmail !== pendingEmail) {
-    return user;
-  }
-  if (metadataEmail === currentEmail) {
-    return user;
-  }
-
-  const oldEmail = metadataEmail;
-  if (!oldEmail) {
+  if (!oldEmail || !currentEmail || oldEmail === currentEmail) {
     return user;
   }
 
@@ -31,29 +21,18 @@ async function syncMemberEmailIfConfirmed(user: User): Promise<User> {
     return user;
   }
 
-  const { data: updated, error: userError } = await supabase.auth.updateUser({
-    data: {
-      ...user.user_metadata,
-      email: currentEmail,
-      pending_email: null,
-    },
+  const { data: updated } = await supabase.auth.updateUser({
+    data: { ...user.user_metadata, email: currentEmail },
   });
-
-  if (userError) {
-    console.error("Failed to clear pending email in metadata:", userError.message);
-    return user;
-  }
 
   return updated?.user ?? user;
 }
 
 export function useAuth() {
   useEffect(() => {
-    const hydrateUser = async (user: User, authStateOverride?: AuthState | null) => {
-      const syncedUser = await syncMemberEmailIfConfirmed(user);
-      const authState =
-        authStateOverride ??
-        (new URLSearchParams(window.location.search).get("authState") as AuthState);
+    const foundUser = async (user: User) => {
+      const syncedUser = await syncMemberEmail(user);
+      const authState = new URLSearchParams(window.location.search).get("authState") as AuthState;
 
       const { data: members } = await supabase
         .from("Members")
@@ -80,22 +59,19 @@ export function useAuth() {
           token_hash: tokenHash,
           type: "recovery",
         });
-        if (data?.user) return hydrateUser(data.user, authState);
+        if (data?.user) return foundUser(data.user);
       }
 
       const { data } = await supabase.auth.getUser();
-      if (data?.user) return hydrateUser(data.user, authState);
+      if (data?.user) return foundUser(data.user);
     };
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (!session?.user) return;
-      if (event !== "USER_UPDATED" && event !== "SIGNED_IN" && event !== "TOKEN_REFRESHED") {
-        return;
+      if (session?.user && (event === "USER_UPDATED" || event === "SIGNED_IN")) {
+        await foundUser(session.user);
       }
-
-      await hydrateUser(session.user);
     });
 
     getUser();
