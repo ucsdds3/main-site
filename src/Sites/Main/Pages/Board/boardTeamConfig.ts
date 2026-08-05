@@ -34,7 +34,16 @@ export function roleForMemberOnTab(
   member: { teamRoles: Record<string, string> },
   tabKey: string
 ): string | undefined {
-  return member.teamRoles[tabKey];
+  // 2026-08-05 archived: return member.teamRoles[tabKey];
+  // Resolve by normalized key so legacy labels ("Social Events") and
+  // storage keys ("SOCIAL_EVENTS") both work for display + director sort.
+  if (Object.prototype.hasOwnProperty.call(member.teamRoles, tabKey)) {
+    return member.teamRoles[tabKey];
+  }
+  for (const [k, v] of Object.entries(member.teamRoles)) {
+    if (labelToTeamKey(k) === tabKey) return v;
+  }
+  return undefined;
 }
 
 /** Ordered tab keys: committees from `teams.json` key order first, then any extra keys in member data. */

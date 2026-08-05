@@ -10,6 +10,11 @@ interface HoverCardProps {
   size: string;
   image?: string;
   imgClassName?: string;
+  // 2026-08-05 archived: imageFit?: "cover" | "contain";
+  /** >1 zooms into the photo (object-cover). Only for per-card framing tweaks. */
+  imageScale?: number;
+  /** CSS object-position for per-card framing (e.g. "center 20%"). */
+  imagePosition?: string;
   placement?: number;
   link?: string;
   links?: {
@@ -28,6 +33,8 @@ const HoverCard = ({
   link,
   links,
   imgClassName,
+  imageScale = 1,
+  imagePosition,
   placement,
 }: HoverCardProps) => {
   const { imageStates } = useImagePreloader([image ? image : ""]);
@@ -82,6 +89,8 @@ const HoverCard = ({
         )}
 
         {image && imageLoaded && (
+          // 2026-08-05 archived:
+          // className={`size-full rounded-2xl ${imageFit === "contain" ? "object-contain" : "object-cover"}`}
           <img
             src={image}
             className="size-full object-cover rounded-2xl"
@@ -89,6 +98,9 @@ const HoverCard = ({
             decoding="async"
             style={{
               animation: "hc-fadeIn 0.35s ease-out forwards",
+              transform: imageScale !== 1 ? `scale(${imageScale})` : undefined,
+              transformOrigin: imageScale !== 1 ? "center top" : undefined,
+              objectPosition: imagePosition,
             }}
             onError={e => (e.currentTarget.style.display = "none")}
           />
