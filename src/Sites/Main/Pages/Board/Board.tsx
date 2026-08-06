@@ -153,6 +153,12 @@ const Board = () => {
                           image={member.image}
                           size="200px"
                           links={formatMemberLinks(member)}
+                          // Nudge crop up for Daniel: more hair, less shirt; same zoom.
+                          imagePosition={
+                            member.name.trim().toLowerCase() === "daniel mathews"
+                              ? "center 22%"
+                              : undefined
+                          }
                         />
                       </motion.div>
                     </Suspense>

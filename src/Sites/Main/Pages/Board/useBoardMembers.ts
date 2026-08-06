@@ -5,6 +5,7 @@ import { supabase } from "src/Utils/supabase";
 import { normalizeExternalHref } from "src/Utils/functions";
 import { normalizeTeamsField } from "src/Sites/Members/Utils/functions";
 import type { BoardMember } from "src/Utils/types.ts";
+import { roleForMemberOnTab } from "./boardTeamConfig";
 
 type MemberRow = {
   full_name: string;
@@ -20,19 +21,32 @@ type MemberRow = {
 
 /** Lower rank = earlier. `Vice President` before `President` so substrings don’t collide. */
 function boardRoleTitleImportanceRank(role: string | undefined | null): number {
-  if (!role?.trim()) return 3;
+  // 2026-08-05 archived:
+  // if (!role?.trim()) return 3;
+  // const lower = role.trim().toLowerCase();
+  // if (lower.includes("vice president")) return 1;
+  // if (lower.includes("president")) return 0;
+  // if (lower.includes("director")) return 2;
+  // return 3;
+  if (!role?.trim()) return 4;
   const lower = role.trim().toLowerCase();
   if (lower.includes("vice president")) return 1;
   if (lower.includes("president")) return 0;
   if (lower.includes("director")) return 2;
-  return 3;
+  if (lower.includes("mentor")) return 3;
+  return 4;
 }
 
 function compareBoardMembersForTeam(a: BoardMember, b: BoardMember, teamKey: string): number {
-  const ra = boardRoleTitleImportanceRank(a.teamRoles[teamKey]);
-  const rb = boardRoleTitleImportanceRank(b.teamRoles[teamKey]);
+  // 2026-08-05 archived:
+  // const ra = boardRoleTitleImportanceRank(a.teamRoles[teamKey]);
+  // const rb = boardRoleTitleImportanceRank(b.teamRoles[teamKey]);
+  // if (ra !== rb) return ra - rb;
+  // return b.teamRoles[teamKey]?.localeCompare(a.teamRoles[teamKey]) ?? 0;
+  const ra = boardRoleTitleImportanceRank(roleForMemberOnTab(a, teamKey));
+  const rb = boardRoleTitleImportanceRank(roleForMemberOnTab(b, teamKey));
   if (ra !== rb) return ra - rb;
-  return b.teamRoles[teamKey]?.localeCompare(a.teamRoles[teamKey]) ?? 0;
+  return a.name.localeCompare(b.name);
 }
 
 function rowToBoardMember(row: MemberRow): BoardMember | null {
