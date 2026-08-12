@@ -27,9 +27,43 @@ export interface TalentLensEngineStatus {
 }
 
 export interface TalentLensEvidenceChunk {
-  section_type?: string;
-  score?: number;
-  text?: string;
+  section_type: string;
+  score: number;
+  text: string;
+  chunk_id: string | null;
+}
+
+export interface TalentLensRankingDetails {
+  dense_score: number | null;
+  bm25_score: number | null;
+  fusion_score: number | null;
+  fit_score?: number | null;
+  verification_component?: number | null;
+  evidence_component?: number | null;
+  retrieval_component?: number | null;
+  semantic_coverage_bonus?: number | null;
+  retrieval_raw?: number | null;
+  overall_status?: string | null;
+  score_cap_applied?: string | null;
+}
+
+export type TalentLensVerificationStatus = "yes" | "no" | "unclear";
+
+export interface TalentLensRequirementVerification {
+  requirement: string;
+  status: TalentLensVerificationStatus;
+  evidence_chunk_ids: string[];
+  evidence_strength: string | null;
+}
+
+export interface TalentLensVerification {
+  requirements: TalentLensRequirementVerification[];
+}
+
+export interface TalentLensExplanation {
+  why_selected: string;
+  matched: string[];
+  gaps: string[];
 }
 
 export interface TalentLensCandidateResult {
@@ -48,24 +82,42 @@ export interface TalentLensCandidateResult {
   resume_link?: string | null;
   local_resume_path?: string | null;
   matched_skills: string[];
-  top_evidence_chunks: Array<string | TalentLensEvidenceChunk>;
-  hard_filter_status: string | Record<string, unknown> | null;
-  ranking_details: Record<string, unknown>;
+  top_evidence_chunks: TalentLensEvidenceChunk[];
+  hard_filter_status: "pass" | "fail";
+  ranking_details: TalentLensRankingDetails | null;
   page_count: number | null;
   company_match_status: string | null;
-  grok_status: string | null;
-  grok_fit_score: number | null;
-  grok_resume_quality_score: number | null;
-  grok_summary: string | null;
-  grok_matched_requirements: string[];
-  grok_missing_requirements: string[];
-  grok_weakness_flags: string[];
+  verification: TalentLensVerification | null;
+  explanation: TalentLensExplanation | null;
+}
+
+export interface TalentLensParsedQuery {
+  graduation_years: number[];
+  must_have_skills: string[];
+  semantic_requirements: string[];
+  major_contains: string | null;
+  exclusions: string[];
 }
 
 export interface TalentLensSearchResponse {
-  parsed_job_description: string | null;
-  engine_status: TalentLensEngineStatus | null;
+  parsed_job_description: Record<string, unknown> | null;
+  engine_status: TalentLensEngineStatus;
   results: TalentLensCandidateResult[];
+  parsed_query: TalentLensParsedQuery | null;
+}
+
+export interface TalentLensHealthResponse {
+  status: "ok";
+  service: string;
+  version: string;
+  index_ready: boolean;
+  engine_loaded: boolean;
+  candidate_count: number;
+  indexed_chunk_count: number;
+  retrieval_backend: string;
+  demo_mode: boolean;
+  mode_label: string;
+  startup_issues: string[];
 }
 
 export interface RecentQuery {

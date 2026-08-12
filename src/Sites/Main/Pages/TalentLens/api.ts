@@ -2,16 +2,18 @@ import type { TalentLensSearchRequest, TalentLensSearchResponse } from "./types"
 
 const SEARCH_TIMEOUT_MS = 30000;
 
-const getTalentLensApiBaseUrl = () => {
-  const apiUrl = import.meta.env.VITE_TALENTLENS_API_URL?.trim();
+const getEnvApiUrl = (value: string | undefined) => value?.trim().replace(/\/$/, "") ?? "";
+
+export const getTalentLensApiBaseUrl = (): string => {
+  const apiUrl = getEnvApiUrl(import.meta.env.VITE_TALENTLENS_V2_API_URL);
 
   if (!apiUrl) {
     throw new Error(
-      "TalentLens API URL is not configured. Set VITE_TALENTLENS_API_URL in your environment."
+      "TalentLens V2 API URL is not configured. Set VITE_TALENTLENS_V2_API_URL in your environment."
     );
   }
 
-  return apiUrl.replace(/\/$/, "");
+  return apiUrl;
 };
 
 export const searchTalentLens = async (
@@ -34,15 +36,15 @@ export const searchTalentLens = async (
       const message = await response.text().catch(() => "");
       throw new Error(
         message
-          ? `TalentLens search failed (${response.status}): ${message}`
-          : `TalentLens search failed with status ${response.status}.`
+          ? `TalentLens V2 search failed (${response.status}): ${message}`
+          : `TalentLens V2 search failed with status ${response.status}.`
       );
     }
 
     return response.json() as Promise<TalentLensSearchResponse>;
   } catch (error) {
     if (error instanceof DOMException && error.name === "AbortError") {
-      throw new Error("TalentLens search timed out. Check the API service and try again.");
+      throw new Error("TalentLens V2 search timed out. Check the API service and try again.");
     }
 
     throw error;

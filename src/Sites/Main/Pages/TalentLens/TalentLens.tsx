@@ -50,6 +50,22 @@ import {
   msFormatter,
 } from "./utils";
 
+const getSkillQueryParts = (value: string) =>
+  value
+    .split(",")
+    .map(part => part.trim())
+    .filter(Boolean);
+
+const dedupeQueryParts = (parts: string[]) => {
+  const seen = new Set<string>();
+  return parts.filter(part => {
+    const normalized = part.toLocaleLowerCase();
+    if (seen.has(normalized)) return false;
+    seen.add(normalized);
+    return true;
+  });
+};
+
 const EmptyState = ({ onPickSearch }: { onPickSearch: (search: string) => void }) => (
   <section className="rounded-lg border border-dashed border-(--obs-border-mid) bg-(--obs-surface) p-6">
     <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
@@ -103,7 +119,7 @@ const ErrorState = ({ message }: { message: string }) => (
         </p>
         <p className="mt-2 text-sm leading-6 text-(--obs-text-muted)">{message}</p>
         <p className="mt-2 text-sm leading-6 text-(--obs-text-muted)">
-          Confirm the API is running and that the Vite environment variable points to the active
+          Confirm TalentLens V2 is running and that VITE_TALENTLENS_V2_API_URL points to the active
           FastAPI service.
         </p>
       </div>
@@ -115,7 +131,6 @@ const TalentLens = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [inputMode, setInputMode] = useState<TalentLensInputMode>("Skills");
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [topK, setTopK] = useState(5);
   const [minScore, setMinScore] = useState(0);
   const [gradYearFilter, setGradYearFilter] = useState<GraduationYearFilter>(
@@ -157,11 +172,27 @@ const TalentLens = () => {
   const engineStatus = response?.engine_status;
   const engineModeLabel = formatEngineMode(engineStatus?.mode_label);
   const retrievalBackendLabel = formatRetrievalBackend(engineStatus?.retrieval_backend);
+  const parsedQuerySignals = useMemo(() => {
+    const parsed = response?.parsed_query;
+    if (!parsed) return [];
+    return dedupeQueryParts([
+      ...parsed.must_have_skills,
+      ...parsed.semantic_requirements,
+      ...parsed.graduation_years.map(year => `Class of ${year}`),
+      ...(parsed.major_contains ? [`Major: ${parsed.major_contains}`] : []),
+      ...parsed.exclusions.map(exclusion => `Excludes: ${exclusion}`),
+    ]);
+  }, [response?.parsed_query]);
+
+  const selectedSkills = useMemo(() => {
+    const queryParts = new Set(getSkillQueryParts(query).map(part => part.toLocaleLowerCase()));
+    return skillSuggestions.filter(skill => queryParts.has(skill.toLocaleLowerCase()));
+  }, [query]);
 
   const effectiveQuery = useMemo(() => {
     if (inputMode === "Job Description") return query.trim();
-    return [...selectedSkills, query.trim()].filter(Boolean).join(", ");
-  }, [inputMode, query, selectedSkills]);
+    return dedupeQueryParts(getSkillQueryParts(query)).join(", ");
+  }, [inputMode, query]);
 
   const suggestionItems = useMemo(
     () => buildSuggestionItems(query, inputMode, recentQueries),
@@ -273,14 +304,27 @@ const TalentLens = () => {
   };
 
   const toggleSkill = (skill: string) => {
-    setSelectedSkills(current =>
-      current.includes(skill) ? current.filter(item => item !== skill) : [...current, skill]
+    const normalizedSkill = skill.toLocaleLowerCase();
+    const parts = dedupeQueryParts(getSkillQueryParts(query));
+    const isSelected = parts.some(part => part.toLocaleLowerCase() === normalizedSkill);
+    const nextParts = isSelected
+      ? parts.filter(part => part.toLocaleLowerCase() !== normalizedSkill)
+      : [...parts, skill];
+    setQuery(nextParts.join(", "));
+    setSuggestionActiveIndex(0);
+  };
+
+  const clearSelectedSkills = () => {
+    const knownSkills = new Set(skillSuggestions.map(skill => skill.toLocaleLowerCase()));
+    setQuery(
+      getSkillQueryParts(query)
+        .filter(part => !knownSkills.has(part.toLocaleLowerCase()))
+        .join(", ")
     );
   };
 
   const handleClear = () => {
     setQuery("");
-    setSelectedSkills([]);
     setRecruiterCompany("");
     setRecruiterJobTitle("");
     setGradYearFilter(EMPTY_GRADUATION_YEAR_FILTER);
@@ -454,25 +498,28 @@ const TalentLens = () => {
                     Choose a skills search or paste a full job description.
                   </p>
                 </div>
-                <div className="grid grid-cols-2 rounded-lg border border-(--obs-border) bg-(--obs-surface) p-1">
-                  {(["Skills", "Job Description"] as TalentLensInputMode[]).map(mode => (
-                    <button
-                      key={mode}
-                      type="button"
-                      className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
-                        inputMode === mode
-                          ? "bg-[#19B5CA] text-[#061019]"
-                          : "text-(--obs-text-muted) hover:text-(--obs-text-primary)"
-                      }`}
-                      onClick={() => {
-                        setInputMode(mode);
-                        setActionMessage(null);
-                        setIsSuggestionsOpen(false);
-                      }}
-                    >
-                      {mode}
-                    </button>
-                  ))}
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-xs font-medium text-(--obs-text-muted)">Input mode</span>
+                  <div className="grid grid-cols-2 rounded-lg border border-(--obs-border) bg-(--obs-surface) p-1">
+                    {(["Skills", "Job Description"] as TalentLensInputMode[]).map(mode => (
+                      <button
+                        key={mode}
+                        type="button"
+                        className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
+                          inputMode === mode
+                            ? "bg-[#19B5CA] text-[#061019]"
+                            : "text-(--obs-text-muted) hover:text-(--obs-text-primary)"
+                        }`}
+                        onClick={() => {
+                          setInputMode(mode);
+                          setActionMessage(null);
+                          setIsSuggestionsOpen(false);
+                        }}
+                      >
+                        {mode}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -509,7 +556,7 @@ const TalentLens = () => {
                           <button
                             type="button"
                             className="text-xs font-semibold text-[#F58134] hover:underline"
-                            onClick={() => setSelectedSkills([])}
+                            onClick={clearSelectedSkills}
                           >
                             Clear skills
                           </button>
@@ -528,6 +575,7 @@ const TalentLens = () => {
                                   : "border-(--obs-border) bg-transparent text-(--obs-text-muted) hover:border-[#19B5CA]/45 hover:text-(--obs-text-primary)"
                               }`}
                               onClick={() => toggleSkill(skill)}
+                              aria-pressed={isActive}
                             >
                               {skill}
                             </button>
@@ -716,6 +764,19 @@ const TalentLens = () => {
               </p>
             ) : null}
 
+            {parsedQuerySignals.length ? (
+              <div className="rounded-lg border border-(--obs-border) bg-(--obs-surface) p-4">
+                <p className="text-sm font-semibold text-(--obs-text-primary)">
+                  TalentLens understood
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {parsedQuerySignals.map(signal => (
+                    <Chip key={signal}>{signal}</Chip>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
             {isLoading ? <LoadingState /> : null}
             {error && !isLoading ? <ErrorState message={error} /> : null}
             {!isLoading && !error && !response ? <EmptyState onPickSearch={setQuery} /> : null}
@@ -820,8 +881,8 @@ const SearchControls = ({
           className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none focus:border-[#19B5CA]/55"
           type="number"
           min={0}
-          max={1}
-          step={0.05}
+          max={100}
+          step={5}
           value={minScore}
           onChange={event => setMinScore(Number(event.target.value))}
         />

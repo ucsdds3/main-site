@@ -4,6 +4,7 @@ import type {
   GraduationYearFilter,
   TalentLensCandidateResult,
   TalentLensEvidenceChunk,
+  TalentLensRankingDetails,
 } from "./types";
 
 const GRAD_YEAR_PATTERN = /\b(19|20)\d{2}\b/;
@@ -82,19 +83,30 @@ export const percentFormatter = new Intl.NumberFormat("en-US", {
 
 export const msFormatter = new Intl.NumberFormat("en-US");
 
+export const formatFitScore = (score: number | null | undefined) => {
+  if (typeof score !== "number" || Number.isNaN(score)) {
+    return "N/A";
+  }
+  const rounded = Math.round(score);
+  return `${rounded}/100`;
+};
+
 export const formatScore = (score: number | null | undefined) => {
   if (typeof score !== "number" || Number.isNaN(score)) {
     return "N/A";
   }
 
-  return percentFormatter.format(score > 1 ? score / 100 : score);
+  if (score > 1) {
+    return formatFitScore(score);
+  }
+
+  return percentFormatter.format(score);
 };
 
 export const compactList = (items: string[] | null | undefined) =>
   Array.isArray(items) ? items.filter(Boolean) : [];
 
-export const getEvidenceText = (chunk: string | TalentLensEvidenceChunk) =>
-  typeof chunk === "string" ? chunk : chunk.text || "";
+export const getEvidenceText = (chunk: TalentLensEvidenceChunk) => chunk.text || "";
 
 export const getEvidenceChunks = (candidate: TalentLensCandidateResult, limit?: number) => {
   const chunks = (candidate.top_evidence_chunks || [])
@@ -221,7 +233,7 @@ export const getProfileShareUrl = (candidate: TalentLensCandidateResult) => {
   return `${origin}/talentlens?candidate=${id}`;
 };
 
-export const formatRankingDetails = (details: Record<string, unknown> | null | undefined) => {
+export const formatRankingDetails = (details: TalentLensRankingDetails | null | undefined) => {
   if (!details || typeof details !== "object") return [];
   return Object.entries(details)
     .filter(([, value]) => value !== null && value !== undefined && value !== "")

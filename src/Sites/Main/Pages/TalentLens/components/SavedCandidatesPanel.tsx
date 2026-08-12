@@ -1,7 +1,7 @@
 import { FiBookmark, FiDownload, FiTrash2, FiX } from "react-icons/fi";
 
 import type { SavedCandidateSnapshot } from "../types";
-import { exportCandidatesCsv, formatScore, getCandidateDisplayName } from "../utils";
+import { exportCandidatesCsv, formatFitScore, getCandidateDisplayName } from "../utils";
 import { Chip } from "./ui";
 
 interface SavedCandidatesPanelProps {
@@ -108,7 +108,7 @@ const SavedCandidatesPanel = ({
                         {item.candidate.rank ? (
                           <Chip tone="orange">Rank {item.candidate.rank}</Chip>
                         ) : null}
-                        <Chip>{formatScore(item.candidate.score)}</Chip>
+                        <Chip>{formatFitScore(item.candidate.score)}</Chip>
                       </div>
                     </button>
                     <button

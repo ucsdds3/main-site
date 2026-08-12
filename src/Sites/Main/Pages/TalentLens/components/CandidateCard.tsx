@@ -3,6 +3,7 @@ import { FiBookmark, FiExternalLink, FiGithub, FiLinkedin } from "react-icons/fi
 import type { TalentLensCandidateResult } from "../types";
 import {
   compactList,
+  formatFitScore,
   formatScore,
   formatStatus,
   getCandidateContact,
@@ -32,9 +33,12 @@ const CandidateCard = ({
   onToggleSaved,
 }: CandidateCardProps) => {
   const matchedSkills = compactList(candidate.matched_skills);
-  const matchedRequirements = compactList(candidate.grok_matched_requirements);
-  const missingRequirements = compactList(candidate.grok_missing_requirements);
-  const weaknessFlags = compactList(candidate.grok_weakness_flags);
+  const matchedRequirements = compactList(candidate.explanation?.matched);
+  const missingRequirements = compactList(candidate.explanation?.gaps);
+  const verificationRequirements = candidate.verification?.requirements ?? [];
+  const unclearRequirements = verificationRequirements
+    .filter(item => item.status === "unclear")
+    .map(item => item.requirement);
   const evidenceChunks = getEvidenceChunks(candidate, 3);
   const displayName = getCandidateDisplayName(candidate);
   const hardFilterStatus = formatStatus(candidate.hard_filter_status);
@@ -66,8 +70,11 @@ const CandidateCard = ({
             {shouldShowStatus(candidate.company_match_status) ? (
               <Chip>{candidate.company_match_status}</Chip>
             ) : null}
-            {shouldShowStatus(candidate.grok_status) ? (
-              <Chip tone="cyan">{candidate.grok_status}</Chip>
+            {verificationRequirements.length ? (
+              <Chip tone="cyan">
+                {verificationRequirements.filter(item => item.status === "yes").length}/
+                {verificationRequirements.length} verified
+              </Chip>
             ) : null}
           </div>
           <h3 className="mt-3 text-2xl font-semibold leading-tight text-(--obs-text-primary)">
@@ -82,7 +89,7 @@ const CandidateCard = ({
         </div>
         <div className="flex items-start gap-2">
           <div className="grid min-w-[220px] grid-cols-2 gap-2">
-            <ScoreTile label="Overall" value={formatScore(candidate.score)} />
+            <ScoreTile label="Fit" value={formatFitScore(candidate.score)} />
             <ScoreTile label="Semantic" value={formatScore(candidate.semantic_score)} />
           </div>
           <button
@@ -133,10 +140,12 @@ const CandidateCard = ({
         </div>
       ) : null}
 
-      {candidate.grok_summary ? (
+      {candidate.explanation?.why_selected ? (
         <div className="mt-5 rounded-lg border border-[#19B5CA]/20 bg-[#19B5CA]/10 p-4">
-          <p className="text-sm font-semibold text-(--obs-text-primary)">AI fit summary</p>
-          <p className="mt-2 text-sm leading-6 text-(--obs-text-muted)">{candidate.grok_summary}</p>
+          <p className="text-sm font-semibold text-(--obs-text-primary)">Why selected</p>
+          <p className="mt-2 text-sm leading-6 text-(--obs-text-muted)">
+            {candidate.explanation.why_selected}
+          </p>
         </div>
       ) : null}
 
@@ -158,7 +167,7 @@ const CandidateCard = ({
         </div>
       ) : null}
 
-      {matchedRequirements.length || missingRequirements.length || weaknessFlags.length ? (
+      {matchedRequirements.length || missingRequirements.length || unclearRequirements.length ? (
         <div className="mt-5 grid gap-3 md:grid-cols-3">
           {matchedRequirements.length ? (
             <RequirementList title="Requirements met" items={matchedRequirements} tone="cyan" />
@@ -166,8 +175,8 @@ const CandidateCard = ({
           {missingRequirements.length ? (
             <RequirementList title="Missing" items={missingRequirements} tone="orange" />
           ) : null}
-          {weaknessFlags.length ? (
-            <RequirementList title="Watchouts" items={weaknessFlags} />
+          {unclearRequirements.length ? (
+            <RequirementList title="Needs verification" items={unclearRequirements} />
           ) : null}
         </div>
       ) : null}

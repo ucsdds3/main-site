@@ -53,14 +53,11 @@ Check the depencencies listed below for this project before starting. Use these 
 
 ## TalentLens API
 
-The `/talentlens` frontend route calls the TalentLens FastAPI backend through a Vite environment variable:
+The `/talentlens` page uses the TalentLens V2 FastAPI service. Configure its base URL:
 
 ```sh
-VITE_TALENTLENS_API_URL=http://localhost:8000
+VITE_TALENTLENS_V2_API_URL=http://localhost:8001
 ```
 
-Use the local value above when running the backend with `uvicorn src.backend.api:app --reload`. Once the backend is deployed, replace it with the Cloud Run service URL, for example:
-
-```sh
-VITE_TALENTLENS_API_URL=https://talentlens-api-xxxxx.a.run.app
-```
+From the sibling `Talentlens_V2` repository, run `python scripts/run_api.py --port 8001`.
+Once deployed, replace the local URL with the V2 Cloud Run service endpoint.
