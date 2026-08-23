@@ -51,9 +51,13 @@ const CandidateCard = ({
       data-talentlens-result-index={index}
       tabIndex={-1}
       className={`cursor-pointer rounded-lg border bg-[rgba(255,255,255,0.045)] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.18)] transition ${
+        candidate.match_tier === "related" ? "opacity-90 " : ""
+      }${
         isFocused
           ? "border-[#19B5CA]/65 ring-2 ring-[#19B5CA]/35"
-          : "border-(--obs-border)"
+          : candidate.match_tier === "related"
+            ? "border-[#F58134]/35"
+            : "border-(--obs-border)"
       }`}
       onClick={onOpen}
       onKeyDown={event => {
@@ -67,6 +71,9 @@ const CandidateCard = ({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <Chip tone="orange">Rank {candidate.rank}</Chip>
+            {candidate.match_tier === "related" ? (
+              <Chip tone="orange">Similar</Chip>
+            ) : null}
             {shouldShowStatus(candidate.company_match_status) ? (
               <Chip>{candidate.company_match_status}</Chip>
             ) : null}

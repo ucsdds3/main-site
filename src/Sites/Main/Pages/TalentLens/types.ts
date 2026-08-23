@@ -15,6 +15,7 @@ export interface TalentLensSearchRequest {
   query: string;
   top_k: number;
   min_score: number;
+  include_related: boolean;
   input_mode: TalentLensInputMode;
   recruiter_company: string | null;
   recruiter_job_title: string | null;
@@ -33,6 +34,12 @@ export interface TalentLensEvidenceChunk {
   chunk_id: string | null;
 }
 
+export interface TalentLensEngagementComponent {
+  membership: number;
+  role: number;
+  events: number;
+}
+
 export interface TalentLensRankingDetails {
   dense_score: number | null;
   bm25_score: number | null;
@@ -42,6 +49,9 @@ export interface TalentLensRankingDetails {
   evidence_component?: number | null;
   retrieval_component?: number | null;
   semantic_coverage_bonus?: number | null;
+  engagement_bonus?: number | null;
+  engagement_component?: TalentLensEngagementComponent | null;
+  final_score?: number | null;
   retrieval_raw?: number | null;
   overall_status?: string | null;
   score_cap_applied?: string | null;
@@ -66,11 +76,14 @@ export interface TalentLensExplanation {
   gaps: string[];
 }
 
+export type TalentLensMatchTier = "verified" | "related";
+
 export interface TalentLensCandidateResult {
   rank: number;
   filename: string;
   candidate_id: string;
   score: number | null;
+  match_tier?: TalentLensMatchTier;
   semantic_score: number | null;
   file_path: string | null;
   full_name: string | null;
@@ -99,11 +112,19 @@ export interface TalentLensParsedQuery {
   exclusions: string[];
 }
 
+export interface TalentLensMatchSummary {
+  requested_top_k: number;
+  verified_count: number;
+  related_count: number;
+  returned_count: number;
+}
+
 export interface TalentLensSearchResponse {
   parsed_job_description: Record<string, unknown> | null;
   engine_status: TalentLensEngineStatus;
   results: TalentLensCandidateResult[];
   parsed_query: TalentLensParsedQuery | null;
+  match_summary: TalentLensMatchSummary | null;
 }
 
 export interface TalentLensHealthResponse {
@@ -118,6 +139,8 @@ export interface TalentLensHealthResponse {
   demo_mode: boolean;
   mode_label: string;
   startup_issues: string[];
+  engagement_snapshot_loaded?: boolean;
+  engagement_member_count?: number;
 }
 
 export interface RecentQuery {

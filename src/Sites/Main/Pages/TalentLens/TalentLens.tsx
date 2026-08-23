@@ -133,6 +133,7 @@ const TalentLens = () => {
   const [inputMode, setInputMode] = useState<TalentLensInputMode>("Skills");
   const [topK, setTopK] = useState(5);
   const [minScore, setMinScore] = useState(0);
+  const [includeRelated, setIncludeRelated] = useState(true);
   const [gradYearFilter, setGradYearFilter] = useState<GraduationYearFilter>(
     EMPTY_GRADUATION_YEAR_FILTER
   );
@@ -166,9 +167,18 @@ const TalentLens = () => {
     [rawResults]
   );
   const results = useMemo(
-    () => filterCandidatesByGradYear(rawResults, gradYearFilter).slice(0, topK),
-    [gradYearFilter, rawResults, topK]
+    () => filterCandidatesByGradYear(rawResults, gradYearFilter),
+    [gradYearFilter, rawResults]
   );
+  const verifiedResults = useMemo(
+    () => results.filter(candidate => candidate.match_tier !== "related"),
+    [results]
+  );
+  const relatedResults = useMemo(
+    () => results.filter(candidate => candidate.match_tier === "related"),
+    [results]
+  );
+  const matchSummary = response?.match_summary ?? null;
   const engineStatus = response?.engine_status;
   const engineModeLabel = formatEngineMode(engineStatus?.mode_label);
   const retrievalBackendLabel = formatRetrievalBackend(engineStatus?.retrieval_backend);
@@ -360,51 +370,79 @@ const TalentLens = () => {
     }
   };
 
+  const runSearch = useCallback(
+    async (options?: { includeRelatedOverride?: boolean }) => {
+      if (!effectiveQuery) {
+        setError("Enter skills, experience, or a job description before searching.");
+        return;
+      }
+
+      const includeRelatedValue = options?.includeRelatedOverride ?? includeRelated;
+
+      setIsLoading(true);
+      setError(null);
+      setActionMessage(null);
+      setLastSearchMeta(null);
+      closeDetail();
+
+      const started = performance.now();
+
+      try {
+        const searchResponse = await searchTalentLens({
+          query: effectiveQuery,
+          top_k: getSearchTopK(topK, gradYearFilter),
+          min_score: minScore,
+          include_related: includeRelatedValue,
+          input_mode: inputMode,
+          recruiter_company: inputMode === "Job Description" ? recruiterCompany.trim() || null : null,
+          recruiter_job_title:
+            inputMode === "Job Description" ? recruiterJobTitle.trim() || null : null,
+        });
+        setResponse(searchResponse);
+        setFocusedIndex(0);
+        const filteredCount = filterCandidatesByGradYear(searchResponse.results, gradYearFilter).length;
+        setLastSearchMeta({
+          count: filteredCount,
+          elapsedMs: Math.round(performance.now() - started),
+          totalBeforeFilter: gradYearFilterActive ? searchResponse.results.length : undefined,
+        });
+        addRecentQuery(effectiveQuery, inputMode);
+      } catch (searchError) {
+        setResponse(null);
+        setError(searchError instanceof Error ? searchError.message : "Search failed unexpectedly.");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [
+      addRecentQuery,
+      closeDetail,
+      effectiveQuery,
+      gradYearFilter,
+      gradYearFilterActive,
+      includeRelated,
+      inputMode,
+      minScore,
+      recruiterCompany,
+      recruiterJobTitle,
+      topK,
+    ]
+  );
+
+  const handleIncludeRelatedChange = useCallback(
+    (next: boolean) => {
+      setIncludeRelated(next);
+      if (response && effectiveQuery) {
+        void runSearch({ includeRelatedOverride: next });
+      }
+    },
+    [effectiveQuery, response, runSearch]
+  );
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSuggestionsOpen(false);
-
-    if (!effectiveQuery) {
-      setError("Enter skills, experience, or a job description before searching.");
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-    setActionMessage(null);
-    setLastSearchMeta(null);
-    closeDetail();
-
-    const started = performance.now();
-
-    try {
-      const searchResponse = await searchTalentLens({
-        query: effectiveQuery,
-        top_k: getSearchTopK(topK, gradYearFilter),
-        min_score: minScore,
-        input_mode: inputMode,
-        recruiter_company: inputMode === "Job Description" ? recruiterCompany.trim() || null : null,
-        recruiter_job_title:
-          inputMode === "Job Description" ? recruiterJobTitle.trim() || null : null,
-      });
-      setResponse(searchResponse);
-      setFocusedIndex(0);
-      const filteredCount = filterCandidatesByGradYear(searchResponse.results, gradYearFilter).slice(
-        0,
-        topK
-      ).length;
-      setLastSearchMeta({
-        count: filteredCount,
-        elapsedMs: Math.round(performance.now() - started),
-        totalBeforeFilter: gradYearFilterActive ? searchResponse.results.length : undefined,
-      });
-      addRecentQuery(effectiveQuery, inputMode);
-    } catch (searchError) {
-      setResponse(null);
-      setError(searchError instanceof Error ? searchError.message : "Search failed unexpectedly.");
-    } finally {
-      setIsLoading(false);
-    }
+    await runSearch();
   };
 
   const openSavedCandidate = (candidateId: string) => {
@@ -414,7 +452,12 @@ const TalentLens = () => {
 
   const resultsSummary = useMemo(() => {
     if (lastSearchMeta) {
-      const countLabel = `${lastSearchMeta.count} result${lastSearchMeta.count === 1 ? "" : "s"}`;
+      const verifiedLabel =
+        matchSummary && matchSummary.related_count > 0
+          ? `${matchSummary.verified_count} verified + ${matchSummary.related_count} similar`
+          : matchSummary
+            ? `${matchSummary.verified_count} verified match${matchSummary.verified_count === 1 ? "" : "es"}`
+            : `${lastSearchMeta.count} result${lastSearchMeta.count === 1 ? "" : "s"}`;
       const filteredNote =
         gradYearFilterActive &&
         lastSearchMeta.totalBeforeFilter !== undefined &&
@@ -423,7 +466,7 @@ const TalentLens = () => {
           : gradYearFilterActive && response
             ? ` (graduation year filter active)`
             : "";
-      return `${countLabel}${filteredNote} in ${msFormatter.format(lastSearchMeta.elapsedMs)} ms`;
+      return `${verifiedLabel}${filteredNote} in ${msFormatter.format(lastSearchMeta.elapsedMs)} ms`;
     }
     if (results.length) {
       return `${results.length} ranked candidate${results.length === 1 ? "" : "s"} returned`;
@@ -432,7 +475,7 @@ const TalentLens = () => {
       return "No candidates match the graduation year filter.";
     }
     return "Results will appear here after a search.";
-  }, [gradYearFilterActive, lastSearchMeta, rawResults.length, response, results.length]);
+  }, [gradYearFilterActive, lastSearchMeta, matchSummary, rawResults.length, response, results.length]);
 
   const searchFieldWrapper = (children: ReactNode) => (
     <div className="relative">
@@ -597,10 +640,12 @@ const TalentLens = () => {
                     <SearchControls
                       topK={topK}
                       minScore={minScore}
+                      includeRelated={includeRelated}
                       gradYearFilter={gradYearFilter}
                       graduationYearOptions={graduationYearOptions}
                       setTopK={setTopK}
                       setMinScore={setMinScore}
+                      setIncludeRelated={handleIncludeRelatedChange}
                       setGradYearFilter={setGradYearFilter}
                     />
                   </div>
@@ -654,10 +699,12 @@ const TalentLens = () => {
                     <SearchControls
                       topK={topK}
                       minScore={minScore}
+                      includeRelated={includeRelated}
                       gradYearFilter={gradYearFilter}
                       graduationYearOptions={graduationYearOptions}
                       setTopK={setTopK}
                       setMinScore={setMinScore}
+                      setIncludeRelated={handleIncludeRelatedChange}
                       setGradYearFilter={setGradYearFilter}
                     />
                   </div>
@@ -797,24 +844,88 @@ const TalentLens = () => {
 
             {!isLoading && !error && results.length ? (
               <div className="grid gap-5">
-                {results.map((candidate, index) => (
-                  <CandidateCard
-                    key={getCandidateStorageId(candidate)}
-                    candidate={candidate}
-                    index={index}
-                    isFocused={index === focusedIndex}
-                    isSaved={isSaved(candidate)}
-                    setCardRef={setCardRef}
-                    onOpen={() => {
-                      setFocusedIndex(index);
-                      openCandidate(candidate);
-                    }}
-                    onToggleSaved={() => {
-                      const added = toggleSaved(candidate);
-                      setActionMessage(added ? "Saved candidate." : "Removed from saved.");
-                    }}
-                  />
-                ))}
+                {matchSummary &&
+                matchSummary.verified_count < matchSummary.requested_top_k &&
+                !includeRelated ? (
+                  <p className="rounded-md border border-[#F58134]/25 bg-[#F58134]/10 px-3 py-2 text-sm text-(--obs-text-primary)">
+                    Only {matchSummary.verified_count} verified match
+                    {matchSummary.verified_count === 1 ? "" : "es"} for this query (you asked for{" "}
+                    {matchSummary.requested_top_k}). Turn on &quot;Include similar candidates&quot;
+                    to explore related profiles.
+                  </p>
+                ) : null}
+                {matchSummary &&
+                includeRelated &&
+                matchSummary.related_count === 0 &&
+                matchSummary.verified_count < matchSummary.requested_top_k ? (
+                  <p className="rounded-md border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-sm text-(--obs-text-muted)">
+                    No additional similar candidates ranked for this query (only{" "}
+                    {matchSummary.verified_count} verified
+                    {matchSummary.verified_count === 1 ? "" : " matches"} in the search pool).
+                  </p>
+                ) : null}
+
+                {verifiedResults.length ? (
+                  <div className="grid gap-5">
+                    {relatedResults.length ? (
+                      <h3 className="text-lg font-semibold text-(--obs-text-primary)">
+                        Verified matches
+                      </h3>
+                    ) : null}
+                    {verifiedResults.map((candidate, index) => (
+                      <CandidateCard
+                        key={getCandidateStorageId(candidate)}
+                        candidate={candidate}
+                        index={index}
+                        isFocused={index === focusedIndex}
+                        isSaved={isSaved(candidate)}
+                        setCardRef={setCardRef}
+                        onOpen={() => {
+                          setFocusedIndex(index);
+                          openCandidate(candidate);
+                        }}
+                        onToggleSaved={() => {
+                          const added = toggleSaved(candidate);
+                          setActionMessage(added ? "Saved candidate." : "Removed from saved.");
+                        }}
+                      />
+                    ))}
+                  </div>
+                ) : null}
+
+                {relatedResults.length ? (
+                  <div className="grid gap-5">
+                    <div>
+                      <h3 className="text-lg font-semibold text-(--obs-text-primary)">
+                        Similar candidates
+                      </h3>
+                      <p className="mt-1 text-sm text-(--obs-text-muted)">
+                        Not fully verified for your requirements — ranked below verified matches.
+                      </p>
+                    </div>
+                    {relatedResults.map((candidate, index) => {
+                      const resultIndex = verifiedResults.length + index;
+                      return (
+                        <CandidateCard
+                          key={getCandidateStorageId(candidate)}
+                          candidate={candidate}
+                          index={resultIndex}
+                          isFocused={resultIndex === focusedIndex}
+                          isSaved={isSaved(candidate)}
+                          setCardRef={setCardRef}
+                          onOpen={() => {
+                            setFocusedIndex(resultIndex);
+                            openCandidate(candidate);
+                          }}
+                          onToggleSaved={() => {
+                            const added = toggleSaved(candidate);
+                            setActionMessage(added ? "Saved candidate." : "Removed from saved.");
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+                ) : null}
               </div>
             ) : null}
           </section>
@@ -848,18 +959,22 @@ const TalentLens = () => {
 const SearchControls = ({
   topK,
   minScore,
+  includeRelated,
   gradYearFilter,
   graduationYearOptions,
   setTopK,
   setMinScore,
+  setIncludeRelated,
   setGradYearFilter,
 }: {
   topK: number;
   minScore: number;
+  includeRelated: boolean;
   gradYearFilter: GraduationYearFilter;
   graduationYearOptions: number[];
   setTopK: (value: number) => void;
   setMinScore: (value: number) => void;
+  setIncludeRelated: (value: boolean) => void;
   setGradYearFilter: (value: GraduationYearFilter) => void;
 }) => (
   <div className="flex flex-col gap-4">
@@ -888,6 +1003,21 @@ const SearchControls = ({
         />
       </label>
     </div>
+    <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-3">
+      <input
+        type="checkbox"
+        className="mt-1"
+        checked={includeRelated}
+        onChange={event => setIncludeRelated(event.target.checked)}
+      />
+      <span className="text-sm leading-6 text-(--obs-text-primary)">
+        Include similar candidates
+        <span className="mt-0.5 block text-xs text-(--obs-text-muted)">
+          On by default — fill remaining slots with related profiles. Uncheck for verified-only
+          results.
+        </span>
+      </span>
+    </label>
     <GraduationYearFilterPanel
       value={gradYearFilter}
       yearOptions={graduationYearOptions}
