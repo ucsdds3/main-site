@@ -7,14 +7,23 @@ interface ButtonProps {
   btnClass?: string;
   children: React.ReactNode;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 /** Primary CTA — matches home hero “Sign Up” (gradient cyan, glow, lift on hover). */
-const Button = ({ onClick, children, className, btnClass, type = "button" }: ButtonProps) => {
+const Button = ({
+  onClick,
+  children,
+  className,
+  btnClass,
+  type = "button",
+  disabled = false,
+}: ButtonProps) => {
   return (
     <motion.button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
       className={twMerge(
