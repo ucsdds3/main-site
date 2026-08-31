@@ -1,5 +1,13 @@
 {
   "rewrites": [
+    {
+      "source": "/talentlens",
+      "destination": "https://talent-lens-public.vercel.app/talentlens"
+    },
+    {
+      "source": "/talentlens/:path*",
+      "destination": "https://talent-lens-public.vercel.app/talentlens/:path*"
+    },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
