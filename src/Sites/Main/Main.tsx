@@ -8,6 +8,8 @@ import Projects from "./Pages/Projects/Projects";
 import OpenSource from "./Pages/OpenSource/OpenSource";
 import Consulting from "./Pages/Consulting/Consulting";
 import Partners from "./Pages/Partners/Partners";
+import TalentLens from "./Pages/TalentLens/TalentLens";
+import TalentLensAuthGate from "./Pages/TalentLens/components/TalentLensAuthGate";
 
 const Main = () => {
   const eventRoute = getEventRoutes();
@@ -28,6 +30,14 @@ const Main = () => {
       <Route path="/opensource" element={<OpenSource />} />
       <Route path="/consulting" element={<Consulting />} />
       <Route path="/partners" element={<Partners />} />
+      <Route
+        path="/talentlens"
+        element={
+          <TalentLensAuthGate>
+            <TalentLens />
+          </TalentLensAuthGate>
+        }
+      />
     </Routes>
   );
 };

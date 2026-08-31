@@ -85,6 +85,8 @@ export function useProfile() {
     const normalizedEmail = data?.email?.toLowerCase();
     memberUpdateData.email = normalizedEmail;
 
+    // Members UPDATE fires Supabase trigger → TalentLensIngestJobs when
+    // resume_link / in_talent_pool / deleted change (see talentlens_members_ingest_trigger.sql).
     const { error: memberError } = await supabase
       .from("Members")
       .update(memberUpdateData)

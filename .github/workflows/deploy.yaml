@@ -34,6 +34,7 @@ jobs:
           VITE_GOOGLE_CALENDAR_API_KEY: ${{ secrets.VITE_GOOGLE_CALENDAR_API_KEY }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_TALENTLENS_V2_API_URL: ${{ secrets.VITE_TALENTLENS_V2_API_URL }}
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" || "${{ steps.commit.outputs.message }}" == *"#prod"* || "${{ steps.commit.outputs.message }}" == *"hotfix"* ]]; then
             echo "🏗️ Building for Production"
