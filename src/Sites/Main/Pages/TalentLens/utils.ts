@@ -47,6 +47,16 @@ export const filterCandidatesByGradYear = (
     matchesGraduationYearFilter(candidate.graduation_year, filter)
   );
 
+/** Apply grad-year filter, then cap to the UI Top K (API may return more when filtering). */
+export const prepareSearchResults = (
+  candidates: TalentLensCandidateResult[],
+  filter: GraduationYearFilter,
+  topK: number
+) => filterCandidatesByGradYear(candidates, filter).slice(0, topK);
+
+/** Clamp UI/API top_k to the supported range (backend enforces the same bounds). */
+export const clampTopK = (value: number) => Math.min(50, Math.max(5, Math.trunc(value)));
+
 /** Fetch up to 50 from API when filtering client-side; otherwise use the display limit. */
 export const getSearchTopK = (displayTopK: number, gradYearFilter: GraduationYearFilter) => {
   if (!isGraduationYearFilterActive(gradYearFilter)) return displayTopK;
@@ -181,24 +191,50 @@ export const downloadCsv = (filename: string, rows: string[][]) => {
   URL.revokeObjectURL(url);
 };
 
+const buildCandidateExportRows = (candidates: TalentLensCandidateResult[]) =>
+  candidates.map(candidate => {
+    const contact = getCandidateContact(candidate);
+    return {
+      rank: candidate.rank,
+      name: contact.name,
+      email: contact.email,
+      linkedin: contact.linkedin,
+      github: contact.github,
+      resume_link: contact.resume,
+    };
+  });
+
 export const exportCandidatesCsv = (
   candidates: TalentLensCandidateResult[],
   filename = "talentlens-candidates.csv"
 ) => {
   downloadCsv(filename, [
     ["rank", "name", "email", "linkedin", "github", "resume_link"],
-    ...candidates.map(candidate => {
-      const contact = getCandidateContact(candidate);
-      return [
-        String(candidate.rank),
-        contact.name,
-        contact.email,
-        contact.linkedin,
-        contact.github,
-        contact.resume,
-      ];
-    }),
+    ...buildCandidateExportRows(candidates).map(row => [
+      String(row.rank),
+      row.name,
+      row.email,
+      row.linkedin,
+      row.github,
+      row.resume_link,
+    ]),
   ]);
+};
+
+export const exportCandidatesJson = (
+  candidates: TalentLensCandidateResult[],
+  filename = "talentlens-candidates.json"
+) => {
+  const payload = buildCandidateExportRows(candidates);
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {
+    type: "application/json;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
 };
 
 export const formatStatus = (status: string | Record<string, unknown> | null | undefined) => {

@@ -6,7 +6,6 @@ import {
   compactList,
   formatFitScore,
   formatRankingDetails,
-  formatScore,
   formatStatus,
   getCandidateContact,
   getCandidateDisplayName,
@@ -105,10 +104,7 @@ const CandidateDetailModal = ({
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <ScoreTile label="Fit" value={formatFitScore(candidate.score)} />
-            <ScoreTile label="Semantic" value={formatScore(candidate.semantic_score)} />
-          </div>
+          <ScoreTile label="Fit" value={formatFitScore(candidate.score)} />
 
           <div className="flex flex-wrap gap-2">
             <ActionLink href={contact.resume}>

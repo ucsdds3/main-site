@@ -1,4 +1,5 @@
 import type { TalentLensSearchRequest, TalentLensSearchResponse } from "./types";
+import { supabase } from "src/Utils/supabase";
 
 const SEARCH_TIMEOUT_MS = 30000;
 
@@ -23,10 +24,14 @@ export const searchTalentLens = async (
   const timeoutId = window.setTimeout(() => controller.abort(), SEARCH_TIMEOUT_MS);
 
   try {
+    const { data: sessionData } = await supabase.auth.getSession();
+    const accessToken = sessionData.session?.access_token;
+
     const response = await fetch(`${getTalentLensApiBaseUrl()}/search`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
       },
       body: JSON.stringify(request),
       signal: controller.signal,

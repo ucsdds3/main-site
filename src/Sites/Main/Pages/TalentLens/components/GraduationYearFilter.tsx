@@ -2,7 +2,7 @@ import {
   EMPTY_GRADUATION_YEAR_FILTER,
   type GraduationYearFilter as GraduationYearFilterState,
 } from "../types";
-import { toggleGraduationUnknown, toggleGraduationYear } from "../utils";
+import { toggleGraduationYear } from "../utils";
 import { FieldLabel } from "./ui";
 
 interface GraduationYearFilterProps {
@@ -12,7 +12,7 @@ interface GraduationYearFilterProps {
 }
 
 const GraduationYearFilter = ({ value, yearOptions, onChange }: GraduationYearFilterProps) => {
-  const isActive = value.years.length > 0 || value.includeUnknown;
+  const isActive = value.years.length > 0;
 
   return (
     <div className="flex flex-col gap-3">
@@ -32,17 +32,6 @@ const GraduationYearFilter = ({ value, yearOptions, onChange }: GraduationYearFi
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          className={`rounded-md border px-3 py-2 text-sm transition ${
-            value.includeUnknown
-              ? "border-[#19B5CA]/55 bg-[#19B5CA]/15 text-[#8eeaf4]"
-              : "border-(--obs-border) bg-transparent text-(--obs-text-muted) hover:border-[#19B5CA]/45 hover:text-(--obs-text-primary)"
-          }`}
-          onClick={() => onChange(toggleGraduationUnknown(value))}
-        >
-          Unknown
-        </button>
         {yearOptions.map(year => {
           const isSelected = value.years.includes(year);
           return (
@@ -63,8 +52,7 @@ const GraduationYearFilter = ({ value, yearOptions, onChange }: GraduationYearFi
       </div>
 
       <p className="text-xs leading-5 text-(--obs-text-faint)">
-        Select one or more class years and/or Unknown. Matches use graduation_year from search
-        results (OR logic).
+        Select one or more class years. Matches use graduation_year from search results (OR logic).
       </p>
     </div>
   );

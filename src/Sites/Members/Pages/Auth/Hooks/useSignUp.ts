@@ -166,6 +166,8 @@ export function useSignUp() {
     //   date_of_birth: data.date_of_birth,
     //   gender: data.gender,
     // });
+    // Members INSERT fires Supabase trigger → TalentLensIngestJobs when
+    // in_talent_pool + resume_link are set (see talentlens_members_ingest_trigger.sql).
     const { error: createMemberProfileError } = await supabase.from("Members").insert(formData);
     if (createMemberProfileError) {
       toast.error(createMemberProfileError.message);

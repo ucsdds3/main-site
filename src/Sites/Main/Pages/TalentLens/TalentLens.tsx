@@ -40,14 +40,15 @@ import {
 } from "./types";
 import {
   collectGraduationYearOptions,
+  clampTopK,
   exportCandidatesCsv,
+  exportCandidatesJson,
   filterCandidatesByGradYear,
-  formatEngineMode,
-  formatRetrievalBackend,
   getCandidateContact,
   getSearchTopK,
   isGraduationYearFilterActive,
   msFormatter,
+  prepareSearchResults,
 } from "./utils";
 
 const getSkillQueryParts = (value: string) =>
@@ -132,7 +133,6 @@ const TalentLens = () => {
   const [query, setQuery] = useState("");
   const [inputMode, setInputMode] = useState<TalentLensInputMode>("Skills");
   const [topK, setTopK] = useState(5);
-  const [minScore, setMinScore] = useState(0);
   const [includeRelated, setIncludeRelated] = useState(true);
   const [gradYearFilter, setGradYearFilter] = useState<GraduationYearFilter>(
     EMPTY_GRADUATION_YEAR_FILTER
@@ -167,8 +167,8 @@ const TalentLens = () => {
     [rawResults]
   );
   const results = useMemo(
-    () => filterCandidatesByGradYear(rawResults, gradYearFilter),
-    [gradYearFilter, rawResults]
+    () => prepareSearchResults(rawResults, gradYearFilter, topK),
+    [gradYearFilter, rawResults, topK]
   );
   const verifiedResults = useMemo(
     () => results.filter(candidate => candidate.match_tier !== "related"),
@@ -179,9 +179,6 @@ const TalentLens = () => {
     [results]
   );
   const matchSummary = response?.match_summary ?? null;
-  const engineStatus = response?.engine_status;
-  const engineModeLabel = formatEngineMode(engineStatus?.mode_label);
-  const retrievalBackendLabel = formatRetrievalBackend(engineStatus?.retrieval_backend);
   const parsedQuerySignals = useMemo(() => {
     const parsed = response?.parsed_query;
     if (!parsed) return [];
@@ -346,10 +343,23 @@ const TalentLens = () => {
     closeDetail();
   };
 
+  const confirmExport = (format: "CSV" | "JSON") => {
+    if (!results.length) return false;
+    return window.confirm(
+      `Export ${results.length} candidate${results.length === 1 ? "" : "s"} as ${format}?`
+    );
+  };
+
   const exportContacts = () => {
-    if (!results.length) return;
+    if (!confirmExport("CSV")) return;
     exportCandidatesCsv(results);
     setActionMessage("Exported candidate contact CSV.");
+  };
+
+  const exportJson = () => {
+    if (!confirmExport("JSON")) return;
+    exportCandidatesJson(results);
+    setActionMessage("Exported candidate contact JSON.");
   };
 
   const copyEmails = async () => {
@@ -391,7 +401,7 @@ const TalentLens = () => {
         const searchResponse = await searchTalentLens({
           query: effectiveQuery,
           top_k: getSearchTopK(topK, gradYearFilter),
-          min_score: minScore,
+          min_score: 0,
           include_related: includeRelatedValue,
           input_mode: inputMode,
           recruiter_company: inputMode === "Job Description" ? recruiterCompany.trim() || null : null,
@@ -400,11 +410,17 @@ const TalentLens = () => {
         });
         setResponse(searchResponse);
         setFocusedIndex(0);
-        const filteredCount = filterCandidatesByGradYear(searchResponse.results, gradYearFilter).length;
+        const filteredCount = prepareSearchResults(
+          searchResponse.results,
+          gradYearFilter,
+          topK
+        ).length;
         setLastSearchMeta({
           count: filteredCount,
           elapsedMs: Math.round(performance.now() - started),
-          totalBeforeFilter: gradYearFilterActive ? searchResponse.results.length : undefined,
+          totalBeforeFilter: gradYearFilterActive
+            ? filterCandidatesByGradYear(searchResponse.results, gradYearFilter).length
+            : undefined,
         });
         addRecentQuery(effectiveQuery, inputMode);
       } catch (searchError) {
@@ -422,7 +438,6 @@ const TalentLens = () => {
       gradYearFilterActive,
       includeRelated,
       inputMode,
-      minScore,
       recruiterCompany,
       recruiterJobTitle,
       topK,
@@ -554,6 +569,9 @@ const TalentLens = () => {
                             : "text-(--obs-text-muted) hover:text-(--obs-text-primary)"
                         }`}
                         onClick={() => {
+                          if (mode !== inputMode) {
+                            setQuery("");
+                          }
                           setInputMode(mode);
                           setActionMessage(null);
                           setIsSuggestionsOpen(false);
@@ -629,22 +647,12 @@ const TalentLens = () => {
                   </div>
 
                   <div className="grid content-start gap-4">
-                    <div className="rounded-lg border border-(--obs-border) bg-(--obs-surface) p-4">
-                      <p className="text-sm font-semibold text-(--obs-text-primary)">
-                        Query sent to TalentLens
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-(--obs-text-muted)">
-                        {effectiveQuery || "Select chips or type skills to build a search."}
-                      </p>
-                    </div>
                     <SearchControls
                       topK={topK}
-                      minScore={minScore}
                       includeRelated={includeRelated}
                       gradYearFilter={gradYearFilter}
                       graduationYearOptions={graduationYearOptions}
                       setTopK={setTopK}
-                      setMinScore={setMinScore}
                       setIncludeRelated={handleIncludeRelatedChange}
                       setGradYearFilter={setGradYearFilter}
                     />
@@ -698,12 +706,10 @@ const TalentLens = () => {
 
                     <SearchControls
                       topK={topK}
-                      minScore={minScore}
                       includeRelated={includeRelated}
                       gradYearFilter={gradYearFilter}
                       graduationYearOptions={graduationYearOptions}
                       setTopK={setTopK}
-                      setMinScore={setMinScore}
                       setIncludeRelated={handleIncludeRelatedChange}
                       setGradYearFilter={setGradYearFilter}
                     />
@@ -793,13 +799,14 @@ const TalentLens = () => {
                       <FiDownload aria-hidden />
                       Export CSV
                     </button>
-                  </>
-                ) : null}
-                {engineStatus ? (
-                  <>
-                    {engineModeLabel ? <Chip>{engineModeLabel}</Chip> : null}
-                    {retrievalBackendLabel ? <Chip>{retrievalBackendLabel}</Chip> : null}
-                    {engineStatus.demo_mode ? <Chip tone="orange">Demo mode</Chip> : null}
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-2 rounded-md border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-sm font-medium text-(--obs-text-primary) transition hover:border-[#19B5CA]/45 hover:bg-[#19B5CA]/10"
+                      onClick={exportJson}
+                    >
+                      <FiDownload aria-hidden />
+                      Export JSON
+                    </button>
                   </>
                 ) : null}
               </div>
@@ -837,7 +844,7 @@ const TalentLens = () => {
                 <p className="mt-2 text-sm leading-6 text-(--obs-text-muted)">
                   {rawResults.length && gradYearFilterActive
                     ? "Widen the graduation year range, clear the filter, or run a new search with a higher Top K."
-                    : "Try broadening the skills, reducing the minimum score, or switching input mode."}
+                    : "Try broadening the skills or switching input mode."}
                 </p>
               </section>
             ) : null}
@@ -958,51 +965,58 @@ const TalentLens = () => {
 
 const SearchControls = ({
   topK,
-  minScore,
   includeRelated,
   gradYearFilter,
   graduationYearOptions,
   setTopK,
-  setMinScore,
   setIncludeRelated,
   setGradYearFilter,
 }: {
   topK: number;
-  minScore: number;
   includeRelated: boolean;
   gradYearFilter: GraduationYearFilter;
   graduationYearOptions: number[];
   setTopK: (value: number) => void;
-  setMinScore: (value: number) => void;
   setIncludeRelated: (value: boolean) => void;
   setGradYearFilter: (value: GraduationYearFilter) => void;
-}) => (
+}) => {
+  const [topKInput, setTopKInput] = useState(String(topK));
+
+  useEffect(() => {
+    setTopKInput(String(topK));
+  }, [topK]);
+
+  const commitTopK = () => {
+    const parsed = Number(topKInput);
+    if (!Number.isFinite(parsed) || topKInput.trim() === "") {
+      setTopKInput(String(topK));
+      return;
+    }
+    const clamped = clampTopK(parsed);
+    setTopK(clamped);
+    setTopKInput(String(clamped));
+  };
+
+  return (
   <div className="flex flex-col gap-4">
-    <div className="grid grid-cols-2 gap-3">
-      <label className="flex flex-col gap-2">
-        <FieldLabel>Top K</FieldLabel>
-        <input
-          className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none focus:border-[#19B5CA]/55"
-          type="number"
-          min={1}
-          max={50}
-          value={topK}
-          onChange={event => setTopK(Number(event.target.value))}
-        />
-      </label>
-      <label className="flex flex-col gap-2">
-        <FieldLabel>Min score</FieldLabel>
-        <input
-          className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none focus:border-[#19B5CA]/55"
-          type="number"
-          min={0}
-          max={100}
-          step={5}
-          value={minScore}
-          onChange={event => setMinScore(Number(event.target.value))}
-        />
-      </label>
-    </div>
+    <label className="flex flex-col gap-2">
+      <FieldLabel>Top K</FieldLabel>
+      <input
+        className="rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-(--obs-text-primary) outline-none focus:border-[#19B5CA]/55"
+        type="number"
+        min={5}
+        max={50}
+        inputMode="numeric"
+        value={topKInput}
+        onChange={event => setTopKInput(event.target.value)}
+        onBlur={commitTopK}
+        onKeyDown={event => {
+          if (event.key === "Enter") {
+            event.currentTarget.blur();
+          }
+        }}
+      />
+    </label>
     <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-(--obs-border) bg-(--obs-surface) px-3 py-3">
       <input
         type="checkbox"
@@ -1024,6 +1038,7 @@ const SearchControls = ({
       onChange={setGradYearFilter}
     />
   </div>
-);
+  );
+};
 
 export default TalentLens;

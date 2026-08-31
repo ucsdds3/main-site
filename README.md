@@ -51,7 +51,9 @@ Check the depencencies listed below for this project before starting. Use these 
 - [Daisy UI](https://daisyui.com/) - Tailwind CSS Component Library 🎯
 - [Framer Motion](https://www.framer.com/motion/) - Animation Library ✨
 
-## TalentLens API
+## TalentLens
+
+### Search UI (`/talentlens`)
 
 The `/talentlens` page uses the TalentLens V2 FastAPI service. Configure its base URL:
 
@@ -59,5 +61,23 @@ The `/talentlens` page uses the TalentLens V2 FastAPI service. Configure its bas
 VITE_TALENTLENS_V2_API_URL=http://localhost:8001
 ```
 
-From the sibling `Talentlens_V2` repository, run `python scripts/run_api.py --port 8001`.
+From the sibling `Talentlens_V2` repository, run `python scripts/run_api.py --port 8001`.  
 Once deployed, replace the local URL with the V2 Cloud Run service endpoint.
+
+Code: `src/Sites/Main/Pages/TalentLens/`
+
+### Members portal → TalentLens ingest
+
+The **members subdomain** (`?subdomain=members`) is where members set `resume_link` and opt into the talent pool (`/profile`, signup). Those writes go to Supabase `Members`; a **database trigger** enqueues ingest jobs — the portal does not parse resumes itself.
+
+| Surface | Route / access | Role |
+|---------|----------------|------|
+| Members portal | `?subdomain=members` | Profile, events, resume URL |
+| TalentLens search | `/talentlens` | Recruiter search (`TalentLensUsers` allowlist + auth gate) |
+
+**Ingest worker (GCP):** currently **OFF** — portal still enqueues jobs in Supabase; a Cloud Run Job (every 30 min when enabled) or local worker processes them. See sibling doc for costs and deploy.
+
+**Full integration architecture** (Supabase tables, worker, RLS, costs, roadmap):  
+`../Talentlens_V2/docs/DS3_INTEGRATION.md` (sibling repo in DS3_new workspace)
+
+Supabase env (portal): `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` in `.env`

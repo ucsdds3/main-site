@@ -4,7 +4,6 @@ import type { TalentLensCandidateResult } from "../types";
 import {
   compactList,
   formatFitScore,
-  formatScore,
   formatStatus,
   getCandidateContact,
   getCandidateDisplayName,
@@ -95,10 +94,7 @@ const CandidateCard = ({
           </div>
         </div>
         <div className="flex items-start gap-2">
-          <div className="grid min-w-[220px] grid-cols-2 gap-2">
-            <ScoreTile label="Fit" value={formatFitScore(candidate.score)} />
-            <ScoreTile label="Semantic" value={formatScore(candidate.semantic_score)} />
-          </div>
+          <ScoreTile label="Fit" value={formatFitScore(candidate.score)} />
           <button
             type="button"
             aria-label={isSaved ? "Unsave candidate" : "Save candidate"}
