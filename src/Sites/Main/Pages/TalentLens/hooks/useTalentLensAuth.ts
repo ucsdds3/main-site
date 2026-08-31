@@ -28,7 +28,10 @@ export function useTalentLensAuth(): TalentLensAuthState {
       setUser(null);
       setRole(null);
       setStatus("signed_out");
-      setError(userError.message);
+      // No session on first visit is expected; don't show Supabase's "Auth session missing!" on the login form.
+      if (userError.name !== "AuthSessionMissingError") {
+        setError(userError.message);
+      }
       return;
     }
 

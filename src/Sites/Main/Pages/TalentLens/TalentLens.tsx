@@ -8,6 +8,7 @@ import {
   FiBriefcase,
   FiClipboard,
   FiDownload,
+  FiMessageSquare,
   FiSearch,
   FiSliders,
   FiX,
@@ -18,7 +19,10 @@ import Page from "src/Shared/Page/Page";
 import { searchTalentLens } from "./api";
 import CandidateCard from "./components/CandidateCard";
 import CandidateDetailModal from "./components/CandidateDetailModal";
+import FeedbackModal from "./components/FeedbackModal";
 import SavedCandidatesPanel from "./components/SavedCandidatesPanel";
+import type { FeedbackContext } from "./feedbackTypes";
+import { useTalentLensAuth } from "./hooks/useTalentLensAuth";
 import SearchSuggestions, {
   buildSuggestionItems,
   type SuggestionItem,
@@ -36,6 +40,7 @@ import {
   type SearchTimingMeta,
   type TalentLensCandidateResult,
   type TalentLensInputMode,
+  type TalentLensSearchRequest,
   type TalentLensSearchResponse,
 } from "./types";
 import {
@@ -129,6 +134,7 @@ const ErrorState = ({ message }: { message: string }) => (
 );
 
 const TalentLens = () => {
+  const { user, role: reporterRole } = useTalentLensAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [inputMode, setInputMode] = useState<TalentLensInputMode>("Skills");
@@ -149,6 +155,10 @@ const TalentLens = () => {
   const [isSavedPanelOpen, setIsSavedPanelOpen] = useState(false);
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
   const [suggestionActiveIndex, setSuggestionActiveIndex] = useState(0);
+  const [lastSearchRequest, setLastSearchRequest] = useState<TalentLensSearchRequest | null>(
+    null
+  );
+  const [feedbackContext, setFeedbackContext] = useState<FeedbackContext | null>(null);
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const jdTextareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -398,7 +408,7 @@ const TalentLens = () => {
       const started = performance.now();
 
       try {
-        const searchResponse = await searchTalentLens({
+        const searchRequest: TalentLensSearchRequest = {
           query: effectiveQuery,
           top_k: getSearchTopK(topK, gradYearFilter),
           min_score: 0,
@@ -407,7 +417,9 @@ const TalentLens = () => {
           recruiter_company: inputMode === "Job Description" ? recruiterCompany.trim() || null : null,
           recruiter_job_title:
             inputMode === "Job Description" ? recruiterJobTitle.trim() || null : null,
-        });
+        };
+        const searchResponse = await searchTalentLens(searchRequest);
+        setLastSearchRequest(searchRequest);
         setResponse(searchResponse);
         setFocusedIndex(0);
         const filteredCount = prepareSearchResults(
@@ -464,6 +476,34 @@ const TalentLens = () => {
     const candidate = resolveCandidateById(candidateId);
     if (candidate) openCandidate(candidate);
   };
+
+  const openFeedback = useCallback(
+    (preselectedRankedTooHigh?: TalentLensCandidateResult | null) => {
+      if (!response || !lastSearchRequest || !effectiveQuery) {
+        setActionMessage("Run a search first, then report feedback on those results.");
+        return;
+      }
+      setFeedbackContext({
+        queryText: effectiveQuery,
+        inputMode,
+        searchRequest: lastSearchRequest,
+        response,
+        gradYearFilter,
+        lastSearchMeta,
+        results: rawResults,
+        preselectedRankedTooHigh,
+      });
+    },
+    [
+      effectiveQuery,
+      gradYearFilter,
+      inputMode,
+      lastSearchMeta,
+      lastSearchRequest,
+      rawResults,
+      response,
+    ]
+  );
 
   const resultsSummary = useMemo(() => {
     if (lastSearchMeta) {
@@ -781,6 +821,16 @@ const TalentLens = () => {
                   <FiBookmark aria-hidden />
                   Saved ({saved.length})
                 </button>
+                {response ? (
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 rounded-md border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-sm font-medium text-(--obs-text-primary) transition hover:border-[#F58134]/45 hover:bg-[#F58134]/10"
+                    onClick={() => openFeedback()}
+                  >
+                    <FiMessageSquare aria-hidden />
+                    Report issue
+                  </button>
+                ) : null}
                 {results.length ? (
                   <>
                     <button
@@ -895,6 +945,7 @@ const TalentLens = () => {
                           const added = toggleSaved(candidate);
                           setActionMessage(added ? "Saved candidate." : "Removed from saved.");
                         }}
+                        onReportIssue={() => openFeedback(candidate)}
                       />
                     ))}
                   </div>
@@ -928,6 +979,7 @@ const TalentLens = () => {
                             const added = toggleSaved(candidate);
                             setActionMessage(added ? "Saved candidate." : "Removed from saved.");
                           }}
+                          onReportIssue={() => openFeedback(candidate)}
                         />
                       );
                     })}
@@ -959,6 +1011,16 @@ const TalentLens = () => {
         onClearAll={clearAll}
         onActionMessage={setActionMessage}
       />
+
+      {feedbackContext && user?.email ? (
+        <FeedbackModal
+          context={feedbackContext}
+          reporterEmail={user.email}
+          reporterRole={reporterRole}
+          onClose={() => setFeedbackContext(null)}
+          onSuccess={setActionMessage}
+        />
+      ) : null}
     </Page>
   );
 };

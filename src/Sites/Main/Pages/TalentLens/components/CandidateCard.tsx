@@ -1,4 +1,4 @@
-import { FiBookmark, FiExternalLink, FiGithub, FiLinkedin } from "react-icons/fi";
+import { FiBookmark, FiExternalLink, FiGithub, FiLinkedin, FiMessageSquare } from "react-icons/fi";
 
 import type { TalentLensCandidateResult } from "../types";
 import {
@@ -20,6 +20,7 @@ interface CandidateCardProps {
   setCardRef: (index: number) => (node: HTMLElement | null) => void;
   onOpen: () => void;
   onToggleSaved: () => void;
+  onReportIssue?: () => void;
 }
 
 const CandidateCard = ({
@@ -30,6 +31,7 @@ const CandidateCard = ({
   setCardRef,
   onOpen,
   onToggleSaved,
+  onReportIssue,
 }: CandidateCardProps) => {
   const matchedSkills = compactList(candidate.matched_skills);
   const matchedRequirements = compactList(candidate.explanation?.matched);
@@ -95,6 +97,20 @@ const CandidateCard = ({
         </div>
         <div className="flex items-start gap-2">
           <ScoreTile label="Fit" value={formatFitScore(candidate.score)} />
+          {onReportIssue ? (
+            <button
+              type="button"
+              aria-label="Report issue with this result"
+              title="Report issue"
+              className="rounded-md border border-(--obs-border) p-2 text-(--obs-text-muted) transition hover:border-[#F58134]/45 hover:text-(--obs-text-primary)"
+              onClick={event => {
+                event.stopPropagation();
+                onReportIssue();
+              }}
+            >
+              <FiMessageSquare aria-hidden />
+            </button>
+          ) : null}
           <button
             type="button"
             aria-label={isSaved ? "Unsave candidate" : "Save candidate"}
