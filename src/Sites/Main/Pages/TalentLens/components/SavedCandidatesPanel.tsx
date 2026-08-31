@@ -8,7 +8,6 @@ interface SavedCandidatesPanelProps {
   isOpen: boolean;
   saved: SavedCandidateSnapshot[];
   onClose: () => void;
-  onOpenCandidate: (candidateId: string) => void;
   onUnsave: (candidateId: string) => void;
   onClearAll: () => void;
   onActionMessage?: (message: string) => void;
@@ -18,7 +17,6 @@ const SavedCandidatesPanel = ({
   isOpen,
   saved,
   onClose,
-  onOpenCandidate,
   onUnsave,
   onClearAll,
   onActionMessage,
@@ -96,11 +94,7 @@ const SavedCandidatesPanel = ({
                   className="rounded-lg border border-(--obs-border) bg-(--obs-surface) p-4"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <button
-                      type="button"
-                      className="min-w-0 flex-1 text-left"
-                      onClick={() => onOpenCandidate(item.candidate_id)}
-                    >
+                    <div className="min-w-0 flex-1">
                       <p className="font-semibold text-(--obs-text-primary)">
                         {getCandidateDisplayName(item.candidate)}
                       </p>
@@ -110,7 +104,7 @@ const SavedCandidatesPanel = ({
                         ) : null}
                         <Chip>{formatFitScore(item.candidate.score)}</Chip>
                       </div>
-                    </button>
+                    </div>
                     <button
                       type="button"
                       className="text-xs font-semibold text-[#F58134] hover:underline"

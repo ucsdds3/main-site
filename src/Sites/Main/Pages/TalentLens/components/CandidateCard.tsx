@@ -18,7 +18,6 @@ interface CandidateCardProps {
   isFocused: boolean;
   isSaved: boolean;
   setCardRef: (index: number) => (node: HTMLElement | null) => void;
-  onOpen: () => void;
   onToggleSaved: () => void;
   onReportIssue?: () => void;
 }
@@ -29,7 +28,6 @@ const CandidateCard = ({
   isFocused,
   isSaved,
   setCardRef,
-  onOpen,
   onToggleSaved,
   onReportIssue,
 }: CandidateCardProps) => {
@@ -51,7 +49,7 @@ const CandidateCard = ({
       ref={setCardRef(index)}
       data-talentlens-result-index={index}
       tabIndex={-1}
-      className={`cursor-pointer rounded-lg border bg-[rgba(255,255,255,0.045)] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.18)] transition ${
+      className={`rounded-lg border bg-[rgba(255,255,255,0.045)] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.18)] transition ${
         candidate.match_tier === "related" ? "opacity-90 " : ""
       }${
         isFocused
@@ -60,13 +58,6 @@ const CandidateCard = ({
             ? "border-[#F58134]/35"
             : "border-(--obs-border)"
       }`}
-      onClick={onOpen}
-      onKeyDown={event => {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          onOpen();
-        }
-      }}
     >
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="min-w-0 flex-1">
@@ -130,7 +121,7 @@ const CandidateCard = ({
       </div>
 
       {hasActions ? (
-        <div className="mt-5 flex flex-wrap gap-2" onClick={event => event.stopPropagation()}>
+        <div className="mt-5 flex flex-wrap gap-2">
           <ActionLink href={contact.resume}>
             <FiExternalLink aria-hidden />
             View resume

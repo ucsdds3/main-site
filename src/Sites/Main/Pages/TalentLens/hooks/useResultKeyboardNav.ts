@@ -7,7 +7,6 @@ interface UseResultKeyboardNavOptions {
   isEnabled: boolean;
   focusedIndex: number;
   setFocusedIndex: (index: number | ((prev: number) => number)) => void;
-  onOpen: (candidate: TalentLensCandidateResult) => void;
   suggestionsOpen?: boolean;
 }
 
@@ -22,7 +21,6 @@ export const useResultKeyboardNav = ({
   isEnabled,
   focusedIndex,
   setFocusedIndex,
-  onOpen,
   suggestionsOpen = false,
 }: UseResultKeyboardNavOptions) => {
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
@@ -47,18 +45,12 @@ export const useResultKeyboardNav = ({
       if (event.key === "ArrowUp") {
         event.preventDefault();
         setFocusedIndex(prev => (prev - 1 + results.length) % results.length);
-        return;
-      }
-
-      if (event.key === "Enter" && focusedIndex >= 0 && focusedIndex < results.length) {
-        event.preventDefault();
-        onOpen(results[focusedIndex]);
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [focusedIndex, isEnabled, onOpen, results, setFocusedIndex, suggestionsOpen]);
+  }, [isEnabled, results, setFocusedIndex, suggestionsOpen]);
 
   useEffect(() => {
     const node = cardRefs.current[focusedIndex];

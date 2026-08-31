@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
-import { useSearchParams } from "react-router";
 import {
   FiAlertCircle,
   FiArrowRight,
@@ -18,7 +17,6 @@ import Page from "src/Shared/Page/Page";
 
 import { searchTalentLens } from "./api";
 import CandidateCard from "./components/CandidateCard";
-import CandidateDetailModal from "./components/CandidateDetailModal";
 import FeedbackModal from "./components/FeedbackModal";
 import SavedCandidatesPanel from "./components/SavedCandidatesPanel";
 import type { FeedbackContext } from "./feedbackTypes";
@@ -135,7 +133,6 @@ const ErrorState = ({ message }: { message: string }) => (
 
 const TalentLens = () => {
   const { user, role: reporterRole } = useTalentLensAuth();
-  const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [inputMode, setInputMode] = useState<TalentLensInputMode>("Skills");
   const [topK, setTopK] = useState(5);
@@ -151,7 +148,6 @@ const TalentLens = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [lastSearchMeta, setLastSearchMeta] = useState<SearchTimingMeta | null>(null);
   const [focusedIndex, setFocusedIndex] = useState(0);
-  const [detailCandidate, setDetailCandidate] = useState<TalentLensCandidateResult | null>(null);
   const [isSavedPanelOpen, setIsSavedPanelOpen] = useState(false);
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
   const [suggestionActiveIndex, setSuggestionActiveIndex] = useState(0);
@@ -165,7 +161,7 @@ const TalentLens = () => {
   const suggestionsListboxId = "talentlens-search-suggestions";
 
   const { recentQueries, addRecentQuery } = useRecentQueries();
-  const { saved, isSaved, toggleSaved, unsave, clearAll, findSaved } = useSavedCandidates();
+  const { saved, isSaved, toggleSaved, unsave, clearAll } = useSavedCandidates();
 
   const rawResults = useMemo(() => response?.results ?? [], [response]);
   const gradYearFilterActive = isGraduationYearFilterActive(gradYearFilter);
@@ -216,50 +212,6 @@ const TalentLens = () => {
     [inputMode, query, recentQueries]
   );
 
-  const openCandidate = useCallback((candidate: TalentLensCandidateResult) => {
-    setDetailCandidate(candidate);
-    const id = getCandidateStorageId(candidate);
-    setSearchParams(
-      prev => {
-        const next = new URLSearchParams(prev);
-        next.set("candidate", id);
-        return next;
-      },
-      { replace: true }
-    );
-  }, [setSearchParams]);
-
-  const closeDetail = useCallback(() => {
-    setDetailCandidate(null);
-    setSearchParams(
-      prev => {
-        const next = new URLSearchParams(prev);
-        next.delete("candidate");
-        return next;
-      },
-      { replace: true }
-    );
-  }, [setSearchParams]);
-
-  const resolveCandidateById = useCallback(
-    (candidateId: string) => {
-      const fromResults = results.find(item => getCandidateStorageId(item) === candidateId);
-      if (fromResults) return fromResults;
-      return findSaved(candidateId) ?? null;
-    },
-    [findSaved, results]
-  );
-
-  useEffect(() => {
-    const candidateId = searchParams.get("candidate");
-    if (!candidateId) {
-      setDetailCandidate(null);
-      return;
-    }
-    const candidate = resolveCandidateById(candidateId);
-    if (candidate) setDetailCandidate(candidate);
-  }, [resolveCandidateById, searchParams]);
-
   useEffect(() => {
     if (!results.length) {
       setFocusedIndex(0);
@@ -270,10 +222,9 @@ const TalentLens = () => {
 
   const { setCardRef } = useResultKeyboardNav({
     results,
-    isEnabled: results.length > 0 && !isLoading && !detailCandidate,
+    isEnabled: results.length > 0 && !isLoading,
     focusedIndex,
     setFocusedIndex,
-    onOpen: openCandidate,
     suggestionsOpen: isSuggestionsOpen,
   });
 
@@ -350,7 +301,6 @@ const TalentLens = () => {
     setActionMessage(null);
     setLastSearchMeta(null);
     setFocusedIndex(0);
-    closeDetail();
   };
 
   const confirmExport = (format: "CSV" | "JSON") => {
@@ -403,7 +353,6 @@ const TalentLens = () => {
       setError(null);
       setActionMessage(null);
       setLastSearchMeta(null);
-      closeDetail();
 
       const started = performance.now();
 
@@ -444,7 +393,6 @@ const TalentLens = () => {
     },
     [
       addRecentQuery,
-      closeDetail,
       effectiveQuery,
       gradYearFilter,
       gradYearFilterActive,
@@ -470,11 +418,6 @@ const TalentLens = () => {
     event.preventDefault();
     setIsSuggestionsOpen(false);
     await runSearch();
-  };
-
-  const openSavedCandidate = (candidateId: string) => {
-    const candidate = resolveCandidateById(candidateId);
-    if (candidate) openCandidate(candidate);
   };
 
   const openFeedback = useCallback(
@@ -784,21 +727,6 @@ const TalentLens = () => {
             </div>
           </form>
 
-          <section className="grid gap-4 md:grid-cols-3">
-            {[
-              "Enter skills or paste a job description",
-              "TalentLens ranks resume matches",
-              "Review evidence before outreach",
-            ].map(tip => (
-              <div
-                key={tip}
-                className="rounded-lg border border-(--obs-border) bg-(--obs-surface) p-4"
-              >
-                <p className="text-sm font-semibold text-(--obs-text-primary)">{tip}</p>
-              </div>
-            ))}
-          </section>
-
           <section className="flex flex-col gap-5">
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
@@ -806,11 +734,6 @@ const TalentLens = () => {
                   Candidate matches
                 </h2>
                 <p className="mt-1 text-sm text-(--obs-text-muted)">{resultsSummary}</p>
-                {results.length ? (
-                  <p className="mt-1 text-xs text-(--obs-text-faint)">
-                    Use ↑↓ to browse, Enter to view details
-                  </p>
-                ) : null}
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
@@ -937,10 +860,6 @@ const TalentLens = () => {
                         isFocused={index === focusedIndex}
                         isSaved={isSaved(candidate)}
                         setCardRef={setCardRef}
-                        onOpen={() => {
-                          setFocusedIndex(index);
-                          openCandidate(candidate);
-                        }}
                         onToggleSaved={() => {
                           const added = toggleSaved(candidate);
                           setActionMessage(added ? "Saved candidate." : "Removed from saved.");
@@ -971,10 +890,6 @@ const TalentLens = () => {
                           isFocused={resultIndex === focusedIndex}
                           isSaved={isSaved(candidate)}
                           setCardRef={setCardRef}
-                          onOpen={() => {
-                            setFocusedIndex(resultIndex);
-                            openCandidate(candidate);
-                          }}
                           onToggleSaved={() => {
                             const added = toggleSaved(candidate);
                             setActionMessage(added ? "Saved candidate." : "Removed from saved.");
@@ -991,22 +906,10 @@ const TalentLens = () => {
         </section>
       </main>
 
-      {detailCandidate ? (
-        <CandidateDetailModal
-          candidate={detailCandidate}
-          onClose={closeDetail}
-          onActionMessage={setActionMessage}
-        />
-      ) : null}
-
       <SavedCandidatesPanel
         isOpen={isSavedPanelOpen}
         saved={saved}
         onClose={() => setIsSavedPanelOpen(false)}
-        onOpenCandidate={candidateId => {
-          openSavedCandidate(candidateId);
-          setIsSavedPanelOpen(false);
-        }}
         onUnsave={unsave}
         onClearAll={clearAll}
         onActionMessage={setActionMessage}

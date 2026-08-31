@@ -1,10 +1,8 @@
 import { GRADUATION_FILTER_API_TOP_K, GRADUATION_YEAR_SELECT_OPTIONS } from "./constants";
-import { getCandidateStorageId } from "./storage";
 import type {
   GraduationYearFilter,
   TalentLensCandidateResult,
   TalentLensEvidenceChunk,
-  TalentLensRankingDetails,
 } from "./types";
 
 const GRAD_YEAR_PATTERN = /\b(19|20)\d{2}\b/;
@@ -263,15 +261,3 @@ export const formatRetrievalBackend = (backend: string | undefined) => {
   return backend;
 };
 
-export const getProfileShareUrl = (candidate: TalentLensCandidateResult) => {
-  const id = encodeURIComponent(getCandidateStorageId(candidate));
-  const origin = typeof window !== "undefined" ? window.location.origin : "https://www.ds3atucsd.com";
-  return `${origin}/talentlens?candidate=${id}`;
-};
-
-export const formatRankingDetails = (details: TalentLensRankingDetails | null | undefined) => {
-  if (!details || typeof details !== "object") return [];
-  return Object.entries(details)
-    .filter(([, value]) => value !== null && value !== undefined && value !== "")
-    .map(([key, value]) => ({ key, value: String(value) }));
-};
