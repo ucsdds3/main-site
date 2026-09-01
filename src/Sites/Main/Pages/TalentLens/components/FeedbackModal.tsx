@@ -38,9 +38,7 @@ const FeedbackModal = ({
   onSuccess,
 }: FeedbackModalProps) => {
   const closeRef = useRef<HTMLButtonElement>(null);
-  const [form, setForm] = useState<FeedbackFormState>(() =>
-    buildInitialFeedbackForm(context)
-  );
+  const [form, setForm] = useState<FeedbackFormState>(buildInitialFeedbackForm);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

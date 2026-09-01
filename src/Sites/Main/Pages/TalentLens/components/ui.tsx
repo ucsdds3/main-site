@@ -46,24 +46,3 @@ export const ActionLink = ({ href, children }: { href: string; children: ReactNo
     </a>
   );
 };
-
-export const RequirementList = ({
-  title,
-  items,
-  tone = "neutral",
-}: {
-  title: string;
-  items: string[];
-  tone?: "cyan" | "orange" | "neutral";
-}) => (
-  <div className="rounded-lg border border-(--obs-border) bg-(--obs-surface) p-3">
-    <p className="text-sm font-semibold text-(--obs-text-primary)">{title}</p>
-    <div className="mt-2 flex flex-wrap gap-2">
-      {items.slice(0, 6).map(item => (
-        <Chip key={item} tone={tone}>
-          {item}
-        </Chip>
-      ))}
-    </div>
-  </div>
-);

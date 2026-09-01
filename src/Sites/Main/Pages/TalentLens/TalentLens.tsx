@@ -36,7 +36,6 @@ import {
   EMPTY_GRADUATION_YEAR_FILTER,
   type GraduationYearFilter,
   type SearchTimingMeta,
-  type TalentLensCandidateResult,
   type TalentLensInputMode,
   type TalentLensSearchRequest,
   type TalentLensSearchResponse,
@@ -52,6 +51,7 @@ import {
   isGraduationYearFilterActive,
   msFormatter,
   prepareSearchResults,
+  getQueryDisplayParts,
 } from "./utils";
 
 const getSkillQueryParts = (value: string) =>
@@ -185,17 +185,6 @@ const TalentLens = () => {
     [results]
   );
   const matchSummary = response?.match_summary ?? null;
-  const parsedQuerySignals = useMemo(() => {
-    const parsed = response?.parsed_query;
-    if (!parsed) return [];
-    return dedupeQueryParts([
-      ...parsed.must_have_skills,
-      ...parsed.semantic_requirements,
-      ...parsed.graduation_years.map(year => `Class of ${year}`),
-      ...(parsed.major_contains ? [`Major: ${parsed.major_contains}`] : []),
-      ...parsed.exclusions.map(exclusion => `Excludes: ${exclusion}`),
-    ]);
-  }, [response?.parsed_query]);
 
   const selectedSkills = useMemo(() => {
     const queryParts = new Set(getSkillQueryParts(query).map(part => part.toLocaleLowerCase()));
@@ -206,6 +195,23 @@ const TalentLens = () => {
     if (inputMode === "Job Description") return query.trim();
     return dedupeQueryParts(getSkillQueryParts(query)).join(", ");
   }, [inputMode, query]);
+
+  const parsedQuerySignals = useMemo(() => {
+    const parsed = response?.parsed_query;
+    if (!parsed) return [];
+    const activeQuery = lastSearchRequest?.query ?? effectiveQuery;
+    const activeInputMode = lastSearchRequest?.input_mode ?? inputMode;
+    const queryParts = getQueryDisplayParts(activeQuery, activeInputMode);
+    const skillsLower = new Set(parsed.must_have_skills.map(skill => skill.toLowerCase()));
+    const themeParts = queryParts.filter(part => !skillsLower.has(part.toLowerCase()));
+    return dedupeQueryParts([
+      ...parsed.must_have_skills,
+      ...themeParts,
+      ...parsed.graduation_years.map(year => `Class of ${year}`),
+      ...(parsed.major_contains ? [`Major: ${parsed.major_contains}`] : []),
+      ...parsed.exclusions.map(exclusion => `Excludes: ${exclusion}`),
+    ]);
+  }, [effectiveQuery, inputMode, lastSearchRequest, response?.parsed_query]);
 
   const suggestionItems = useMemo(
     () => buildSuggestionItems(query, inputMode, recentQueries),
@@ -420,8 +426,7 @@ const TalentLens = () => {
     await runSearch();
   };
 
-  const openFeedback = useCallback(
-    (preselectedRankedTooHigh?: TalentLensCandidateResult | null) => {
+  const openFeedback = useCallback(() => {
       if (!response || !lastSearchRequest || !effectiveQuery) {
         setActionMessage("Run a search first, then report feedback on those results.");
         return;
@@ -434,7 +439,6 @@ const TalentLens = () => {
         gradYearFilter,
         lastSearchMeta,
         results: rawResults,
-        preselectedRankedTooHigh,
       });
     },
     [
@@ -736,6 +740,16 @@ const TalentLens = () => {
                 <p className="mt-1 text-sm text-(--obs-text-muted)">{resultsSummary}</p>
               </div>
               <div className="flex flex-wrap gap-2">
+                {response ? (
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#F58134] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(245,129,52,0.35)] transition hover:bg-[#f06f1d]"
+                    onClick={() => openFeedback()}
+                  >
+                    <FiMessageSquare aria-hidden />
+                    Report an issue
+                  </button>
+                ) : null}
                 <button
                   type="button"
                   className="inline-flex items-center gap-2 rounded-md border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-sm font-medium text-(--obs-text-primary) transition hover:border-[#F58134]/45 hover:bg-[#F58134]/10"
@@ -744,16 +758,6 @@ const TalentLens = () => {
                   <FiBookmark aria-hidden />
                   Saved ({saved.length})
                 </button>
-                {response ? (
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-2 rounded-md border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-sm font-medium text-(--obs-text-primary) transition hover:border-[#F58134]/45 hover:bg-[#F58134]/10"
-                    onClick={() => openFeedback()}
-                  >
-                    <FiMessageSquare aria-hidden />
-                    Report issue
-                  </button>
-                ) : null}
                 {results.length ? (
                   <>
                     <button
@@ -864,7 +868,6 @@ const TalentLens = () => {
                           const added = toggleSaved(candidate);
                           setActionMessage(added ? "Saved candidate." : "Removed from saved.");
                         }}
-                        onReportIssue={() => openFeedback(candidate)}
                       />
                     ))}
                   </div>
@@ -894,7 +897,6 @@ const TalentLens = () => {
                             const added = toggleSaved(candidate);
                             setActionMessage(added ? "Saved candidate." : "Removed from saved.");
                           }}
-                          onReportIssue={() => openFeedback(candidate)}
                         />
                       );
                     })}

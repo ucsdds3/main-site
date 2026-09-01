@@ -66,7 +66,7 @@ Once deployed, replace the local URL with the V2 Cloud Run service endpoint.
 
 Code: `src/Sites/Main/Pages/TalentLens/`
 
-**Beta feedback:** After a search, use **Report issue** (results toolbar or per-candidate icon). Submissions go to Supabase `TalentLensFeedback` with the query and top-10 debug snapshot attached. One-time setup in the DS3 Supabase project: run `Talentlens_V2/sql/talentlens_feedback.sql` in the SQL Editor. Admins (`TalentLensUsers.role = admin`) can triage rows in Supabase; reporters can only insert and read their own.
+**Beta feedback:** After a search, use **Report an issue** in the results toolbar. Submissions go to Supabase `TalentLensFeedback` with the query and top-10 debug snapshot attached. One-time setup in the DS3 Supabase project: run `Talentlens_V2/sql/talentlens_feedback.sql` in the SQL Editor. Admins (`TalentLensUsers.role = admin`) can triage rows in Supabase; reporters can only insert and read their own.
 
 ### Members portal → TalentLens ingest
 

@@ -41,28 +41,21 @@ export const buildFeedbackDebugBundle = (context: FeedbackContext) => ({
   results_top10: context.response.results.slice(0, 10).map(slimCandidateSnapshot),
 });
 
-export const buildInitialFeedbackForm = (
-  context: FeedbackContext
-): FeedbackFormState => {
-  const rankedTooHigh = context.preselectedRankedTooHigh;
-  return {
-    category: rankedTooHigh ? "wrong_rank" : "",
-    confidence: "",
-    impact: "",
-    noGoodResults: false,
-    expectedCandidateId: "",
-    expectedCandidateName: "",
-    expectedNotShown: false,
-    expectedRank: "",
-    rankedTooHighCandidateId: rankedTooHigh
-      ? getCandidateStorageId(rankedTooHigh)
-      : "",
-    expectedEvidence: "",
-    whyWrong: "",
-    notes: "",
-    reportingAboutSelf: false,
-  };
-};
+export const buildInitialFeedbackForm = (): FeedbackFormState => ({
+  category: "",
+  confidence: "",
+  impact: "",
+  noGoodResults: false,
+  expectedCandidateId: "",
+  expectedCandidateName: "",
+  expectedNotShown: false,
+  expectedRank: "",
+  rankedTooHighCandidateId: "",
+  expectedEvidence: "",
+  whyWrong: "",
+  notes: "",
+  reportingAboutSelf: false,
+});
 
 export const findCandidateByStorageId = (
   results: TalentLensCandidateResult[],

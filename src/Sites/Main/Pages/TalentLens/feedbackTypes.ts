@@ -66,7 +66,6 @@ export interface FeedbackContext {
   gradYearFilter: GraduationYearFilter;
   lastSearchMeta: SearchTimingMeta | null;
   results: TalentLensCandidateResult[];
-  preselectedRankedTooHigh?: TalentLensCandidateResult | null;
 }
 
 export const FEEDBACK_CATEGORY_OPTIONS: {

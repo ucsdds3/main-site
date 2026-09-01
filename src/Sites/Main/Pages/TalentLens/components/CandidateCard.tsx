@@ -1,4 +1,4 @@
-import { FiBookmark, FiExternalLink, FiGithub, FiLinkedin, FiMessageSquare } from "react-icons/fi";
+import { FiBookmark, FiExternalLink, FiGithub, FiLinkedin } from "react-icons/fi";
 
 import type { TalentLensCandidateResult } from "../types";
 import {
@@ -10,7 +10,7 @@ import {
   getEvidenceChunks,
   shouldShowStatus,
 } from "../utils";
-import { ActionLink, Chip, RequirementList, ScoreTile } from "./ui";
+import { ActionLink, Chip, ScoreTile } from "./ui";
 
 interface CandidateCardProps {
   candidate: TalentLensCandidateResult;
@@ -19,7 +19,6 @@ interface CandidateCardProps {
   isSaved: boolean;
   setCardRef: (index: number) => (node: HTMLElement | null) => void;
   onToggleSaved: () => void;
-  onReportIssue?: () => void;
 }
 
 const CandidateCard = ({
@@ -29,15 +28,8 @@ const CandidateCard = ({
   isSaved,
   setCardRef,
   onToggleSaved,
-  onReportIssue,
 }: CandidateCardProps) => {
   const matchedSkills = compactList(candidate.matched_skills);
-  const matchedRequirements = compactList(candidate.explanation?.matched);
-  const missingRequirements = compactList(candidate.explanation?.gaps);
-  const verificationRequirements = candidate.verification?.requirements ?? [];
-  const unclearRequirements = verificationRequirements
-    .filter(item => item.status === "unclear")
-    .map(item => item.requirement);
   const evidenceChunks = getEvidenceChunks(candidate, 3);
   const displayName = getCandidateDisplayName(candidate);
   const hardFilterStatus = formatStatus(candidate.hard_filter_status);
@@ -69,12 +61,6 @@ const CandidateCard = ({
             {shouldShowStatus(candidate.company_match_status) ? (
               <Chip>{candidate.company_match_status}</Chip>
             ) : null}
-            {verificationRequirements.length ? (
-              <Chip tone="cyan">
-                {verificationRequirements.filter(item => item.status === "yes").length}/
-                {verificationRequirements.length} verified
-              </Chip>
-            ) : null}
           </div>
           <h3 className="mt-3 text-2xl font-semibold leading-tight text-(--obs-text-primary)">
             {displayName}
@@ -88,20 +74,6 @@ const CandidateCard = ({
         </div>
         <div className="flex items-start gap-2">
           <ScoreTile label="Fit" value={formatFitScore(candidate.score)} />
-          {onReportIssue ? (
-            <button
-              type="button"
-              aria-label="Report issue with this result"
-              title="Report issue"
-              className="rounded-md border border-(--obs-border) p-2 text-(--obs-text-muted) transition hover:border-[#F58134]/45 hover:text-(--obs-text-primary)"
-              onClick={event => {
-                event.stopPropagation();
-                onReportIssue();
-              }}
-            >
-              <FiMessageSquare aria-hidden />
-            </button>
-          ) : null}
           <button
             type="button"
             aria-label={isSaved ? "Unsave candidate" : "Save candidate"}
@@ -174,20 +146,6 @@ const CandidateCard = ({
               </blockquote>
             ))}
           </div>
-        </div>
-      ) : null}
-
-      {matchedRequirements.length || missingRequirements.length || unclearRequirements.length ? (
-        <div className="mt-5 grid gap-3 md:grid-cols-3">
-          {matchedRequirements.length ? (
-            <RequirementList title="Requirements met" items={matchedRequirements} tone="cyan" />
-          ) : null}
-          {missingRequirements.length ? (
-            <RequirementList title="Missing" items={missingRequirements} tone="orange" />
-          ) : null}
-          {unclearRequirements.length ? (
-            <RequirementList title="Needs verification" items={unclearRequirements} />
-          ) : null}
         </div>
       ) : null}
 

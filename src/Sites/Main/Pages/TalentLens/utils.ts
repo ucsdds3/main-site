@@ -3,6 +3,7 @@ import type {
   GraduationYearFilter,
   TalentLensCandidateResult,
   TalentLensEvidenceChunk,
+  TalentLensInputMode,
 } from "./types";
 
 const GRAD_YEAR_PATTERN = /\b(19|20)\d{2}\b/;
@@ -259,5 +260,18 @@ export const formatRetrievalBackend = (backend: string | undefined) => {
   if (!backend) return "";
   if (backend === "lexical-chunk") return "Resume text chunk search";
   return backend;
+};
+
+export const getQueryDisplayParts = (
+  searchQuery: string,
+  inputMode: TalentLensInputMode
+): string[] => {
+  const trimmed = searchQuery.trim();
+  if (!trimmed) return [];
+  if (inputMode === "Job Description") return [trimmed];
+  return trimmed
+    .split(",")
+    .map(part => part.trim())
+    .filter(Boolean);
 };
 
