@@ -53,6 +53,8 @@ Check the depencencies listed below for this project before starting. Use these 
 
 ## TalentLens
 
+**Start here:** sibling repo [`Talentlens_V2/README.md`](../Talentlens_V2/README.md) — product overview, local dev, and doc map.
+
 ### Search UI (`/talentlens`)
 
 The `/talentlens` page uses the TalentLens V2 FastAPI service. Configure its base URL:
@@ -66,7 +68,9 @@ Once deployed, replace the local URL with the V2 Cloud Run service endpoint.
 
 Code: `src/Sites/Main/Pages/TalentLens/`
 
-**Beta feedback:** After a search, use **Report an issue** in the results toolbar. Submissions go to Supabase `TalentLensFeedback` with the query and top-10 debug snapshot attached. One-time setup in the DS3 Supabase project: run `Talentlens_V2/sql/talentlens_feedback.sql` in the SQL Editor. Admins (`TalentLensUsers.role = admin`) can triage rows in Supabase; reporters can only insert and read their own.
+**Beta feedback:** After a search, use **Report an issue** (orange button in the results toolbar). Submissions go to Supabase `TalentLensFeedback` with the query and top-10 debug snapshot attached. One-time Supabase setup: run `Talentlens_V2/sql/talentlens_feedback.sql`. Triage guide: `Talentlens_V2/docs/FEEDBACK_TRIAGE.md`. Agent skill: `.cursor/skills/talentlens-feedback-triage/`.
+
+**UI (2026-09):** Results are card-only (no detail popup). Single feedback entry point — no per-candidate report icon.
 
 ### Members portal → TalentLens ingest
 
