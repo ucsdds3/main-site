@@ -18,6 +18,12 @@ import { Input, TextArea } from "src/Sites/Members/Components/Input";
 import Select from "src/Sites/Members/Components/Select";
 
 import EventQRCode from "./EventQRCode";
+import {
+  EVENT_WORKFLOW_STATUS_LABELS,
+  EVENT_WORKFLOW_STATUS_VALUES,
+  eventWorkflowStatusFromLabel,
+  formatEventWorkflowStatus,
+} from "../Utils/eventWorkflow";
 
 const COMMITTEE_STORAGE_KEYS = new Set(COMMITTEE_TYPES.map(l => labelToTeamKey(l)));
 
@@ -67,6 +73,8 @@ export default function EditCard<T extends Record<string, unknown>>({
     handleSave,
     handleDelete,
     handleExtendEventEnd,
+    handleConfirmWorkflowStatus,
+    workflowStatusDirty,
   } = useEditCard({
     tableName,
     columns,
@@ -390,6 +398,72 @@ export default function EditCard<T extends Record<string, unknown>>({
               options={adminLevelOptions}
               value={String(value || "")}
               setValue={v => handleChange(col.key, v || null, col.type)}
+              disabled={!canModify}
+              className="w-full min-w-0"
+            />
+          );
+        }
+        if (col.key === "workflow_status" && tableName === "Events") {
+          const statusLabels = EVENT_WORKFLOW_STATUS_VALUES.map(
+            v => EVENT_WORKFLOW_STATUS_LABELS[v]
+          );
+          return (
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-stretch">
+                <Select
+                  label={getColumnLabel(col)}
+                  fieldId={`ec-${String(col.key)}`}
+                  hideLabel
+                  showPlaceholderOption={false}
+                  options={statusLabels}
+                  value={formatEventWorkflowStatus(value)}
+                  setValue={v => {
+                    const next = eventWorkflowStatusFromLabel(v) ?? "none";
+                    handleChange(col.key, next, col.type);
+                  }}
+                  disabled={!canModify || isNew}
+                  className="w-full min-w-0 flex-1"
+                />
+                <button
+                  type="button"
+                  className="btn btn-primary shrink-0"
+                  onClick={() => handleConfirmWorkflowStatus()}
+                  disabled={loading || !canModify || isNew || !workflowStatusDirty}
+                >
+                  {loading ? <span className="loading loading-spinner" /> : "Confirm status"}
+                </button>
+              </div>
+              {isNew ? (
+                <p className="text-xs text-(--obs-text-muted)">
+                  New events start as None. Confirm status after creating the event.
+                </p>
+              ) : workflowStatusDirty ? (
+                <p className="text-xs text-(--obs-text-muted)">
+                  Status changed — click Confirm status to save
+                  {formatEventWorkflowStatus(value).startsWith("Waiting")
+                    ? " and send the notification email"
+                    : ""}
+                  .
+                </p>
+              ) : (
+                <p className="text-xs text-(--obs-text-muted)">
+                  Waiting statuses email VPI / VPF / Marketing. Complete publishes to the public
+                  events page.
+                </p>
+              )}
+            </div>
+          );
+        }
+        if (col.key === "internal_notes" && tableName === "Events") {
+          return (
+            <TextArea
+              label={getColumnLabel(col)}
+              fieldId={`ec-${String(col.key)}`}
+              hideLabel
+              rows={4}
+              value={String(value ?? "")}
+              setValue={v => handleChange(col.key, v, col.type)}
+              placeholder="Internal ops notes (Executive only)"
               disabled={!canModify}
               className="w-full min-w-0"
             />

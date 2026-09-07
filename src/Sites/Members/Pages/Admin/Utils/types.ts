@@ -22,6 +22,8 @@ export interface ColumnDefinition<T = any> {
   locked?: boolean;
   optional?: boolean;
   hide?: boolean;
+  /** When true, column is shown only to Executive adminLevel. */
+  execOnly?: boolean;
   join?: string;
   label?: string;
 }
@@ -53,6 +55,8 @@ export type EventRow = {
   tags: string[] | null;
   end: string | null;
   location: string | null;
+  workflow_status?: string | null;
+  internal_notes?: string | null;
 };
 
 export type AdminLevel = "Member" | "Board" | "Executive";

@@ -61,6 +61,7 @@
     "globals": "^16.0.0",
     "prettier": "^3.7.4",
     "sharp": "^0.34.5",
+    "supabase": "^2.116.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.0"

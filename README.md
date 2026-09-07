@@ -68,7 +68,7 @@ Once deployed, replace the local URL with the V2 Cloud Run service endpoint.
 
 Code: `src/Sites/Main/Pages/TalentLens/`
 
-**Beta feedback:** After a search, use **Report an issue** (orange button in the results toolbar). Submissions go to Supabase `TalentLensFeedback` with the query and top-10 debug snapshot attached. One-time Supabase setup: run `Talentlens_V2/sql/talentlens_feedback.sql`. Triage guide: `Talentlens_V2/docs/FEEDBACK_TRIAGE.md`. Agent skill: `.cursor/skills/talentlens-feedback-triage/`.
+**Beta feedback:** After a search, use **Report an issue** (orange button in the results toolbar). Submissions go to Supabase `TalentLensFeedback` with the query and top-10 debug snapshot attached. One-time Supabase setup: run `Talentlens_V2/sql/talentlens_feedback.sql`. Triage guide: `Talentlens_V2/docs/FEEDBACK_TRIAGE.md`. Agent skill: `.cursor/s/talentlens-feedback-triage/`.
 
 **UI (2026-09):** Results are card-only (no detail popup). Single feedback entry point — no per-candidate report icon.
 

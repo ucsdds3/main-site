@@ -12,7 +12,25 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-    <Toaster />
+    <Toaster
+      position="top-center"
+      toastOptions={{
+        duration: 8000,
+        style: {
+          maxWidth: "min(92vw, 36rem)",
+          width: "max-content",
+          padding: "12px 16px",
+          fontSize: "0.875rem",
+          lineHeight: "1.4",
+          wordBreak: "break-word",
+          overflowWrap: "anywhere",
+          whiteSpace: "pre-wrap",
+        },
+        error: {
+          duration: 12000,
+        },
+      }}
+    />
     <Analytics />
   </StrictMode>
 );

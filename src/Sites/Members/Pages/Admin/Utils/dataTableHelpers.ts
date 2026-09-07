@@ -1,6 +1,7 @@
 import { formatColumnLabel, formatCellValue } from "../../../Utils/functions";
 
 import type { ColumnDefinition } from "./types";
+import { formatEventWorkflowStatus } from "./eventWorkflow";
 
 export function filterAdminTableRows<T extends Record<string, any>>(
   tableName: string,
@@ -18,7 +19,10 @@ export function filterAdminTableRows<T extends Record<string, any>>(
   return baseData.filter(row =>
     visibleColumns.some(col => {
       const value = row[col.key];
-      const formatted = formatCellValue(value, col.type);
+      const formatted =
+        col.key === "workflow_status"
+          ? formatEventWorkflowStatus(value)
+          : formatCellValue(value, col.type);
       return String(formatted ?? "").toLowerCase().includes(q);
     })
   );
@@ -31,11 +35,14 @@ export function downloadAdminTableCsv<T extends Record<string, any>>(
 ): void {
   const visibleColumns = columns.filter(col => !col.hide);
 
-  const headers = visibleColumns.map(col => formatColumnLabel(col.key));
+  const headers = visibleColumns.map(col => col.label ?? formatColumnLabel(col.key));
   const rows = filteredRows.map(row =>
     visibleColumns.map(col => {
       const value = row[col.key];
-      const formatted = formatCellValue(value, col.type);
+      const formatted =
+        col.key === "workflow_status"
+          ? formatEventWorkflowStatus(value)
+          : formatCellValue(value, col.type);
       return `"${String(formatted).replace(/"/g, '""')}"`;
     })
   );
