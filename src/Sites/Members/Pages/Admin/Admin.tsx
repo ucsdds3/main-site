@@ -24,10 +24,16 @@ export default function AdminDashboardOnePage() {
     const tableData = getTableData();
     const columnsObj = tableData.columns;
 
-    return Object.entries(columnsObj).map(([key, col]) => ({
-      ...col,
-      key,
-    })) as ColumnDefinition<any>[];
+    return Object.entries(columnsObj)
+      .map(([key, col]) => ({
+        ...col,
+        key,
+      }))
+      .filter(col => {
+        const execOnly = Boolean((col as ColumnDefinition).execOnly);
+        if (!execOnly) return true;
+        return adminLevel === "Executive";
+      }) as ColumnDefinition<any>[];
   };
 
   const canAdd = (): boolean => {

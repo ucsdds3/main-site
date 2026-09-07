@@ -1,5 +1,6 @@
 import { ColumnDefinition } from "../Utils/types";
 import { formatCellValue } from "../../../Utils/functions";
+import { formatEventWorkflowStatus } from "../Utils/eventWorkflow";
 import EventQRCode from "./EventQRCode";
 
 interface TableBodyProps<T = any> {
@@ -8,6 +9,11 @@ interface TableBodyProps<T = any> {
   loading: boolean;
   selectedRow: T | null;
   onRowSelect?: (row: T | null) => void;
+}
+
+function cellDisplayValue(col: ColumnDefinition, value: unknown): string {
+  if (col.key === "workflow_status") return formatEventWorkflowStatus(value);
+  return formatCellValue(value, col.type);
 }
 
 export default function TableBody<T extends Record<string, any>>({
@@ -47,31 +53,31 @@ export default function TableBody<T extends Record<string, any>>({
             >
               {columns
                 .filter(col => !col.hide)
-                .map(col => (
-                  <td
-                    key={String(col.key)}
-                    className={
-                      col.type === "qr_code"
-                        ? "p-1"
-                        : "whitespace-pre-line"
-                    }
-                    title={formatCellValue(row[col.key], col.type)}
-                  >
-                    {col.type === "qr_code" ? (
-                      <div className="flex items-center justify-center" onClick={e => e.stopPropagation()}>
-                        <EventQRCode
-                          password={String(row.password ?? "")}
-                          eventName={row.name}
-                          size={48}
-                        />
-                      </div>
-                    ) : (
-                      <span className="line-clamp-3 max-w-[150px]">
-                        {formatCellValue(row[col.key], col.type)}
-                      </span>
-                    )}
-                  </td>
-                ))}
+                .map(col => {
+                  const display = cellDisplayValue(col, row[col.key]);
+                  return (
+                    <td
+                      key={String(col.key)}
+                      className={col.type === "qr_code" ? "p-1" : "whitespace-pre-line"}
+                      title={display}
+                    >
+                      {col.type === "qr_code" ? (
+                        <div
+                          className="flex items-center justify-center"
+                          onClick={e => e.stopPropagation()}
+                        >
+                          <EventQRCode
+                            password={String(row.password ?? "")}
+                            eventName={row.name}
+                            size={48}
+                          />
+                        </div>
+                      ) : (
+                        <span className="line-clamp-3 max-w-[150px]">{display}</span>
+                      )}
+                    </td>
+                  );
+                })}
             </tr>
           ))
       )}

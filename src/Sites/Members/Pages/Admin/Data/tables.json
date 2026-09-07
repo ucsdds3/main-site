@@ -11,7 +11,19 @@
       "end": { "type": "date" },
       "temp_end": { "type": "date", "optional": true, "label": "Extended End Time", "hide": true },
       "location": { "type": "text", "optional": true },
-      "tags": { "type": "array" }
+      "tags": { "type": "array" },
+      "workflow_status": {
+        "type": "text",
+        "optional": true,
+        "label": "Status",
+        "execOnly": true
+      },
+      "internal_notes": {
+        "type": "text",
+        "optional": true,
+        "label": "Internal notes",
+        "execOnly": true
+      }
     },
     "permissions": {
       "canAdd": ["Executive"],

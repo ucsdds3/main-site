@@ -26,6 +26,7 @@ function useEvents() {
         .from("Events")
         .select("name,description,image,points,deleted,password,start,end,location,tags")
         .eq("deleted", false)
+        .eq("workflow_status", "complete")
         .order("start", { ascending: false });
       if (data) setEvents(data.filter(e => !isDataHacksEvent(e)));
 

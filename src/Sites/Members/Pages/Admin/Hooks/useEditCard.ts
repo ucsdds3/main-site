@@ -3,8 +3,39 @@ import { supabase } from "src/Utils/supabase";
 import { useState, useEffect, RefObject } from "react";
 
 import { ColumnDefinition, ColumnType } from "../Utils/types";
+import {
+  EVENT_WORKFLOW_NOTIFY_RECIPIENT_LABEL,
+  EVENT_WORKFLOW_NOTIFY_STATUSES,
+  formatEventWorkflowStatus,
+  isEventWorkflowStatus,
+  type EventWorkflowStatus,
+} from "../Utils/eventWorkflow";
 import { normalizeTeamsField } from "../../../Utils/functions";
 import { processFormValue, formatColumnLabel, compressImage } from "../../../Utils/functions";
+
+/** Prefer a short human message when Edge/Resend return JSON blobs. */
+function formatConfirmStatusError(raw: string): string {
+  const trimmed = raw.trim();
+  const resendPrefix = "Resend failed (";
+  if (trimmed.startsWith(resendPrefix)) {
+    const jsonStart = trimmed.indexOf("{");
+    if (jsonStart >= 0) {
+      try {
+        const parsed = JSON.parse(trimmed.slice(jsonStart)) as { message?: string };
+        if (parsed.message) {
+          const statusMatch = trimmed.match(/Resend failed \((\d+)\)/);
+          const status = statusMatch?.[1];
+          return status
+            ? `Email failed (${status}): ${parsed.message}`
+            : `Email failed: ${parsed.message}`;
+        }
+      } catch {
+        /* fall through */
+      }
+    }
+  }
+  return trimmed;
+}
 
 interface UseEditCardProps<T> {
   tableName: string;
@@ -24,18 +55,28 @@ export default function useEditCard<T extends Record<string, unknown>>({
   const [isNew, setIsNew] = useState(false);
   const [pendingImageFile, setPendingImageFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  /** Last confirmed/saved workflow status (status changes only via Confirm). */
+  const [savedWorkflowStatus, setSavedWorkflowStatus] = useState<EventWorkflowStatus>("none");
 
   useEffect(() => {
     const loadRowData = async () => {
       if (selectedRow) {
         const rowData = { ...selectedRow };
+        const statusRaw = (rowData as Record<string, unknown>).workflow_status;
+        const status: EventWorkflowStatus = isEventWorkflowStatus(statusRaw) ? statusRaw : "none";
+        (rowData as Record<string, unknown>).workflow_status = status;
         setFormData(rowData);
+        setSavedWorkflowStatus(status);
         setIsNew(false);
         setPendingImageFile(null);
         setImagePreviewUrl(null);
       } else {
         const defaults: Partial<T> = {};
         columns.forEach(col => {
+          if (col.key === "workflow_status") {
+            defaults[col.key] = "none" as unknown as T[keyof T];
+            return;
+          }
           if (col.optional) defaults[col.key] = null as unknown as T[keyof T];
           else if (col.type === "boolean") defaults[col.key] = false as unknown as T[keyof T];
           else if (col.type === "number") defaults[col.key] = 0 as unknown as T[keyof T];
@@ -43,7 +84,11 @@ export default function useEditCard<T extends Record<string, unknown>>({
           else if (col.type === "json") defaults[col.key] = {} as unknown as T[keyof T];
           else defaults[col.key] = "" as unknown as T[keyof T];
         });
+        if (tableName === "Events" && !("workflow_status" in defaults)) {
+          (defaults as Record<string, unknown>).workflow_status = "none";
+        }
         setFormData(defaults);
+        setSavedWorkflowStatus("none");
         setIsNew(true);
         setPendingImageFile(null);
         setImagePreviewUrl(null);
@@ -51,7 +96,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
     };
 
     loadRowData();
-  }, [selectedRow, columns]);
+  }, [selectedRow, columns, tableName]);
 
   useEffect(() => {
     return () => {
@@ -202,8 +247,11 @@ export default function useEditCard<T extends Record<string, unknown>>({
       }
 
       const dataToSave = { ...finalFormData };
-      const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code"];
-      columns.forEach(col => { if (col.join) fieldsToExclude.push(col.key as string) });
+      // Status changes go through Confirm (emails); never patch via Save/Update.
+      const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code", "workflow_status"];
+      columns.forEach(col => {
+        if (col.join) fieldsToExclude.push(col.key as string);
+      });
       fieldsToExclude.forEach(field => delete dataToSave[field as keyof T]);
 
       if (Object.prototype.hasOwnProperty.call(dataToSave, "teams")) {
@@ -218,6 +266,9 @@ export default function useEditCard<T extends Record<string, unknown>>({
       });
 
       if (isNew) {
+        if (tableName === "Events") {
+          (dataToSave as Record<string, unknown>).workflow_status = "none";
+        }
         const { error } = await supabase.from(tableName).insert([dataToSave]);
         if (error) throw error;
         toast.success("Row created successfully");
@@ -261,6 +312,91 @@ export default function useEditCard<T extends Record<string, unknown>>({
     }
   };
 
+  const draftWorkflowStatus: EventWorkflowStatus = isEventWorkflowStatus(
+    (formData as Record<string, unknown>).workflow_status
+  )
+    ? ((formData as Record<string, unknown>).workflow_status as EventWorkflowStatus)
+    : "none";
+
+  const workflowStatusDirty = !isNew && draftWorkflowStatus !== savedWorkflowStatus;
+
+  const handleConfirmWorkflowStatus = async () => {
+    if (tableName !== "Events" || !formData.id || isNew) return;
+    if (!workflowStatusDirty) {
+      toast.error("Change the status before confirming.");
+      return;
+    }
+
+    const label = formatEventWorkflowStatus(draftWorkflowStatus);
+    let confirmMsg = `Set status to "${label}"?`;
+    if (EVENT_WORKFLOW_NOTIFY_STATUSES.has(draftWorkflowStatus)) {
+      const role =
+        EVENT_WORKFLOW_NOTIFY_RECIPIENT_LABEL[
+          draftWorkflowStatus as "waiting_room" | "waiting_finance" | "waiting_marketing"
+        ];
+      confirmMsg = `Set status to "${label}" and email ${role}?`;
+    } else if (draftWorkflowStatus === "complete") {
+      confirmMsg =
+        'Set status to "Complete"? This event will become visible on the public events page.';
+    }
+
+    if (!confirm(confirmMsg)) return;
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("confirm-event-status", {
+        body: {
+          event_id: formData.id,
+          workflow_status: draftWorkflowStatus,
+        },
+      });
+
+      if (error) {
+        let detail = error.message;
+        // Non-2xx responses: supabase-js puts the Response on error.context
+        const ctx = (error as { context?: Response }).context;
+        if (ctx && typeof ctx.json === "function") {
+          try {
+            const body = await ctx.json();
+            if (body && typeof body === "object" && "error" in body) {
+              detail = String((body as { error: unknown }).error);
+            } else if (body) {
+              detail = JSON.stringify(body);
+            }
+          } catch {
+            /* keep detail */
+          }
+        }
+        // Sometimes the JSON body is still in `data` even when error is set
+        if (
+          detail === error.message &&
+          data &&
+          typeof data === "object" &&
+          "error" in data &&
+          (data as { error: unknown }).error
+        ) {
+          detail = String((data as { error: unknown }).error);
+        }
+        throw new Error(formatConfirmStatusError(detail));
+      }
+      if (data && typeof data === "object" && "error" in data && data.error) {
+        throw new Error(formatConfirmStatusError(String((data as { error: string }).error)));
+      }
+
+      setSavedWorkflowStatus(draftWorkflowStatus);
+      const emailed = Boolean(
+        data && typeof data === "object" && "emailed" in data && (data as { emailed: boolean }).emailed
+      );
+      toast.success(emailed ? "Status confirmed and email sent." : "Status confirmed.");
+      reloadRef?.current?.reload();
+    } catch (err) {
+      toast.error((err as Error).message || "Failed to confirm status");
+      console.error("Error confirming workflow status:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleDelete = async () => {
     if (!selectedRow || isNew) return;
 
@@ -294,5 +430,8 @@ export default function useEditCard<T extends Record<string, unknown>>({
     handleSave,
     handleDelete,
     handleExtendEventEnd,
+    handleConfirmWorkflowStatus,
+    workflowStatusDirty,
+    savedWorkflowStatus,
   };
 }
