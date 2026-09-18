@@ -59,10 +59,25 @@
       "github_repository": "https://github.com/v1zhu/Energy_Optimization",
       "presentation_slides": null,
       "website": null
+    },
+    {
+      "title": "Triton Ball",
+      "description": "Building the public website for Triton Ball, UC San Diego's student sports analytics organization connecting students with athletic teams through data-driven insights.",
+      "github_repository": null,
+      "presentation_slides": null,
+      "website": "https://www.tritonball.org/"
+    },
+    {
+      "title": "Circadian Biology Lab Consulting Project",
+      "description": "Registering high-resolution 3D fruit fly brain images for cross-sample comparison, supporting AI-assisted healthy vs mutant analysis.",
+      "github_repository": null,
+      "presentation_slides": null,
+      "website": null
     }
   ],
   "clients": [
     { "name": "UCSD Center for Energy Research", "logo": "/Consulting/cer.png" },
-    { "name": "UCSD Natural Reserve System", "logo": "/Consulting/nrs.png" }
+    { "name": "UCSD Natural Reserve System", "logo": "/Consulting/nrs.png" },
+    { "name": "Triton Ball", "logo": "/Consulting/tritonball.png" }
   ]
 }

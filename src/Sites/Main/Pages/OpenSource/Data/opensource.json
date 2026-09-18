@@ -15,7 +15,7 @@
   "projects": [
     {
       "title": "Xarray-SQL (MEDIUM)",
-      "description": "Contribute to Xarray-SQL, an open-source library that enables SQL-style querying over xarray datasets—the core structure for large labeled scientific data such as satellite imagery, climate fields, and geospatial time series (workflows comparable to Google Earth Engine). Work directly with Alex. Tech: Python, SQL. Workload ~6–7 hrs/week. Prerequisites: DSC 100 or graduate equivalent.",
+      "description": "Xarray-SQL is an experiment to provide a SQL interface for array datasets. Succinctly, we \"pivot\" Xarray Datasets to treat them like tables so we can run SQL queries against them — on the query engine of your choice. xarray-sql translates data, not queries: it registers a lazy Dataset as a table on DataFusion (built in), DuckDB, or Polars, and turns any engine's Arrow result back into a labeled Dataset. Dialects, geometry functions, and optimizers stay with the engine.",
       "mentor": "Alex Merose",
       "github_repository": "https://github.com/alxmrs/xarray-sql",
       "presentation_slides": null,
@@ -23,7 +23,7 @@
     },
     {
       "title": "Marin – LLMs (HARD)",
-      "description": "Contribute to Marin, a frontier open-source framework for experimenting with, training, and evaluating LLMs with 32+ billion parameters—benchmarking, scaling experiments, and contributor workflows. Exclusive Marin developer access; pair with senior developers on issues and features. Tech: LLMs, Python, PyTorch. Workload ~6–8 hrs/week. Prerequisites: strong Python and ML experience, LLM familiarity. Two teams, eight people total.",
+      "description": "Marin is an open lab for building foundation models—together. We're training powerful models from scratch, and sharing and programmatically documenting every step: the code, the data, the experiments, the mistakes…all in real-time. We invite anyone who shares our vision of open science and open-source to join and contribute, whether you want to try out a new architecture, training algorithm, dataset, evaluation…there is a lot to do!",
       "github_repository": "https://github.com/marin-community/marin/blob/main/docs%2Ftutorials%2Fsubmitting-speedrun.md",
       "presentation_slides": null,
       "website": "https://marin.community"

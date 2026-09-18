@@ -1,6 +1,13 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaFilePowerpoint, FaGlobe } from "react-icons/fa";
+import {
+  FaGithub,
+  FaFilePowerpoint,
+  FaGlobe,
+  FaFileAlt,
+  FaBook,
+  FaClipboardList,
+} from "react-icons/fa";
 
 import projectsData from "../Data/projects.json";
 import { ChevronDownSmallIcon } from "src/Shared/icons/ChevronDownSmallIcon";
@@ -11,9 +18,13 @@ const INITIAL_SHOW = 6;
 interface Project {
   title: string;
   description: string;
+  design_document?: string | null;
   github_repository: string | null;
+  code_documentation?: string | null;
+  meeting_logs?: string | null;
   presentation_slides: string | null;
   website: string | null;
+  website_note?: string | null;
   projects_points: number;
   presentation_points: number;
   mentor?: string;
@@ -33,24 +44,35 @@ const iconLinkDisabledClass = `${iconLinkClass} cursor-default text-(--obs-text-
 const ProjectCard = ({ project, rank }: { project: Project; rank: number }) => {
   const badge = placementConfig[rank];
 
+  // 2026-08-26 archived (3-link row only):
+  // const links = [
+  //   { icon: <FaGlobe />, href: project.website, title: "Website" },
+  //   { icon: <FaGithub />, href: project.github_repository, title: "GitHub" },
+  //   { icon: <FaFilePowerpoint />, href: project.presentation_slides, title: "Slides" },
+  // ];
   const links = [
-    { icon: <FaGlobe />, href: project.website, title: "Website" },
-    { icon: <FaGithub />, href: project.github_repository, title: "GitHub" },
-    { icon: <FaFilePowerpoint />, href: project.presentation_slides, title: "Slides" },
+    { icon: <FaFileAlt />, href: project.design_document, title: "Design Document" },
+    { icon: <FaGithub />, href: project.github_repository, title: "GitHub Repository" },
+    { icon: <FaBook />, href: project.code_documentation, title: "Code Documentation" },
+    { icon: <FaClipboardList />, href: project.meeting_logs, title: "Meeting Logs" },
+    { icon: <FaFilePowerpoint />, href: project.presentation_slides, title: "Presentation Slides" },
+    { icon: <FaGlobe />, href: project.website, title: "Deployed Website" },
   ];
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      // 2026-08-26 archived: whileInView left cards at opacity 0 after sort reorder
+      // whileInView={{ opacity: 1, y: 0 }}
+      // viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -3 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="relative flex flex-col gap-4 rounded-xl border border-(--obs-border) bg-transparent p-[clamp(1.25rem,2vw,1.75rem)] transition-[border-color] duration-[0.25s] hover:border-[#F58134]"
     >
-      {/* Top row: 3 horizontal icons (left) + badge (right) */}
-      <div className="flex items-center justify-between">
-        <div className="flex flex-row gap-[0.3rem]">
+      {/* Top row: link icons (left) + badge (right) */}
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-row flex-wrap gap-[0.3rem]">
           {links.map(({ icon, href, title }) =>
             href ? (
               <a
@@ -74,7 +96,7 @@ const ProjectCard = ({ project, rank }: { project: Project; rank: number }) => {
 
         {badge && (
           <div
-            className="rounded-4xl px-[0.65rem] py-0.5 font-mono text-[0.6rem] font-bold uppercase tracking-widest text-white"
+            className="shrink-0 rounded-4xl px-[0.65rem] py-0.5 font-mono text-[0.6rem] font-bold uppercase tracking-widest text-white"
             style={{ background: badge.bg }}
           >
             {badge.text}
@@ -91,6 +113,21 @@ const ProjectCard = ({ project, rank }: { project: Project; rank: number }) => {
       <p className="m-0 grow text-[clamp(0.82rem,1vw,0.92rem)] leading-[1.65] text-(--obs-text-primary) opacity-[0.58]">
         {project.description}
       </p>
+
+      {(project.mentor || project.website_note) && (
+        <div className="mt-auto flex flex-col gap-[0.4rem]">
+          {project.mentor && (
+            <span className="w-fit rounded-4xl border border-[rgba(245,129,52,0.3)] bg-[rgba(245,129,52,0.08)] px-[0.55rem] py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#F58134]">
+              Mentor: {project.mentor}
+            </span>
+          )}
+          {project.website_note && (
+            <span className="font-mono text-[0.58rem] leading-snug tracking-[0.04em] text-(--obs-text-primary) opacity-55">
+              {project.website_note}
+            </span>
+          )}
+        </div>
+      )}
     </motion.div>
   );
 };
@@ -104,6 +141,7 @@ const Gallery = () => {
   const [showAll, setShowAll] = useState(false);
 
   const isWinter = year === "Winter 2026";
+  const isSpring = year === "Spring 2026";
 
   const sortedProjects = useMemo(() =>
     [...(projects[year] as Project[])].sort((a, b) =>
@@ -135,7 +173,7 @@ const Gallery = () => {
           <h2 className="text-fluid-subsection-title">Project Gallery</h2>
         </div>
 
-        {/* Order by dropdown — only for years with presentation points */}
+        {/* Order by dropdown — only for years with presentation / DinoCage points */}
         {!isWinter && (
           <div className="flex flex-col gap-[0.3rem]">
             <span className="font-mono text-[0.58rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-[0.45]">
@@ -146,8 +184,8 @@ const Gallery = () => {
               className="obs-select min-w-44 text-(--obs-text-primary)"
               onChange={e => { setShowAll(false); setOrder(e.target.value as "Projects" | "Presentation"); }}
             >
-              <option value="Projects">Project Points</option>
-              <option value="Presentation">Presentation Points</option>
+              <option value="Projects">{isSpring ? "Mentor Scores" : "Project Points"}</option>
+              <option value="Presentation">{isSpring ? "DinoCage Scores" : "Presentation Points"}</option>
             </select>
           </div>
         )}
@@ -181,7 +219,7 @@ const Gallery = () => {
         <div className="grid grid-cols-[repeat(auto-fill,minmax(clamp(280px,28vw,380px),1fr))] gap-[clamp(1rem,2vw,1.5rem)]">
           {visibleProjects.map((project, index) => (
             <ProjectCard
-              key={`${year}-${index}`}
+              key={`${year}-${order}-${project.title}`}
               project={project}
               rank={index + 1}
             />
