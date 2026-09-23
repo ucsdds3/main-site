@@ -1,0 +1,11 @@
+-- Moved to versioned migrations. Do not run this file in the SQL Editor.
+--
+-- Up:     supabase/migrations/20260907220000_create_sprints.sql
+--         supabase/migrations/20260923000000_sprint_task_reviews.sql
+--         supabase/migrations/20260923013000_sprint_hours_and_membership.sql
+--         supabase/migrations/20260923120000_sprint_task_due_date.sql
+-- Revert: supabase/migrations/revert/ (same timestamps, reverse order)
+--
+-- Apply to Membership only via GitHub Action "Supabase migrations" with apply=true
+-- (dumps a backup first), or `npm run db:push` after `supabase link`.
+-- Merging to main does not apply schema automatically.

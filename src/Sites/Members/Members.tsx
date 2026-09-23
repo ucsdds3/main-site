@@ -12,6 +12,10 @@ import Profile from "./Pages/Profile/Profile";
 import Store from "./Pages/Store/Store";
 import Admin from "./Pages/Admin/Admin";
 import Insights from "./Pages/Admin/Insights";
+import Sprints from "./Pages/Sprints/Sprints";
+import type { AdminLevel } from "./Pages/Admin/Utils/types";
+
+const isBoardOrExec = (level: AdminLevel | null) => level === "Board" || level === "Executive";
 
 const Members = () => {
   const { authState, adminLevel } = useAuthStore();
@@ -26,6 +30,8 @@ const Members = () => {
       }
     } else if (adminLevel == null && location.pathname.includes("admin"))
       navigate({ pathname: "/" });
+    else if (location.pathname.includes("sprints") && !isBoardOrExec(adminLevel))
+      navigate({ pathname: "/" });
     console.log(authState, "MEMBERS");
   }, [authState, adminLevel, location.pathname, location.search]);
 
@@ -38,6 +44,8 @@ const Members = () => {
       <Route path="/events/leaderboard" element={<Leaderboard />} />
       <Route path="/events" element={<Events />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/sprints" element={<Sprints />} />
+      <Route path="/sprints/:sprintId" element={<Sprints />} />
       <Route path="/store" element={<Store />} />
     </Routes>
   );

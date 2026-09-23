@@ -1,0 +1,3 @@
+-- Revert 20260907215900_ensure_members.sql
+-- Manual only. Do not drop public."Members" — it is the club profile table on prod.
+-- This up is CREATE TABLE IF NOT EXISTS plus grants/index. Nothing to undo safely.
