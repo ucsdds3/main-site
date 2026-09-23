@@ -15,6 +15,7 @@ import {
   teamKeyToLabel,
 } from "./boardTeamConfig";
 import { useBoardMembers } from "./useBoardMembers";
+import { useBoardTeamsCatalog } from "./useBoardTeamsCatalog";
 
 const HoverCard = lazy(() => import("src/Shared/Components/HoverCard"));
 
@@ -22,15 +23,17 @@ const Board = () => {
   const navigate = useNavigate();
 
   const [team, setTeam] = useState<string>("");
-  const { members, loading } = useBoardMembers(team);
+  const { catalog, loading: catalogLoading } = useBoardTeamsCatalog();
+  const { members, loading: membersLoading } = useBoardMembers(team);
+  const loading = catalogLoading || membersLoading;
 
   const teamKeys = useMemo(() => {
     const keys = new Set<string>();
     for (const m of members) {
       for (const k of Object.keys(m.teamRoles)) keys.add(labelToTeamKey(k));
     }
-    return boardTeamTabKeys(keys);
-  }, [members]);
+    return boardTeamTabKeys(keys, catalog);
+  }, [members, catalog]);
 
   useEffect(() => {
     if (teamKeys.length === 0) return;
@@ -108,7 +111,7 @@ const Board = () => {
                       : "border-(--obs-border) bg-transparent text-(--obs-text-primary) opacity-55"
                   )}
                 >
-                  {unbreakable(teamKeyToLabel(t))}
+                  {unbreakable(teamKeyToLabel(t, catalog))}
                 </button>
               ))}
             </motion.div>
@@ -125,10 +128,10 @@ const Board = () => {
               >
                 <div className="flex max-w-[720px] flex-col gap-3">
                   <h2 className="m-0 font-heading text-[clamp(1.85rem,2.8vw,2.5rem)] font-normal leading-[1.15] text-(--obs-text-primary)">
-                    {unbreakable(teamKeyToLabel(team))} Team
+                    {unbreakable(teamKeyToLabel(team, catalog))} Team
                   </h2>
                   <p className="m-0 font-body text-[clamp(1.05rem,1.45vw,1.22rem)] font-normal leading-[1.65] text-(--obs-text-primary) opacity-[0.78]">
-                    {teamDescriptionForKey(team)}
+                    {teamDescriptionForKey(team, catalog)}
                   </p>
                 </div>
 

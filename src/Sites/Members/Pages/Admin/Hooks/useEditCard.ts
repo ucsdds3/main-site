@@ -12,6 +12,7 @@ import {
 } from "../Utils/eventWorkflow";
 import { normalizeTeamsField } from "../../../Utils/functions";
 import { processFormValue, formatColumnLabel, compressImage } from "../../../Utils/functions";
+import { labelToTeamKey, teamKeyToLabel } from "src/Sites/Main/Pages/Board/boardTeamConfig";
 
 /** Prefer a short human message when Edge/Resend return JSON blobs. */
 function formatConfirmStatusError(raw: string): string {
@@ -203,7 +204,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
 
         const value = formData[col.key];
 
-        if (col.key === "description" && col.type === "text") {
+        if (col.key === "description" && tableName === "Events" && col.type === "text") {
           const descValue = String(value || "");
           if (!value || descValue.length < 100) {
             missingFields.push(`${formatColumnLabel(col.key)} (minimum 100 characters)`);
@@ -258,6 +259,32 @@ export default function useEditCard<T extends Record<string, unknown>>({
         const normalized = normalizeTeamsField((dataToSave as Record<string, unknown>).teams);
         (dataToSave as Record<string, unknown>).teams =
           Object.keys(normalized).length > 0 ? normalized : null;
+      }
+
+      if (tableName === "BoardTeams") {
+        const label = String((dataToSave as Record<string, unknown>).label ?? "").trim();
+        let teamKey = String((dataToSave as Record<string, unknown>).team_key ?? "").trim();
+        if (!teamKey && label) {
+          teamKey = labelToTeamKey(label);
+          (dataToSave as Record<string, unknown>).team_key = teamKey;
+        }
+        if (!teamKey) {
+          toast.error("Team key is required (or provide a label to auto-generate it).");
+          setLoading(false);
+          return;
+        }
+        (dataToSave as Record<string, unknown>).team_key = teamKey;
+        (dataToSave as Record<string, unknown>).label = label || teamKeyToLabel(teamKey, []);
+        if ((dataToSave as Record<string, unknown>).description == null) {
+          (dataToSave as Record<string, unknown>).description = "";
+        }
+        if (
+          (dataToSave as Record<string, unknown>).sort_order === "" ||
+          (dataToSave as Record<string, unknown>).sort_order == null
+        ) {
+          (dataToSave as Record<string, unknown>).sort_order = 100;
+        }
+        (dataToSave as Record<string, unknown>).updated_at = new Date().toISOString();
       }
 
       columns.forEach(col => {

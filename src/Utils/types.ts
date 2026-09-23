@@ -124,6 +124,7 @@ export const tagColor = {
 
 export type EventTagType = keyof typeof tagColor;
 
+/** @deprecated Prefer BoardTeams catalog via useBoardTeamsCatalog(). Kept for reference. */
 export const COMMITTEE_TYPES = [
   "Executive",
   "Internal",

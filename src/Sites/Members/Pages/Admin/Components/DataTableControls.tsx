@@ -41,7 +41,7 @@ export default function DataTableControls() {
           fieldId="admin-data-table-picker"
           hideLabel
           showPlaceholderOption={false}
-          options={["Events", "Members", "Items", "Attendance"]}
+          options={["Events", "Members", "Items", "Attendance", "BoardTeams"]}
           value={tableName}
           setValue={v => {
             bridge?.onTableChange(v);

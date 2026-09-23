@@ -8,7 +8,7 @@ import { ColumnDefinition, AdminLevel } from "./Utils/types";
 import tablesData from "./Data/tables.json";
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 
-type TableType = "Events" | "Members" | "Items" | "Attendance";
+type TableType = "Events" | "Members" | "Items" | "Attendance" | "BoardTeams";
 
 export default function AdminDashboardOnePage() {
   const [currentTable, setCurrentTable] = useState<TableType>("Events");

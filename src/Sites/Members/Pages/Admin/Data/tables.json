@@ -74,5 +74,18 @@
       "points": { "type": "number", "optional": true }
     },
     "permissions": { "canAdd": [], "canEdit": [], "canView": ["Board", "Executive"] }
+  },
+  "BoardTeams": {
+    "columns": {
+      "label": { "type": "text", "label": "Label" },
+      "team_key": { "type": "text", "optional": true, "label": "Team key" },
+      "description": { "type": "text", "optional": true },
+      "sort_order": { "type": "number", "optional": true, "label": "Sort order" }
+    },
+    "permissions": {
+      "canAdd": ["Executive"],
+      "canEdit": ["Executive"],
+      "canView": ["Board", "Executive"]
+    }
   }
 }
