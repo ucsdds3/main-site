@@ -11,7 +11,13 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css}\"",
     "preview": "vite preview",
     "optimize-images": "node scripts/optimize-images.mjs",
-    "graph": "depcruise --no-config --include-only \"^src\" --output-type dot src | dot -T svg > dependencygraph.svg"
+    "graph": "depcruise --no-config --include-only \"^src\" --output-type dot src | dot -T svg > dependencygraph.svg",
+    "db:push": "supabase db push",
+    "db:dry-run": "supabase db push --dry-run",
+    "db:new": "supabase migration new",
+    "db:local": "node scripts/local-db.mjs",
+    "db:stop": "node scripts/local-db.mjs --stop",
+    "db:reset": "node scripts/local-db.mjs --reset"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

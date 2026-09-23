@@ -25,6 +25,10 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
         <NavItem key={index} label={label} data={data as string | Record<string, string>} />
       ))}
 
+      {isMembers && isAuthed && (adminLevel === "Board" || adminLevel === "Executive") && (
+        <NavItem label="Sprints" data="/sprints" />
+      )}
+
       {isMembers && isAuthed && adminLevel !== "Member" && (
         <NavItem
           label="Admin"

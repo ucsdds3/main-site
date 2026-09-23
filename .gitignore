@@ -33,3 +33,7 @@ dist-ssr
 # Python
 .venv/
 __pycache__/
+
+# Supabase CLI local state (config.toml + migrations are tracked)
+supabase/.temp/
+supabase/.branches/
