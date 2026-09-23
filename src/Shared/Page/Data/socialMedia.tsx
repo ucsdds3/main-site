@@ -20,7 +20,7 @@ export default [
   },
   {
     title: "Mail",
-    link: "mailto:ds3@ucsd.edu",
+    link: "mailto:info@ds3.club",
     icon: <IoMail />
   },
   {

@@ -66,10 +66,10 @@ const ContactUs = ({ ref, type = "students" }: ContactUsProps) => {
               Or reach us directly
             </span>
             <a
-              href="mailto:ds3@ucsd.edu"
+              href="mailto:info@ds3.club"
               className="w-fit border-b border-[rgba(25,181,202,0.3)] pb-0.5 font-[family-name:var(--font-heading)] text-[clamp(1rem,1.4vw,1.25rem)] text-[#19B5CA] no-underline"
             >
-              ds3@ucsd.edu
+              info@ds3.club
             </a>
           </div>
         </motion.div>
