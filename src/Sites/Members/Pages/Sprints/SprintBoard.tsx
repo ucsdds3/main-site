@@ -20,6 +20,7 @@ import {
   isOpenSprintTaskStatus,
   SPRINT_BOARD_COLUMNS,
   SPRINT_STATUS_LABELS,
+  SPRINT_TEAM_CATALOG,
   teamAccent,
   teamLabel,
 } from "./constants";
@@ -67,7 +68,13 @@ export default function SprintBoard({
   const canEdit = sprint.status !== "closed";
   const editingTask = typeof taskModal === "number" ? tasks.find(t => t.id === taskModal) : null;
 
-  const teamKeys = useMemo(() => boardTeamTabKeys(tasks.map(t => t.team_key)), [tasks]);
+  const teamKeys = useMemo(
+    () => boardTeamTabKeys(
+      tasks.map(t => t.team_key),
+      SPRINT_TEAM_CATALOG
+    ),
+    [tasks]
+  );
 
   const visibleTasks = useMemo(() => {
     return tasks.filter(task => {

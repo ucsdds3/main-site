@@ -7,7 +7,7 @@ import Select from "src/Sites/Members/Components/Select";
 import Button from "src/Shared/Components/Button";
 import { boardTeamTabKeys } from "src/Sites/Main/Pages/Board/boardTeamConfig";
 
-import { teamLabel } from "../constants";
+import { teamLabel, SPRINT_TEAM_CATALOG } from "../constants";
 import type { RetroDecision, SprintRow, SprintTaskRow } from "../types";
 
 const DECISION_LABELS: Record<RetroDecision, string> = {
@@ -36,7 +36,10 @@ export default function CloseSprintDialog({
   onConfirm,
 }: CloseSprintDialogProps) {
   const grouped = useMemo(() => {
-    const keys = boardTeamTabKeys(openTasks.map(t => t.team_key));
+    const keys = boardTeamTabKeys(
+      openTasks.map(t => t.team_key),
+      SPRINT_TEAM_CATALOG
+    );
     return keys.map(key => ({
       key,
       label: teamLabel(key),

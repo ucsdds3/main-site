@@ -13,7 +13,7 @@ import { Bar, Line } from "react-chartjs-2";
 
 import { boardTeamTabKeys } from "src/Sites/Main/Pages/Board/boardTeamConfig";
 
-import { SPRINT_BOARD_COLUMNS, teamAccent, teamLabel } from "../constants";
+import { SPRINT_BOARD_COLUMNS, SPRINT_TEAM_CATALOG, teamAccent, teamLabel } from "../constants";
 import type { SprintRow, SprintTaskRow } from "../types";
 
 ChartJS.register(
@@ -119,7 +119,7 @@ export default function SprintStats({ tasks, sprint, teamTab }: SprintStatsProps
       for (const task of scoped) {
         hours.set(task.team_key, (hours.get(task.team_key) ?? 0) + task.expected_hours);
       }
-      const keys = boardTeamTabKeys(hours.keys());
+      const keys = boardTeamTabKeys(hours.keys(), SPRINT_TEAM_CATALOG);
       return {
         labels: keys.map(teamLabel),
         values: keys.map(k => Number((hours.get(k) ?? 0).toFixed(1))),

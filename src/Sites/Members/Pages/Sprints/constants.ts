@@ -1,13 +1,19 @@
-import teamsJson from "src/Sites/Main/Pages/Board/Data/teams.json";
-import { labelToTeamKey, teamKeyToLabel } from "src/Sites/Main/Pages/Board/boardTeamConfig";
+import {
+  fallbackBoardTeamCatalog,
+  labelToTeamKey,
+  teamKeyToLabel,
+} from "src/Sites/Main/Pages/Board/boardTeamConfig";
 
 import type { SprintStatus, SprintTaskStatus } from "./types";
 
-export const BOARD_TEAM_KEYS = Object.keys(teamsJson).map(labelToTeamKey);
+/** Static catalog fallback until sprints wires live BoardTeams fetch. */
+export const SPRINT_TEAM_CATALOG = fallbackBoardTeamCatalog();
 
-export const BOARD_TEAM_OPTIONS = Object.keys(teamsJson).map(label => ({
-  key: labelToTeamKey(label),
-  label,
+export const BOARD_TEAM_KEYS = SPRINT_TEAM_CATALOG.map(t => t.team_key);
+
+export const BOARD_TEAM_OPTIONS = SPRINT_TEAM_CATALOG.map(t => ({
+  key: t.team_key,
+  label: t.label,
 }));
 
 export const SPRINT_TASK_STATUS_VALUES = ["todo", "in_progress", "pending_review", "done"] as const;
@@ -70,7 +76,7 @@ export const SPRINT_STATUS_LABELS: Record<SprintStatus, string> = {
 };
 
 export function teamLabel(teamKey: string): string {
-  return teamKeyToLabel(teamKey);
+  return teamKeyToLabel(teamKey, SPRINT_TEAM_CATALOG);
 }
 
 export function formatSprintDates(startsOn: string, endsOn: string): string {

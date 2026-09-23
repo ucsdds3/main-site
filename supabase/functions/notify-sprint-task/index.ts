@@ -1,13 +1,13 @@
--- notify-sprint-task — email assignees on create, reviewer on pending_review
---
--- Deploy from main-site/:
---   supabase functions deploy notify-sprint-task
---
--- Secrets (same as confirm-event-status):
---   RESEND_API_KEY
---   RESEND_FROM_EMAIL
--- Optional:
---   MEMBERS_PORTAL_URL  (default https://members.ds3atucsd.com)
+// notify-sprint-task — email assignees on create, reviewer on pending_review
+//
+// Deploy from main-site/:
+//   supabase functions deploy notify-sprint-task
+//
+// Secrets (same as confirm-event-status):
+//   RESEND_API_KEY
+//   RESEND_FROM_EMAIL
+// Optional:
+//   MEMBERS_PORTAL_URL  (default https://members.ds3atucsd.com)
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
