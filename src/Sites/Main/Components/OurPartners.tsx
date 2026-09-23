@@ -172,10 +172,10 @@ const OurPartners = () => {
           >
             Interested in working with us? Reach out at{" "}
             <SafeLink
-              href="mailto:ds3@ucsd.edu"
+              href="mailto:info@ds3.club"
               className="border-b border-[rgba(25,181,202,0.35)] pb-px text-[#19B5CA] no-underline"
             >
-              ds3@ucsd.edu
+              info@ds3.club
             </SafeLink>
             .
           </motion.p>
