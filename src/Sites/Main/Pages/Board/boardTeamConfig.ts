@@ -1,26 +1,32 @@
 import teamsJson from "./Data/teams.json";
+import type { BoardTeamCatalogEntry } from "./boardTeamTypes";
 
-/** Label → Supabase `teams` key: spaces → underscores, uppercased. */
+/** Label → Supabase `teams` / BoardTeams key: spaces → underscores, uppercased. */
 export function labelToTeamKey(label: string): string {
   return label.trim().replace(/\s+/g, "_").toUpperCase();
 }
 
-function labelForTeamKey(key: string): string | undefined {
-  return Object.keys(teamsJson).find(label => labelToTeamKey(label) === key);
+/** Static fallback when BoardTeams fetch fails (matches historical teams.json). */
+export function fallbackBoardTeamCatalog(): BoardTeamCatalogEntry[] {
+  return Object.entries(teamsJson).map(([label, description], index) => ({
+    team_key: labelToTeamKey(label),
+    label,
+    description: String(description),
+    sort_order: (index + 1) * 10,
+  }));
 }
 
-export function teamKeyToLabel(key: string): string {
-  const label = labelForTeamKey(key);
-  if (label) return label;
+export function teamKeyToLabel(key: string, catalog: BoardTeamCatalogEntry[]): string {
+  const hit = catalog.find(t => t.team_key === key);
+  if (hit) return hit.label;
   return key
     .split("_")
     .map(w => w.charAt(0) + w.slice(1).toLowerCase())
     .join(" ");
 }
 
-export function teamDescriptionForKey(key: string): string {
-  const label = labelForTeamKey(key);
-  return label ? teamsJson[label as keyof typeof teamsJson] : "";
+export function teamDescriptionForKey(key: string, catalog: BoardTeamCatalogEntry[]): string {
+  return catalog.find(t => t.team_key === key)?.description ?? "";
 }
 
 export function memberMatchesTab(
@@ -34,7 +40,6 @@ export function roleForMemberOnTab(
   member: { teamRoles: Record<string, string> },
   tabKey: string
 ): string | undefined {
-  // 2026-08-05 archived: return member.teamRoles[tabKey];
   // Resolve by normalized key so legacy labels ("Social Events") and
   // storage keys ("SOCIAL_EVENTS") both work for display + director sort.
   if (Object.prototype.hasOwnProperty.call(member.teamRoles, tabKey)) {
@@ -46,16 +51,24 @@ export function roleForMemberOnTab(
   return undefined;
 }
 
-/** Ordered tab keys: committees from `teams.json` key order first, then any extra keys in member data. */
-export function boardTeamTabKeys(memberTeamKeys: Iterable<string>): string[] {
+/**
+ * Ordered tab keys for /board: catalog order, only teams that still exist in the
+ * catalog and have at least one published member. Archived (deleted) catalog
+ * rows never appear — even if Members.teams still has the old key.
+ */
+export function boardTeamTabKeys(
+  memberTeamKeys: Iterable<string>,
+  catalog: BoardTeamCatalogEntry[]
+): string[] {
   const fromMembers = new Set(memberTeamKeys);
-  const configured = Object.keys(teamsJson).map(label =>
-    labelToTeamKey(label)
-  ) as readonly string[];
-  const ordered: string[] = [];
-  for (const k of configured) {
-    if (fromMembers.has(k)) ordered.push(k);
-  }
-  const extra = [...fromMembers].filter(k => !configured.includes(k)).sort();
-  return [...ordered, ...extra];
+  const ordered = [...catalog]
+    .sort((a, b) => a.sort_order - b.sort_order || a.label.localeCompare(b.label))
+    .map(t => t.team_key);
+  return ordered.filter(k => fromMembers.has(k));
+}
+
+export function catalogLabels(catalog: BoardTeamCatalogEntry[]): string[] {
+  return [...catalog]
+    .sort((a, b) => a.sort_order - b.sort_order || a.label.localeCompare(b.label))
+    .map(t => t.label);
 }

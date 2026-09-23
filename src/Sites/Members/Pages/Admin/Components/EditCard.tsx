@@ -1,9 +1,14 @@
-import { RefObject } from "react";
+import { RefObject, useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
 import { TfiClose } from "react-icons/tfi";
 
-import { labelToTeamKey, teamKeyToLabel } from "src/Sites/Main/Pages/Board/boardTeamConfig";
-import { COMMITTEE_TYPES } from "src/Utils/types";
+import {
+  catalogLabels,
+  labelToTeamKey,
+  teamKeyToLabel,
+} from "src/Sites/Main/Pages/Board/boardTeamConfig";
+import type { BoardTeamCatalogEntry } from "src/Sites/Main/Pages/Board/boardTeamTypes";
+import { useBoardTeamsCatalog } from "src/Sites/Main/Pages/Board/useBoardTeamsCatalog";
 
 import { ColumnDefinition } from "../Utils/types";
 import useEditCard from "../Hooks/useEditCard";
@@ -25,8 +30,6 @@ import {
   formatEventWorkflowStatus,
 } from "../Utils/eventWorkflow";
 
-const COMMITTEE_STORAGE_KEYS = new Set(COMMITTEE_TYPES.map(l => labelToTeamKey(l)));
-
 function readTeamsFormRecord(raw: unknown): Record<string, string> {
   if (raw === null || raw === undefined) return {};
   if (typeof raw !== "object" || Array.isArray(raw)) return {};
@@ -37,8 +40,11 @@ function readTeamsFormRecord(raw: unknown): Record<string, string> {
   return out;
 }
 
-function sortTeamEntries(entries: [string, string][]): [string, string][] {
-  const order = new Map(COMMITTEE_TYPES.map((label, i) => [labelToTeamKey(label), i]));
+function sortTeamEntries(
+  entries: [string, string][],
+  catalog: BoardTeamCatalogEntry[]
+): [string, string][] {
+  const order = new Map(catalog.map((t, i) => [t.team_key, i]));
   return [...entries].sort((a, b) => {
     const ia = order.has(a[0]) ? order.get(a[0])! : 1000;
     const ib = order.has(b[0]) ? order.get(b[0])! : 1000;
@@ -81,6 +87,19 @@ export default function EditCard<T extends Record<string, unknown>>({
     selectedRow,
     reloadRef,
   });
+
+  const { catalog, refetch: refetchBoardTeams } = useBoardTeamsCatalog();
+  const committeeLabels = useMemo(() => catalogLabels(catalog), [catalog]);
+  const committeeStorageKeys = useMemo(
+    () => new Set(catalog.map(t => t.team_key)),
+    [catalog]
+  );
+
+  useEffect(() => {
+    if (tableName === "Members" || tableName === "BoardTeams") {
+      void refetchBoardTeams();
+    }
+  }, [tableName, selectedRow, refetchBoardTeams]);
 
   const canModify = isNew ? canAdd : canEdit;
 
@@ -272,8 +291,8 @@ export default function EditCard<T extends Record<string, unknown>>({
         if (col.key === "teams") {
           const record = readTeamsFormRecord(value);
           const usedKeys = new Set(Object.keys(record));
-          const entries = sortTeamEntries(Object.entries(record));
-          const firstFreeLabel = COMMITTEE_TYPES.find(l => !usedKeys.has(labelToTeamKey(l)));
+          const entries = sortTeamEntries(Object.entries(record), catalog);
+          const firstFreeLabel = committeeLabels.find(l => !usedKeys.has(labelToTeamKey(l)));
           const canAddMore = firstFreeLabel !== undefined;
 
           const commit = (next: Record<string, string>) => {
@@ -286,8 +305,8 @@ export default function EditCard<T extends Record<string, unknown>>({
                 <p className="text-sm text-(--obs-text-muted)">No board teams assigned.</p>
               ) : null}
               {entries.map(([storageKey, role]) => {
-                const isKnown = COMMITTEE_STORAGE_KEYS.has(storageKey);
-                const labelsForRow = COMMITTEE_TYPES.filter(l => {
+                const isKnown = committeeStorageKeys.has(storageKey);
+                const labelsForRow = committeeLabels.filter(l => {
                   const k = labelToTeamKey(l);
                   return k === storageKey || !usedKeys.has(k);
                 });
@@ -316,7 +335,9 @@ export default function EditCard<T extends Record<string, unknown>>({
                         disabled={!canModify}
                       >
                         {!isKnown ? (
-                          <option value={storageKey}>{teamKeyToLabel(storageKey)}</option>
+                          <option value={storageKey}>
+                            {teamKeyToLabel(storageKey, catalog)}
+                          </option>
                         ) : null}
                         {labelsForRow.map(lbl => {
                           const k = labelToTeamKey(lbl);
@@ -370,6 +391,11 @@ export default function EditCard<T extends Record<string, unknown>>({
               >
                 Add Team
               </button>
+              {committeeLabels.length === 0 ? (
+                <p className="text-xs text-(--obs-text-muted)">
+                  No active committees in BoardTeams. Add one under the BoardTeams admin tab.
+                </p>
+              ) : null}
             </div>
           );
         }
@@ -474,7 +500,7 @@ export default function EditCard<T extends Record<string, unknown>>({
             </div>
           );
         }
-        if (col.key === "description" && col.type === "text") {
+        if (col.key === "description" && col.type === "text" && tableName === "Events") {
           const descValue = String(value || "");
           const charCount = descValue.length;
           const minChars = 100;
@@ -500,6 +526,45 @@ export default function EditCard<T extends Record<string, unknown>>({
                 </span>
               </div>
             </div>
+          );
+        }
+        if (col.key === "team_key" && tableName === "BoardTeams") {
+          const label = String(formData.label ?? "");
+          const previewKey = labelToTeamKey(label);
+          return (
+            <div className="flex flex-col gap-1">
+              <Input
+                label={getColumnLabel(col)}
+                fieldId={`ec-${String(col.key)}`}
+                hideLabel
+                type="text"
+                value={String(value ?? "")}
+                setValue={v => handleChange(col.key, v, col.type)}
+                placeholder={isNew ? previewKey || "AUTO from label" : ""}
+                disabled={!canModify || !isNew}
+                className="w-full min-w-0"
+              />
+              <p className="text-xs text-(--obs-text-muted)">
+                {isNew
+                  ? "Leave blank to auto-generate from Label (e.g. Open Source → OPEN_SOURCE). Do not change after members are assigned."
+                  : "Storage key is locked after create so member assignments stay valid."}
+              </p>
+            </div>
+          );
+        }
+        if (col.key === "description" && col.type === "text" && tableName === "BoardTeams") {
+          return (
+            <TextArea
+              label={getColumnLabel(col)}
+              fieldId={`ec-${String(col.key)}`}
+              hideLabel
+              rows={4}
+              value={String(value ?? "")}
+              setValue={v => handleChange(col.key, v, col.type)}
+              placeholder="Shown under the team name on /board"
+              disabled={!canModify}
+              className="w-full min-w-0"
+            />
           );
         }
 
