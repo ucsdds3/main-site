@@ -43,6 +43,8 @@ interface AdminStoreState {
   filterDropdownOpen: boolean;
   reloadTrigger: number;
   dataTableSearch: string;
+  /** Events table: when true, hide rows whose effective end is in the past. */
+  showUpcomingEventsOnly: boolean;
   dataTableUiBridge: DataTableUiBridge | null;
 }
 
@@ -50,6 +52,7 @@ interface AdminStoreActions {
   setTable: (tableName: string, columns: ColumnDefinition[]) => void;
   reload: () => void;
   setDataTableSearch: (search: string) => void;
+  setShowUpcomingEventsOnly: (value: boolean) => void;
   setDataTableUiBridge: (bridge: DataTableUiBridge | null) => void;
 }
 
@@ -68,6 +71,7 @@ export const useAdminStore = create<AdminStoreState & AdminStoreActions>(set => 
   filterDropdownOpen: false,
   reloadTrigger: 0,
   dataTableSearch: "",
+  showUpcomingEventsOnly: false,
   dataTableUiBridge: null,
 
   setTable: (tableName, columns) =>
@@ -81,9 +85,12 @@ export const useAdminStore = create<AdminStoreState & AdminStoreActions>(set => 
       filterDraft: [],
       columnStates: {},
       dataTableSearch: "",
+      showUpcomingEventsOnly: false,
     }),
 
   setDataTableSearch: search => set({ dataTableSearch: search }),
+
+  setShowUpcomingEventsOnly: value => set({ showUpcomingEventsOnly: value }),
 
   setDataTableUiBridge: bridge => set({ dataTableUiBridge: bridge }),
 

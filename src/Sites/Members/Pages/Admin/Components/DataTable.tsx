@@ -34,6 +34,7 @@ export default function DataTable<T extends Record<string, any>>({
   const data = useAdminStore(state => state.data) as T[];
   const loading = useAdminStore(state => state.loading);
   const dataTableSearch = useAdminStore(state => state.dataTableSearch);
+  const showUpcomingEventsOnly = useAdminStore(state => state.showUpcomingEventsOnly);
   const setDataTableUiBridge = useAdminStore(state => state.setDataTableUiBridge);
 
   useAdminFetch();
@@ -56,8 +57,11 @@ export default function DataTable<T extends Record<string, any>>({
   }, [canAdd, onRowSelect, onTableChange, setDataTableUiBridge]);
 
   const filteredData = useMemo(
-    () => filterAdminTableRows(tableName, columns, data, dataTableSearch),
-    [columns, data, dataTableSearch, tableName]
+    () =>
+      filterAdminTableRows(tableName, columns, data, dataTableSearch, {
+        showUpcomingEventsOnly,
+      }),
+    [columns, data, dataTableSearch, showUpcomingEventsOnly, tableName]
   );
 
   const handleRowSelect = (row: T | null) => {

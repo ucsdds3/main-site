@@ -456,17 +456,22 @@ export default function EditCard<T extends Record<string, unknown>>({
         }
         if (col.key === "internal_notes" && tableName === "Events") {
           return (
-            <TextArea
-              label={getColumnLabel(col)}
-              fieldId={`ec-${String(col.key)}`}
-              hideLabel
-              rows={4}
-              value={String(value ?? "")}
-              setValue={v => handleChange(col.key, v, col.type)}
-              placeholder="Internal ops notes (Executive only)"
-              disabled={!canModify}
-              className="w-full min-w-0"
-            />
+            <div className="flex flex-col gap-1">
+              <TextArea
+                label={getColumnLabel(col)}
+                fieldId={`ec-${String(col.key)}`}
+                hideLabel
+                rows={4}
+                value={String(value ?? "")}
+                setValue={v => handleChange(col.key, v, col.type)}
+                placeholder="Internal ops notes (Executive only)"
+                disabled={!canModify}
+                className="w-full min-w-0"
+              />
+              <p className="text-xs text-(--obs-text-muted)">
+                Put the link to the event planning doc here.
+              </p>
+            </div>
           );
         }
         if (col.key === "description" && col.type === "text") {

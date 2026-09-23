@@ -3,15 +3,40 @@ import { formatColumnLabel, formatCellValue } from "../../../Utils/functions";
 import type { ColumnDefinition } from "./types";
 import { formatEventWorkflowStatus } from "./eventWorkflow";
 
+/** Prefer extended end, then end, then start — same notion of "event is over". */
+export function eventEffectiveEndIso(row: Record<string, unknown>): string | null {
+  const tempEnd = row.temp_end;
+  const end = row.end;
+  const start = row.start;
+  if (typeof tempEnd === "string" && tempEnd) return tempEnd;
+  if (typeof end === "string" && end) return end;
+  if (typeof start === "string" && start) return start;
+  return null;
+}
+
+export function isUpcomingEventRow(row: Record<string, unknown>, now = new Date()): boolean {
+  const iso = eventEffectiveEndIso(row);
+  if (!iso) return true;
+  const t = new Date(iso).getTime();
+  if (Number.isNaN(t)) return true;
+  return t >= now.getTime();
+}
+
 export function filterAdminTableRows<T extends Record<string, any>>(
   tableName: string,
   columns: ColumnDefinition<T>[],
   data: T[],
-  search: string
+  search: string,
+  options?: { showUpcomingEventsOnly?: boolean }
 ): T[] {
   const visibleColumns = columns.filter(col => !col.hide);
-  const baseData =
+  let baseData =
     tableName === "Attendance" ? data : data.filter(row => row.deleted !== true);
+
+  if (tableName === "Events" && options?.showUpcomingEventsOnly) {
+    const now = new Date();
+    baseData = baseData.filter(row => isUpcomingEventRow(row, now));
+  }
 
   const q = search.trim().toLowerCase();
   if (!q) return baseData;

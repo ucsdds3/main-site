@@ -17,11 +17,16 @@ export default function DataTableControls() {
   const reload = useAdminStore(state => state.reload);
   const search = useAdminStore(state => state.dataTableSearch);
   const setSearch = useAdminStore(state => state.setDataTableSearch);
+  const showUpcomingEventsOnly = useAdminStore(state => state.showUpcomingEventsOnly);
+  const setShowUpcomingEventsOnly = useAdminStore(state => state.setShowUpcomingEventsOnly);
   const bridge = useAdminStore(state => state.dataTableUiBridge);
 
   const filteredData = useMemo(
-    () => filterAdminTableRows(tableName, columns, data as Record<string, any>[], search),
-    [columns, data, search, tableName]
+    () =>
+      filterAdminTableRows(tableName, columns, data as Record<string, any>[], search, {
+        showUpcomingEventsOnly,
+      }),
+    [columns, data, search, showUpcomingEventsOnly, tableName]
   );
 
   const handleDownload = () => {
@@ -54,6 +59,21 @@ export default function DataTableControls() {
           setValue={setSearch}
           className="min-w-0 w-[200px]"
         />
+        {tableName === "Events" && (
+          <label
+            htmlFor="admin-upcoming-events-only"
+            className="flex cursor-pointer items-center gap-2 whitespace-nowrap font-body fl-text-sm/base font-semibold text-(--obs-text-primary)"
+          >
+            <input
+              id="admin-upcoming-events-only"
+              type="checkbox"
+              className="toggle toggle-primary cursor-pointer"
+              checked={showUpcomingEventsOnly}
+              onChange={e => setShowUpcomingEventsOnly(e.target.checked)}
+            />
+            Upcoming only
+          </label>
+        )}
       </div>
       <span className="order-last font-body fl-text-base/lg font-semibold text-(--obs-text-primary) md:order-0 md:ml-4 md:mr-auto">
         Found {filteredData.length} rows
