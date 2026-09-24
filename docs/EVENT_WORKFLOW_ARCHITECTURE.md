@@ -27,7 +27,7 @@ We needed:
 
 | Principle | Choice |
 |-----------|--------|
-| Separate publish from draft | `workflow_status = complete` is the public gate |
+| Separate publish from draft | Public when `waiting_marketing` or `complete` |
 | Status changes are intentional | Not part of normal **Save**; requires **Confirm status** |
 | Notify on handoff only | Email only for the three `waiting_*` states |
 | Secrets stay server-side | Resend API key lives in Edge Function secrets, never in Vite `.env` |
@@ -45,7 +45,7 @@ We needed:
 │  Executive /admin                  Anyone (auth) /events or public list   │
 │  ┌─────────────────────┐           ┌──────────────────────────────────┐ │
 │  │ DataTable + EditCard│           │ Shared EventPage / useEvents     │ │
-│  │ Status, Notes       │           │ .eq(workflow_status, complete)   │ │
+│  │ Status, Notes       │           │ .in(waiting_marketing, complete) │ │
 │  └──────────┬──────────┘           └────────────────▲─────────────────┘ │
 │             │                                        │                   │
 │   Save notes│  Confirm status                        │ select public cols│
@@ -64,7 +64,7 @@ We needed:
            ▼                                           │
 ┌─────────────────────────────┐     ┌──────────────────┴──────────────────┐
 │ Postgres: Events            │◄────│ Anon / authenticated PostgREST      │
-│  workflow_status            │     │ (public page filters complete)      │
+│  workflow_status            │     │ (public: waiting_marketing|complete)│
 │  internal_notes             │     └─────────────────────────────────────┘
 └──────────────┬──────────────┘
                │
@@ -167,12 +167,13 @@ Source: [`supabase/functions/confirm-event-status/index.ts`](../supabase/functio
 .from("Events")
 .select("name,description,image,points,deleted,password,start,end,location,tags")
 .eq("deleted", false)
-.eq("workflow_status", "complete")
+.in("workflow_status", ["waiting_marketing", "complete"])
 ```
 
 Implications:
 
-- Incomplete / waiting events are invisible on the public calendar.
+- `none` / `waiting_room` / `waiting_finance` stay invisible on the public calendar.
+- `waiting_marketing` and `complete` are public (marketing handoff = publish).
 - `internal_notes` is not requested by the public query (defense in depth; still rely on RLS/grants for true secrecy).
 
 ---
@@ -198,14 +199,20 @@ Select status "Waiting for finance" (draft in form only)
   → still not public
 ```
 
-### 5.3 Publish
+### 5.3 Publish (marketing handoff)
 
 ```
-Select status "Complete"
+Select status "Waiting for marketing"
   → Confirm status
-  → Edge Function (no email)
-  → UPDATE workflow_status = complete
+  → Edge Function
+       → email Marketing Director
+       → UPDATE workflow_status = waiting_marketing
   → appears on /events for everyone
+
+Select status "Complete" (later)
+  → Confirm status (no email)
+  → UPDATE workflow_status = complete
+  → stays public; marks ops finished
 ```
 
 ### 5.4 Unpublish / park
@@ -254,7 +261,7 @@ Members.admin_level ∈ { Member, Board, Executive }
 | Resend test domain | `403` when mailing anyone other than account owner — verify club domain |
 | Board opens admin | Works, but Status/Notes hidden |
 
-**Invariant:** An event is publicly listable iff `deleted = false` **and** `workflow_status = 'complete'`.
+**Invariant:** An event is publicly listable iff `deleted = false` **and** `workflow_status` in (`waiting_marketing`, `complete`).
 
 ---
 
@@ -292,8 +299,8 @@ Members.admin_level ∈ { Member, Board, Executive }
 1. SQL applied; existing events `complete`.
 2. Function deployed; secrets: `RESEND_API_KEY`, `RESEND_FROM_EMAIL` (verified domain).
 3. Optional: `VPI_EMAIL` / `VPF_EMAIL` / `MARKETING_DIRECTOR_EMAIL` when officers change.
-4. Frontend shipped with `execOnly` columns + public `.eq("workflow_status", "complete")`.
-5. Smoke: Waiting → email; Complete → public; None → hidden; notes Save → no email.
+4. Frontend shipped with `execOnly` columns + public `.in("workflow_status", ["waiting_marketing", "complete"])`.
+5. Smoke: Waiting room/finance → email, not public; Waiting marketing → email + public; Complete → stays public; None → hidden; notes Save → no email.
 
 ---
 

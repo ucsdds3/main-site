@@ -1,7 +1,7 @@
 -- Events workflow status + internal notes (Executive ops)
 -- Run once in Supabase SQL Editor before deploying the Edge Function / frontend.
 --
--- Public /events shows only workflow_status = 'complete'.
+-- Public /events shows workflow_status in ('waiting_marketing', 'complete').
 -- Existing rows (NULL at add time) are backfilled to 'complete' so the live calendar stays unchanged.
 -- Re-running is safe: only NULL statuses are backfilled.
 

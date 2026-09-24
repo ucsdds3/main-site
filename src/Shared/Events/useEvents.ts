@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { supabase } from "src/Utils/supabase";
 import { EventType } from "src/Utils/types";
+import { PUBLIC_EVENT_WORKFLOW_STATUSES } from "src/Sites/Members/Pages/Admin/Utils/eventWorkflow";
 
 /** DataHacks / hackathon entries are hidden from public event lists and calendars. */
 function isDataHacksEvent(event: EventType): boolean {
@@ -26,7 +27,7 @@ function useEvents() {
         .from("Events")
         .select("name,description,image,points,deleted,password,start,end,location,tags")
         .eq("deleted", false)
-        .eq("workflow_status", "complete")
+        .in("workflow_status", [...PUBLIC_EVENT_WORKFLOW_STATUSES])
         .order("start", { ascending: false });
       if (data) setEvents(data.filter(e => !isDataHacksEvent(e)));
 

@@ -163,7 +163,7 @@ Anyone can load these routes (`src/Sites/Main/Main.tsx`). Navbar CTA is **Sign I
 | Path | What | Data source |
 |---|---|---|
 | `/` | Home | JSON + static |
-| `/events` | Public calendar / cards | Supabase `Events` where `deleted = false` **and** `workflow_status = 'complete'` (DataHacks-named rows hidden) |
+| `/events` | Public calendar / cards | Supabase `Events` where `deleted = false` **and** `workflow_status` in `waiting_marketing` \| `complete` (DataHacks-named rows hidden) |
 | `/events/{gbm,workshops,social,professional,leetcode}` | Series “about” pages | `Pages/Events/Data/events.json` |
 | `/board` | Current board | `Members` with non-null `teams`, not deleted |
 | `/board/alumni` | Alumni | JSON |
@@ -244,9 +244,9 @@ Event lifecycle (Executives, members admin):
 
 1. Create/edit event fields + internal notes with normal **Save** (client → PostgREST).
 2. Change `workflow_status` only via **Confirm status**, which invokes Edge Function `confirm-event-status`.
-3. Public `/events` shows only `workflow_status = 'complete'`.
+3. Public `/events` (and ICS) show `workflow_status` in `waiting_marketing` | `complete`.
 
-Statuses: `none` → `waiting_room` | `waiting_finance` | `waiting_marketing` → `complete`. The three `waiting_*` values email VPI / VPF / Marketing via Resend from the Edge Function.
+Statuses: `none` → `waiting_room` | `waiting_finance` | `waiting_marketing` → `complete`. The three `waiting_*` values email VPI / VPF / Marketing via Resend from the Edge Function. `waiting_marketing` also publishes.
 
 Read before changing this: `docs/EVENT_WORKFLOW_ARCHITECTURE.md` and `docs/EVENT_WORKFLOW_STATUS.md`. SQL: `sql/events_workflow_status.sql`. Deploy function from repo root: `supabase functions deploy confirm-event-status`. Secrets stay in Supabase (`RESEND_*`, optional `VPI_EMAIL` / `VPF_EMAIL` / `MARKETING_DIRECTOR_EMAIL`).
 

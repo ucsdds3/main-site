@@ -1,4 +1,4 @@
-/** Event ops pipeline status (DB values). Public /events only shows `complete`. */
+/** Event ops pipeline status (DB values). */
 export const EVENT_WORKFLOW_STATUS_VALUES = [
   "none",
   "waiting_room",
@@ -16,6 +16,22 @@ export const EVENT_WORKFLOW_STATUS_LABELS: Record<EventWorkflowStatus, string> =
   waiting_marketing: "Waiting for marketing",
   complete: "Complete",
 };
+
+/**
+ * Statuses visible on public /events and the ICS calendar feed.
+ * Published once marketing handoff starts (`waiting_marketing`) or when Complete.
+ */
+export const PUBLIC_EVENT_WORKFLOW_STATUSES: readonly EventWorkflowStatus[] = [
+  "waiting_marketing",
+  "complete",
+] as const;
+
+export function isPublicEventWorkflowStatus(value: unknown): boolean {
+  return (
+    typeof value === "string" &&
+    (PUBLIC_EVENT_WORKFLOW_STATUSES as readonly string[]).includes(value)
+  );
+}
 
 /** Statuses that trigger an email on Confirm. */
 export const EVENT_WORKFLOW_NOTIFY_STATUSES: ReadonlySet<EventWorkflowStatus> = new Set([
