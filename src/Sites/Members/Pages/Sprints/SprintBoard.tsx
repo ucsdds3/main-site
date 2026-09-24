@@ -55,9 +55,8 @@ export default function SprintBoard({
 }: SprintBoardProps) {
   const { catalog } = useBoardTeamsCatalog();
   const { assignees } = useBoardAssignees();
-  const { tasks, loading, createTask, updateTask, moveTask, closeSprint } = useSprintBoard(
-    sprint.id
-  );
+  const { tasks, loading, createTask, updateTask, moveTask, deleteTask, closeSprint } =
+    useSprintBoard(sprint.id);
   const [teamTab, setTeamTab] = useState("ALL");
   const [assigneeFilter, setAssigneeFilter] = useState<number | null>(null);
   const [taskModal, setTaskModal] = useState<"create" | number | null>(null);
@@ -439,6 +438,14 @@ export default function SprintBoard({
           sprints={pickerSprints}
           assignees={assignees}
           onClose={() => setTaskModal(null)}
+          onDelete={
+            canEdit && editingTask
+              ? async () => {
+                  await deleteTask(editingTask.id);
+                  toast.success("Task deleted.");
+                }
+              : undefined
+          }
           onSave={async input => {
             if (taskModal === "create") {
               const created = await createTask({

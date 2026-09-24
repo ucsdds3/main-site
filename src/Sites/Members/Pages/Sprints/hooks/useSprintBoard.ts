@@ -368,5 +368,21 @@ export function useSprintBoard(sprintId: number | null) {
     await reload();
   };
 
-  return { tasks, loading, reload, createTask, updateTask, moveTask, closeSprint };
+  const deleteTask = async (taskId: number) => {
+    const { error: assigneeError } = await supabase
+      .from("SprintTaskAssignees")
+      .delete()
+      .eq("task_id", taskId);
+    if (assigneeError) throw assigneeError;
+    const { error: linkError } = await supabase
+      .from("SprintTaskSprints")
+      .delete()
+      .eq("task_id", taskId);
+    if (linkError) throw linkError;
+    const { error } = await supabase.from("SprintTasks").delete().eq("id", taskId);
+    if (error) throw error;
+    await reload();
+  };
+
+  return { tasks, loading, reload, createTask, updateTask, moveTask, deleteTask, closeSprint };
 }
