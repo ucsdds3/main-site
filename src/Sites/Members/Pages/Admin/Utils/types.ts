@@ -35,6 +35,8 @@ export type AttendanceRow = {
   member_id: number;
   event_id: number;
   points: number | null;
+  rating: number | null;
+  feedback: string | null;
   member: string;
   email: string;
   event: string;
