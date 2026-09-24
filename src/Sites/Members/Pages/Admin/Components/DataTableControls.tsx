@@ -11,8 +11,8 @@ import { downloadNewsletterEmailsCsv } from "../Utils/newsletterExport";
 import { Input } from "src/Sites/Members/Components/Input";
 import Select from "src/Sites/Members/Components/Select";
 
-import FilterDropdown from "./FilterDropdown";
-import SortDropdown from "./SortDropdown";
+import { FilterPanel, FilterToggleButton } from "./FilterDropdown";
+import { SortPanel, SortToggleButton } from "./SortDropdown";
 
 export default function DataTableControls() {
   const tableName = useAdminStore(state => state.tableName);
@@ -39,7 +39,6 @@ export default function DataTableControls() {
   };
 
   const handleNewsletterExport = () => {
-    // Use full Members load (not search-filtered) so marketing always gets the full eligible list.
     const { count } = downloadNewsletterEmailsCsv(data as Record<string, unknown>[]);
     if (count === 0) {
       toast.error("No eligible UCSD emails found (active, non-alumni).");
@@ -49,92 +48,99 @@ export default function DataTableControls() {
   };
 
   return (
-    <div className="mb-4 flex flex-col items-center justify-between gap-4 md:flex-row md:gap-0">
-      <div className="flex flex-col sm:flex-row items-center gap-4">
-        <Select
-          label="Data table"
-          fieldId="admin-data-table-picker"
-          hideLabel
-          showPlaceholderOption={false}
-          options={["Events", "Members", "Items", "Attendance", "BoardTeams"]}
-          value={tableName}
-          setValue={v => {
-            bridge?.onTableChange(v);
-            bridge?.clearSelection();
-          }}
-          className="min-w-[200px] w-max!"
-        />
-        <Input
-          label="Search table"
-          fieldId="admin-data-table-search"
-          hideLabel
-          type="text"
-          placeholder="Search…"
-          value={search}
-          setValue={setSearch}
-          className="min-w-0 w-[200px]"
-        />
-        {tableName === "Events" && (
-          <label
-            htmlFor="admin-upcoming-events-only"
-            className="flex cursor-pointer items-center gap-2 whitespace-nowrap font-body fl-text-sm/base font-semibold text-(--obs-text-primary)"
-          >
-            <input
-              id="admin-upcoming-events-only"
-              type="checkbox"
-              className="toggle toggle-primary cursor-pointer"
-              checked={showUpcomingEventsOnly}
-              onChange={e => setShowUpcomingEventsOnly(e.target.checked)}
-            />
-            Upcoming only
-          </label>
-        )}
-      </div>
-      <span className="order-last font-body fl-text-base/lg font-semibold text-(--obs-text-primary) md:order-0 md:ml-4 md:mr-auto">
-        Found {filteredData.length} rows
-      </span>
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={reload}
-          className="btn btn-outline hover:border-primary font-body fl-text-base/lg font-semibold"
-          disabled={loading}
-          title="Reload"
-        >
-          {loading ? <span className="loading loading-spinner loading-sm" /> : <TfiReload />}
-        </button>
-        <SortDropdown />
-        <FilterDropdown />
-        <button
-          type="button"
-          onClick={handleDownload}
-          className="btn btn-outline hover:border-primary font-body fl-text-base/lg font-semibold"
-          disabled={loading || filteredData.length === 0}
-          title="Download as CSV"
-        >
-          <TfiDownload />
-        </button>
-        {tableName === "Members" && (
+    <div className="mb-4">
+      <div className="flex flex-col items-center justify-between gap-4 md:flex-row md:gap-0">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <Select
+            label="Data table"
+            fieldId="admin-data-table-picker"
+            hideLabel
+            showPlaceholderOption={false}
+            options={["Events", "Members", "Items", "Attendance", "BoardTeams"]}
+            value={tableName}
+            setValue={v => {
+              bridge?.onTableChange(v);
+              bridge?.clearSelection();
+            }}
+            className="min-w-[200px] w-max!"
+          />
+          <Input
+            label="Search table"
+            fieldId="admin-data-table-search"
+            hideLabel
+            type="text"
+            placeholder="Search…"
+            value={search}
+            setValue={setSearch}
+            className="min-w-0 w-[200px]"
+          />
+          {tableName === "Events" && (
+            <label
+              htmlFor="admin-upcoming-events-only"
+              className="flex cursor-pointer items-center gap-2 whitespace-nowrap font-body fl-text-sm/base font-semibold text-(--obs-text-primary)"
+            >
+              <input
+                id="admin-upcoming-events-only"
+                type="checkbox"
+                className="toggle toggle-primary cursor-pointer"
+                checked={showUpcomingEventsOnly}
+                onChange={e => setShowUpcomingEventsOnly(e.target.checked)}
+              />
+              Upcoming only
+            </label>
+          )}
+        </div>
+        <span className="order-last font-body fl-text-base/lg font-semibold text-(--obs-text-primary) md:order-0 md:ml-4 md:mr-auto">
+          Found {filteredData.length} rows
+        </span>
+        <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={handleNewsletterExport}
+            onClick={reload}
             className="btn btn-outline hover:border-primary font-body fl-text-base/lg font-semibold"
-            disabled={loading || data.length === 0}
-            title="Export newsletter emails (active @ucsd.edu, exclude alumni)"
+            disabled={loading}
+            title="Reload"
           >
-            <TfiEmail className="mr-1" />
-            Newsletter CSV
+            {loading ? <span className="loading loading-spinner loading-sm" /> : <TfiReload />}
           </button>
-        )}
-        <button
-          type="button"
-          onClick={() => bridge?.clearSelection()}
-          className="btn btn-primary font-body fl-text-base/lg font-semibold"
-          disabled={!bridge?.canAdd}
-          title="Add New"
-        >
-          <TfiPlus className="font-bold" />
-        </button>
+          <SortToggleButton />
+          <FilterToggleButton />
+          <button
+            type="button"
+            onClick={handleDownload}
+            className="btn btn-outline hover:border-primary font-body fl-text-base/lg font-semibold"
+            disabled={loading || filteredData.length === 0}
+            title="Download as CSV"
+          >
+            <TfiDownload />
+          </button>
+          {tableName === "Members" && (
+            <button
+              type="button"
+              onClick={handleNewsletterExport}
+              className="btn btn-outline hover:border-primary font-body fl-text-base/lg font-semibold"
+              disabled={loading || data.length === 0}
+              title="Export newsletter emails (active @ucsd.edu, exclude alumni)"
+            >
+              <TfiEmail className="mr-1" />
+              Newsletter CSV
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => bridge?.clearSelection()}
+            className="btn btn-primary font-body fl-text-base/lg font-semibold"
+            disabled={!bridge?.canAdd}
+            title="Add New"
+          >
+            <TfiPlus className="font-bold" />
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-4">
+        <SortPanel />
+        <FilterPanel />
       </div>
     </div>
   );
