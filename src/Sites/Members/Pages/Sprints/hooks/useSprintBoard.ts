@@ -92,6 +92,23 @@ async function notifySprintTask(kind: "assigned" | "pending_review", taskId: num
   }
 }
 
+export async function nudgeIdleMembers(sprintId: number, memberIds: number[]) {
+  const { data, error } = await supabase.functions.invoke("notify-sprint-task", {
+    body: { kind: "nudge", sprint_id: sprintId, member_ids: memberIds },
+  });
+  if (error) {
+    throw new Error(error.message || "Could not send nudge");
+  }
+  if (data && typeof data === "object" && "error" in data && data.error) {
+    throw new Error(String(data.error));
+  }
+  const emailed = data && typeof data === "object" && "emailed" in data ? Number(data.emailed) : 0;
+  if (!Number.isFinite(emailed) || emailed <= 0) {
+    throw new Error("No nudge emails were sent.");
+  }
+  return emailed;
+}
+
 export function useSprintBoard(sprintId: number | null) {
   const [tasks, setTasks] = useState<SprintTaskRow[]>([]);
   const [loading, setLoading] = useState(Boolean(sprintId));

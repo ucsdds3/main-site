@@ -415,7 +415,15 @@ export default function SprintBoard({
         </div>
       )}
 
-      {loading ? null : <SprintIdleMembers members={assignees} tasks={tasks} teamTab={teamTab} />}
+      {loading ? null : (
+        <SprintIdleMembers
+          members={assignees}
+          tasks={tasks}
+          teamTab={teamTab}
+          sprintId={sprint.id}
+          canNudge={canEdit}
+        />
+      )}
 
       <SprintStats tasks={tasks} sprint={sprint} teamTab={teamTab} />
 

@@ -1,4 +1,5 @@
-// notify-sprint-task — email assignees on create, reviewer on pending_review
+// notify-sprint-task — email assignees on create, reviewer on pending_review,
+// idle board members on nudge
 //
 // Deploy from main-site/:
 //   supabase functions deploy notify-sprint-task
@@ -93,6 +94,147 @@ async function sendResendEmail(params: {
 
 type MemberRow = { id: number; full_name: string | null; email: string | null };
 
+function memberHasTeam(teams: unknown): boolean {
+  if (teams == null) return false;
+  let value: unknown = teams;
+  if (typeof teams === "string") {
+    try {
+      value = JSON.parse(teams);
+    } catch {
+      return false;
+    }
+  }
+  if (typeof value !== "object" || value == null || Array.isArray(value)) return false;
+  return Object.keys(value as Record<string, unknown>).length > 0;
+}
+
+async function idleBoardMembers(
+  admin: ReturnType<typeof createClient>,
+  sprintId: number
+): Promise<MemberRow[]> {
+  const { data: links } = await admin
+    .from("SprintTaskSprints")
+    .select("task_id")
+    .eq("sprint_id", sprintId);
+  const { data: legacy } = await admin.from("SprintTasks").select("id").eq("sprint_id", sprintId);
+  const taskIds = [
+    ...new Set([
+      ...(links ?? []).map(row => row.task_id as number),
+      ...(legacy ?? []).map(row => row.id as number),
+    ]),
+  ];
+
+  const busy = new Set<number>();
+  if (taskIds.length > 0) {
+    const { data: taskRows } = await admin.from("SprintTasks").select("id, status").in("id", taskIds);
+    const openIds = (taskRows ?? [])
+      .filter(row => row.status === "todo" || row.status === "in_progress" || row.status === "pending_review")
+      .map(row => row.id as number);
+    if (openIds.length > 0) {
+      const { data: joins } = await admin
+        .from("SprintTaskAssignees")
+        .select("member_id")
+        .in("task_id", openIds);
+      for (const join of joins ?? []) busy.add(join.member_id as number);
+    }
+  }
+
+  const { data: board } = await admin
+    .from("Members")
+    .select("id, full_name, email, teams")
+    .in("admin_level", ["Board", "Executive"])
+    .or("deleted.is.null,deleted.eq.false");
+
+  return (board ?? []).filter(row => {
+    if (busy.has(row.id as number)) return false;
+    if (!memberHasTeam(row.teams)) return false;
+    return true;
+  }) as MemberRow[];
+}
+
+async function handleNudge(
+  admin: ReturnType<typeof createClient>,
+  body: { sprint_id?: unknown; member_ids?: unknown }
+): Promise<Response> {
+  const sprintId = Number(body.sprint_id);
+  const requested = Array.isArray(body.member_ids)
+    ? [...new Set(body.member_ids.map(id => Number(id)).filter(id => Number.isInteger(id) && id > 0))]
+    : [];
+  if (!Number.isInteger(sprintId) || sprintId <= 0 || requested.length === 0) {
+    return json({ error: "Invalid sprint_id or member_ids" }, 400);
+  }
+  if (requested.length > 40) {
+    return json({ error: "Too many recipients for one nudge" }, 400);
+  }
+
+  const { data: sprint, error: sprintError } = await admin
+    .from("Sprints")
+    .select("id, name")
+    .eq("id", sprintId)
+    .maybeSingle();
+  if (sprintError || !sprint) {
+    return json({ error: "Sprint not found" }, 404);
+  }
+
+  const idle = await idleBoardMembers(admin, sprintId);
+  const idleById = new Map(idle.map(row => [row.id, row]));
+  const targets = requested.map(id => idleById.get(id)).filter((row): row is MemberRow => Boolean(row));
+  const uniqueEmails = (rows: MemberRow[]) => {
+    const seen = new Set<string>();
+    const out: { row: MemberRow; email: string }[] = [];
+    for (const row of rows) {
+      const email = row.email?.trim().toLowerCase();
+      if (!email || !email.includes("@") || seen.has(email)) continue;
+      seen.add(email);
+      out.push({ row, email });
+    }
+    return out;
+  };
+  const recipients = uniqueEmails(targets);
+  if (recipients.length === 0) {
+    return json({ ok: true, emailed: 0, warning: "No idle members to nudge" });
+  }
+
+  const portal = readSecret("MEMBERS_PORTAL_URL") || "https://members.ds3atucsd.com";
+  const boardUrl = `${portal.replace(/\/$/, "")}/sprints/${sprintId}`;
+  const sprintName = sprint.name || "Current sprint";
+
+  let emailed = 0;
+  let failed = 0;
+  for (const { row, email } of recipients) {
+    const name = row.full_name?.trim() || "there";
+    try {
+      await sendResendEmail({
+        to: [email],
+        subject: `[DS3 Sprints] Add your tasks for ${sprintName}`,
+        text: [
+          `Hi ${name},`,
+          "",
+          `You don't have any tasks on ${sprintName} yet. Please add your work on the sprint board so the rest of the board can see what you own.`,
+          "",
+          `Board: ${boardUrl}`,
+          "",
+          "— DS3 Members Portal",
+        ].join("\n"),
+        html: `<p>Hi ${escapeHtml(name)},</p>
+<p>You don't have any tasks on <strong>${escapeHtml(sprintName)}</strong> yet. Please add your work on the sprint board so the rest of the board can see what you own.</p>
+<p><a href="${escapeHtml(boardUrl)}">Open the sprint board</a></p>
+<p>— DS3 Members Portal</p>`,
+      });
+      emailed += 1;
+    } catch (err) {
+      console.error(err);
+      failed += 1;
+    }
+  }
+
+  if (emailed === 0) {
+    return json({ error: "Could not send nudge emails" }, 500);
+  }
+
+  return json({ ok: true, emailed, failed, kind: "nudge" });
+}
+
 Deno.serve(async req => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -146,6 +288,11 @@ Deno.serve(async req => {
 
     const body = await req.json();
     const kind = body?.kind as string;
+
+    if (kind === "nudge") {
+      return await handleNudge(admin, body);
+    }
+
     const taskId = body?.task_id;
     if (taskId == null || (kind !== "assigned" && kind !== "pending_review")) {
       return json({ error: "Invalid kind or task_id" }, 400);
