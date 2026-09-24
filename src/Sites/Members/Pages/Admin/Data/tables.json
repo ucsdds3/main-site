@@ -71,7 +71,9 @@
       "event": { "type": "text", "join": "Events.name" },
       "start": { "type": "date", "join": "Events.start" },
       "check_in": { "type": "date" },
-      "points": { "type": "number", "optional": true }
+      "points": { "type": "number", "optional": true },
+      "rating": { "type": "number", "optional": true, "label": "Rating" },
+      "feedback": { "type": "text", "optional": true, "label": "Feedback" }
     },
     "permissions": { "canAdd": [], "canEdit": [], "canView": ["Board", "Executive"] }
   },

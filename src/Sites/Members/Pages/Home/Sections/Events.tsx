@@ -6,10 +6,18 @@ import EventCard from "src/Shared/Events/EventCard";
 import { Input } from "src/Sites/Members/Components/Input";
 import { useEvents } from "../Hooks/useEvents";
 import { useScreenSize } from "src/Hooks/useScreenSize";
+import CheckInFeedbackModal from "../Components/CheckInFeedbackModal";
 
 const Events = () => {
   const [eventCode, setEventCode] = useState("");
-  const { attendedEvents, handleSubmitCode, eventStats } = useEvents();
+  const {
+    attendedEvents,
+    handleSubmitCode,
+    eventStats,
+    feedbackTarget,
+    clearFeedbackTarget,
+    refreshAttended,
+  } = useEvents();
   const { width } = useScreenSize();
 
   return (
@@ -36,7 +44,10 @@ const Events = () => {
         <div className="obs-panel flex flex-col items-center gap-6 p-8">
           <h2 className="text-fluid-subsection-title text-center">Event Check In</h2>
           <form
-            onSubmit={e => handleSubmitCode(e, eventCode)}
+            onSubmit={async e => {
+              await handleSubmitCode(e, eventCode);
+              setEventCode("");
+            }}
             className="flex w-full flex-col items-center gap-4"
           >
             <Input
@@ -74,6 +85,12 @@ const Events = () => {
           </div>
         </div>
       </div>
+
+      <CheckInFeedbackModal
+        target={feedbackTarget}
+        onClose={clearFeedbackTarget}
+        onSubmitted={() => void refreshAttended()}
+      />
     </Section>
   );
 };
