@@ -58,11 +58,77 @@ function authCookieDomain(): string | undefined {
   return undefined;
 }
 
+function expireCookie(name: string, domain?: string) {
+  const secure = window.location.protocol === "https:" ? "; Secure" : "";
+  const domainPart = domain ? `; domain=${domain}` : "";
+  document.cookie = `${encodeURIComponent(name)}=; path=/; max-age=0; SameSite=Lax${domainPart}${secure}`;
+}
+
+/**
+ * Wipe Supabase auth cookies at host-only AND .ds3atucsd.com scopes, plus legacy
+ * localStorage keys. Needed after switching to shared-domain cookies — duplicate /
+ * stale cookies make login fail everywhere except a clean profile (incognito).
+ */
+export function clearSupabaseAuthArtifacts(): void {
+  if (typeof window === "undefined") return;
+
+  const names = document.cookie
+    .split(";")
+    .map(part => part.trim().split("=")[0])
+    .filter(Boolean)
+    .map(name => {
+      try {
+        return decodeURIComponent(name);
+      } catch {
+        return name;
+      }
+    });
+
+  const authCookieNames = names.filter(
+    name =>
+      name.startsWith("sb-") &&
+      (name.includes("auth-token") ||
+        name.includes("code-verifier") ||
+        name.includes("auth-token-code-verifier"))
+  );
+
+  const domain = authCookieDomain();
+  for (const name of authCookieNames) {
+    expireCookie(name);
+    if (domain) expireCookie(name, domain);
+  }
+
+  // Known chunk suffixes even if not currently listed in document.cookie
+  if (supabaseUrl) {
+    try {
+      const projectRef = new URL(supabaseUrl).hostname.split(".")[0];
+      const base = `sb-${projectRef}-auth-token`;
+      const extras = [base, `${base}-code-verifier`, ...Array.from({ length: 10 }, (_, i) => `${base}.${i}`)];
+      for (const name of extras) {
+        expireCookie(name);
+        if (domain) expireCookie(name, domain);
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
+  try {
+    const keys = Object.keys(window.localStorage);
+    for (const key of keys) {
+      if (key.startsWith("sb-") && (key.includes("auth") || key.includes("code-verifier"))) {
+        window.localStorage.removeItem(key);
+      }
+    }
+  } catch {
+    /* private mode / blocked storage */
+  }
+}
+
 function createSupabaseClient(): SupabaseClient {
   if (!supabaseUrl || !supabaseKey) return createMissingSupabaseClient();
 
   const domain = authCookieDomain();
-  // Cookie storage so login on members.* is visible on www / apex (and vice versa).
   return createBrowserClient(supabaseUrl, supabaseKey, {
     cookieOptions: domain
       ? {
@@ -81,15 +147,22 @@ function createSupabaseClient(): SupabaseClient {
 export const supabase = createSupabaseClient();
 
 /**
- * One-time: copy a legacy localStorage session into cookie storage so existing
- * logged-in members keep their session after the cross-subdomain cookie switch.
+ * If cookie storage has no usable session, try once to import a legacy localStorage
+ * session. On failure, wipe artifacts so a normal login can succeed.
  */
 export async function migrateLegacyAuthStorage(): Promise<void> {
   if (typeof window === "undefined" || !supabaseUrl) return;
 
   try {
     const { data: existing } = await supabase.auth.getSession();
-    if (existing.session) return;
+    if (existing.session) {
+      // Validate — stale refresh tokens leave a zombie session that blocks login.
+      const { error } = await supabase.auth.getUser();
+      if (!error) return;
+      clearSupabaseAuthArtifacts();
+      await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
+      return;
+    }
 
     const projectRef = new URL(supabaseUrl).hostname.split(".")[0];
     const storageKey = `sb-${projectRef}-auth-token`;
@@ -103,11 +176,20 @@ export async function migrateLegacyAuthStorage(): Promise<void> {
     };
     const access_token = parsed.access_token ?? parsed.currentSession?.access_token;
     const refresh_token = parsed.refresh_token ?? parsed.currentSession?.refresh_token;
-    if (!access_token || !refresh_token) return;
+    if (!access_token || !refresh_token) {
+      clearSupabaseAuthArtifacts();
+      return;
+    }
 
-    await supabase.auth.setSession({ access_token, refresh_token });
+    const { error: setError } = await supabase.auth.setSession({ access_token, refresh_token });
+    if (setError) {
+      clearSupabaseAuthArtifacts();
+      return;
+    }
+    const { error: userError } = await supabase.auth.getUser();
+    if (userError) clearSupabaseAuthArtifacts();
   } catch {
-    /* ignore corrupt legacy storage */
+    clearSupabaseAuthArtifacts();
   }
 }
 

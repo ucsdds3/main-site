@@ -1,5 +1,5 @@
 import { toast } from "react-hot-toast";
-import { supabase } from "src/Utils/supabase";
+import { clearSupabaseAuthArtifacts, supabase } from "src/Utils/supabase";
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 
 export function useSignOut() {
@@ -7,9 +7,10 @@ export function useSignOut() {
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
+    clearSupabaseAuthArtifacts();
     if (error) {
       toast.error(error.message);
-      return;
+      // Still clear local UI / cookies so the user isn't stuck.
     }
 
     setAuthState("signin");

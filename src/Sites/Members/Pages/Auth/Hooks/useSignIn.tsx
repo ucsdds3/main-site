@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthStore } from "../../../Hooks/useAuthStore";
-import { supabase } from "../../../../../Utils/supabase";
+import { clearSupabaseAuthArtifacts, supabase } from "../../../../../Utils/supabase";
 import toast from "react-hot-toast";
 
 export function useSignIn() {
@@ -10,45 +10,17 @@ export function useSignIn() {
     password: "",
   });
 
-  // const resendVerification = async () => {
-  //   const href = window.location.href;
-  //   const search = new URLSearchParams(window.location.search);
-
-  //   const { error } = await supabase.auth.resend({
-  //     type: "signup",
-  //     email: data.email,
-  //     options: { emailRedirectTo: `${href}${search && "&"}authState=signin` },
-  //   });
-
-  //   if (error) {
-  //     toast.error(error.message);
-  //     return;
-  //   }
-
-  //   toast.success("Verification email resent!");
-  // };
-
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Stale host-only + domain cookies from the cross-subdomain auth change block new logins.
+    clearSupabaseAuthArtifacts();
+    await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
+
     const { data: userData, error } = await supabase.auth.signInWithPassword({
       email: data.email.toLowerCase(),
       password: data.password,
     });
-
-    // const emailVerified = userData.user?.user_metadata.email_verified;
-    // if (error || !emailVerified) {
-    //   if (error?.message == "Email not confirmed" || !emailVerified) {
-    //     toast(
-    //       <div>
-    //         <span>Please verify your email to login.</span>
-    //         <button className="underline text-blue-500 cursor-pointer" onClick={resendVerification}>
-    //           Resend Verification Email
-    //         </button>
-    //       </div>
-    //     );
-    //   } else toast.error(error?.message || "An error occurred");
-    //   return;
-    // }
 
     if (error) {
       toast.error(error.message);
@@ -65,7 +37,6 @@ export function useSignIn() {
       toast.error(adminError.message);
       return;
     }
-    console.log("adminData: ", adminData);
     setAdminLevel(adminData.admin_level);
     setUser(userData.user);
     setAuthState("authenticated");

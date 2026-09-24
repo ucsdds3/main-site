@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { AuthState } from "../Utils/types";
 import { useAuthStore } from "../Sites/Members/Hooks/useAuthStore";
-import { migrateLegacyAuthStorage, supabase } from "../Utils/supabase";
+import {
+  clearSupabaseAuthArtifacts,
+  migrateLegacyAuthStorage,
+  supabase,
+} from "../Utils/supabase";
 import { User } from "@supabase/supabase-js";
 
 async function hydrateUser(user: User, urlAuthState: AuthState | null) {
@@ -53,8 +57,20 @@ export function useAuth() {
         }
       }
 
-      const { data } = await supabase.auth.getUser();
+      const { data, error } = await supabase.auth.getUser();
       if (cancelled) return;
+      if (error) {
+        // Corrupt / conflicting cookies from the domain migration — wipe so login works again.
+        clearSupabaseAuthArtifacts();
+        await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
+        useAuthStore.setState({
+          user: null,
+          authState:
+            urlAuthState && urlAuthState !== "authenticated" ? urlAuthState : "signin",
+          adminLevel: null,
+        });
+        return;
+      }
       if (data?.user) {
         await hydrateUser(data.user, urlAuthState);
       }
