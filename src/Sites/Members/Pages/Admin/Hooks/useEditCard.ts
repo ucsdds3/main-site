@@ -4,9 +4,7 @@ import { useState, useEffect, RefObject } from "react";
 
 import { ColumnDefinition, ColumnType } from "../Utils/types";
 import {
-  EVENT_WORKFLOW_NOTIFY_RECIPIENT_LABEL,
-  EVENT_WORKFLOW_NOTIFY_STATUSES,
-  formatEventWorkflowStatus,
+  eventWorkflowStatusConfirmMessage,
   isEventWorkflowStatus,
   type EventWorkflowStatus,
 } from "../Utils/eventWorkflow";
@@ -36,6 +34,53 @@ function formatConfirmStatusError(raw: string): string {
     }
   }
   return trimmed;
+}
+
+async function invokeConfirmEventStatus(
+  eventId: unknown,
+  workflowStatus: EventWorkflowStatus
+): Promise<{ emailed: boolean }> {
+  const { data, error } = await supabase.functions.invoke("confirm-event-status", {
+    body: {
+      event_id: eventId,
+      workflow_status: workflowStatus,
+    },
+  });
+
+  if (error) {
+    let detail = error.message;
+    const ctx = (error as { context?: Response }).context;
+    if (ctx && typeof ctx.json === "function") {
+      try {
+        const body = await ctx.json();
+        if (body && typeof body === "object" && "error" in body) {
+          detail = String((body as { error: unknown }).error);
+        } else if (body) {
+          detail = JSON.stringify(body);
+        }
+      } catch {
+        /* keep detail */
+      }
+    }
+    if (
+      detail === error.message &&
+      data &&
+      typeof data === "object" &&
+      "error" in data &&
+      (data as { error: unknown }).error
+    ) {
+      detail = String((data as { error: unknown }).error);
+    }
+    throw new Error(formatConfirmStatusError(detail));
+  }
+  if (data && typeof data === "object" && "error" in data && data.error) {
+    throw new Error(formatConfirmStatusError(String((data as { error: string }).error)));
+  }
+
+  const emailed = Boolean(
+    data && typeof data === "object" && "emailed" in data && (data as { emailed: boolean }).emailed
+  );
+  return { emailed };
 }
 
 interface UseEditCardProps<T> {
@@ -230,6 +275,22 @@ export default function useEditCard<T extends Record<string, unknown>>({
         return;
       }
 
+      const pendingWorkflowStatus: EventWorkflowStatus = isEventWorkflowStatus(
+        (formData as Record<string, unknown>).workflow_status
+      )
+        ? ((formData as Record<string, unknown>).workflow_status as EventWorkflowStatus)
+        : "none";
+
+      if (
+        isNew &&
+        tableName === "Events" &&
+        pendingWorkflowStatus !== "none" &&
+        !confirm(eventWorkflowStatusConfirmMessage(pendingWorkflowStatus))
+      ) {
+        setLoading(false);
+        return;
+      }
+
       const finalFormData = { ...formData };
       if (
         pendingImageFile &&
@@ -296,9 +357,21 @@ export default function useEditCard<T extends Record<string, unknown>>({
         if (tableName === "Events") {
           (dataToSave as Record<string, unknown>).workflow_status = "none";
         }
-        const { error } = await supabase.from(tableName).insert([dataToSave]);
+        const { data: inserted, error } = await supabase
+          .from(tableName)
+          .insert([dataToSave])
+          .select("id")
+          .single();
         if (error) throw error;
-        toast.success("Row created successfully");
+
+        if (tableName === "Events" && pendingWorkflowStatus !== "none" && inserted?.id) {
+          const { emailed } = await invokeConfirmEventStatus(inserted.id, pendingWorkflowStatus);
+          toast.success(
+            emailed ? "Event created; status confirmed and email sent." : "Event created; status confirmed."
+          );
+        } else {
+          toast.success("Row created successfully");
+        }
       } else {
         const { error } = await supabase.from(tableName).update(dataToSave).eq("id", formData.id);
         if (error) throw error;
@@ -354,69 +427,13 @@ export default function useEditCard<T extends Record<string, unknown>>({
       return;
     }
 
-    const label = formatEventWorkflowStatus(draftWorkflowStatus);
-    let confirmMsg = `Set status to "${label}"?`;
-    if (draftWorkflowStatus === "waiting_marketing") {
-      confirmMsg =
-        'Set status to "Waiting for marketing", email Director of Marketing, and publish this event on the public events page?';
-    } else if (EVENT_WORKFLOW_NOTIFY_STATUSES.has(draftWorkflowStatus)) {
-      const role =
-        EVENT_WORKFLOW_NOTIFY_RECIPIENT_LABEL[
-          draftWorkflowStatus as "waiting_room" | "waiting_finance" | "waiting_marketing"
-        ];
-      confirmMsg = `Set status to "${label}" and email ${role}?`;
-    } else if (draftWorkflowStatus === "complete") {
-      confirmMsg =
-        'Set status to "Complete"? (Already public once Waiting for marketing; this marks ops as done.)';
-    }
-
-    if (!confirm(confirmMsg)) return;
+    if (!confirm(eventWorkflowStatusConfirmMessage(draftWorkflowStatus))) return;
 
     setLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke("confirm-event-status", {
-        body: {
-          event_id: formData.id,
-          workflow_status: draftWorkflowStatus,
-        },
-      });
-
-      if (error) {
-        let detail = error.message;
-        // Non-2xx responses: supabase-js puts the Response on error.context
-        const ctx = (error as { context?: Response }).context;
-        if (ctx && typeof ctx.json === "function") {
-          try {
-            const body = await ctx.json();
-            if (body && typeof body === "object" && "error" in body) {
-              detail = String((body as { error: unknown }).error);
-            } else if (body) {
-              detail = JSON.stringify(body);
-            }
-          } catch {
-            /* keep detail */
-          }
-        }
-        // Sometimes the JSON body is still in `data` even when error is set
-        if (
-          detail === error.message &&
-          data &&
-          typeof data === "object" &&
-          "error" in data &&
-          (data as { error: unknown }).error
-        ) {
-          detail = String((data as { error: unknown }).error);
-        }
-        throw new Error(formatConfirmStatusError(detail));
-      }
-      if (data && typeof data === "object" && "error" in data && data.error) {
-        throw new Error(formatConfirmStatusError(String((data as { error: string }).error)));
-      }
+      const { emailed } = await invokeConfirmEventStatus(formData.id, draftWorkflowStatus);
 
       setSavedWorkflowStatus(draftWorkflowStatus);
-      const emailed = Boolean(
-        data && typeof data === "object" && "emailed" in data && (data as { emailed: boolean }).emailed
-      );
       toast.success(emailed ? "Status confirmed and email sent." : "Status confirmed.");
       reloadRef?.current?.reload();
     } catch (err) {

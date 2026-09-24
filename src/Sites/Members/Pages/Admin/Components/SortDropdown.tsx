@@ -19,7 +19,11 @@ export default function SortDropdown() {
             useAdminStore.setState({ sortDropdownOpen: false });
           } else {
             const { sortOrder } = useAdminStore.getState();
-            useAdminStore.setState({ sortDraft: [...sortOrder], sortDropdownOpen: true });
+            useAdminStore.setState({
+              sortDraft: [...sortOrder],
+              sortDropdownOpen: true,
+              filterDropdownOpen: false,
+            });
           }
         }}
         className="btn btn-outline hover:border-primary font-body fl-text-base/lg font-semibold"
@@ -29,7 +33,7 @@ export default function SortDropdown() {
       </button>
       <div
         tabIndex={0}
-        className="dropdown-content menu bg-base-200 rounded-box z-1 mt-2 w-80 p-4 font-body shadow-lg"
+        className="dropdown-content menu bg-base-200 rounded-box z-50 mt-2 w-80 p-4 font-body shadow-lg"
       >
         <div className="space-y-2">
           {sortDraft.length > 0 ? (

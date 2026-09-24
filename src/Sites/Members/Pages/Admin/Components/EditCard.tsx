@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useMemo } from "react";
+import { RefObject, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { TfiClose } from "react-icons/tfi";
 
@@ -29,6 +29,10 @@ import {
   eventWorkflowStatusFromLabel,
   formatEventWorkflowStatus,
 } from "../Utils/eventWorkflow";
+import {
+  eventTagOptionsForForm,
+  normalizeEventTag,
+} from "../Utils/eventTags";
 
 function readTeamsFormRecord(raw: unknown): Record<string, string> {
   if (raw === null || raw === undefined) return {};
@@ -87,6 +91,11 @@ export default function EditCard<T extends Record<string, unknown>>({
     selectedRow,
     reloadRef,
   });
+
+  const [customTagInput, setCustomTagInput] = useState("");
+  useEffect(() => {
+    setCustomTagInput("");
+  }, [selectedRow]);
 
   const { catalog, refetch: refetchBoardTeams } = useBoardTeamsCatalog();
   const committeeLabels = useMemo(() => catalogLabels(catalog), [catalog]);
@@ -247,14 +256,29 @@ export default function EditCard<T extends Record<string, unknown>>({
       }
       case "array":
         if (col.key === "tags") {
-          const tagOptions = ["Workshop", "Professional", "Social", "Fundraiser", "Other"];
-          const selectedTags = Array.isArray(value) ? value : [];
+          const selectedTags = Array.isArray(value) ? (value as string[]) : [];
+          const tagOptions = eventTagOptionsForForm(selectedTags);
 
           const handleTagToggle = (tag: string) => {
-            const newTags = (selectedTags as string[]).includes(tag)
-              ? (selectedTags as string[]).filter((t: string) => t !== tag)
+            const newTags = selectedTags.includes(tag)
+              ? selectedTags.filter(t => t !== tag)
               : [...selectedTags, tag];
             handleChange(col.key, newTags, col.type);
+          };
+
+          const addCustomTag = () => {
+            const normalized = normalizeEventTag(customTagInput);
+            if (!normalized) {
+              toast.error("Enter a tag name");
+              return;
+            }
+            const exists = selectedTags.some(t => t.toLowerCase() === normalized.toLowerCase());
+            if (exists) {
+              toast.error("That tag is already selected");
+              return;
+            }
+            handleChange(col.key, [...selectedTags, normalized], col.type);
+            setCustomTagInput("");
           };
 
           return (
@@ -264,13 +288,34 @@ export default function EditCard<T extends Record<string, unknown>>({
                   <input
                     type="checkbox"
                     className="checkbox checkbox-primary"
-                    checked={(selectedTags as string[]).includes(tag)}
+                    checked={selectedTags.includes(tag)}
                     onChange={() => handleTagToggle(tag)}
                     disabled={!canModify}
                   />
                   <span>{tag}</span>
                 </label>
               ))}
+              <div className="flex flex-col gap-2 pt-1 sm:flex-row sm:items-end">
+                <Input
+                  label="Custom tag"
+                  fieldId="ec-event-custom-tag"
+                  hideLabel
+                  type="text"
+                  placeholder="Add custom tag…"
+                  value={customTagInput}
+                  setValue={setCustomTagInput}
+                  disabled={!canModify}
+                  className="min-w-0 flex-1"
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline btn-sm shrink-0"
+                  onClick={addCustomTag}
+                  disabled={!canModify || !customTagInput.trim()}
+                >
+                  Add tag
+                </button>
+              </div>
             </div>
           );
         }
@@ -447,21 +492,24 @@ export default function EditCard<T extends Record<string, unknown>>({
                     const next = eventWorkflowStatusFromLabel(v) ?? "none";
                     handleChange(col.key, next, col.type);
                   }}
-                  disabled={!canModify || isNew}
+                  disabled={!canModify}
                   className="w-full min-w-0 flex-1"
                 />
-                <button
-                  type="button"
-                  className="btn btn-primary shrink-0"
-                  onClick={() => handleConfirmWorkflowStatus()}
-                  disabled={loading || !canModify || isNew || !workflowStatusDirty}
-                >
-                  {loading ? <span className="loading loading-spinner" /> : "Confirm status"}
-                </button>
+                {!isNew ? (
+                  <button
+                    type="button"
+                    className="btn btn-primary shrink-0"
+                    onClick={() => handleConfirmWorkflowStatus()}
+                    disabled={loading || !canModify || !workflowStatusDirty}
+                  >
+                    {loading ? <span className="loading loading-spinner" /> : "Confirm status"}
+                  </button>
+                ) : null}
               </div>
               {isNew ? (
                 <p className="text-xs text-(--obs-text-muted)">
-                  New events start as None. Confirm status after creating the event.
+                  Defaults to None. Change before Create to apply status (emails fire on create when
+                  applicable).
                 </p>
               ) : workflowStatusDirty ? (
                 <p className="text-xs text-(--obs-text-muted)">

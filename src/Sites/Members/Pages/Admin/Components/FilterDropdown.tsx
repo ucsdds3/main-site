@@ -71,7 +71,7 @@ export default function FilterDropdown() {
   ).length;
 
   return (
-    <div className={`dropdown dropdown-center ${filterDropdownOpen ? "dropdown-open" : ""}`}>
+    <div className={`dropdown dropdown-end ${filterDropdownOpen ? "dropdown-open" : ""}`}>
       <button
         tabIndex={0}
         onClick={() => {
@@ -79,7 +79,7 @@ export default function FilterDropdown() {
             useAdminStore.setState({ filterDropdownOpen: false });
           } else {
             const { columnStates } = useAdminStore.getState();
-            const filterDraft = Object.entries(columnStates)
+            let filterDraft = Object.entries(columnStates)
               .filter(
                 ([, s]) =>
                   s?.filter && (s.filter === "empty" || s.filter === "non_empty" || !!s.filterValue)
@@ -89,7 +89,23 @@ export default function FilterDropdown() {
                 filter: s.filter!,
                 filterValue: s.filterValue || "",
               }));
-            useAdminStore.setState({ filterDraft, filterDropdownOpen: true });
+            if (filterDraft.length === 0 && filterableColumns.length > 0) {
+              const first = filterableColumns[0];
+              const opts = getFilterOptionsForType(first.type);
+              const defaultFilter = opts.find(o => o.value !== null)?.value ?? null;
+              filterDraft = [
+                {
+                  columnKey: String(first.key),
+                  filter: defaultFilter,
+                  filterValue: "",
+                },
+              ];
+            }
+            useAdminStore.setState({
+              filterDraft,
+              filterDropdownOpen: true,
+              sortDropdownOpen: false,
+            });
           }
         }}
         className="btn btn-outline hover:border-primary font-body fl-text-base/lg font-semibold"
@@ -99,7 +115,7 @@ export default function FilterDropdown() {
       </button>
       <div
         tabIndex={0}
-        className="dropdown-content menu bg-base-200 rounded-box z-1 mt-2 min-w-[420px] p-4 font-body shadow-lg"
+        className="dropdown-content menu bg-base-200 rounded-box z-50 mt-2 min-w-[420px] p-4 font-body shadow-lg"
       >
         <div className="space-y-2">
           {filterDraft.length > 0 ? (

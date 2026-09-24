@@ -66,3 +66,21 @@ export function eventWorkflowStatusFromLabel(label: string): EventWorkflowStatus
   const entry = Object.entries(EVENT_WORKFLOW_STATUS_LABELS).find(([, l]) => l === label);
   return entry ? (entry[0] as EventWorkflowStatus) : null;
 }
+
+export function eventWorkflowStatusConfirmMessage(status: EventWorkflowStatus): string {
+  const label = formatEventWorkflowStatus(status);
+  if (status === "waiting_marketing") {
+    return 'Set status to "Waiting for marketing", email Director of Marketing, and publish this event on the public events page?';
+  }
+  if (EVENT_WORKFLOW_NOTIFY_STATUSES.has(status)) {
+    const role =
+      EVENT_WORKFLOW_NOTIFY_RECIPIENT_LABEL[
+        status as "waiting_room" | "waiting_finance" | "waiting_marketing"
+      ];
+    return `Set status to "${label}" and email ${role}?`;
+  }
+  if (status === "complete") {
+    return 'Set status to "Complete"? (Already public once Waiting for marketing; this marks ops as done.)';
+  }
+  return `Set status to "${label}"?`;
+}
