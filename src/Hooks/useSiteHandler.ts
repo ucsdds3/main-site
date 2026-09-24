@@ -55,10 +55,7 @@ export function useSiteHandler() {
       if (isLocalHostname || hostname.includes("vercel.app")) {
         navigate(pathWithSearch);
       } else {
-        // Public site is www/apex — not main.ds3atucsd.com. Members stays on members.* .
-        const host =
-          subdomain === "main" ? "www.ds3atucsd.com" : `${subdomain}.ds3atucsd.com`;
-        window.location.href = `https://${host}${path}${query ? `?${query}` : ""}`;
+        window.location.href = `https://${subdomain}.ds3atucsd.com${path}${query ? `?${query}` : ""}`;
       }
     } else {
       navigate(pathWithSearch);
