@@ -1,0 +1,3 @@
+# Public ICS feed — calendar clients must fetch without a JWT.
+[functions.events-ics]
+verify_jwt = false

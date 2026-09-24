@@ -1,9 +1,10 @@
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import { useNavigate } from "react-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
 import { useTheme } from "src/Hooks/useTheme";
+import CalendarSubscribeModal from "../Components/CalendarSubscribeModal";
 import { IoIosArrowForward } from "react-icons/io";
 
 /* ─────────────────────────────────────────
@@ -29,6 +30,7 @@ const Landing = () => {
   const { navigate: navigateSite } = useSiteHandler();
   const { isDark } = useTheme();
   const heroRef = useRef<HTMLDivElement>(null);
+  const [calendarModalOpen, setCalendarModalOpen] = useState(false);
 
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], [0, 40]);
@@ -191,6 +193,28 @@ const Landing = () => {
             </button>
 
             <button
+              type="button"
+              onClick={() => setCalendarModalOpen(true)}
+              className="px-8 py-3.5 rounded-full text-sm font-semibold tracking-widest uppercase transition-all duration-300"
+              style={{
+                border: "1px solid rgba(245,129,52,0.55)",
+                background: "rgba(245,129,52,0.08)",
+                color: "#F58134",
+                fontFamily: "ui-monospace, monospace",
+                cursor: "pointer",
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLButtonElement).style.background = "rgba(245,129,52,0.16)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLButtonElement).style.background = "rgba(245,129,52,0.08)";
+              }}
+              title="Subscribe to published DS3 events in your calendar"
+            >
+              Add our event calendar
+            </button>
+
+            <button
               onClick={() => navigate("/partners")}
               className="text-sm tracking-widest uppercase transition-all duration-200"
               style={{
@@ -236,6 +260,11 @@ const Landing = () => {
           </motion.div>
         </motion.div>
       </div>
+
+      <CalendarSubscribeModal
+        open={calendarModalOpen}
+        onClose={() => setCalendarModalOpen(false)}
+      />
     </div>
   );
 };
