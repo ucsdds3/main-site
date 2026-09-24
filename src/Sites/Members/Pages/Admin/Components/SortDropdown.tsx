@@ -5,6 +5,8 @@ import { formatColumnLabel } from "../../../Utils/functions";
 import { useAdminStore } from "../Hooks/useAdminStore";
 import { TfiArrowsVertical } from "react-icons/tfi";
 
+import MenuSelect from "./MenuSelect";
+
 export default function SortDropdown() {
   const rootRef = useRef<HTMLDivElement>(null);
   const sortOrder = useAdminStore(state => state.sortOrder);
@@ -18,6 +20,8 @@ export default function SortDropdown() {
     const onPointerDown = (e: PointerEvent) => {
       const root = rootRef.current;
       if (!root || root.contains(e.target as Node)) return;
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && root.contains(active)) return;
       useAdminStore.setState({ sortDropdownOpen: false });
     };
 
@@ -61,43 +65,43 @@ export default function SortDropdown() {
           role="dialog"
           aria-label="Table sorts"
           className="absolute left-1/2 z-50 mt-2 w-80 -translate-x-1/2 rounded-box border border-(--obs-border) bg-base-200 p-4 font-body shadow-lg"
-          onMouseDown={e => e.stopPropagation()}
         >
           <div className="space-y-2">
             {sortDraft.length > 0 ? (
               sortDraft.map((row, index) => (
                 <div key={index} className="flex gap-2 items-center">
-                  <select
-                    className="select select-bordered flex-1 font-body fl-text-sm/base font-normal"
+                  <MenuSelect
+                    className="min-w-0 flex-1"
+                    aria-label="Sort column"
                     value={row.columnKey}
-                    onChange={e =>
+                    options={sortableColumns.map(col => ({
+                      value: String(col.key),
+                      label: col.label ?? formatColumnLabel(col.key),
+                    }))}
+                    onChange={columnKey =>
                       useAdminStore.setState(state => ({
                         sortDraft: state.sortDraft.map((r, i) =>
-                          i === index ? { ...r, columnKey: e.target.value } : r
+                          i === index ? { ...r, columnKey } : r
                         ),
                       }))
                     }
-                  >
-                    {sortableColumns.map(col => (
-                      <option key={String(col.key)} value={String(col.key)}>
-                        {col.label ?? formatColumnLabel(col.key)}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    className="select select-bordered w-24 font-body fl-text-sm/base font-normal"
+                  />
+                  <MenuSelect
+                    className="w-24 shrink-0"
+                    aria-label="Sort direction"
                     value={row.direction}
-                    onChange={e =>
+                    options={[
+                      { value: "asc", label: "Asc" },
+                      { value: "desc", label: "Desc" },
+                    ]}
+                    onChange={direction =>
                       useAdminStore.setState(state => ({
                         sortDraft: state.sortDraft.map((r, i) =>
-                          i === index ? { ...r, direction: e.target.value as "asc" | "desc" } : r
+                          i === index ? { ...r, direction: direction as "asc" | "desc" } : r
                         ),
                       }))
                     }
-                  >
-                    <option value="asc">Asc</option>
-                    <option value="desc">Desc</option>
-                  </select>
+                  />
                   <button
                     type="button"
                     className="btn btn-ghost btn-square p-0 min-h-0 h-8 w-8"

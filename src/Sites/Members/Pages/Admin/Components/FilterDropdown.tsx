@@ -8,6 +8,8 @@ import { formatColumnLabel } from "../../../Utils/functions";
 import { useAdminStore } from "../Hooks/useAdminStore";
 import { TfiFilter } from "react-icons/tfi";
 
+import MenuSelect from "./MenuSelect";
+
 const FILTER_OPTIONS: Record<string, { value: FilterOperator; label: string }[]> = {
   text: [
     { value: null, label: "None" },
@@ -78,6 +80,9 @@ export default function FilterDropdown() {
     const onPointerDown = (e: PointerEvent) => {
       const root = rootRef.current;
       if (!root || root.contains(e.target as Node)) return;
+      // Native date/time pickers also render outside the React tree.
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && root.contains(active)) return;
       useAdminStore.setState({ filterDropdownOpen: false });
     };
 
@@ -147,8 +152,6 @@ export default function FilterDropdown() {
           role="dialog"
           aria-label="Table filters"
           className="absolute right-0 z-50 mt-2 min-w-[420px] rounded-box border border-(--obs-border) bg-base-200 p-4 font-body shadow-lg"
-          // Keep panel open when native <select> steals focus (DaisyUI focus-within closes otherwise).
-          onMouseDown={e => e.stopPropagation()}
         >
           <div className="space-y-2">
             {filterDraft.length > 0 ? (
@@ -159,11 +162,15 @@ export default function FilterDropdown() {
 
                 return (
                   <div key={index} className="flex gap-2 items-center">
-                    <select
-                      className="select select-bordered min-w-32 font-body fl-text-sm/base font-normal"
+                    <MenuSelect
+                      className="min-w-32 flex-1"
+                      aria-label="Filter column"
                       value={row.columnKey}
-                      onChange={e => {
-                        const key = e.target.value;
+                      options={filterableColumns.map(c => ({
+                        value: String(c.key),
+                        label: c.label ?? formatColumnLabel(c.key),
+                      }))}
+                      onChange={key => {
                         const newCol = getColumnByKey(key);
                         const opts = newCol
                           ? getFilterOptionsForType(newCol.type)
@@ -181,18 +188,17 @@ export default function FilterDropdown() {
                           ),
                         }));
                       }}
-                    >
-                      {filterableColumns.map(c => (
-                        <option key={String(c.key)} value={String(c.key)}>
-                          {c.label ?? formatColumnLabel(c.key)}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      className="select select-bordered min-w-[100px] font-body fl-text-sm/base font-normal"
+                    />
+                    <MenuSelect
+                      className="min-w-[120px] flex-1"
+                      aria-label="Filter operator"
                       value={row.filter ?? ""}
-                      onChange={e => {
-                        const val = (e.target.value || null) as FilterOperator;
+                      options={options.map(opt => ({
+                        value: opt.value ?? "",
+                        label: opt.label,
+                      }))}
+                      onChange={raw => {
+                        const val = (raw || null) as FilterOperator;
                         useAdminStore.setState(state => ({
                           filterDraft: state.filterDraft.map((r, i) =>
                             i === index
@@ -205,13 +211,7 @@ export default function FilterDropdown() {
                           ),
                         }));
                       }}
-                    >
-                      {options.map(opt => (
-                        <option key={opt.value ?? "none"} value={opt.value ?? ""}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
+                    />
                     {showValue && (
                       <Input
                         label="Filter value"
