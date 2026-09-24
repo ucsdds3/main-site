@@ -4,12 +4,6 @@ import { ColumnDefinition, FilterOperator, SortDirection } from "../Utils/types"
 
 export type SortOrderEntry = { columnKey: string; direction: "asc" | "desc" };
 
-export type FilterDraftEntry = {
-  columnKey: string;
-  filter: FilterOperator;
-  filterValue: string;
-};
-
 export interface ColumnSortFilter {
   sort: SortDirection;
   filter: FilterOperator;
@@ -37,10 +31,6 @@ interface AdminStoreState {
   loading: boolean;
   columnStates: Record<string, ColumnSortFilter>;
   sortOrder: SortOrderEntry[];
-  sortDraft: SortOrderEntry[];
-  sortDropdownOpen: boolean;
-  filterDraft: FilterDraftEntry[];
-  filterDropdownOpen: boolean;
   reloadTrigger: number;
   dataTableSearch: string;
   /** Events table: when true, hide rows whose effective end is in the past. */
@@ -65,10 +55,6 @@ export const useAdminStore = create<AdminStoreState & AdminStoreActions>(set => 
   loading: false,
   columnStates: {},
   sortOrder: [],
-  sortDraft: [],
-  sortDropdownOpen: false,
-  filterDraft: [],
-  filterDropdownOpen: false,
   reloadTrigger: 0,
   dataTableSearch: "",
   showUpcomingEventsOnly: false,
@@ -81,8 +67,6 @@ export const useAdminStore = create<AdminStoreState & AdminStoreActions>(set => 
       sortableColumns: getSortableColumns(columns),
       filterableColumns: getFilterableColumns(columns),
       sortOrder: [],
-      sortDraft: [],
-      filterDraft: [],
       columnStates: {},
       dataTableSearch: "",
       showUpcomingEventsOnly: false,
