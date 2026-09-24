@@ -206,9 +206,11 @@ export function useSprintBoard(sprintId: number | null) {
     status: input.status,
     reviewer_id: input.reviewer_id,
     relevant_url: input.relevant_url,
-    review_approved: input.review_approved,
+    review_approved:
+      input.status === "done" && input.reviewer_id == null ? true : input.review_approved,
     review_comment: input.review_comment,
-    reviewed_at: input.review_approved ? new Date().toISOString() : null,
+    reviewed_at:
+      input.reviewer_id != null && input.review_approved ? new Date().toISOString() : null,
     sprint_id: input.sprint_ids[0],
     expected_completion_on: input.expected_completion_on,
   });
@@ -216,21 +218,38 @@ export function useSprintBoard(sprintId: number | null) {
   const createTask = async (input: TaskWriteInput & { created_by: number }) => {
     const sprintIds = input.sprint_ids.length > 0 ? input.sprint_ids : [];
     if (sprintIds.length === 0) throw new Error("Select at least one sprint.");
-    const { data, error } = await supabase
-      .from("SprintTasks")
-      .insert({
-        ...writePayload({ ...input, status: "todo", review_approved: false, review_comment: null }),
-        created_by: input.created_by,
-        actual_hours: null,
-      })
-      .select("id")
-      .single();
 
-    if (error) throw error;
-    await replaceAssignees(data.id, input.assignee_ids);
-    await replaceSprints(data.id, sprintIds);
-    await notifySprintTask("assigned", data.id);
+    const assigneeGroups =
+      input.create_per_assignee && input.assignee_ids.length > 0
+        ? [...new Set(input.assignee_ids)].map(id => [id])
+        : [input.assignee_ids];
+
+    const createdIds: number[] = [];
+    for (const assignee_ids of assigneeGroups) {
+      const { data, error } = await supabase
+        .from("SprintTasks")
+        .insert({
+          ...writePayload({
+            ...input,
+            status: "todo",
+            review_approved: false,
+            review_comment: null,
+          }),
+          created_by: input.created_by,
+          actual_hours: null,
+        })
+        .select("id")
+        .single();
+
+      if (error) throw error;
+      await replaceAssignees(data.id, assignee_ids);
+      await replaceSprints(data.id, sprintIds);
+      await notifySprintTask("assigned", data.id);
+      createdIds.push(data.id);
+    }
+
     await reload();
+    return createdIds;
   };
 
   const updateTask = async (input: TaskWriteInput & { id: number }) => {
@@ -251,14 +270,21 @@ export function useSprintBoard(sprintId: number | null) {
 
   const moveTask = async (task: SprintTaskRow, status: SprintTaskStatus) => {
     if ((status === "pending_review" || status === "done") && task.actual_hours == null) {
-      throw new Error("Log actual hours before moving this task to pending review.");
+      throw new Error("Log actual hours before moving this task to pending review or complete.");
     }
-    if (status === "done" && !task.review_approved) {
+    if (status === "pending_review" && task.reviewer_id == null) {
+      throw new Error("This task has no reviewer. Move it to Complete instead.");
+    }
+    if (status === "done" && task.reviewer_id != null && !task.review_approved) {
       throw new Error(
         `Waiting on ${task.reviewer?.full_name ?? "the reviewer"} to approve this task.`
       );
     }
-    const { error } = await supabase.from("SprintTasks").update({ status }).eq("id", task.id);
+    const patch: { status: SprintTaskStatus; review_approved?: boolean } = { status };
+    if (status === "done" && task.reviewer_id == null) {
+      patch.review_approved = true;
+    }
+    const { error } = await supabase.from("SprintTasks").update(patch).eq("id", task.id);
     if (error) throw error;
     if (status === "pending_review" && task.status !== "pending_review") {
       await notifySprintTask("pending_review", task.id);

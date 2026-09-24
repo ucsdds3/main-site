@@ -1,7 +1,7 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-import { boardTeamTabKeys } from "src/Sites/Main/Pages/Board/boardTeamConfig";
+import { useBoardTeamsCatalog } from "src/Sites/Main/Pages/Board/useBoardTeamsCatalog";
 import Button from "src/Shared/Components/Button";
 import { twMerge } from "src/Utils/cn";
 
@@ -20,7 +20,7 @@ import {
   isOpenSprintTaskStatus,
   SPRINT_BOARD_COLUMNS,
   SPRINT_STATUS_LABELS,
-  SPRINT_TEAM_CATALOG,
+  sprintTeamTabKeys,
   teamAccent,
   teamLabel,
 } from "./constants";
@@ -41,6 +41,7 @@ type SprintBoardProps = {
     created_by: number;
     status?: "planning" | "active";
   }) => Promise<SprintRow>;
+  updateSprint: (id: number, patch: { name: string }) => Promise<SprintRow>;
 };
 
 export default function SprintBoard({
@@ -50,7 +51,9 @@ export default function SprintBoard({
   member,
   onSprintsChanged,
   createSprint,
+  updateSprint,
 }: SprintBoardProps) {
+  const { catalog } = useBoardTeamsCatalog();
   const { assignees } = useBoardAssignees();
   const { tasks, loading, createTask, updateTask, moveTask, closeSprint } = useSprintBoard(
     sprint.id
@@ -59,21 +62,34 @@ export default function SprintBoard({
   const [assigneeFilter, setAssigneeFilter] = useState<number | null>(null);
   const [taskModal, setTaskModal] = useState<"create" | number | null>(null);
   const [closeOpen, setCloseOpen] = useState(false);
+  const [renaming, setRenaming] = useState(false);
+  const [draftName, setDraftName] = useState(sprint.name);
+  const [renamingSaving, setRenamingSaving] = useState(false);
   const [expandedColumns, setExpandedColumns] = useState<
     Partial<Record<SprintTaskStatus, boolean>>
   >({});
   const draggingId = useRef<number | null>(null);
+
+  useEffect(() => {
+    setDraftName(sprint.name);
+    setRenaming(false);
+  }, [sprint.id, sprint.name]);
 
   const isExec = member.admin_level === "Executive";
   const canEdit = sprint.status !== "closed";
   const editingTask = typeof taskModal === "number" ? tasks.find(t => t.id === taskModal) : null;
 
   const teamKeys = useMemo(
-    () => boardTeamTabKeys(
-      tasks.map(t => t.team_key),
-      SPRINT_TEAM_CATALOG
-    ),
-    [tasks]
+    () =>
+      sprintTeamTabKeys(
+        catalog,
+        tasks.map(t => t.team_key)
+      ),
+    [catalog, tasks]
+  );
+  const teamOptions = useMemo(
+    () => teamKeys.map(key => ({ key, label: teamLabel(key, catalog) })),
+    [catalog, teamKeys]
   );
 
   const visibleTasks = useMemo(() => {
@@ -104,8 +120,12 @@ export default function SprintBoard({
     if (id == null || !canEdit) return;
     const task = tasks.find(t => t.id === id);
     if (!task || task.status === status) return;
+    if (status === "pending_review" && task.reviewer_id == null) {
+      toast.error("This task has no reviewer. Move it to Complete instead.");
+      return;
+    }
     if ((status === "pending_review" || status === "done") && task.actual_hours == null) {
-      toast.error("Log actual hours before pending review.");
+      toast.error("Log actual hours before pending review or complete.");
       setTaskModal(task.id);
       return;
     }
@@ -142,27 +162,98 @@ export default function SprintBoard({
     await onSprintsChanged();
   };
 
+  const cancelRename = () => {
+    setDraftName(sprint.name);
+    setRenaming(false);
+  };
+
+  const handleRename = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const name = draftName.trim();
+    if (!name) {
+      toast.error("Name is required.");
+      return;
+    }
+    if (name === sprint.name) {
+      setRenaming(false);
+      return;
+    }
+    setRenamingSaving(true);
+    try {
+      await updateSprint(sprint.id, { name });
+      toast.success("Sprint renamed.");
+      setRenaming(false);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not rename sprint");
+    } finally {
+      setRenamingSaving(false);
+    }
+  };
+
   const pickerSprints = useMemo(() => {
     const rank = { active: 0, planning: 1, closed: 2 } as const;
     return [...sprints].sort((a, b) => rank[a.status] - rank[b.status] || b.id - a.id);
   }, [sprints]);
 
   return (
-    <div className="flex w-full flex-col gap-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
+    <div className="flex w-full flex-col gap-8">
+      <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-5">
+        <div className="min-w-0 max-w-3xl">
           <div className="obs-eyebrow-row">
             <div className="obs-accent-bar-cyan" />
             <span className="text-eyebrow text-eyebrow-cyan">
               {SPRINT_STATUS_LABELS[sprint.status]}
             </span>
           </div>
-          <h1 className="mt-3 mb-0 text-fluid-page-hero">{sprint.name}</h1>
-          <p className="mt-2 mb-0 font-mono text-[0.72rem] uppercase tracking-widest text-(--obs-text-faint)">
-            {formatSprintDates(sprint.starts_on, sprint.ends_on)}
-          </p>
+          {renaming ? (
+            <form
+              className="mt-1 flex max-w-xl flex-wrap items-center gap-3"
+              onSubmit={handleRename}
+            >
+              <label className="obs-input-row min-h-11 min-w-0 flex-1">
+                <input
+                  value={draftName}
+                  onChange={e => setDraftName(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === "Escape") {
+                      e.preventDefault();
+                      cancelRename();
+                    }
+                  }}
+                  aria-label="Sprint name"
+                  autoFocus
+                />
+              </label>
+              <Button type="submit" disabled={renamingSaving} className="my-0">
+                {renamingSaving ? "Saving…" : "Save"}
+              </Button>
+              <button
+                type="button"
+                onClick={cancelRename}
+                className="cursor-pointer rounded-full border border-(--obs-border) bg-transparent px-5 py-3 font-mono text-[0.7rem] uppercase tracking-widest text-(--obs-text-muted)"
+              >
+                Cancel
+              </button>
+            </form>
+          ) : (
+            <h1 className="mb-0 text-fluid-page-hero">{sprint.name}</h1>
+          )}
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p className="m-0 font-mono text-[0.72rem] uppercase tracking-widest text-(--obs-text-faint)">
+              {formatSprintDates(sprint.starts_on, sprint.ends_on)}
+            </p>
+            {isExec && !renaming ? (
+              <button
+                type="button"
+                onClick={() => setRenaming(true)}
+                className="cursor-pointer rounded-full border border-(--obs-border) bg-transparent px-3 py-1 font-mono text-[0.65rem] uppercase tracking-widest text-[#19B5CA]"
+              >
+                Rename
+              </button>
+            ) : null}
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-center gap-3 pt-1">
           {canEdit ? (
             <Button className="my-0" onClick={() => setTaskModal("create")}>
               Add task
@@ -207,7 +298,7 @@ export default function SprintBoard({
                     : { borderColor: "var(--obs-border)" }
                 }
               >
-                {key === "ALL" ? "All teams" : teamLabel(key)}
+                {key === "ALL" ? "All teams" : teamLabel(key, catalog)}
                 {hours != null ? ` · ${hours}h` : ""}
               </button>
             );
@@ -324,9 +415,7 @@ export default function SprintBoard({
         </div>
       )}
 
-      {loading ? null : (
-        <SprintIdleMembers members={assignees} tasks={tasks} teamTab={teamTab} />
-      )}
+      {loading ? null : <SprintIdleMembers members={assignees} tasks={tasks} teamTab={teamTab} />}
 
       <SprintStats tasks={tasks} sprint={sprint} teamTab={teamTab} />
 
@@ -334,7 +423,8 @@ export default function SprintBoard({
         <TaskModal
           mode={taskModal === "create" ? "create" : "edit"}
           task={editingTask}
-          defaultTeamKey={defaultTeamKey(member.teams)}
+          defaultTeamKey={teamTab !== "ALL" ? teamTab : defaultTeamKey(member.teams)}
+          teamOptions={teamOptions}
           defaultAssigneeId={member.id}
           currentMemberId={member.id}
           currentSprintId={sprint.id}
@@ -343,11 +433,11 @@ export default function SprintBoard({
           onClose={() => setTaskModal(null)}
           onSave={async input => {
             if (taskModal === "create") {
-              await createTask({
+              const created = await createTask({
                 ...input,
                 created_by: member.id,
               });
-              toast.success("Task added.");
+              toast.success(created.length > 1 ? `Added ${created.length} tasks.` : "Task added.");
             } else if (editingTask) {
               await updateTask({ ...input, id: editingTask.id });
               toast.success("Task updated.");

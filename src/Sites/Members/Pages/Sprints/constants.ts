@@ -3,6 +3,7 @@ import {
   labelToTeamKey,
   teamKeyToLabel,
 } from "src/Sites/Main/Pages/Board/boardTeamConfig";
+import type { BoardTeamCatalogEntry } from "src/Sites/Main/Pages/Board/boardTeamTypes";
 
 import type { SprintStatus, SprintTaskStatus } from "./types";
 
@@ -75,8 +76,29 @@ export const SPRINT_STATUS_LABELS: Record<SprintStatus, string> = {
   closed: "Closed",
 };
 
-export function teamLabel(teamKey: string): string {
-  return teamKeyToLabel(teamKey, SPRINT_TEAM_CATALOG);
+export function teamLabel(
+  teamKey: string,
+  catalog: BoardTeamCatalogEntry[] = SPRINT_TEAM_CATALOG
+): string {
+  return teamKeyToLabel(teamKey, catalog);
+}
+
+/** Filter chips: every catalog team, plus any stray keys still on tasks. */
+export function sprintTeamTabKeys(
+  catalog: BoardTeamCatalogEntry[],
+  extraKeys: Iterable<string> = []
+): string[] {
+  const ordered = [...catalog]
+    .sort((a, b) => a.sort_order - b.sort_order || a.label.localeCompare(b.label))
+    .map(t => t.team_key);
+  const seen = new Set(ordered);
+  const extras: string[] = [];
+  for (const key of extraKeys) {
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    extras.push(key);
+  }
+  return [...ordered, ...extras];
 }
 
 export function formatSprintDates(startsOn: string, endsOn: string): string {
@@ -109,4 +131,22 @@ export function isTaskDueOverdue(task: {
 export function defaultTeamKey(teams: Record<string, string> | null | undefined): string {
   const first = Object.keys(teams ?? {})[0];
   return first ? labelToTeamKey(first) : (BOARD_TEAM_KEYS[0] ?? "EXECUTIVE");
+}
+
+export function memberTeamKeys(teams: Record<string, string> | null | undefined): string[] {
+  return Object.keys(teams ?? {}).map(labelToTeamKey);
+}
+
+export function memberOnTeam(
+  member: { teams: Record<string, string> | null | undefined },
+  teamKey: string
+): boolean {
+  return memberTeamKeys(member.teams).includes(teamKey);
+}
+
+export function taskNeedsReviewer(task: {
+  reviewer_id: number | null;
+  reviewer?: { id: number } | null;
+}): boolean {
+  return task.reviewer_id != null || task.reviewer != null;
 }

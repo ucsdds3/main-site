@@ -68,7 +68,8 @@ export type TaskWriteInput = {
   team_key: string;
   status: SprintTaskStatus;
   assignee_ids: number[];
-  reviewer_id: number;
+  reviewer_id: number | null;
+  create_per_assignee?: boolean;
   relevant_url: string | null;
   review_approved: boolean;
   review_comment: string | null;

@@ -66,6 +66,22 @@ export function useSprints() {
     [activeSprint, reload]
   );
 
+  const updateSprint = useCallback(async (id: number, patch: { name: string }) => {
+    const name = patch.name.trim();
+    if (!name) throw new Error("Name is required.");
+    const { data, error } = await supabase
+      .from("Sprints")
+      .update({ name })
+      .eq("id", id)
+      .select("*")
+      .single();
+
+    if (error) throw error;
+    const row = data as SprintRow;
+    setSprints(prev => prev.map(s => (s.id === id ? row : s)));
+    return row;
+  }, []);
+
   return {
     sprints,
     activeSprint,
@@ -75,5 +91,6 @@ export function useSprints() {
     loading,
     reload,
     createSprint,
+    updateSprint,
   };
 }
