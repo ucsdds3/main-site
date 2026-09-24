@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { AuthState } from "../Utils/types";
 import { useAuthStore } from "../Sites/Members/Hooks/useAuthStore";
-import { migrateLegacyAuthStorage, supabase } from "../Utils/supabase";
+import { supabase } from "../Utils/supabase";
 import { User } from "@supabase/supabase-js";
 
 async function hydrateUser(user: User, urlAuthState: AuthState | null) {
@@ -37,9 +37,6 @@ export function useAuth() {
         useAuthStore.setState({ authState: urlAuthState });
       }
 
-      await migrateLegacyAuthStorage();
-      if (cancelled) return;
-
       const tokenHash = new URLSearchParams(window.location.search).get("tokenHash");
       if (tokenHash && tokenHash !== "authenticated") {
         const { data } = await supabase.auth.verifyOtp({
@@ -66,7 +63,7 @@ export function useAuth() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (cancelled) return;
-      if (event === "SIGNED_OUT" || !session?.user) {
+      if (event === "SIGNED_OUT") {
         useAuthStore.setState({
           user: null,
           authState: "signin",
@@ -75,10 +72,11 @@ export function useAuth() {
         return;
       }
       if (
-        event === "SIGNED_IN" ||
-        event === "TOKEN_REFRESHED" ||
-        event === "USER_UPDATED" ||
-        event === "INITIAL_SESSION"
+        session?.user &&
+        (event === "SIGNED_IN" ||
+          event === "TOKEN_REFRESHED" ||
+          event === "USER_UPDATED" ||
+          event === "INITIAL_SESSION")
       ) {
         await hydrateUser(session.user, null);
       }
