@@ -29,9 +29,7 @@ export default function SprintIdleMembers({ members, tasks, teamTab }: SprintIdl
     .sort((a, b) => a.full_name.localeCompare(b.full_name));
 
   return (
-    <details
-      className="rounded-2xl border border-[rgba(248,113,113,0.45)] bg-[rgba(127,29,29,0.18)] px-5 py-4"
-    >
+    <details className="rounded-2xl border border-[rgba(248,113,113,0.45)] bg-[rgba(127,29,29,0.18)] px-5 py-4">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-mono text-[0.72rem] uppercase tracking-widest text-[#f87171] [&::-webkit-details-marker]:hidden">
         <span>No active work this sprint</span>
         <span className="rounded-full border border-[rgba(248,113,113,0.4)] bg-[rgba(248,113,113,0.12)] px-2.5 py-0.5 tabular-nums">
@@ -60,7 +58,9 @@ export default function SprintIdleMembers({ members, tasks, teamTab }: SprintIdl
                   >
                     <p className="m-0 text-sm text-(--obs-text-primary)">{member.full_name}</p>
                     <p className="mb-0 mt-1 font-mono text-[0.62rem] uppercase tracking-widest text-[#f87171]">
-                      {teams.length === 0 ? "No team listed" : teams.map(teamLabel).join(" · ")}
+                      {teams.length === 0
+                        ? "No team listed"
+                        : teams.map(key => teamLabel(key)).join(" · ")}
                     </p>
                   </li>
                 );

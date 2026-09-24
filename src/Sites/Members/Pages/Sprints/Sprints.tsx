@@ -16,7 +16,8 @@ export default function Sprints() {
   const { sprintId } = useParams();
   const { navigate } = useSiteHandler();
   const { member, loading: memberLoading } = useCurrentMember();
-  const { activeSprint, planningSprint, sprints, loading, reload, createSprint } = useSprints();
+  const { activeSprint, planningSprint, sprints, loading, reload, createSprint, updateSprint } =
+    useSprints();
   const [createOpen, setCreateOpen] = useState(false);
 
   const selected = useMemo(() => {
@@ -60,6 +61,7 @@ export default function Sprints() {
                 sprints={sprints}
                 member={member}
                 createSprint={createSprint}
+                updateSprint={updateSprint}
                 onSprintsChanged={reload}
               />
             ) : (

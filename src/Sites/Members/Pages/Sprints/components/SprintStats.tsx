@@ -121,7 +121,7 @@ export default function SprintStats({ tasks, sprint, teamTab }: SprintStatsProps
       }
       const keys = boardTeamTabKeys(hours.keys(), SPRINT_TEAM_CATALOG);
       return {
-        labels: keys.map(teamLabel),
+        labels: keys.map(key => teamLabel(key)),
         values: keys.map(k => Number((hours.get(k) ?? 0).toFixed(1))),
         colors: keys.map(teamAccent),
       };

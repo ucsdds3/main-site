@@ -21,8 +21,8 @@ export default function SprintHowTo({ className }: HowToProps) {
           <p className="m-0">
             A club-wide kanban for the current sprint. In DS3 it exists so every committee can see
             what the rest of the board owns — not just their own Discord channel. That cross-board
-            visibility is how we keep work accountable: a task has owners, a director as reviewer,
-            and a public status.
+            visibility is how we keep work accountable: a task has owners, an optional reviewer
+            (usually a director), and a public status.
           </p>
         </section>
         <section>
@@ -31,7 +31,9 @@ export default function SprintHowTo({ className }: HowToProps) {
             Each card should be one tangible unit of work: shippable or reviewable on its own. Not a
             one-line chore, and not a whole committee’s quarter.{" "}
             <strong className="text-(--obs-text-primary)">No task should be above 5 hours.</strong>{" "}
-            If it is, split it. Log expected hours up front; log actual hours before pending review.
+            If it is, split it. Log expected hours up front; log actual hours before pending review
+            or complete. You can assign specific people to one card, or everyone on a team — that
+            creates a separate card for each person.
           </p>
         </section>
         <section>
@@ -48,12 +50,14 @@ export default function SprintHowTo({ className }: HowToProps) {
               on it.
             </li>
             <li>
-              <span className="text-(--obs-text-primary)">Pending review</span> — assignees are
-              done. Actual hours required. The reviewer then approves (optional comment).
+              <span className="text-(--obs-text-primary)">Pending review</span> — assignees are done
+              and a reviewer is assigned. Actual hours required. The reviewer then approves
+              (optional comment). Skip this column when there is no reviewer.
             </li>
             <li>
-              <span className="text-(--obs-text-primary)">Complete</span> — only after that
-              approval.
+              <span className="text-(--obs-text-primary)">Complete</span> — after reviewer approval,
+              or straight from In progress if the task has no reviewer (actual hours still
+              required).
             </li>
           </ul>
           <p className="mb-0 mt-2">

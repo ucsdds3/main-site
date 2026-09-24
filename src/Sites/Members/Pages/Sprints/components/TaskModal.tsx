@@ -10,6 +10,7 @@ import {
   BOARD_TEAM_OPTIONS,
   MAX_EXPECTED_HOURS,
   MIN_TASK_DESCRIPTION_LENGTH,
+  memberOnTeam,
   SPRINT_TASK_STATUS_LABELS,
   SPRINT_TASK_STATUS_VALUES,
 } from "../constants";
@@ -33,6 +34,7 @@ type TaskModalProps = {
   currentSprintId: number;
   sprints: SprintRow[];
   assignees: BoardAssigneeOption[];
+  teamOptions?: { key: string; label: string }[];
   onClose: () => void;
   onSave: (input: TaskWriteInput) => Promise<void>;
 };
@@ -66,6 +68,7 @@ export default function TaskModal({
   currentSprintId,
   sprints,
   assignees,
+  teamOptions = BOARD_TEAM_OPTIONS,
   onClose,
   onSave,
 }: TaskModalProps) {
@@ -89,6 +92,7 @@ export default function TaskModal({
   const [relevantUrl, setRelevantUrl] = useState(task?.relevant_url ?? "");
   const [approve, setApprove] = useState(Boolean(task?.review_approved));
   const [reviewComment, setReviewComment] = useState(task?.review_comment ?? "");
+  const [assignMode, setAssignMode] = useState<"people" | "team">("people");
   const [dueOn, setDueOn] = useState(() => {
     if (task?.expected_completion_on) return task.expected_completion_on.slice(0, 10);
     const current = sprints.find(s => s.id === currentSprintId);
@@ -98,6 +102,11 @@ export default function TaskModal({
 
   const isReviewer = reviewerId != null && reviewerId === currentMemberId;
   const alreadyApproved = Boolean(task?.review_approved) && approve;
+  const teamMembers = assignees.filter(a => memberOnTeam(a, teamKey));
+  const statusChoices =
+    reviewerId == null
+      ? SPRINT_TASK_STATUS_VALUES.filter(v => v !== "pending_review")
+      : SPRINT_TASK_STATUS_VALUES;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,12 +119,12 @@ export default function TaskModal({
       toast.error(`Brief description must be at least ${MIN_TASK_DESCRIPTION_LENGTH} characters.`);
       return;
     }
-    if (assigneeIds.length === 0) {
+    if (assignMode === "people" && assigneeIds.length === 0) {
       toast.error("Assign at least one task assignee.");
       return;
     }
-    if (reviewerId == null) {
-      toast.error("A reviewer is required.");
+    if (mode === "create" && assignMode === "team" && teamMembers.length === 0) {
+      toast.error("That team has no board members to assign.");
       return;
     }
     if (sprintIds.length === 0) {
@@ -138,8 +147,18 @@ export default function TaskModal({
     }
 
     const nextStatus: SprintTaskStatus = mode === "create" ? "todo" : status;
-    const reviewApproved = isReviewer ? approve : Boolean(task?.review_approved);
-    const statusToSave: SprintTaskStatus = isReviewer && approve ? "done" : nextStatus;
+    const reviewApproved =
+      reviewerId == null
+        ? nextStatus === "done"
+        : isReviewer
+          ? approve
+          : Boolean(task?.review_approved);
+    const statusToSave: SprintTaskStatus =
+      isReviewer && approve && reviewerId != null ? "done" : nextStatus;
+    if (statusToSave === "pending_review" && reviewerId == null) {
+      toast.error("Add a reviewer, or move this task to Complete.");
+      return;
+    }
     const needsActual = statusToSave === "pending_review" || statusToSave === "done";
     const parsedActual = parseHours(actualHours, needsActual);
     if (needsActual && (parsedActual === "invalid" || parsedActual == null)) {
@@ -155,7 +174,7 @@ export default function TaskModal({
       return;
     }
 
-    if (statusToSave === "done" && !reviewApproved) {
+    if (statusToSave === "done" && reviewerId != null && !reviewApproved) {
       toast.error(
         isReviewer
           ? "Check the approval box before moving this task to Complete."
@@ -173,13 +192,15 @@ export default function TaskModal({
         actual_hours: parsedActual,
         team_key: teamKey,
         status: statusToSave,
-        assignee_ids: assigneeIds,
+        assignee_ids:
+          mode === "create" && assignMode === "team" ? teamMembers.map(m => m.id) : assigneeIds,
         reviewer_id: reviewerId,
         relevant_url: url,
         review_approved: reviewApproved,
         review_comment: isReviewer ? reviewComment.trim() || null : (task?.review_comment ?? null),
         sprint_ids: sprintIds,
         expected_completion_on: dueOn,
+        create_per_assignee: mode === "create" && assignMode === "team",
       });
       onClose();
     } catch (err) {
@@ -258,12 +279,12 @@ export default function TaskModal({
               className="w-full min-w-0"
               value={actualHours}
               setValue={setActualHours}
-              placeholder={mode === "create" ? "Log when work is done" : "Required for review"}
+              placeholder={mode === "create" ? "Log when work is done" : "Required to complete"}
             />
           </div>
           <p className="m-0 -mt-2 text-xs text-(--obs-text-faint)">
             Keep expected hours at {MAX_EXPECTED_HOURS} or less. Actual hours are required before
-            pending review.
+            pending review or complete.
           </p>
           <Input
             label="Expected date of completion"
@@ -278,10 +299,10 @@ export default function TaskModal({
             required
             showPlaceholderOption={false}
             className="w-full min-w-0"
-            options={BOARD_TEAM_OPTIONS.map(o => o.label)}
-            value={BOARD_TEAM_OPTIONS.find(o => o.key === teamKey)?.label ?? ""}
+            options={teamOptions.map(o => o.label)}
+            value={teamOptions.find(o => o.key === teamKey)?.label ?? ""}
             setValue={label => {
-              const next = BOARD_TEAM_OPTIONS.find(o => o.label === label);
+              const next = teamOptions.find(o => o.label === label);
               if (next) setTeamKey(next.key);
             }}
           />
@@ -291,28 +312,71 @@ export default function TaskModal({
               label="Status"
               showPlaceholderOption={false}
               className="w-full min-w-0"
-              options={SPRINT_TASK_STATUS_VALUES.map(v => SPRINT_TASK_STATUS_LABELS[v])}
+              options={statusChoices.map(v => SPRINT_TASK_STATUS_LABELS[v])}
               value={SPRINT_TASK_STATUS_LABELS[status]}
               setValue={label => {
-                const next = SPRINT_TASK_STATUS_VALUES.find(
-                  v => SPRINT_TASK_STATUS_LABELS[v] === label
-                );
+                const next = statusChoices.find(v => SPRINT_TASK_STATUS_LABELS[v] === label);
                 if (next) setStatus(next);
               }}
             />
           ) : null}
-          <AssigneeMultiSelect
-            options={assignees}
-            selectedIds={assigneeIds}
-            onChange={setAssigneeIds}
-          />
+          {mode === "create" ? (
+            <fieldset className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
+              <legend className="mb-1 px-0 text-sm font-medium text-(--obs-text-muted)">
+                Assign to
+              </legend>
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-(--obs-text-primary)">
+                <input
+                  type="radio"
+                  name="assign-mode"
+                  className="accent-[#19B5CA]"
+                  checked={assignMode === "people"}
+                  onChange={() => setAssignMode("people")}
+                />
+                Specific people
+              </label>
+              <label className="flex cursor-pointer items-start gap-2 text-sm text-(--obs-text-primary)">
+                <input
+                  type="radio"
+                  name="assign-mode"
+                  className="mt-0.5 accent-[#19B5CA]"
+                  checked={assignMode === "team"}
+                  onChange={() => setAssignMode("team")}
+                />
+                <span>
+                  Everyone on this team
+                  <span className="mt-0.5 block text-xs text-(--obs-text-faint)">
+                    Creates a separate card for each board member on{" "}
+                    {teamOptions.find(o => o.key === teamKey)?.label ?? "this team"} (
+                    {teamMembers.length}).
+                  </span>
+                </span>
+              </label>
+            </fieldset>
+          ) : null}
+          {mode === "edit" || assignMode === "people" ? (
+            <AssigneeMultiSelect
+              options={assignees}
+              selectedIds={assigneeIds}
+              onChange={setAssigneeIds}
+            />
+          ) : (
+            <p className="m-0 rounded-xl border border-(--obs-border) bg-(--obs-surface) px-3 py-2 text-sm text-(--obs-text-muted)">
+              {teamMembers.length === 0
+                ? "No board members currently listed on this team."
+                : teamMembers.map(m => m.full_name).join(", ")}
+            </p>
+          )}
           <PersonTypeahead
             label="Reviewer"
-            hint="(for board, your reviewer should be your director)"
-            required
+            hint="(optional — for board, your director)"
             options={assignees}
             valueId={reviewerId}
-            onChange={setReviewerId}
+            onChange={id => {
+              setReviewerId(id);
+              if (id == null && status === "pending_review") setStatus("in_progress");
+            }}
+            noneLabel="No reviewer"
             placeholder="Search for a reviewer…"
           />
 
@@ -343,7 +407,13 @@ export default function TaskModal({
             </div>
           ) : null}
 
-          {mode === "edit" && !isReviewer ? (
+          {mode === "edit" && reviewerId == null ? (
+            <p className="m-0 text-sm text-(--obs-text-muted)">
+              No reviewer — this task can move from In progress straight to Complete.
+            </p>
+          ) : null}
+
+          {mode === "edit" && reviewerId != null && !isReviewer ? (
             <p className="m-0 text-sm text-(--obs-text-muted)">
               {alreadyApproved
                 ? `Approved by ${task?.reviewer?.full_name ?? "the reviewer"}${
