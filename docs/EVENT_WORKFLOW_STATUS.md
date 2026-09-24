@@ -1,6 +1,6 @@
 # Event workflow status + internal notes
 
-Executive-only ops fields on the members admin Events dashboard, plus public visibility gated on **Complete**.
+Executive-only ops fields on the members admin Events dashboard, plus public visibility gated on **Waiting for marketing** (and **Complete**).
 
 **System design (read this for PRs / onboarding):** [`EVENT_WORKFLOW_ARCHITECTURE.md`](./EVENT_WORKFLOW_ARCHITECTURE.md)
 
@@ -10,7 +10,7 @@ Executive-only ops fields on the members admin Events dashboard, plus public vis
 |-------|--------|
 | DB | `Events.workflow_status`, `Events.internal_notes` |
 | Admin UI | Status + Internal notes columns (Executive only); Confirm status button |
-| Public `/events` | Only rows with `workflow_status = 'complete'` |
+| Public `/events` | Rows with `workflow_status` in `waiting_marketing` \| `complete` |
 | Edge Function | `confirm-event-status` updates status and emails VPI/VPF/Marketing via Resend |
 
 ### Status values
@@ -18,8 +18,8 @@ Executive-only ops fields on the members admin Events dashboard, plus public vis
 - `none` — draft / not ready (default for new events)
 - `waiting_room` — emails VPI (`cclougherty@ucsd.edu`)
 - `waiting_finance` — emails VPF (`v1zhu@ucsd.edu`)
-- `waiting_marketing` — emails Marketing Director (`ankamath@ucsd.edu`)
-- `complete` — visible on public events page (no email)
+- `waiting_marketing` — emails Marketing Director (`ankamath@ucsd.edu`); **publishes** to public `/events`
+- `complete` — ops finished (stays public; no email)
 
 Internal notes save with the normal **Save** button. Status only changes via **Confirm status**.
 
@@ -96,7 +96,7 @@ Already wired in this repo:
 
 - Admin table/edit: Status + Internal notes (`execOnly`)
 - Confirm → `supabase.functions.invoke("confirm-event-status", …)`
-- Public list filter: `.eq("workflow_status", "complete")`
+- Public list filter: `.in("workflow_status", ["waiting_marketing", "complete"])`
 
 Deploy/publish the main-site as usual after SQL + function are live.
 
@@ -107,8 +107,8 @@ Deploy/publish the main-site as usual after SQL + function are live.
 1. As Executive: open `/admin` → Events → see Status / Internal notes columns
 2. As Board: those columns hidden
 3. Edit event → change status to Waiting for finance → Confirm → VPF receives email; status updates
-4. Set Complete → Confirm → event appears on public `/events`
-5. Set None → event disappears from public `/events`
+4. Set Waiting for marketing → Confirm → Marketing emailed; event appears on public `/events`
+5. Set Complete → Confirm → stays public (ops finished); Set None → disappears from public `/events`
 6. Edit notes → Save (no email)
 
 ---

@@ -1,6 +1,6 @@
 # Subscribe to DS3 events (personal calendar)
 
-Public ICS feed of **published** DS3 events (`workflow_status = complete`, not deleted, not DataHacks).
+Public ICS feed of **published** DS3 events (`workflow_status` in `waiting_marketing` | `complete`, not deleted, not DataHacks).
 Includes upcoming events plus the last ~90 days so the feed is rarely empty.
 
 ## Why not Google’s `cid=` deep link?

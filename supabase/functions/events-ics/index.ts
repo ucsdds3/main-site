@@ -135,7 +135,7 @@ Deno.serve(async req => {
     .from("Events")
     .select("id,name,description,location,start,end,tags,updated_at")
     .eq("deleted", false)
-    .eq("workflow_status", "complete")
+    .in("workflow_status", ["waiting_marketing", "complete"])
     .order("start", { ascending: true });
 
   if (error) {

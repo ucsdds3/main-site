@@ -473,8 +473,8 @@ export default function EditCard<T extends Record<string, unknown>>({
                 </p>
               ) : (
                 <p className="text-xs text-(--obs-text-muted)">
-                  Waiting statuses email VPI / VPF / Marketing. Complete publishes to the public
-                  events page.
+                  Waiting for room/finance email officers. Waiting for marketing emails Marketing and
+                  publishes to the public events page. Complete marks ops finished.
                 </p>
               )}
             </div>

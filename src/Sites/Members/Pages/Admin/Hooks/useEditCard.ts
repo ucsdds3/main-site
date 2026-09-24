@@ -356,7 +356,10 @@ export default function useEditCard<T extends Record<string, unknown>>({
 
     const label = formatEventWorkflowStatus(draftWorkflowStatus);
     let confirmMsg = `Set status to "${label}"?`;
-    if (EVENT_WORKFLOW_NOTIFY_STATUSES.has(draftWorkflowStatus)) {
+    if (draftWorkflowStatus === "waiting_marketing") {
+      confirmMsg =
+        'Set status to "Waiting for marketing", email Director of Marketing, and publish this event on the public events page?';
+    } else if (EVENT_WORKFLOW_NOTIFY_STATUSES.has(draftWorkflowStatus)) {
       const role =
         EVENT_WORKFLOW_NOTIFY_RECIPIENT_LABEL[
           draftWorkflowStatus as "waiting_room" | "waiting_finance" | "waiting_marketing"
@@ -364,7 +367,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
       confirmMsg = `Set status to "${label}" and email ${role}?`;
     } else if (draftWorkflowStatus === "complete") {
       confirmMsg =
-        'Set status to "Complete"? This event will become visible on the public events page.';
+        'Set status to "Complete"? (Already public once Waiting for marketing; this marks ops as done.)';
     }
 
     if (!confirm(confirmMsg)) return;
