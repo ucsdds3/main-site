@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 import { labelToTeamKey } from "src/Sites/Main/Pages/Board/boardTeamConfig";
 
-import { isOpenSprintTaskStatus, teamLabel } from "../constants";
+import { isAssignedSprintTaskStatus, teamLabel } from "../constants";
 import { nudgeIdleMembers } from "../hooks/useSprintBoard";
 import type { BoardAssigneeOption, SprintTaskRow } from "../types";
 
@@ -57,7 +57,7 @@ export default function SprintIdleMembers({
 
   const busyIds = new Set<number>();
   for (const task of tasks) {
-    if (!isOpenSprintTaskStatus(task.status)) continue;
+    if (!isAssignedSprintTaskStatus(task.status)) continue;
     for (const assignee of task.assignees) busyIds.add(assignee.id);
   }
 
@@ -100,17 +100,15 @@ export default function SprintIdleMembers({
       <div className="mt-4">
         {idle.length === 0 ? (
           <p className="m-0 text-sm text-(--obs-text-muted)">
-            Every board member with an assigned team has at least one to-do, in-progress, or
-            pending-review task
-            {teamTab === "ALL" ? "" : ` on ${teamLabel(teamTab)}`}.
+            Every board member with an assigned team has at least one task this sprint
+            {teamTab === "ALL" ? "" : ` on ${teamLabel(teamTab)}`}. Dropped cards do not count.
           </p>
         ) : (
           <>
             <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
               <p className="m-0 flex-1 text-sm leading-6 text-[#fca5a5]">
-                Board members with a committee who are not assigned to any to-do, in-progress, or
-                pending-review card this sprint. People without a team are omitted. Completed or
-                dropped work does not count.
+                Board members with a committee who are not assigned to any card this sprint.
+                Completed work counts; dropped cards and people without a team do not.
               </p>
               {canNudge ? (
                 <NudgeButton

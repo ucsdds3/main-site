@@ -127,14 +127,14 @@ async function idleBoardMembers(
   const busy = new Set<number>();
   if (taskIds.length > 0) {
     const { data: taskRows } = await admin.from("SprintTasks").select("id, status").in("id", taskIds);
-    const openIds = (taskRows ?? [])
-      .filter(row => row.status === "todo" || row.status === "in_progress" || row.status === "pending_review")
+    const assignedIds = (taskRows ?? [])
+      .filter(row => row.status !== "cancelled")
       .map(row => row.id as number);
-    if (openIds.length > 0) {
+    if (assignedIds.length > 0) {
       const { data: joins } = await admin
         .from("SprintTaskAssignees")
         .select("member_id")
-        .in("task_id", openIds);
+        .in("task_id", assignedIds);
       for (const join of joins ?? []) busy.add(join.member_id as number);
     }
   }

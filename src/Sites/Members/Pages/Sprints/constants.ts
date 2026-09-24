@@ -70,6 +70,11 @@ export function isOpenSprintTaskStatus(status: SprintTaskStatus): boolean {
   return status === "todo" || status === "in_progress" || status === "pending_review";
 }
 
+/** Any real assignment this sprint — complete counts, dropped does not. */
+export function isAssignedSprintTaskStatus(status: SprintTaskStatus): boolean {
+  return status !== "cancelled";
+}
+
 export const SPRINT_STATUS_LABELS: Record<SprintStatus, string> = {
   planning: "Planning",
   active: "Active",
