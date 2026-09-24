@@ -1,8 +1,13 @@
 import { useMemo } from "react";
-import { TfiReload, TfiDownload, TfiPlus } from "react-icons/tfi";
+import toast from "react-hot-toast";
+import { TfiReload, TfiDownload, TfiPlus, TfiEmail } from "react-icons/tfi";
 
 import { useAdminStore } from "../Hooks/useAdminStore";
-import { downloadAdminTableCsv, filterAdminTableRows } from "../Utils/dataTableHelpers";
+import {
+  downloadAdminTableCsv,
+  filterAdminTableRows,
+} from "../Utils/dataTableHelpers";
+import { downloadNewsletterEmailsCsv } from "../Utils/newsletterExport";
 import { Input } from "src/Sites/Members/Components/Input";
 import Select from "src/Sites/Members/Components/Select";
 
@@ -31,6 +36,16 @@ export default function DataTableControls() {
 
   const handleDownload = () => {
     downloadAdminTableCsv(tableName, columns, filteredData);
+  };
+
+  const handleNewsletterExport = () => {
+    // Use full Members load (not search-filtered) so marketing always gets the full eligible list.
+    const { count } = downloadNewsletterEmailsCsv(data as Record<string, unknown>[]);
+    if (count === 0) {
+      toast.error("No eligible UCSD emails found (active, non-alumni).");
+      return;
+    }
+    toast.success(`Downloaded ${count} newsletter email${count === 1 ? "" : "s"}.`);
   };
 
   return (
@@ -99,6 +114,18 @@ export default function DataTableControls() {
         >
           <TfiDownload />
         </button>
+        {tableName === "Members" && (
+          <button
+            type="button"
+            onClick={handleNewsletterExport}
+            className="btn btn-outline hover:border-primary font-body fl-text-base/lg font-semibold"
+            disabled={loading || data.length === 0}
+            title="Export newsletter emails (active @ucsd.edu, exclude alumni)"
+          >
+            <TfiEmail className="mr-1" />
+            Newsletter CSV
+          </button>
+        )}
         <button
           type="button"
           onClick={() => bridge?.clearSelection()}
