@@ -43,7 +43,7 @@ export default function SprintHowTo({ className }: HowToProps) {
           <ul className="m-0 list-disc space-y-1 pl-5">
             <li>
               <span className="text-(--obs-text-primary)">To do</span> — new work. Drag or open the
-              card to change status.
+              card to change status. Open a card to edit or delete it.
             </li>
             <li>
               <span className="text-(--obs-text-primary)">In progress</span> — someone is actively

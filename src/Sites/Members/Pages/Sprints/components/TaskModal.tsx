@@ -37,6 +37,7 @@ type TaskModalProps = {
   teamOptions?: { key: string; label: string }[];
   onClose: () => void;
   onSave: (input: TaskWriteInput) => Promise<void>;
+  onDelete?: () => Promise<void>;
 };
 
 function parseOptionalUrl(raw: string): string | null | "invalid" {
@@ -71,6 +72,7 @@ export default function TaskModal({
   teamOptions = BOARD_TEAM_OPTIONS,
   onClose,
   onSave,
+  onDelete,
 }: TaskModalProps) {
   const [title, setTitle] = useState(task?.title ?? "");
   const [description, setDescription] = useState(task?.description ?? "");
@@ -99,6 +101,7 @@ export default function TaskModal({
     return current?.ends_on ?? "";
   });
   const [saving, setSaving] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const isReviewer = reviewerId != null && reviewerId === currentMemberId;
   const alreadyApproved = Boolean(task?.review_approved) && approve;
@@ -205,6 +208,23 @@ export default function TaskModal({
       onClose();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Failed to save task");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!onDelete) return;
+    if (!confirmDelete) {
+      setConfirmDelete(true);
+      return;
+    }
+    setSaving(true);
+    try {
+      await onDelete();
+      onClose();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to delete task");
     } finally {
       setSaving(false);
     }
@@ -424,17 +444,35 @@ export default function TaskModal({
           ) : null}
         </div>
 
-        <div className="mt-6 flex justify-end gap-3">
-          <button
-            type="button"
-            onClick={onClose}
-            className="cursor-pointer rounded-full border border-(--obs-border) bg-transparent px-5 py-2 font-mono text-[0.7rem] uppercase tracking-widest text-(--obs-text-muted)"
-          >
-            Cancel
-          </button>
-          <Button type="submit" disabled={saving} className="my-0">
-            {saving ? "Saving…" : "Save task"}
-          </Button>
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            {mode === "edit" && onDelete ? (
+              <button
+                type="button"
+                disabled={saving}
+                onClick={() => void handleDelete()}
+                className="cursor-pointer rounded-full border border-[rgba(248,113,113,0.45)] bg-transparent px-5 py-2 font-mono text-[0.7rem] uppercase tracking-widest text-[#f87171] disabled:opacity-50"
+              >
+                {saving && confirmDelete
+                  ? "Deleting…"
+                  : confirmDelete
+                    ? "Confirm delete"
+                    : "Delete task"}
+              </button>
+            ) : null}
+          </div>
+          <div className="flex flex-wrap justify-end gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="cursor-pointer rounded-full border border-(--obs-border) bg-transparent px-5 py-2 font-mono text-[0.7rem] uppercase tracking-widest text-(--obs-text-muted)"
+            >
+              Cancel
+            </button>
+            <Button type="submit" disabled={saving} className="my-0">
+              {saving && !confirmDelete ? "Saving…" : "Save task"}
+            </Button>
+          </div>
         </div>
       </form>
     </div>
