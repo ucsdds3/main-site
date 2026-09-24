@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 
 import { Input } from "src/Sites/Members/Components/Input";
@@ -57,7 +57,6 @@ const needsValue = (filter: FilterOperator) =>
   filter && filter !== "empty" && filter !== "non_empty";
 
 export default function FilterDropdown() {
-  const rootRef = useRef<HTMLDivElement>(null);
   const columnStates = useAdminStore(state => state.columnStates);
   const filterDropdownOpen = useAdminStore(state => state.filterDropdownOpen);
   const filterDraft = useAdminStore(state => state.filterDraft);
@@ -74,28 +73,15 @@ export default function FilterDropdown() {
         !!columnStates[k].filterValue)
   ).length;
 
+  // Escape only — no document outside-click. That pattern kept closing this panel when
+  // interacting with Name/Equals (focus + nested listeners).
   useEffect(() => {
     if (!filterDropdownOpen) return;
-
-    const onPointerDown = (e: PointerEvent) => {
-      const root = rootRef.current;
-      if (!root || root.contains(e.target as Node)) return;
-      // Native date/time pickers also render outside the React tree.
-      const active = document.activeElement;
-      if (active instanceof HTMLElement && root.contains(active)) return;
-      useAdminStore.setState({ filterDropdownOpen: false });
-    };
-
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") useAdminStore.setState({ filterDropdownOpen: false });
     };
-
-    document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [filterDropdownOpen]);
 
   const openPanel = () => {
@@ -130,7 +116,7 @@ export default function FilterDropdown() {
   };
 
   return (
-    <div ref={rootRef} className="relative">
+    <div className="relative">
       <button
         type="button"
         onClick={() => {
@@ -152,8 +138,10 @@ export default function FilterDropdown() {
           role="dialog"
           aria-label="Table filters"
           className="absolute right-0 z-50 mt-2 min-w-[420px] rounded-box border border-(--obs-border) bg-base-200 p-4 font-body shadow-lg"
+          onMouseDown={e => e.stopPropagation()}
+          onClick={e => e.stopPropagation()}
         >
-          <div className="space-y-2">
+          <div className="space-y-3">
             {filterDraft.length > 0 ? (
               filterDraft.map((row, index) => {
                 const col = getColumnByKey(row.columnKey);
@@ -161,57 +149,71 @@ export default function FilterDropdown() {
                 const showValue = needsValue(row.filter);
 
                 return (
-                  <div key={index} className="flex gap-2 items-center">
-                    <MenuSelect
-                      className="min-w-32 flex-1"
-                      aria-label="Filter column"
-                      value={row.columnKey}
-                      options={filterableColumns.map(c => ({
-                        value: String(c.key),
-                        label: c.label ?? formatColumnLabel(c.key),
-                      }))}
-                      onChange={key => {
-                        const newCol = getColumnByKey(key);
-                        const opts = newCol
-                          ? getFilterOptionsForType(newCol.type)
-                          : FILTER_OPTIONS.text;
-                        const defaultFilter = opts.find(o => o.value !== null)?.value ?? null;
-                        useAdminStore.setState(state => ({
-                          filterDraft: state.filterDraft.map((r, i) =>
-                            i === index
-                              ? {
-                                  columnKey: key,
-                                  filter: defaultFilter,
-                                  filterValue: "",
-                                }
-                              : r
-                          ),
-                        }));
-                      }}
-                    />
-                    <MenuSelect
-                      className="min-w-[120px] flex-1"
-                      aria-label="Filter operator"
-                      value={row.filter ?? ""}
-                      options={options.map(opt => ({
-                        value: opt.value ?? "",
-                        label: opt.label,
-                      }))}
-                      onChange={raw => {
-                        const val = (raw || null) as FilterOperator;
-                        useAdminStore.setState(state => ({
-                          filterDraft: state.filterDraft.map((r, i) =>
-                            i === index
-                              ? {
-                                  ...r,
-                                  filter: val,
-                                  filterValue: needsValue(val) ? r.filterValue : "",
-                                }
-                              : r
-                          ),
-                        }));
-                      }}
-                    />
+                  <div key={index} className="flex flex-col gap-2 rounded-lg border border-(--obs-border) p-2">
+                    <div className="flex gap-2 items-start">
+                      <MenuSelect
+                        className="min-w-32 flex-1"
+                        aria-label="Filter column"
+                        value={row.columnKey}
+                        options={filterableColumns.map(c => ({
+                          value: String(c.key),
+                          label: c.label ?? formatColumnLabel(c.key),
+                        }))}
+                        onChange={key => {
+                          const newCol = getColumnByKey(key);
+                          const opts = newCol
+                            ? getFilterOptionsForType(newCol.type)
+                            : FILTER_OPTIONS.text;
+                          const defaultFilter = opts.find(o => o.value !== null)?.value ?? null;
+                          useAdminStore.setState(state => ({
+                            filterDraft: state.filterDraft.map((r, i) =>
+                              i === index
+                                ? {
+                                    columnKey: key,
+                                    filter: defaultFilter,
+                                    filterValue: "",
+                                  }
+                                : r
+                            ),
+                          }));
+                        }}
+                      />
+                      <MenuSelect
+                        className="min-w-[120px] flex-1"
+                        aria-label="Filter operator"
+                        value={row.filter ?? ""}
+                        options={options.map(opt => ({
+                          value: opt.value ?? "",
+                          label: opt.label,
+                        }))}
+                        onChange={raw => {
+                          const val = (raw || null) as FilterOperator;
+                          useAdminStore.setState(state => ({
+                            filterDraft: state.filterDraft.map((r, i) =>
+                              i === index
+                                ? {
+                                    ...r,
+                                    filter: val,
+                                    filterValue: needsValue(val) ? r.filterValue : "",
+                                  }
+                                : r
+                            ),
+                          }));
+                        }}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-ghost btn-square p-0 min-h-0 h-10 w-8 shrink-0"
+                        onClick={() => {
+                          useAdminStore.setState(state => ({
+                            filterDraft: state.filterDraft.filter((_, i) => i !== index),
+                          }));
+                        }}
+                        aria-label="Remove filter"
+                      >
+                        <IoClose className="text-lg" />
+                      </button>
+                    </div>
                     {showValue && (
                       <Input
                         label="Filter value"
@@ -233,21 +235,9 @@ export default function FilterDropdown() {
                           }))
                         }
                         placeholder="Value"
-                        className="min-w-[100px] max-w-[200px]"
+                        className="min-w-0 w-full!"
                       />
                     )}
-                    <button
-                      type="button"
-                      className="btn btn-ghost btn-square p-0 min-h-0 h-8 w-8 shrink-0"
-                      onClick={() => {
-                        useAdminStore.setState(state => ({
-                          filterDraft: state.filterDraft.filter((_, i) => i !== index),
-                        }));
-                      }}
-                      aria-label="Remove filter"
-                    >
-                      <IoClose className="text-lg" />
-                    </button>
                   </div>
                 );
               })
