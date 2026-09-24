@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Stub existing public.Members (brownfield)
+      - name: Stub brownfield Membership tables
         run: |
           psql -v ON_ERROR_STOP=1 <<'SQL'
           -- Vanilla Postgres has neither Supabase Auth nor its roles.
@@ -58,6 +58,18 @@ jobs:
           language sql
           stable
           as $$ select '{}'::jsonb $$;
+
+          create or replace function auth.uid()
+          returns uuid
+          language sql
+          stable
+          as $$ select null::uuid $$;
+
+          create or replace function auth.email()
+          returns text
+          language sql
+          stable
+          as $$ select null::text $$;
 
           do $$
           begin
@@ -74,6 +86,20 @@ jobs:
             email text,
             admin_level text,
             deleted boolean default false
+          );
+
+          -- Events + Attendance exist on Membership but are not in versioned ups.
+          create table public."Events" (
+            id bigint generated always as identity primary key,
+            name text
+          );
+
+          create table public."Attendance" (
+            id bigint generated always as identity primary key,
+            created_at timestamptz not null default now(),
+            updated_at timestamptz not null default now(),
+            member_id bigint references public."Members"(id),
+            event_id bigint references public."Events"(id)
           );
           SQL
 
