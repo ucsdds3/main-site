@@ -42,8 +42,9 @@ export default function SprintHowTo({ className }: HowToProps) {
           </h3>
           <ul className="m-0 list-disc space-y-1 pl-5">
             <li>
-              <span className="text-(--obs-text-primary)">To do</span> — new work. Drag or open the
-              card to change status. Open a card to edit or delete it.
+              <span className="text-(--obs-text-primary)">To do</span> — new work. Drag a card to
+              change status. Cards show title and assignee; open Details for hours, due date,
+              assigner, and reviewer. Use Edit to change or delete.
             </li>
             <li>
               <span className="text-(--obs-text-primary)">In progress</span> — someone is actively
@@ -61,8 +62,11 @@ export default function SprintHowTo({ className }: HowToProps) {
             </li>
           </ul>
           <p className="mb-0 mt-2">
-            Filter by team tabs or search a person. Check every sprint a long-running task belongs
-            to so leftover work can ride into the next sprint without duplicating the card.
+            Filter starts on your tasks, or pick a team tab / search a person. All time loads that
+            person’s cards across every sprint — search someone first so the board stays fast. Check
+            every sprint a long-running task belongs to so leftover work can ride into the next
+            sprint without duplicating the card. Overdue cards can be nudged so assignees get an
+            email.
           </p>
         </section>
       </div>
