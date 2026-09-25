@@ -1,5 +1,5 @@
 // notify-sprint-task — email assignees on create, reviewer on pending_review,
-// idle board members on nudge
+// idle board members on nudge, assignees on overdue
 //
 // Deploy from main-site/:
 //   supabase functions deploy notify-sprint-task
@@ -94,6 +94,40 @@ async function sendResendEmail(params: {
 
 type MemberRow = { id: number; full_name: string | null; email: string | null };
 
+function uniqueMemberEmails(rows: MemberRow[]): { row: MemberRow; email: string }[] {
+  const seen = new Set<string>();
+  const out: { row: MemberRow; email: string }[] = [];
+  for (const row of rows) {
+    const email = row.email?.trim().toLowerCase();
+    if (!email || !email.includes("@") || seen.has(email)) continue;
+    seen.add(email);
+    out.push({ row, email });
+  }
+  return out;
+}
+
+function uniqueEmails(rows: MemberRow[]): string[] {
+  return uniqueMemberEmails(rows).map(item => item.email);
+}
+
+function todayYmdPacific(): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Los_Angeles",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
+function isOverdueTask(task: {
+  expected_completion_on: string | null;
+  status: string | null;
+}): boolean {
+  if (!task.expected_completion_on) return false;
+  if (task.status === "done" || task.status === "cancelled") return false;
+  return String(task.expected_completion_on).slice(0, 10) < todayYmdPacific();
+}
+
 function memberHasTeam(teams: unknown): boolean {
   if (teams == null) return false;
   let value: unknown = teams;
@@ -179,18 +213,7 @@ async function handleNudge(
   const idle = await idleBoardMembers(admin, sprintId);
   const idleById = new Map(idle.map(row => [row.id, row]));
   const targets = requested.map(id => idleById.get(id)).filter((row): row is MemberRow => Boolean(row));
-  const uniqueEmails = (rows: MemberRow[]) => {
-    const seen = new Set<string>();
-    const out: { row: MemberRow; email: string }[] = [];
-    for (const row of rows) {
-      const email = row.email?.trim().toLowerCase();
-      if (!email || !email.includes("@") || seen.has(email)) continue;
-      seen.add(email);
-      out.push({ row, email });
-    }
-    return out;
-  };
-  const recipients = uniqueEmails(targets);
+  const recipients = uniqueMemberEmails(targets);
   if (recipients.length === 0) {
     return json({ ok: true, emailed: 0, warning: "No idle members to nudge" });
   }
@@ -233,6 +256,93 @@ async function handleNudge(
   }
 
   return json({ ok: true, emailed, failed, kind: "nudge" });
+}
+
+async function handleOverdue(
+  admin: ReturnType<typeof createClient>,
+  body: { task_id?: unknown }
+): Promise<Response> {
+  const taskId = Number(body.task_id);
+  if (!Number.isInteger(taskId) || taskId <= 0) {
+    return json({ error: "Invalid task_id" }, 400);
+  }
+
+  const { data: task, error: taskError } = await admin
+    .from("SprintTasks")
+    .select("id, title, description, team_key, expected_hours, expected_completion_on, status, reviewer_id, sprint_id")
+    .eq("id", taskId)
+    .maybeSingle();
+
+  if (taskError || !task) {
+    return json({ error: "Task not found" }, 404);
+  }
+  if (!isOverdueTask(task)) {
+    return json({ error: "That task is not overdue" }, 400);
+  }
+
+  const { data: sprint } = await admin
+    .from("Sprints")
+    .select("id, name")
+    .eq("id", task.sprint_id)
+    .maybeSingle();
+
+  const { data: assigneeJoins } = await admin
+    .from("SprintTaskAssignees")
+    .select("member_id, Members(id, full_name, email)")
+    .eq("task_id", taskId);
+
+  const assignees: MemberRow[] = (assigneeJoins ?? []).flatMap(join => {
+    const raw = join.Members as MemberRow | MemberRow[] | null;
+    if (!raw) return [];
+    return Array.isArray(raw) ? raw : [raw];
+  });
+  const recipients = uniqueMemberEmails(assignees);
+  if (recipients.length === 0) {
+    return json({ error: "No assignee emails to nudge" }, 400);
+  }
+
+  const portal = readSecret("MEMBERS_PORTAL_URL") || "https://members.ds3atucsd.com";
+  const boardUrl = `${portal.replace(/\/$/, "")}/sprints/${task.sprint_id}`;
+  const sprintName = sprint?.name || "Current sprint";
+  const title = task.title || `Task #${task.id}`;
+  const due = formatDate(task.expected_completion_on);
+
+  let emailed = 0;
+  let failed = 0;
+  for (const { row, email } of recipients) {
+    const name = row.full_name?.trim() || "there";
+    try {
+      await sendResendEmail({
+        to: [email],
+        subject: `[DS3 Sprints] Overdue: ${title}`,
+        text: [
+          `Hi ${name},`,
+          "",
+          `This sprint task is past its due date (${due}) and still open on ${sprintName}. Please update it or finish it soon.`,
+          "",
+          `Task: ${title}`,
+          `Board: ${boardUrl}`,
+          "",
+          "— DS3 Members Portal",
+        ].join("\n"),
+        html: `<p>Hi ${escapeHtml(name)},</p>
+<p>This sprint task is past its due date (<strong>${escapeHtml(due)}</strong>) and still open on <strong>${escapeHtml(sprintName)}</strong>. Please update it or finish it soon.</p>
+<p><strong>Task:</strong> ${escapeHtml(title)}</p>
+<p><a href="${escapeHtml(boardUrl)}">Open the sprint board</a></p>
+<p>— DS3 Members Portal</p>`,
+      });
+      emailed += 1;
+    } catch (err) {
+      console.error(err);
+      failed += 1;
+    }
+  }
+
+  if (emailed === 0) {
+    return json({ error: "Could not send nudge emails" }, 500);
+  }
+
+  return json({ ok: true, emailed, failed, kind: "overdue" });
 }
 
 Deno.serve(async req => {
@@ -291,6 +401,9 @@ Deno.serve(async req => {
 
     if (kind === "nudge") {
       return await handleNudge(admin, body);
+    }
+    if (kind === "overdue") {
+      return await handleOverdue(admin, body);
     }
 
     const taskId = body?.task_id;
@@ -373,18 +486,6 @@ Deno.serve(async req => {
 </ul>
 <p>${escapeHtml(brief)}</p>
 <p><a href="${escapeHtml(boardUrl)}">Open the sprint board</a></p>`;
-
-    const uniqueEmails = (rows: MemberRow[]) => {
-      const seen = new Set<string>();
-      const out: string[] = [];
-      for (const row of rows) {
-        const email = row.email?.trim().toLowerCase();
-        if (!email || !email.includes("@") || seen.has(email)) continue;
-        seen.add(email);
-        out.push(email);
-      }
-      return out;
-    };
 
     if (kind === "assigned") {
       const to = uniqueEmails(assignees);

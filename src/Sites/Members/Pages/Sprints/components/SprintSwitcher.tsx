@@ -1,3 +1,5 @@
+import { twMerge } from "src/Utils/cn";
+
 import { formatSprintDates, SPRINT_STATUS_LABELS } from "../constants";
 import type { SprintRow } from "../types";
 
@@ -6,6 +8,8 @@ type SprintSwitcherProps = {
   selectedId: number | null;
   onSelect: (sprint: SprintRow) => void;
   onCreate?: () => void;
+  allTime?: boolean;
+  onAllTimeChange?: (allTime: boolean) => void;
 };
 
 function optionLabel(sprint: SprintRow) {
@@ -17,6 +21,8 @@ export default function SprintSwitcher({
   selectedId,
   onSelect,
   onCreate,
+  allTime,
+  onAllTimeChange,
 }: SprintSwitcherProps) {
   const active = sprints.filter(s => s.status === "active");
   const upcoming = sprints
@@ -57,33 +63,56 @@ export default function SprintSwitcher({
       </div>
 
       {sprints.length > 0 ? (
-        <label className="obs-input-row mt-4 min-h-11 w-full max-w-xl cursor-pointer">
-          <select
-            className="obs-select-field min-w-0 flex-1"
-            value={selectedId ?? ""}
-            onChange={e => {
-              const id = Number(e.target.value);
-              const sprint = sprints.find(s => s.id === id);
-              if (sprint) onSelect(sprint);
-            }}
-            aria-label="View sprint"
-          >
-            {selectedId == null ? (
-              <option value="" disabled>
-                Select a sprint
-              </option>
-            ) : null}
-            {groups.map(group => (
-              <optgroup key={group.label} label={group.label}>
-                {group.items.map(sprint => (
-                  <option key={sprint.id} value={sprint.id}>
-                    {optionLabel(sprint)}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-        </label>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <label className="obs-input-row min-h-11 min-w-0 max-w-xl flex-1 cursor-pointer">
+            <select
+              className="obs-select-field min-w-0 flex-1"
+              value={selectedId ?? ""}
+              onChange={e => {
+                const id = Number(e.target.value);
+                const sprint = sprints.find(s => s.id === id);
+                if (sprint) onSelect(sprint);
+              }}
+              aria-label="View sprint"
+            >
+              {selectedId == null ? (
+                <option value="" disabled>
+                  Select a sprint
+                </option>
+              ) : null}
+              {groups.map(group => (
+                <optgroup key={group.label} label={group.label}>
+                  {group.items.map(sprint => (
+                    <option key={sprint.id} value={sprint.id}>
+                      {optionLabel(sprint)}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+          </label>
+          {onAllTimeChange ? (
+            <button
+              type="button"
+              onClick={() => onAllTimeChange(!allTime)}
+              className={twMerge(
+                "shrink-0 cursor-pointer rounded-full border px-4 py-2 font-mono text-[0.65rem] uppercase tracking-widest",
+                allTime ? "text-(--obs-text-primary)" : "bg-transparent text-(--obs-text-muted)"
+              )}
+              style={
+                allTime
+                  ? {
+                      borderColor: "#19B5CA80",
+                      background: "#19B5CA22",
+                      color: "#19B5CA",
+                    }
+                  : { borderColor: "var(--obs-border)" }
+              }
+            >
+              All time
+            </button>
+          ) : null}
+        </div>
       ) : null}
     </section>
   );

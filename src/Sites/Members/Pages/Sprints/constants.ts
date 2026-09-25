@@ -37,6 +37,18 @@ export const SPRINT_BOARD_COLUMNS = [
 export const MIN_TASK_DESCRIPTION_LENGTH = 20;
 export const MAX_EXPECTED_HOURS = 5;
 export const COLUMN_TASK_PREVIEW = 10;
+export const MAX_PROGRESS_NOTES_WORDS = 100;
+export const MINE_TAB = "MINE";
+
+export function wordCount(text: string): number {
+  const parts = text.trim().split(/\s+/).filter(Boolean);
+  return parts.length;
+}
+
+export function firstName(fullName: string): string {
+  const part = fullName.trim().split(/\s+/)[0];
+  return part || fullName;
+}
 
 export const TEAM_ACCENT: Record<string, string> = {
   EXECUTIVE: "#19B5CA",
