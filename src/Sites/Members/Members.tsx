@@ -11,6 +11,7 @@ import Home from "./Pages/Home/Home";
 import Profile from "./Pages/Profile/Profile";
 import Store from "./Pages/Store/Store";
 import Admin from "./Pages/Admin/Admin";
+import Fundraising from "./Pages/Admin/Fundraising";
 import Insights from "./Pages/Admin/Insights";
 import Sprints from "./Pages/Sprints/Sprints";
 import type { AdminLevel } from "./Pages/Admin/Utils/types";
@@ -32,6 +33,8 @@ const Members = () => {
       navigate({ pathname: "/" });
     else if (location.pathname.includes("sprints") && !isBoardOrExec(adminLevel))
       navigate({ pathname: "/" });
+    else if (location.pathname.includes("/admin/fundraising") && !isBoardOrExec(adminLevel))
+      navigate({ pathname: "/" });
     console.log(authState, "MEMBERS");
   }, [authState, adminLevel, location.pathname, location.search]);
 
@@ -40,6 +43,7 @@ const Members = () => {
       <Route index element={<Home />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/insights" element={<Insights />} />
+      <Route path="/admin/fundraising" element={<Fundraising />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/events/leaderboard" element={<Leaderboard />} />
       <Route path="/events" element={<Events />} />
