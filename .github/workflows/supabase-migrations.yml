@@ -118,6 +118,7 @@ jobs:
 
       - name: Smoke-test revert script
         run: |
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260926013000_fundraising_meter.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260923120000_sprint_task_due_date.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260923013000_sprint_hours_and_membership.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260923000000_sprint_task_reviews.sql
@@ -126,6 +127,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260923000000_sprint_task_reviews.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260923013000_sprint_hours_and_membership.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260923120000_sprint_task_due_date.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260926013000_fundraising_meter.sql
 
   dry_run:
     name: Dry-run against linked project
