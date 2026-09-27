@@ -7,6 +7,7 @@ import Alumni from "./Pages/Board/Alumni";
 import Projects from "./Pages/Projects/Projects";
 import OpenSource from "./Pages/OpenSource/OpenSource";
 import Consulting from "./Pages/Consulting/Consulting";
+import Apply from "./Pages/Apply/Apply";
 import Partners from "./Pages/Partners/Partners";
 import TalentLens from "./Pages/TalentLens/TalentLens";
 import TalentLensAuthGate from "./Pages/TalentLens/components/TalentLensAuthGate";
@@ -29,6 +30,7 @@ const Main = () => {
       <Route path="/projects" element={<Projects />} />
       <Route path="/opensource" element={<OpenSource />} />
       <Route path="/consulting" element={<Consulting />} />
+      <Route path="/apply" element={<Apply />} />
       <Route path="/partners" element={<Partners />} />
       <Route
         path="/talentlens"

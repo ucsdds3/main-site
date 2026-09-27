@@ -1,13 +1,17 @@
 import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
-import { TfiReload, TfiDownload, TfiPlus, TfiEmail, TfiFilter, TfiArrowsVertical } from "react-icons/tfi";
+import {
+  TfiReload,
+  TfiDownload,
+  TfiPlus,
+  TfiEmail,
+  TfiFilter,
+  TfiArrowsVertical,
+} from "react-icons/tfi";
 
 import { useAdminStore } from "../Hooks/useAdminStore";
-import {
-  downloadAdminTableCsv,
-  filterAdminTableRows,
-} from "../Utils/dataTableHelpers";
+import { downloadAdminTableCsv, filterAdminTableRows } from "../Utils/dataTableHelpers";
 import { downloadNewsletterEmailsCsv } from "../Utils/newsletterExport";
 import { formatColumnLabel } from "../../../Utils/functions";
 import { Input } from "src/Sites/Members/Components/Input";
@@ -216,7 +220,7 @@ export default function DataTableControls() {
             fieldId="admin-data-table-picker"
             hideLabel
             showPlaceholderOption={false}
-            options={["Events", "Members", "Items", "Attendance", "BoardTeams"]}
+            options={["Events", "Members", "Items", "Attendance", "BoardTeams", "Applications"]}
             value={tableName}
             setValue={v => {
               setFilterOpen(false);
@@ -388,10 +392,7 @@ export default function DataTableControls() {
                 const used = new Set(sortDraft.map(r => r.columnKey));
                 const next = sortableColumns.find(c => !used.has(String(c.key)));
                 if (next) {
-                  setSortDraft(d => [
-                    ...d,
-                    { columnKey: String(next.key), direction: "asc" },
-                  ]);
+                  setSortDraft(d => [...d, { columnKey: String(next.key), direction: "asc" }]);
                 }
               }}
             >
@@ -453,9 +454,7 @@ export default function DataTableControls() {
                         type="button"
                         className="btn btn-ghost btn-square shrink-0"
                         aria-label="Remove filter"
-                        onClick={() =>
-                          setFilterDraft(draft => draft.filter((_, i) => i !== index))
-                        }
+                        onClick={() => setFilterDraft(draft => draft.filter((_, i) => i !== index))}
                       >
                         <IoClose />
                       </button>
@@ -501,9 +500,7 @@ export default function DataTableControls() {
                           value={row.filterValue}
                           setValue={v =>
                             setFilterDraft(draft =>
-                              draft.map((r, i) =>
-                                i === index ? { ...r, filterValue: v } : r
-                              )
+                              draft.map((r, i) => (i === index ? { ...r, filterValue: v } : r))
                             )
                           }
                           placeholder="Value"
@@ -524,9 +521,7 @@ export default function DataTableControls() {
               className="btn btn-outline"
               disabled={
                 filterableColumns.length === 0 ||
-                filterableColumns.every(c =>
-                  filterDraft.some(r => r.columnKey === String(c.key))
-                )
+                filterableColumns.every(c => filterDraft.some(r => r.columnKey === String(c.key)))
               }
               onClick={() => {
                 const used = new Set(filterDraft.map(r => r.columnKey));

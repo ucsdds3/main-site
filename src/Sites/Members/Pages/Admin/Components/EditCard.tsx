@@ -29,10 +29,7 @@ import {
   eventWorkflowStatusFromLabel,
   formatEventWorkflowStatus,
 } from "../Utils/eventWorkflow";
-import {
-  eventTagOptionsForForm,
-  normalizeEventTag,
-} from "../Utils/eventTags";
+import { eventTagOptionsForForm, normalizeEventTag } from "../Utils/eventTags";
 
 function readTeamsFormRecord(raw: unknown): Record<string, string> {
   if (raw === null || raw === undefined) return {};
@@ -99,13 +96,10 @@ export default function EditCard<T extends Record<string, unknown>>({
 
   const { catalog, refetch: refetchBoardTeams } = useBoardTeamsCatalog();
   const committeeLabels = useMemo(() => catalogLabels(catalog), [catalog]);
-  const committeeStorageKeys = useMemo(
-    () => new Set(catalog.map(t => t.team_key)),
-    [catalog]
-  );
+  const committeeStorageKeys = useMemo(() => new Set(catalog.map(t => t.team_key)), [catalog]);
 
   useEffect(() => {
-    if (tableName === "Members" || tableName === "BoardTeams") {
+    if (tableName === "Members" || tableName === "BoardTeams" || tableName === "Applications") {
       void refetchBoardTeams();
     }
   }, [tableName, selectedRow, refetchBoardTeams]);
@@ -380,9 +374,7 @@ export default function EditCard<T extends Record<string, unknown>>({
                         disabled={!canModify}
                       >
                         {!isKnown ? (
-                          <option value={storageKey}>
-                            {teamKeyToLabel(storageKey, catalog)}
-                          </option>
+                          <option value={storageKey}>{teamKeyToLabel(storageKey, catalog)}</option>
                         ) : null}
                         {labelsForRow.map(lbl => {
                           const k = labelToTeamKey(lbl);
@@ -521,8 +513,8 @@ export default function EditCard<T extends Record<string, unknown>>({
                 </p>
               ) : (
                 <p className="text-xs text-(--obs-text-muted)">
-                  Waiting for room/finance email officers. Waiting for marketing emails Marketing and
-                  publishes to the public events page. Complete marks ops finished.
+                  Waiting for room/finance email officers. Waiting for marketing emails Marketing
+                  and publishes to the public events page. Complete marks ops finished.
                 </p>
               )}
             </div>
@@ -576,6 +568,24 @@ export default function EditCard<T extends Record<string, unknown>>({
             </div>
           );
         }
+        if (col.key === "team_key" && tableName === "Applications") {
+          const currentKey = String(value ?? "");
+          const currentLabel = currentKey ? teamKeyToLabel(currentKey, catalog) : "";
+          return (
+            <Select
+              label={getColumnLabel(col)}
+              fieldId={`ec-${String(col.key)}`}
+              hideLabel
+              required
+              showPlaceholderOption
+              options={committeeLabels}
+              value={committeeLabels.includes(currentLabel) ? currentLabel : ""}
+              setValue={label => handleChange(col.key, labelToTeamKey(label), col.type)}
+              disabled={!canModify}
+              className="w-full min-w-0"
+            />
+          );
+        }
         if (col.key === "team_key" && tableName === "BoardTeams") {
           const label = String(formData.label ?? "");
           const previewKey = labelToTeamKey(label);
@@ -610,6 +620,29 @@ export default function EditCard<T extends Record<string, unknown>>({
               value={String(value ?? "")}
               setValue={v => handleChange(col.key, v, col.type)}
               placeholder="Shown under the team name on /board"
+              disabled={!canModify}
+              className="w-full min-w-0"
+            />
+          );
+        }
+        if (
+          tableName === "Applications" &&
+          col.type === "text" &&
+          (col.key === "description" || col.key === "preferred_experience")
+        ) {
+          return (
+            <TextArea
+              label={getColumnLabel(col)}
+              fieldId={`ec-${String(col.key)}`}
+              hideLabel
+              rows={4}
+              value={String(value ?? "")}
+              setValue={v => handleChange(col.key, v, col.type)}
+              placeholder={
+                col.key === "preferred_experience"
+                  ? "Optional: skills or qualities you're looking for"
+                  : "What this role is and what the person will do"
+              }
               disabled={!canModify}
               className="w-full min-w-0"
             />

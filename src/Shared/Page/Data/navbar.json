@@ -1,5 +1,6 @@
 {
   "main": {
+    "Apply": "/apply",
     "Events": {
       "All Events": "/events",
       "GBM": "/events/gbm",
