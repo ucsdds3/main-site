@@ -19,6 +19,7 @@ export default function Sprints() {
   const { activeSprint, planningSprint, sprints, loading, reload, createSprint, updateSprint } =
     useSprints();
   const [createOpen, setCreateOpen] = useState(false);
+  const [allTime, setAllTime] = useState(false);
 
   const selected = useMemo(() => {
     if (sprintId) {
@@ -52,6 +53,8 @@ export default function Sprints() {
               selectedId={selected?.id ?? null}
               onSelect={openSprint}
               onCreate={isExec ? () => setCreateOpen(true) : undefined}
+              allTime={allTime}
+              onAllTimeChange={setAllTime}
             />
 
             {selected ? (
@@ -60,6 +63,7 @@ export default function Sprints() {
                 planningSprint={planningSprint}
                 sprints={sprints}
                 member={member}
+                allTime={allTime}
                 createSprint={createSprint}
                 updateSprint={updateSprint}
                 onSprintsChanged={reload}

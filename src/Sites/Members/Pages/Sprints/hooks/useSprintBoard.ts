@@ -19,9 +19,10 @@ type AssigneeJoin = {
   Members: MemberEmbed | MemberEmbed[] | null;
 };
 
-type TaskQueryRow = Omit<SprintTaskRow, "assignees" | "reviewer" | "sprint_ids"> & {
+type TaskQueryRow = Omit<SprintTaskRow, "assignees" | "reviewer" | "creator" | "sprint_ids"> & {
   SprintTaskAssignees: AssigneeJoin[] | null;
   reviewer: MemberEmbed | MemberEmbed[] | null;
+  creator: MemberEmbed | MemberEmbed[] | null;
 };
 
 function embedMember(raw: MemberEmbed | MemberEmbed[] | null): MemberEmbed | null {
@@ -51,6 +52,7 @@ function mapTask(row: TaskQueryRow, sprintIds: number[]): SprintTaskRow {
     team_key: row.team_key,
     title: row.title,
     description: row.description,
+    progress_notes: row.progress_notes ?? null,
     expected_hours: Number(row.expected_hours ?? 0),
     actual_hours: row.actual_hours == null ? null : Number(row.actual_hours),
     status: row.status,
@@ -67,13 +69,14 @@ function mapTask(row: TaskQueryRow, sprintIds: number[]): SprintTaskRow {
     review_comment: row.review_comment,
     reviewed_at: row.reviewed_at,
     reviewer: toAssignee(embedMember(row.reviewer)),
+    creator: toAssignee(embedMember(row.creator)),
     assignees,
     sprint_ids: ids,
   };
 }
 
 const TASK_SELECT =
-  "id, sprint_id, team_key, title, description, expected_hours, actual_hours, status, created_by, created_at, updated_at, completed_at, expected_completion_on, reviewer_id, relevant_url, review_approved, review_comment, reviewed_at, reviewer:Members!reviewer_id(id, full_name, email), SprintTaskAssignees(member_id, Members(id, full_name, email))";
+  "id, sprint_id, team_key, title, description, progress_notes, expected_hours, actual_hours, status, created_by, created_at, updated_at, completed_at, expected_completion_on, reviewer_id, relevant_url, review_approved, review_comment, reviewed_at, reviewer:Members!reviewer_id(id, full_name, email), creator:Members!created_by(id, full_name, email), SprintTaskAssignees(member_id, Members(id, full_name, email))";
 
 async function notifySprintTask(kind: "assigned" | "pending_review", taskId: number) {
   try {
@@ -109,41 +112,80 @@ export async function nudgeIdleMembers(sprintId: number, memberIds: number[]) {
   return emailed;
 }
 
-export function useSprintBoard(sprintId: number | null) {
+export async function nudgeOverdueTask(taskId: number) {
+  const { data, error } = await supabase.functions.invoke("notify-sprint-task", {
+    body: { kind: "overdue", task_id: taskId },
+  });
+  if (error) {
+    throw new Error(error.message || "Could not send nudge");
+  }
+  if (data && typeof data === "object" && "error" in data && data.error) {
+    throw new Error(String(data.error));
+  }
+  const emailed = data && typeof data === "object" && "emailed" in data ? Number(data.emailed) : 0;
+  if (!Number.isFinite(emailed) || emailed <= 0) {
+    throw new Error("No nudge emails were sent.");
+  }
+  return emailed;
+}
+
+export function useSprintBoard(
+  sprintId: number,
+  options?: { allTime?: boolean; historyMemberId?: number | null }
+) {
   const [tasks, setTasks] = useState<SprintTaskRow[]>([]);
-  const [loading, setLoading] = useState(Boolean(sprintId));
+  const [loading, setLoading] = useState(true);
+  const allTime = Boolean(options?.allTime);
+  const historyMemberId = options?.historyMemberId ?? null;
 
   const reload = useCallback(async () => {
-    if (!sprintId) {
+    if (allTime && historyMemberId == null) {
       setTasks([]);
       setLoading(false);
       return;
     }
 
     setLoading(true);
-    const { data: links, error: linkError } = await supabase
-      .from("SprintTaskSprints")
-      .select("task_id")
-      .eq("sprint_id", sprintId);
+    let ids: number[] = [];
 
-    const { data: legacy, error: legacyError } = await supabase
-      .from("SprintTasks")
-      .select("id")
-      .eq("sprint_id", sprintId);
+    if (allTime && historyMemberId != null) {
+      const { data: joins, error: joinError } = await supabase
+        .from("SprintTaskAssignees")
+        .select("task_id")
+        .eq("member_id", historyMemberId);
+      if (joinError) {
+        toast.error(joinError.message);
+        setTasks([]);
+        setLoading(false);
+        return;
+      }
+      ids = [...new Set((joins ?? []).map(row => row.task_id as number))];
+    } else {
+      const { data: links, error: linkError } = await supabase
+        .from("SprintTaskSprints")
+        .select("task_id")
+        .eq("sprint_id", sprintId);
 
-    if (linkError && legacyError) {
-      toast.error(linkError.message);
-      setTasks([]);
-      setLoading(false);
-      return;
+      const { data: legacy, error: legacyError } = await supabase
+        .from("SprintTasks")
+        .select("id")
+        .eq("sprint_id", sprintId);
+
+      if (linkError && legacyError) {
+        toast.error(linkError.message);
+        setTasks([]);
+        setLoading(false);
+        return;
+      }
+
+      ids = [
+        ...new Set([
+          ...(links ?? []).map(l => l.task_id as number),
+          ...(legacy ?? []).map(l => l.id as number),
+        ]),
+      ];
     }
 
-    const ids = [
-      ...new Set([
-        ...(links ?? []).map(l => l.task_id as number),
-        ...(legacy ?? []).map(l => l.id as number),
-      ]),
-    ];
     if (ids.length === 0) {
       setTasks([]);
       setLoading(false);
@@ -181,7 +223,7 @@ export function useSprintBoard(sprintId: number | null) {
       )
     );
     setLoading(false);
-  }, [sprintId]);
+  }, [sprintId, allTime, historyMemberId]);
 
   useEffect(() => {
     void reload();
@@ -218,6 +260,7 @@ export function useSprintBoard(sprintId: number | null) {
     team_key: input.team_key,
     title: input.title.trim(),
     description: input.description.trim(),
+    progress_notes: input.progress_notes?.trim() || null,
     expected_hours: input.expected_hours,
     actual_hours: input.actual_hours,
     status: input.status,

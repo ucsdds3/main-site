@@ -32,13 +32,15 @@ const Links = ({ menuOpen }: { menuOpen: boolean }) => {
       {isMembers && isAuthed && adminLevel !== "Member" && (
         <NavItem
           label="Admin"
-          data={{ Dashboard: "/admin", Insights: "/admin/insights" }}
+          data={{
+            Dashboard: "/admin",
+            Insights: "/admin/insights",
+            Fundraising: "/admin/fundraising",
+          }}
         />
       )}
 
-      {isMembers && (
-        <NavItem label="Main Site" data={{ pathname: "/", subdomain: "main" }} />
-      )}
+      {isMembers && <NavItem label="Main Site" data={{ pathname: "/", subdomain: "main" }} />}
 
       {!isMembers || !isAuthed ? (
         <button

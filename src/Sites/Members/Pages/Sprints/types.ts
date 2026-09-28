@@ -27,6 +27,7 @@ export type SprintTaskRow = {
   team_key: string;
   title: string;
   description: string | null;
+  progress_notes: string | null;
   expected_hours: number;
   actual_hours: number | null;
   status: SprintTaskStatus;
@@ -41,6 +42,7 @@ export type SprintTaskRow = {
   review_comment: string | null;
   reviewed_at: string | null;
   reviewer: SprintAssignee | null;
+  creator: SprintAssignee | null;
   assignees: SprintAssignee[];
   sprint_ids: number[];
 };
@@ -75,4 +77,5 @@ export type TaskWriteInput = {
   review_comment: string | null;
   sprint_ids: number[];
   expected_completion_on: string | null;
+  progress_notes: string | null;
 };
