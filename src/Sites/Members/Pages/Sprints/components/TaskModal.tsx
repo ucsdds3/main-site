@@ -5,14 +5,17 @@ import toast from "react-hot-toast";
 import { Input, TextArea } from "src/Sites/Members/Components/Input";
 import Select from "src/Sites/Members/Components/Select";
 import Button from "src/Shared/Components/Button";
+import { twMerge } from "src/Utils/cn";
 
 import {
   BOARD_TEAM_OPTIONS,
   MAX_EXPECTED_HOURS,
+  MAX_PROGRESS_NOTES_WORDS,
   MIN_TASK_DESCRIPTION_LENGTH,
   memberOnTeam,
   SPRINT_TASK_STATUS_LABELS,
   SPRINT_TASK_STATUS_VALUES,
+  wordCount,
 } from "../constants";
 import type {
   BoardAssigneeOption,
@@ -102,6 +105,7 @@ export default function TaskModal({
   });
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [progressNotes, setProgressNotes] = useState(task?.progress_notes ?? "");
 
   const isReviewer = reviewerId != null && reviewerId === currentMemberId;
   const alreadyApproved = Boolean(task?.review_approved) && approve;
@@ -176,6 +180,11 @@ export default function TaskModal({
       toast.error("Expected date of completion is required.");
       return;
     }
+    const notes = progressNotes.trim();
+    if (wordCount(notes) > MAX_PROGRESS_NOTES_WORDS) {
+      toast.error(`Notes must be ${MAX_PROGRESS_NOTES_WORDS} words or fewer.`);
+      return;
+    }
 
     if (statusToSave === "done" && reviewerId != null && !reviewApproved) {
       toast.error(
@@ -203,6 +212,7 @@ export default function TaskModal({
         review_comment: isReviewer ? reviewComment.trim() || null : (task?.review_comment ?? null),
         sprint_ids: sprintIds,
         expected_completion_on: dueOn,
+        progress_notes: notes || null,
         create_per_assignee: mode === "create" && assignMode === "team",
       });
       onClose();
@@ -442,6 +452,31 @@ export default function TaskModal({
                 : `Waiting on ${task?.reviewer?.full_name ?? "the assigned reviewer"} to approve before Complete.`}
             </p>
           ) : null}
+
+          {mode === "edit" && task?.creator ? (
+            <p className="m-0 text-xs text-(--obs-text-faint)">Added by {task.creator.full_name}</p>
+          ) : null}
+
+          <div>
+            <TextArea
+              label="Notes"
+              rows={3}
+              value={progressNotes}
+              setValue={setProgressNotes}
+              placeholder="Optional progress notes while the work is underway"
+            />
+            <p
+              className={twMerge(
+                "mb-0 mt-1 text-xs",
+                wordCount(progressNotes) > MAX_PROGRESS_NOTES_WORDS
+                  ? "text-[#f87171]"
+                  : "text-(--obs-text-faint)"
+              )}
+            >
+              {wordCount(progressNotes)} / {MAX_PROGRESS_NOTES_WORDS} words. Separate from the
+              description — use this for status as you go.
+            </p>
+          </div>
         </div>
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3">

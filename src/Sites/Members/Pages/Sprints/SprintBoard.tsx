@@ -16,8 +16,10 @@ import {
   COLUMN_ACCENT,
   COLUMN_TASK_PREVIEW,
   defaultTeamKey,
+  firstName,
   formatSprintDates,
   isOpenSprintTaskStatus,
+  MINE_TAB,
   SPRINT_BOARD_COLUMNS,
   SPRINT_STATUS_LABELS,
   sprintTeamTabKeys,
@@ -25,14 +27,21 @@ import {
   teamLabel,
 } from "./constants";
 import { useBoardAssignees } from "./hooks/useBoardAssignees";
-import { useSprintBoard } from "./hooks/useSprintBoard";
-import type { CurrentMember, RetroDecision, SprintRow, SprintTaskStatus } from "./types";
+import { nudgeOverdueTask, useSprintBoard } from "./hooks/useSprintBoard";
+import type {
+  CurrentMember,
+  RetroDecision,
+  SprintRow,
+  SprintTaskRow,
+  SprintTaskStatus,
+} from "./types";
 
 type SprintBoardProps = {
   sprint: SprintRow;
   planningSprint: SprintRow | null;
   sprints: SprintRow[];
   member: CurrentMember;
+  allTime?: boolean;
   onSprintsChanged: () => Promise<void> | void;
   createSprint: (input: {
     name: string;
@@ -49,16 +58,21 @@ export default function SprintBoard({
   planningSprint,
   sprints,
   member,
+  allTime = false,
   onSprintsChanged,
   createSprint,
   updateSprint,
 }: SprintBoardProps) {
   const { catalog } = useBoardTeamsCatalog();
   const { assignees } = useBoardAssignees();
-  const { tasks, loading, createTask, updateTask, moveTask, deleteTask, closeSprint } =
-    useSprintBoard(sprint.id);
-  const [teamTab, setTeamTab] = useState("ALL");
+  const [teamTab, setTeamTab] = useState(MINE_TAB);
   const [assigneeFilter, setAssigneeFilter] = useState<number | null>(null);
+  const { tasks, loading, createTask, updateTask, moveTask, deleteTask, closeSprint } =
+    useSprintBoard(sprint.id, {
+      allTime,
+      historyMemberId: allTime ? assigneeFilter : null,
+    });
+  const [nudgingTaskId, setNudgingTaskId] = useState<number | null>(null);
   const [taskModal, setTaskModal] = useState<"create" | number | null>(null);
   const [closeOpen, setCloseOpen] = useState(false);
   const [renaming, setRenaming] = useState(false);
@@ -76,6 +90,8 @@ export default function SprintBoard({
 
   const isExec = member.admin_level === "Executive";
   const canEdit = sprint.status !== "closed";
+  const canMove = canEdit && !allTime;
+  const sprintNameById = useMemo(() => new Map(sprints.map(row => [row.id, row.name])), [sprints]);
   const editingTask = typeof taskModal === "number" ? tasks.find(t => t.id === taskModal) : null;
 
   const teamKeys = useMemo(
@@ -94,13 +110,18 @@ export default function SprintBoard({
   const visibleTasks = useMemo(() => {
     return tasks.filter(task => {
       if (task.status === "cancelled") return false;
-      if (teamTab !== "ALL" && task.team_key !== teamTab) return false;
+      if (allTime) return true;
+      if (teamTab === MINE_TAB) {
+        if (!task.assignees.some(a => a.id === member.id)) return false;
+      } else if (teamTab !== "ALL" && task.team_key !== teamTab) {
+        return false;
+      }
       if (assigneeFilter != null && !task.assignees.some(a => a.id === assigneeFilter)) {
         return false;
       }
       return true;
     });
-  }, [tasks, teamTab, assigneeFilter]);
+  }, [tasks, teamTab, assigneeFilter, member.id, allTime]);
 
   const hoursByTeam = useMemo(() => {
     const map = new Map<string, number>();
@@ -116,7 +137,7 @@ export default function SprintBoard({
   const handleDrop = async (status: SprintTaskStatus) => {
     const id = draggingId.current;
     draggingId.current = null;
-    if (id == null || !canEdit) return;
+    if (id == null || !canMove) return;
     const task = tasks.find(t => t.id === id);
     if (!task || task.status === status) return;
     if (status === "pending_review" && task.reviewer_id == null) {
@@ -164,6 +185,18 @@ export default function SprintBoard({
   const cancelRename = () => {
     setDraftName(sprint.name);
     setRenaming(false);
+  };
+
+  const handleNudgeOverdue = async (task: SprintTaskRow) => {
+    setNudgingTaskId(task.id);
+    try {
+      const emailed = await nudgeOverdueTask(task.id);
+      toast.success(emailed === 1 ? "Nudged the assignee." : `Nudged ${emailed} assignees.`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not send nudge");
+    } finally {
+      setNudgingTaskId(null);
+    }
   };
 
   const handleRename = async (e: React.FormEvent) => {
@@ -273,50 +306,66 @@ export default function SprintBoard({
       <SprintHowTo />
 
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <div className="flex flex-wrap gap-2">
-          {["ALL", ...teamKeys].map(key => {
-            const active = teamTab === key;
-            const hours = key === "ALL" ? null : hoursByTeam.get(key);
-            const accent = key === "ALL" ? "#19B5CA" : teamAccent(key);
-            return (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setTeamTab(key)}
-                className={twMerge(
-                  "cursor-pointer rounded-full border px-3 py-1.5 font-mono text-[0.65rem] uppercase tracking-widest",
-                  active ? "text-(--obs-text-primary)" : "bg-transparent text-(--obs-text-muted)"
-                )}
-                style={
-                  active
-                    ? {
-                        borderColor: `${accent}80`,
-                        background: `${accent}22`,
-                        color: accent,
-                      }
-                    : { borderColor: "var(--obs-border)" }
-                }
-              >
-                {key === "ALL" ? "All teams" : teamLabel(key, catalog)}
-                {hours != null ? ` · ${hours}h` : ""}
-              </button>
-            );
-          })}
+        <div className="flex flex-wrap items-center gap-2">
+          {allTime
+            ? null
+            : [MINE_TAB, "ALL", ...teamKeys].map(key => {
+                const active = teamTab === key;
+                const hours = key === "ALL" || key === MINE_TAB ? null : hoursByTeam.get(key);
+                const accent =
+                  key === MINE_TAB ? "#F58134" : key === "ALL" ? "#19B5CA" : teamAccent(key);
+                const label =
+                  key === MINE_TAB
+                    ? firstName(member.full_name) || "You"
+                    : key === "ALL"
+                      ? "All teams"
+                      : teamLabel(key, catalog);
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setTeamTab(key)}
+                    className={twMerge(
+                      "cursor-pointer rounded-full border px-3 py-1.5 font-mono text-[0.65rem] uppercase tracking-widest",
+                      active
+                        ? "text-(--obs-text-primary)"
+                        : "bg-transparent text-(--obs-text-muted)"
+                    )}
+                    style={
+                      active
+                        ? {
+                            borderColor: `${accent}80`,
+                            background: `${accent}22`,
+                            color: accent,
+                          }
+                        : { borderColor: "var(--obs-border)" }
+                    }
+                  >
+                    {label}
+                    {hours != null ? ` · ${hours}h` : ""}
+                  </button>
+                );
+              })}
         </div>
         <div className="w-full min-w-0 sm:w-72">
           <PersonTypeahead
             label="Person"
+            required={allTime}
             options={assignees}
             valueId={assigneeFilter}
             onChange={setAssigneeFilter}
-            noneLabel="Everyone"
-            placeholder="Search people…"
+            noneLabel={allTime ? undefined : "Everyone"}
+            placeholder={allTime ? "Search a person across every sprint…" : "Search people…"}
           />
         </div>
       </div>
 
       {loading ? (
         <p className="text-(--obs-text-muted)">Loading tasks…</p>
+      ) : allTime && assigneeFilter == null ? (
+        <p className="m-0 rounded-2xl border border-dashed border-(--obs-border) px-4 py-16 text-center text-sm text-(--obs-text-muted)">
+          Search a person to see every task they have been assigned, across all sprints.
+        </p>
       ) : (
         <div className="grid min-h-[28rem] grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           {SPRINT_BOARD_COLUMNS.map(column => {
@@ -329,7 +378,7 @@ export default function SprintBoard({
               <section
                 key={column.status}
                 onDragOver={e => {
-                  if (!canEdit) return;
+                  if (!canMove) return;
                   e.preventDefault();
                   e.dataTransfer.dropEffect = "move";
                 }}
@@ -366,9 +415,11 @@ export default function SprintBoard({
                 <div className="flex flex-1 flex-col gap-3">
                   {columnTasks.length === 0 ? (
                     <p className="m-0 rounded-xl border border-dashed border-(--obs-border) px-3 py-8 text-center text-xs text-(--obs-text-faint)">
-                      {column.status === "todo" && canEdit
+                      {column.status === "todo" && canMove
                         ? "New tasks land here."
-                        : "Drop a card here"}
+                        : allTime
+                          ? "None"
+                          : "Drop a card here"}
                     </p>
                   ) : (
                     shown.map(task => (
@@ -376,9 +427,18 @@ export default function SprintBoard({
                         key={task.id}
                         task={task}
                         compact
-                        showTeam={teamTab === "ALL"}
-                        canEdit={canEdit}
+                        showTeam
+                        sprintNames={
+                          allTime
+                            ? task.sprint_ids
+                                .map(id => sprintNameById.get(id))
+                                .filter((name): name is string => Boolean(name))
+                            : undefined
+                        }
+                        canEdit={canMove}
+                        nudging={nudgingTaskId === task.id}
                         onEdit={() => setTaskModal(task.id)}
+                        onNudge={canMove ? handleNudgeOverdue : undefined}
                         onDragStart={() => {
                           draggingId.current = task.id;
                         }}
@@ -414,23 +474,31 @@ export default function SprintBoard({
         </div>
       )}
 
-      {loading ? null : (
+      {loading || allTime ? null : (
         <SprintIdleMembers
           members={assignees}
           tasks={tasks}
-          teamTab={teamTab}
+          teamTab={teamTab === MINE_TAB ? "ALL" : teamTab}
           sprintId={sprint.id}
           canNudge={canEdit}
         />
       )}
 
-      <SprintStats tasks={tasks} sprint={sprint} teamTab={teamTab} />
+      {allTime ? null : (
+        <SprintStats
+          tasks={visibleTasks}
+          sprint={sprint}
+          teamTab={teamTab === MINE_TAB ? "ALL" : teamTab}
+        />
+      )}
 
       {taskModal !== null ? (
         <TaskModal
           mode={taskModal === "create" ? "create" : "edit"}
           task={editingTask}
-          defaultTeamKey={teamTab !== "ALL" ? teamTab : defaultTeamKey(member.teams)}
+          defaultTeamKey={
+            teamTab !== "ALL" && teamTab !== MINE_TAB ? teamTab : defaultTeamKey(member.teams)
+          }
           teamOptions={teamOptions}
           defaultAssigneeId={member.id}
           currentMemberId={member.id}
