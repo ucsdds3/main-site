@@ -14,8 +14,11 @@ export default function TableHeader<T extends Record<string, any>>({
         {columns
           .filter(col => !col.hide)
           .map(col => (
-            <th key={String(col.key)} className="relative max-w-[200px] border-b border-(--obs-border)">
-              <span className="font-body fl-text-base/lg text-(--obs-text-primary)">
+            <th
+              key={String(col.key)}
+              className="relative min-w-[7.5rem] max-w-[200px] whitespace-normal border-b border-(--obs-border) align-bottom"
+            >
+              <span className="block font-body fl-text-sm/base leading-snug break-words text-(--obs-text-primary)">
                 {col.label ?? formatColumnLabel(col.key)}
               </span>
             </th>

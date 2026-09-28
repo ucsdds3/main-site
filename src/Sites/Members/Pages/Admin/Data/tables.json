@@ -89,5 +89,26 @@
       "canEdit": ["Executive"],
       "canView": ["Board", "Executive"]
     }
+  },
+  "Applications": {
+    "columns": {
+      "title": { "type": "text", "label": "Job title" },
+      "team_key": { "type": "text", "label": "Team" },
+      "description": { "type": "text", "label": "Description" },
+      "preferred_experience": {
+        "type": "text",
+        "optional": true,
+        "label": "Preferred experience"
+      },
+      "application_url": { "type": "text", "label": "Apply link" },
+      "poster_emails": { "type": "text", "label": "Poster emails" },
+      "opens_at": { "type": "date", "label": "Opens" },
+      "due_at": { "type": "date", "label": "Due" }
+    },
+    "permissions": {
+      "canAdd": ["Executive"],
+      "canEdit": ["Executive"],
+      "canView": ["Board", "Executive"]
+    }
   }
 }
