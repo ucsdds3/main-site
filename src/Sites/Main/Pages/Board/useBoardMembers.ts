@@ -5,6 +5,7 @@ import { supabase } from "src/Utils/supabase";
 import { normalizeExternalHref } from "src/Utils/functions";
 import { normalizeTeamsField } from "src/Sites/Members/Utils/functions";
 import type { BoardMember } from "src/Utils/types.ts";
+import type { BoardTeamCatalogEntry } from "./boardTeamTypes";
 import { roleForMemberOnTab } from "./boardTeamConfig";
 
 type MemberRow = {
@@ -37,14 +38,19 @@ function boardRoleTitleImportanceRank(role: string | undefined | null): number {
   return 4;
 }
 
-function compareBoardMembersForTeam(a: BoardMember, b: BoardMember, teamKey: string): number {
+function compareBoardMembersForTeam(
+  a: BoardMember,
+  b: BoardMember,
+  teamKey: string,
+  catalog: BoardTeamCatalogEntry[]
+): number {
   // 2026-08-05 archived:
   // const ra = boardRoleTitleImportanceRank(a.teamRoles[teamKey]);
   // const rb = boardRoleTitleImportanceRank(b.teamRoles[teamKey]);
   // if (ra !== rb) return ra - rb;
   // return b.teamRoles[teamKey]?.localeCompare(a.teamRoles[teamKey]) ?? 0;
-  const ra = boardRoleTitleImportanceRank(roleForMemberOnTab(a, teamKey));
-  const rb = boardRoleTitleImportanceRank(roleForMemberOnTab(b, teamKey));
+  const ra = boardRoleTitleImportanceRank(roleForMemberOnTab(a, teamKey, catalog));
+  const rb = boardRoleTitleImportanceRank(roleForMemberOnTab(b, teamKey, catalog));
   if (ra !== rb) return ra - rb;
   return a.name.localeCompare(b.name);
 }
@@ -67,13 +73,13 @@ function rowToBoardMember(row: MemberRow): BoardMember | null {
 }
 
 /** `sortTeamKey` is the active committee tab; members are ordered by role importance for that key, then name. */
-export function useBoardMembers(sortTeamKey: string) {
+export function useBoardMembers(sortTeamKey: string, catalog: BoardTeamCatalogEntry[] = []) {
   const [rawMembers, setRawMembers] = useState<BoardMember[]>([]);
   const [loading, setLoading] = useState(true);
 
   const members = useMemo(
-    () => [...rawMembers].sort((a, b) => compareBoardMembersForTeam(a, b, sortTeamKey)),
-    [rawMembers, sortTeamKey]
+    () => [...rawMembers].sort((a, b) => compareBoardMembersForTeam(a, b, sortTeamKey, catalog)),
+    [rawMembers, sortTeamKey, catalog]
   );
 
   useEffect(() => {
@@ -85,7 +91,7 @@ export function useBoardMembers(sortTeamKey: string) {
         .select(
           "full_name,email,github_link,resume_link,linkedin_link,other_link,profile_picture,teams,deleted"
         )
-        .neq("teams", null)
+        .not("teams", "is", null)
         .or("deleted.is.null,deleted.eq.false");
 
       if (cancelled) return;
