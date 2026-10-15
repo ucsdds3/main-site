@@ -53,7 +53,9 @@ export default function SprintHowTo({ className }: HowToProps) {
             <li>
               <span className="text-(--obs-text-primary)">Pending review</span> — assignees are done
               and a reviewer is assigned. Actual hours required. The reviewer then approves
-              (optional comment). Skip this column when there is no reviewer.
+              (optional comment). Skip this column when there is no reviewer. On your personal tab,
+              this column splits: your cards waiting on someone else, then amber cards waiting on
+              you.
             </li>
             <li>
               <span className="text-(--obs-text-primary)">Complete</span> — after reviewer approval,

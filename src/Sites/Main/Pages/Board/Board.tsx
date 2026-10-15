@@ -8,7 +8,7 @@ import { twMerge } from "src/Utils/cn";
 
 import {
   boardTeamTabKeys,
-  labelToTeamKey,
+  memberTeamKeyForCatalog,
   memberMatchesTab,
   roleForMemberOnTab,
   teamDescriptionForKey,
@@ -24,13 +24,13 @@ const Board = () => {
 
   const [team, setTeam] = useState<string>("");
   const { catalog, loading: catalogLoading } = useBoardTeamsCatalog();
-  const { members, loading: membersLoading } = useBoardMembers(team);
+  const { members, loading: membersLoading } = useBoardMembers(team, catalog);
   const loading = catalogLoading || membersLoading;
 
   const teamKeys = useMemo(() => {
     const keys = new Set<string>();
     for (const m of members) {
-      for (const k of Object.keys(m.teamRoles)) keys.add(labelToTeamKey(k));
+      for (const k of Object.keys(m.teamRoles)) keys.add(memberTeamKeyForCatalog(k, catalog));
     }
     return boardTeamTabKeys(keys, catalog);
   }, [members, catalog]);
@@ -41,8 +41,8 @@ const Board = () => {
   }, [teamKeys, team]);
 
   const filteredMembers = useMemo(
-    () => members.filter(m => memberMatchesTab(m, team)),
-    [members, team]
+    () => members.filter(m => memberMatchesTab(m, team, catalog)),
+    [members, team, catalog]
   );
 
   return (
@@ -152,7 +152,7 @@ const Board = () => {
                       >
                         <HoverCard
                           title={member.name}
-                          description={roleForMemberOnTab(member, team)}
+                          description={roleForMemberOnTab(member, team, catalog)}
                           image={member.image}
                           size="200px"
                           links={formatMemberLinks(member)}

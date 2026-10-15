@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { twMerge } from "src/Utils/cn";
 
-import { firstName, formatTaskDate, isTaskDueOverdue, teamAccent, teamLabel } from "../constants";
+import {
+  firstName,
+  formatTaskDate,
+  isTaskDueOverdue,
+  REVIEW_INBOX_ACCENT,
+  teamAccent,
+  teamLabel,
+} from "../constants";
 import type { SprintTaskRow } from "../types";
 
 type TaskCardProps = {
@@ -9,6 +16,7 @@ type TaskCardProps = {
   showTeam?: boolean;
   canEdit: boolean;
   compact?: boolean;
+  awaitingMyReview?: boolean;
   nudging?: boolean;
   sprintNames?: string[];
   onEdit: () => void;
@@ -32,6 +40,7 @@ export default function TaskCard({
   showTeam,
   canEdit,
   compact = true,
+  awaitingMyReview,
   nudging,
   sprintNames,
   onEdit,
@@ -50,6 +59,8 @@ export default function TaskCard({
       : `${task.expected_hours}h expected`;
   const overdue = isTaskDueOverdue(task);
   const assigner = task.creator?.full_name ?? "Unknown";
+  const inbox = Boolean(awaitingMyReview);
+  const tone = inbox ? "inbox" : overdue ? "overdue" : "default";
 
   return (
     <article
@@ -61,22 +72,32 @@ export default function TaskCard({
       }}
       className={twMerge(
         "rounded-xl border p-3.5",
-        overdue
-          ? "border-[rgba(248,113,113,0.7)] bg-[rgba(127,29,29,0.42)]"
-          : "border-(--obs-border) bg-[rgba(8,14,25,0.92)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)]",
+        tone === "inbox" && "border-[rgba(251,191,36,0.7)] bg-[rgba(120,53,15,0.38)]",
+        tone === "overdue" && "border-[rgba(248,113,113,0.7)] bg-[rgba(127,29,29,0.42)]",
+        tone === "default" &&
+          "border-(--obs-border) bg-[rgba(8,14,25,0.92)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)]",
         canEdit && "cursor-grab hover:brightness-110 active:cursor-grabbing"
       )}
       style={{
         borderLeftWidth: 4,
-        borderLeftColor: overdue ? "#f87171" : accent,
-        boxShadow: overdue
-          ? "0 0 0 1px rgba(248,113,113,0.28), 0 10px 24px rgba(248,113,113,0.18)"
-          : `0 0 0 1px ${accent}22, 0 10px 24px ${accent}10`,
+        borderLeftColor:
+          tone === "inbox" ? REVIEW_INBOX_ACCENT : tone === "overdue" ? "#f87171" : accent,
+        boxShadow:
+          tone === "inbox"
+            ? "0 0 0 1px rgba(251,191,36,0.32), 0 10px 24px rgba(251,191,36,0.16)"
+            : tone === "overdue"
+              ? "0 0 0 1px rgba(248,113,113,0.28), 0 10px 24px rgba(248,113,113,0.18)"
+              : `0 0 0 1px ${accent}22, 0 10px 24px ${accent}10`,
       }}
     >
       <h3 className="m-0 text-[0.95rem] font-semibold leading-snug text-(--obs-text-primary)">
         {task.title}
       </h3>
+      {inbox ? (
+        <p className="mb-0 mt-1.5 font-mono text-[0.58rem] uppercase tracking-widest text-[#fbbf24]">
+          Waiting on your review
+        </p>
+      ) : null}
       {expanded ? null : (
         <p className="mb-0 mt-1.5 truncate text-[0.78rem] text-(--obs-text-muted)">{names}</p>
       )}

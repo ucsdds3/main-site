@@ -6,6 +6,25 @@ export function labelToTeamKey(label: string): string {
   return label.trim().replace(/\s+/g, "_").toUpperCase();
 }
 
+export function memberTeamKeyForCatalog(
+  memberTeamKey: string,
+  catalog: BoardTeamCatalogEntry[]
+): string {
+  const normalizedKey = labelToTeamKey(memberTeamKey);
+  const directMatch = catalog.find(team => team.team_key === normalizedKey);
+  if (directMatch) return directMatch.team_key;
+
+  const labelMatch = catalog.find(team => labelToTeamKey(team.label) === normalizedKey);
+  if (labelMatch) return labelMatch.team_key;
+
+  const legacyAliases: Record<string, string> = {
+    DATAHACKS: "HACKATHONS",
+    HACKATHONS: "DATAHACKS",
+  };
+  const aliasMatch = catalog.find(team => team.team_key === legacyAliases[normalizedKey]);
+  return aliasMatch?.team_key ?? normalizedKey;
+}
+
 /** Static fallback when BoardTeams fetch fails (matches historical teams.json). */
 export function fallbackBoardTeamCatalog(): BoardTeamCatalogEntry[] {
   return Object.entries(teamsJson).map(([label, description], index) => ({
@@ -31,14 +50,18 @@ export function teamDescriptionForKey(key: string, catalog: BoardTeamCatalogEntr
 
 export function memberMatchesTab(
   member: { teamRoles: Record<string, string> },
-  tabKey: string
+  tabKey: string,
+  catalog: BoardTeamCatalogEntry[] = []
 ): boolean {
-  return Object.keys(member.teamRoles).map(labelToTeamKey).includes(tabKey);
+  return Object.keys(member.teamRoles)
+    .map(key => memberTeamKeyForCatalog(key, catalog))
+    .includes(tabKey);
 }
 
 export function roleForMemberOnTab(
   member: { teamRoles: Record<string, string> },
-  tabKey: string
+  tabKey: string,
+  catalog: BoardTeamCatalogEntry[] = []
 ): string | undefined {
   // Resolve by normalized key so legacy labels ("Social Events") and
   // storage keys ("SOCIAL_EVENTS") both work for display + director sort.
@@ -46,7 +69,7 @@ export function roleForMemberOnTab(
     return member.teamRoles[tabKey];
   }
   for (const [k, v] of Object.entries(member.teamRoles)) {
-    if (labelToTeamKey(k) === tabKey) return v;
+    if (memberTeamKeyForCatalog(k, catalog) === tabKey) return v;
   }
   return undefined;
 }

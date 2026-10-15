@@ -39,6 +39,8 @@ export const MAX_EXPECTED_HOURS = 5;
 export const COLUMN_TASK_PREVIEW = 10;
 export const MAX_PROGRESS_NOTES_WORDS = 100;
 export const MINE_TAB = "MINE";
+/** Amber highlight for cards waiting on the signed-in member to review. */
+export const REVIEW_INBOX_ACCENT = "#fbbf24";
 
 export function wordCount(text: string): number {
   const parts = text.trim().split(/\s+/).filter(Boolean);
@@ -166,4 +168,18 @@ export function taskNeedsReviewer(task: {
   reviewer?: { id: number } | null;
 }): boolean {
   return task.reviewer_id != null || task.reviewer != null;
+}
+
+export function isAssignedToMember(
+  task: { assignees: { id: number }[] },
+  memberId: number
+): boolean {
+  return task.assignees.some(a => a.id === memberId);
+}
+
+export function isWaitingOnMemberReview(
+  task: { status: SprintTaskStatus; reviewer_id: number | null },
+  memberId: number
+): boolean {
+  return task.status === "pending_review" && task.reviewer_id === memberId;
 }

@@ -18,8 +18,11 @@ import {
   defaultTeamKey,
   firstName,
   formatSprintDates,
+  isAssignedToMember,
   isOpenSprintTaskStatus,
+  isWaitingOnMemberReview,
   MINE_TAB,
+  REVIEW_INBOX_ACCENT,
   SPRINT_BOARD_COLUMNS,
   SPRINT_STATUS_LABELS,
   sprintTeamTabKeys,
@@ -78,9 +81,7 @@ export default function SprintBoard({
   const [renaming, setRenaming] = useState(false);
   const [draftName, setDraftName] = useState(sprint.name);
   const [renamingSaving, setRenamingSaving] = useState(false);
-  const [expandedColumns, setExpandedColumns] = useState<
-    Partial<Record<SprintTaskStatus, boolean>>
-  >({});
+  const [expandedColumns, setExpandedColumns] = useState<Partial<Record<string, boolean>>>({});
   const draggingId = useRef<number | null>(null);
 
   useEffect(() => {
@@ -112,12 +113,16 @@ export default function SprintBoard({
       if (task.status === "cancelled") return false;
       if (allTime) return true;
       if (teamTab === MINE_TAB) {
-        if (!task.assignees.some(a => a.id === member.id)) return false;
+        const assigned = isAssignedToMember(task, member.id);
+        const reviewInbox = isWaitingOnMemberReview(task, member.id);
+        if (!assigned && !reviewInbox) return false;
       } else if (teamTab !== "ALL" && task.team_key !== teamTab) {
         return false;
       }
-      if (assigneeFilter != null && !task.assignees.some(a => a.id === assigneeFilter)) {
-        return false;
+      if (assigneeFilter != null && !isAssignedToMember(task, assigneeFilter)) {
+        if (!(assigneeFilter === member.id && isWaitingOnMemberReview(task, member.id))) {
+          return false;
+        }
       }
       return true;
     });
@@ -226,6 +231,63 @@ export default function SprintBoard({
     const rank = { active: 0, planning: 1, closed: 2 } as const;
     return [...sprints].sort((a, b) => rank[a.status] - rank[b.status] || b.id - a.id);
   }, [sprints]);
+
+  const renderTaskCards = (list: SprintTaskRow[], expandKey: string, awaitingMyReview = false) => {
+    const expanded = Boolean(expandedColumns[expandKey]);
+    const shown = expanded ? list : list.slice(0, COLUMN_TASK_PREVIEW);
+    const hidden = Math.max(0, list.length - shown.length);
+    return (
+      <>
+        {list.length === 0 ? (
+          <p className="m-0 rounded-xl border border-dashed border-(--obs-border) px-3 py-6 text-center text-xs text-(--obs-text-faint)">
+            None
+          </p>
+        ) : (
+          shown.map(task => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              compact
+              showTeam
+              awaitingMyReview={awaitingMyReview}
+              sprintNames={
+                allTime
+                  ? task.sprint_ids
+                      .map(id => sprintNameById.get(id))
+                      .filter((name): name is string => Boolean(name))
+                  : undefined
+              }
+              canEdit={canMove}
+              nudging={nudgingTaskId === task.id}
+              onEdit={() => setTaskModal(task.id)}
+              onNudge={canMove ? handleNudgeOverdue : undefined}
+              onDragStart={() => {
+                draggingId.current = task.id;
+              }}
+            />
+          ))
+        )}
+        {hidden > 0 ? (
+          <button
+            type="button"
+            onClick={() => setExpandedColumns(prev => ({ ...prev, [expandKey]: true }))}
+            className="cursor-pointer rounded-xl border border-(--obs-border) bg-transparent py-2 font-mono text-[0.65rem] uppercase tracking-widest text-(--obs-text-muted)"
+          >
+            Show more · {hidden}
+          </button>
+        ) : null}
+        {expanded && list.length > COLUMN_TASK_PREVIEW ? (
+          <button
+            type="button"
+            onClick={() => setExpandedColumns(prev => ({ ...prev, [expandKey]: false }))}
+            className="cursor-pointer border-0 bg-transparent py-1 font-mono text-[0.65rem] uppercase tracking-widest text-(--obs-text-faint)"
+          >
+            Show less
+          </button>
+        ) : null}
+      </>
+    );
+  };
 
   return (
     <div className="flex w-full flex-col gap-8">
@@ -370,9 +432,14 @@ export default function SprintBoard({
         <div className="grid min-h-[28rem] grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           {SPRINT_BOARD_COLUMNS.map(column => {
             const columnTasks = visibleTasks.filter(t => t.status === column.status);
-            const expanded = Boolean(expandedColumns[column.status]);
-            const shown = expanded ? columnTasks : columnTasks.slice(0, COLUMN_TASK_PREVIEW);
-            const hidden = Math.max(0, columnTasks.length - shown.length);
+            const splitPending =
+              column.status === "pending_review" && teamTab === MINE_TAB && !allTime;
+            const awaitingMe = splitPending
+              ? columnTasks.filter(t => isWaitingOnMemberReview(t, member.id))
+              : [];
+            const awaitingOthers = splitPending
+              ? columnTasks.filter(t => !isWaitingOnMemberReview(t, member.id))
+              : columnTasks;
             const accent = COLUMN_ACCENT[column.status];
             return (
               <section
@@ -413,7 +480,25 @@ export default function SprintBoard({
                   </span>
                 </h2>
                 <div className="flex flex-1 flex-col gap-3">
-                  {columnTasks.length === 0 ? (
+                  {splitPending && columnTasks.length > 0 ? (
+                    <>
+                      <div className="flex flex-col gap-3">
+                        <p className="m-0 font-mono text-[0.62rem] uppercase tracking-widest text-(--obs-text-faint)">
+                          Waiting on a reviewer · {awaitingOthers.length}
+                        </p>
+                        {renderTaskCards(awaitingOthers, `${column.status}-theirs`)}
+                      </div>
+                      <div className="flex flex-col gap-3 border-t border-(--obs-border) pt-3">
+                        <p
+                          className="m-0 font-mono text-[0.62rem] uppercase tracking-widest"
+                          style={{ color: REVIEW_INBOX_ACCENT }}
+                        >
+                          Waiting on you · {awaitingMe.length}
+                        </p>
+                        {renderTaskCards(awaitingMe, `${column.status}-mine`, true)}
+                      </div>
+                    </>
+                  ) : columnTasks.length === 0 ? (
                     <p className="m-0 rounded-xl border border-dashed border-(--obs-border) px-3 py-8 text-center text-xs text-(--obs-text-faint)">
                       {column.status === "todo" && canMove
                         ? "New tasks land here."
@@ -422,51 +507,8 @@ export default function SprintBoard({
                           : "Drop a card here"}
                     </p>
                   ) : (
-                    shown.map(task => (
-                      <TaskCard
-                        key={task.id}
-                        task={task}
-                        compact
-                        showTeam
-                        sprintNames={
-                          allTime
-                            ? task.sprint_ids
-                                .map(id => sprintNameById.get(id))
-                                .filter((name): name is string => Boolean(name))
-                            : undefined
-                        }
-                        canEdit={canMove}
-                        nudging={nudgingTaskId === task.id}
-                        onEdit={() => setTaskModal(task.id)}
-                        onNudge={canMove ? handleNudgeOverdue : undefined}
-                        onDragStart={() => {
-                          draggingId.current = task.id;
-                        }}
-                      />
-                    ))
+                    renderTaskCards(columnTasks, column.status)
                   )}
-                  {hidden > 0 ? (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setExpandedColumns(prev => ({ ...prev, [column.status]: true }))
-                      }
-                      className="cursor-pointer rounded-xl border border-(--obs-border) bg-transparent py-2 font-mono text-[0.65rem] uppercase tracking-widest text-(--obs-text-muted)"
-                    >
-                      Show more · {hidden}
-                    </button>
-                  ) : null}
-                  {expanded && columnTasks.length > COLUMN_TASK_PREVIEW ? (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setExpandedColumns(prev => ({ ...prev, [column.status]: false }))
-                      }
-                      className="cursor-pointer border-0 bg-transparent py-1 font-mono text-[0.65rem] uppercase tracking-widest text-(--obs-text-faint)"
-                    >
-                      Show less
-                    </button>
-                  ) : null}
                 </div>
               </section>
             );
