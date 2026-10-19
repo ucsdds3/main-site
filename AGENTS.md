@@ -115,6 +115,7 @@ main-site/
 ├── .github/workflows/            # Vercel deploy + Supabase migration CI
 ├── docs/                         # Feature architecture (event workflow)
 ├── scripts/                      # Node helpers (optimize-images, …)
+├── mcp/sprint-board/             # MCP server for the sprint board (Claude Code; docs/SPRINT_BOARD_MCP.md)
 └── vercel.json
 ```
 
@@ -396,6 +397,10 @@ Secrets (Supabase, not Vite): `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, optional `V
 
 Same `RESEND_*` secrets as `confirm-event-status`. Optional `MEMBERS_PORTAL_URL` (default `https://members.ds3atucsd.com`). Task writes still go client → PostgREST; a mail failure does not roll back the card.
 
+### Sprint board MCP server
+
+`mcp/sprint-board/` (stdio, `@modelcontextprotocol/sdk`, run with `tsx`) exposes `/sprints` to Claude Code: review the board, create / assign / move / review tasks. It signs in with the anon key + the member's own email and password (`SPRINTS_MCP_EMAIL` / `SPRINTS_MCP_PASSWORD` in `.env`), so sprints RLS applies exactly as in the UI. Never give it a service-role key. Its validation in `board.ts` mirrors `constants.ts` / `useSprintBoard.ts`: change both together. Project config: `.mcp.json`. Typechecked by `tsconfig.mcp.json` (part of `npm run build`). Setup + tools: `docs/SPRINT_BOARD_MCP.md`.
+
 ### RLS / grants (not in this repo)
 
 Most tables do **not** have policies checked in here. The UI is a presentation layer for Admin/events: hide columns, hide nav, split Confirm vs Save.
@@ -429,6 +434,7 @@ Row types: `src/Sites/Members/Pages/Admin/Utils/types.ts`, `src/Utils/types.ts`.
 | Role / admin permissions | `Pages/Admin/Data/tables.json`, `Members.tsx`, `Links.tsx` |
 | Admin tables | `useAdminFetch`, `EditCard` |
 | Sprint tracker | `src/Sites/Members/Pages/Sprints/`, `supabase/migrations/20260907220000_create_sprints.sql` |
+| Sprint board from Claude Code (MCP) | `mcp/sprint-board/`, `docs/SPRINT_BOARD_MCP.md` |
 | Events calendar / cards | `src/Shared/Events/` |
 | Cross-site nav / titles | `src/Hooks/useSiteHandler.ts`, `navbar.json` |
 | Supabase client | `src/Utils/supabase.ts` |

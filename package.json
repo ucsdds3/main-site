@@ -17,7 +17,8 @@
     "db:new": "supabase migration new",
     "db:local": "node scripts/local-db.mjs",
     "db:stop": "node scripts/local-db.mjs --stop",
-    "db:reset": "node scripts/local-db.mjs --reset"
+    "db:reset": "node scripts/local-db.mjs --reset",
+    "mcp:sprints": "tsx mcp/sprint-board/server.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -54,6 +55,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@modelcontextprotocol/sdk": "^1.32.1",
     "@types/node": "^24.1.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",

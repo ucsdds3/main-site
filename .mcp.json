@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ds3-sprints": {
+      "command": "npx",
+      "args": ["--no-install", "tsx", "mcp/sprint-board/server.ts"]
+    }
+  }
+}
