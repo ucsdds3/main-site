@@ -11,6 +11,7 @@ do $$
 declare
   old_default text;
   default_tags text[];
+  dependents text;
 begin
   select column_default into old_default
   from information_schema.columns
@@ -20,6 +21,21 @@ begin
     and udt_name <> '_text';
 
   if found then
+    -- Functions typed on or casting to the enum would only break after this succeeds (the
+    -- column change can't see inside function bodies), so refuse and name them instead.
+    select string_agg(p.oid::regprocedure::text, ', ') into dependents
+    from pg_proc p
+    where p.pronamespace = 'public'::regnamespace
+      and (
+        pg_get_function_result(p.oid) ilike '%Event Tags%'
+        or pg_get_function_arguments(p.oid) ilike '%Event Tags%'
+        or p.prosrc ilike '%Event Tags%'
+      );
+    if dependents is not null then
+      raise exception 'Events.tags: these functions use the "Event Tags" enum; update them to text first: %',
+        dependents;
+    end if;
+
     -- Keep any default as a plain text literal (e.g. '{Other}'::"Event Tags"[] → '{Other}').
     if old_default is not null then
       execute format('select (%s)::text[]', old_default) into default_tags;
