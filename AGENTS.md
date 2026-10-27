@@ -115,6 +115,7 @@ main-site/
 ├── .github/workflows/            # Vercel deploy + Supabase migration CI
 ├── docs/                         # Feature architecture (event workflow)
 ├── scripts/                      # Node helpers (optimize-images, …)
+├── mcp/sprint-board/             # Sprint board MCP server: hosted Worker + local stdio (docs/SPRINT_BOARD_MCP.md)
 └── vercel.json
 ```
 
@@ -396,6 +397,10 @@ Secrets (Supabase, not Vite): `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, optional `V
 
 Same `RESEND_*` secrets as `confirm-event-status`. Optional `MEMBERS_PORTAL_URL` (default `https://members.ds3atucsd.com`). Task writes still go client → PostgREST; a mail failure does not roll back the card.
 
+### Sprint board MCP server
+
+`mcp/sprint-board/` exposes `/sprints` to Claude: review the board, create / assign / move / review tasks. `board.ts` (queries + validation) and `tools.ts` (MCP tools) are shared by two entry points: `worker.ts`, the hosted Cloudflare Worker (OAuth sign-in page that takes the member's portal email + password, MCP over HTTP at `/mcp`, config `wrangler.jsonc`, deploy `npm run mcp:deploy`; merging does not redeploy it), and `server.ts`, local stdio for Claude Code / Desktop (`SPRINTS_MCP_EMAIL` / `SPRINTS_MCP_PASSWORD` in `.env`, project config `.mcp.json`). Both run every query with the member's own Supabase session, so sprints RLS applies exactly as in the UI. Never give either a service-role key. Validation in `board.ts` mirrors `constants.ts` / `useSprintBoard.ts`: change both together. Typechecked by `tsconfig.mcp.json` + `tsconfig.worker.json` (part of `npm run build`). Setup + tools: `docs/SPRINT_BOARD_MCP.md`.
+
 ### RLS / grants (not in this repo)
 
 Most tables do **not** have policies checked in here. The UI is a presentation layer for Admin/events: hide columns, hide nav, split Confirm vs Save.
@@ -429,6 +434,7 @@ Row types: `src/Sites/Members/Pages/Admin/Utils/types.ts`, `src/Utils/types.ts`.
 | Role / admin permissions | `Pages/Admin/Data/tables.json`, `Members.tsx`, `Links.tsx` |
 | Admin tables | `useAdminFetch`, `EditCard` |
 | Sprint tracker | `src/Sites/Members/Pages/Sprints/`, `supabase/migrations/20260907220000_create_sprints.sql` |
+| Sprint board from Claude (MCP) | `mcp/sprint-board/`, `docs/SPRINT_BOARD_MCP.md` |
 | Events calendar / cards | `src/Shared/Events/` |
 | Cross-site nav / titles | `src/Hooks/useSiteHandler.ts`, `navbar.json` |
 | Supabase client | `src/Utils/supabase.ts` |

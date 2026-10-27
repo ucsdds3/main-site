@@ -17,7 +17,9 @@
     "db:new": "supabase migration new",
     "db:local": "node scripts/local-db.mjs",
     "db:stop": "node scripts/local-db.mjs --stop",
-    "db:reset": "node scripts/local-db.mjs --reset"
+    "db:reset": "node scripts/local-db.mjs --reset",
+    "mcp:sprints": "tsx mcp/sprint-board/server.ts",
+    "mcp:deploy": "npx --yes wrangler@4.149.0 deploy --config mcp/sprint-board/wrangler.jsonc"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -53,7 +55,11 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@cfworker/json-schema": "^4.1.1",
+    "@cloudflare/workers-oauth-provider": "^1.2.3",
+    "@cloudflare/workers-types": "^5.20261009.1",
     "@eslint/js": "^9.22.0",
+    "@modelcontextprotocol/sdk": "^1.32.1",
     "@types/node": "^24.1.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
