@@ -243,13 +243,20 @@ export type TaskFilter = {
 export class SprintBoard {
   private me: BoardMember | null = null;
 
-  constructor(private readonly sb: SupabaseClient) {}
+  /**
+   * `accessToken` is for a client authenticated by header rather than a signed-in session
+   * (the hosted Worker); the local server signs in and leaves it unset.
+   */
+  constructor(
+    private readonly sb: SupabaseClient,
+    private readonly accessToken?: string
+  ) {}
 
   // ---------------------------------------------------------------- people
 
   async whoami(): Promise<BoardMember> {
     if (this.me) return this.me;
-    const { data: auth, error: authError } = await this.sb.auth.getUser();
+    const { data: auth, error: authError } = await this.sb.auth.getUser(this.accessToken);
     if (authError || !auth.user?.email) {
       throw new BoardError(authError?.message ?? "Not signed in.");
     }

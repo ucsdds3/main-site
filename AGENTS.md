@@ -115,7 +115,7 @@ main-site/
 ├── .github/workflows/            # Vercel deploy + Supabase migration CI
 ├── docs/                         # Feature architecture (event workflow)
 ├── scripts/                      # Node helpers (optimize-images, …)
-├── mcp/sprint-board/             # MCP server for the sprint board (Claude Code; docs/SPRINT_BOARD_MCP.md)
+├── mcp/sprint-board/             # Sprint board MCP server: hosted Worker + local stdio (docs/SPRINT_BOARD_MCP.md)
 └── vercel.json
 ```
 
@@ -399,7 +399,7 @@ Same `RESEND_*` secrets as `confirm-event-status`. Optional `MEMBERS_PORTAL_URL`
 
 ### Sprint board MCP server
 
-`mcp/sprint-board/` (stdio, `@modelcontextprotocol/sdk`, run with `tsx`) exposes `/sprints` to Claude Code: review the board, create / assign / move / review tasks. It signs in with the anon key + the member's own email and password (`SPRINTS_MCP_EMAIL` / `SPRINTS_MCP_PASSWORD` in `.env`), so sprints RLS applies exactly as in the UI. Never give it a service-role key. Its validation in `board.ts` mirrors `constants.ts` / `useSprintBoard.ts`: change both together. Project config: `.mcp.json`. Typechecked by `tsconfig.mcp.json` (part of `npm run build`). Setup + tools: `docs/SPRINT_BOARD_MCP.md`.
+`mcp/sprint-board/` exposes `/sprints` to Claude: review the board, create / assign / move / review tasks. `board.ts` (queries + validation) and `tools.ts` (MCP tools) are shared by two entry points: `worker.ts`, the hosted Cloudflare Worker (OAuth sign-in page that takes the member's portal email + password, MCP over HTTP at `/mcp`, config `wrangler.jsonc`, deploy `npm run mcp:deploy`; merging does not redeploy it), and `server.ts`, local stdio for Claude Code / Desktop (`SPRINTS_MCP_EMAIL` / `SPRINTS_MCP_PASSWORD` in `.env`, project config `.mcp.json`). Both run every query with the member's own Supabase session, so sprints RLS applies exactly as in the UI. Never give either a service-role key. Validation in `board.ts` mirrors `constants.ts` / `useSprintBoard.ts`: change both together. Typechecked by `tsconfig.mcp.json` + `tsconfig.worker.json` (part of `npm run build`). Setup + tools: `docs/SPRINT_BOARD_MCP.md`.
 
 ### RLS / grants (not in this repo)
 
@@ -434,7 +434,7 @@ Row types: `src/Sites/Members/Pages/Admin/Utils/types.ts`, `src/Utils/types.ts`.
 | Role / admin permissions | `Pages/Admin/Data/tables.json`, `Members.tsx`, `Links.tsx` |
 | Admin tables | `useAdminFetch`, `EditCard` |
 | Sprint tracker | `src/Sites/Members/Pages/Sprints/`, `supabase/migrations/20260907220000_create_sprints.sql` |
-| Sprint board from Claude Code (MCP) | `mcp/sprint-board/`, `docs/SPRINT_BOARD_MCP.md` |
+| Sprint board from Claude (MCP) | `mcp/sprint-board/`, `docs/SPRINT_BOARD_MCP.md` |
 | Events calendar / cards | `src/Shared/Events/` |
 | Cross-site nav / titles | `src/Hooks/useSiteHandler.ts`, `navbar.json` |
 | Supabase client | `src/Utils/supabase.ts` |

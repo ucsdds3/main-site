@@ -1,0 +1,18 @@
+// Hosted sprint board MCP server. Deploy from main-site/: see docs/SPRINT_BOARD_MCP.md.
+{
+  "name": "ds3-sprint-board-mcp",
+  "main": "worker.ts",
+  "compatibility_date": "2026-10-01",
+  // global_fetch_strictly_public: required for OAuth client ID metadata documents (SSRF guard).
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "vars": {
+    "SUPABASE_URL": "https://aogowlvmcvvrnryxuzlr.supabase.co",
+  },
+  // SUPABASE_ANON_KEY is set with `wrangler secret put SUPABASE_ANON_KEY` (the same public
+  // anon key as VITE_SUPABASE_ANON_KEY). No service-role key: tools run as the signed-in member.
+  "kv_namespaces": [
+    // OAuth clients, grants and tokens. Created automatically on first deploy.
+    { "binding": "OAUTH_KV" },
+  ],
+  "observability": { "enabled": true },
+}

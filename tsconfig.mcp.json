@@ -20,5 +20,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["mcp"]
+  "include": ["mcp"],
+  "exclude": ["mcp/sprint-board/worker.ts"]
 }

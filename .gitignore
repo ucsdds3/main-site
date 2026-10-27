@@ -34,6 +34,10 @@ dist-ssr
 .venv/
 __pycache__/
 
+# Cloudflare Worker (mcp/sprint-board) local state and dev secrets
+.wrangler/
+.dev.vars*
+
 # Supabase CLI local state (config.toml + migrations are tracked)
 supabase/.temp/
 supabase/.branches/

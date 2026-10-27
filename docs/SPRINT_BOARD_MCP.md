@@ -1,54 +1,135 @@
 # Sprint board MCP server
 
 `mcp/sprint-board/` is an [MCP](https://modelcontextprotocol.io) server for the members-portal
-sprint board (`/sprints`). Connect it to Claude Code and you can review the board, add tasks,
-assign people and approve reviews by asking in plain English instead of clicking through the UI.
+sprint board (`/sprints`). Connect it to Claude and you can review the board, add tasks, assign
+people and approve reviews by asking in plain English instead of clicking through the UI.
 
-It runs locally over stdio and signs in to Supabase **as you**, with the same public anon key the
-website uses and your members-portal password. Every read and write goes through the sprints
-RLS policies, so you can do exactly what you can do on members.ds3atucsd.com/sprints and
-nothing more. No service-role key is involved.
+It runs two ways, with the same tools and rules:
 
-## Setup
+| | Hosted (Cloudflare Worker) | Local (stdio) |
+|---|---|---|
+| Works in | Claude web, desktop and mobile (custom connector), Claude Code, other MCP clients | Claude Code, Claude Desktop |
+| Setup per person | Add one URL and sign in with your DS3 account | Clone this repo, `npm install`, password in `.env` |
+| Code | `mcp/sprint-board/worker.ts` | `mcp/sprint-board/server.ts` |
 
-1. Install dependencies in `main-site/`:
+Both act **as the signed-in member**: every query runs with that member's own Supabase session
+and the public anon key, so the sprints RLS policies apply exactly as on members.ds3atucsd.com.
+A regular Member can't connect; Board can't create sprints. No service-role key is involved.
+
+```
+mcp/sprint-board/
+  board.ts       queries + validation (mirrors the /sprints UI)
+  tools.ts       the MCP tools, shared by both servers
+  worker.ts      hosted: OAuth sign-in + MCP over HTTP at /mcp
+  server.ts      local: stdio, signs in from .env
+  wrangler.jsonc Cloudflare config
+```
+
+## Hosted
+
+### Connect (everyone)
+
+You need the Worker URL from whoever deployed it, e.g.
+`https://ds3-sprint-board-mcp.<account>.workers.dev/mcp`.
+
+- **Claude app (web, desktop, mobile):** Settings → Connectors → Add custom connector → paste
+  the URL → Connect. A DS3 page opens: sign in with your members-portal email and password and
+  click **Sign in and allow**. Custom connectors depend on your Claude plan; on Team/Enterprise an
+  owner may have to add it for the org.
+- **Claude Code:** `claude mcp add --transport http ds3-sprints <url>`, then run `/mcp` and
+  choose `ds3-sprints` to sign in.
+
+Your password is only used to sign in to Supabase on that page and is never stored. The Worker
+keeps your Supabase session (encrypted in Workers KV) so Claude stays connected; an idle
+connection signs in again after 30 days. Disconnecting the connector in Claude revokes it.
+
+### Deploy (once, by an admin)
+
+It runs on the free Cloudflare Workers plan. From `main-site/`:
+
+1. Make a free Cloudflare account, then sign in from the terminal:
 
    ```sh
    npm install
+   npx wrangler@4.149.0 login
    ```
 
-2. Add your login to `main-site/.env`, which is gitignored and already holds the Vite Supabase
-   keys:
+2. Deploy. The first deploy creates the `OAUTH_KV` namespace automatically and prints the URL:
 
    ```sh
-   VITE_SUPABASE_URL=...            # already there for `npm run dev`
-   VITE_SUPABASE_ANON_KEY=...       # already there for `npm run dev`
+   npm run mcp:deploy
+   ```
+
+3. Give it the Supabase anon key, the same public value as `VITE_SUPABASE_ANON_KEY`:
+
+   ```sh
+   npx wrangler@4.149.0 secret put SUPABASE_ANON_KEY --config mcp/sprint-board/wrangler.jsonc
+   ```
+
+4. Open the printed URL: it should say "DS3 sprint board MCP server". Share `<url>/mcp`.
+
+Merging to `main` does **not** redeploy the Worker. Run `npm run mcp:deploy` again after
+changing anything in `mcp/sprint-board/`. Logs: Cloudflare dashboard → Workers → ds3-sprint-board-mcp.
+
+`SUPABASE_URL` is set in `wrangler.jsonc` (the Membership project). To serve it on a custom
+domain, add a route in Cloudflare and set the `PUBLIC_ORIGIN` var to that origin.
+
+### Try it locally
+
+```sh
+npm run db:local                # local Supabase (see AGENTS.md)
+npx wrangler@4.149.0 dev --config mcp/sprint-board/wrangler.jsonc \
+  --var SUPABASE_URL:http://127.0.0.1:54321 --var SUPABASE_ANON_KEY:<anon key from .env.local>
+```
+
+Then point an MCP client at `http://127.0.0.1:8787/mcp` and sign in as `exec@ucsd.edu` /
+`LocalDev1`, or run `npx @modelcontextprotocol/inspector`.
+
+## Local
+
+1. `npm install` in `main-site/`.
+2. Add your login to `main-site/.env` (gitignored; it already holds the Vite Supabase keys):
+
+   ```sh
+   VITE_SUPABASE_URL=...
+   VITE_SUPABASE_ANON_KEY=...
    SPRINTS_MCP_EMAIL=you@ucsd.edu   # your members-portal login (Board or Executive)
    SPRINTS_MCP_PASSWORD=...
    ```
 
    `.env.local` overrides `.env`, as it does for Vite. While `npm run db:local` is running, the
-   server therefore talks to the local Supabase (log in as `exec@ucsd.edu` / `LocalDev1`).
-   Variables already set in the server's environment take precedence over both files.
+   server therefore talks to the local Supabase. Variables already set in the server's
+   environment take precedence over both files.
 
-3. Connect it to Claude Code. Pick one:
+3. Connect it:
 
-   - **Inside this repo:** the committed `.mcp.json` registers it as `ds3-sprints`. Start
-     `claude` from `main-site/` and approve the server when prompted.
-   - **From any directory:** register it once at user scope, using absolute paths:
+   - **Claude Code, inside this repo:** the committed `.mcp.json` registers it as
+     `ds3-sprints`. Start `claude` from `main-site/` and approve it.
+   - **Claude Code, from any directory:**
 
      ```sh
      claude mcp add --scope user ds3-sprints -- \
        /path/to/main-site/node_modules/.bin/tsx /path/to/main-site/mcp/sprint-board/server.ts
      ```
 
-     The server still reads `main-site/.env`. You can pass `-e SPRINTS_MCP_EMAIL=...` and
-     `-e SPRINTS_MCP_PASSWORD=...` instead.
+   - **Claude Desktop:** Settings → Developer → Edit Config, then restart Desktop. Use full
+     paths; `which node` prints node's:
 
-4. Check it: run `/mcp` in Claude Code (it should list `ds3-sprints` as connected), then ask
-   "who am I on the sprint board?"
+     ```json
+     {
+       "mcpServers": {
+         "ds3-sprints": {
+           "command": "/full/path/to/node",
+           "args": [
+             "/full/path/to/main-site/node_modules/tsx/dist/cli.mjs",
+             "/full/path/to/main-site/mcp/sprint-board/server.ts"
+           ]
+         }
+       }
+     }
+     ```
 
-To try it without Claude Code, run `npx @modelcontextprotocol/inspector npm run --silent mcp:sprints`.
+To try it without Claude: `npx @modelcontextprotocol/inspector npm run --silent mcp:sprints`.
 
 ## Tools
 
@@ -65,7 +146,7 @@ To try it without Claude Code, run `npx @modelcontextprotocol/inspector npm run 
 | `update_task` | Edit fields, replace/add/remove assignees, change the reviewer, move between sprints |
 | `move_task` | Change column, optionally logging actual hours. Moving to pending review emails the reviewer |
 | `review_task` | As the reviewer: approve (moves to Complete) or send back to In progress |
-| `delete_task` | Delete a card. Claude Code asks before running it |
+| `delete_task` | Delete a card. Clients ask before running it |
 
 People can be named by email, member id, full or partial name, or `"me"`. If a name matches more
 than one person, the tool refuses and lists the matches. Sprints can be `"active"`, `"planning"`,
@@ -81,8 +162,7 @@ These match the task modal and `useSprintBoard.ts`, and the database triggers an
 - A card with a reviewer reaches Complete only through that reviewer's approval
   (`review_task`). A card without a reviewer can go straight to Complete.
 - Progress notes are capped at 100 words.
-- Board can't create or close sprints (Executive only, as on the site). This server does not
-  manage sprints; use the website for that.
+- Creating and closing sprints stays on the website (Executive only).
 
 Emails go through the `notify-sprint-task` Edge Function, as they do from the website. If the
 email fails, the card is still saved and the tool returns a warning.
