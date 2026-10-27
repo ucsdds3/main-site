@@ -10,6 +10,7 @@ const TAG_ACCENT: Record<string, string> = {
   Workshop:     "#19B5CA",
   Social:       "#a78bfa",
   Professional: "#F58134",
+  Hackathon:    "#fbbf24",
   Default:      "rgba(255,255,255,0.3)",
 };
 
