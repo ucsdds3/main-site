@@ -163,8 +163,9 @@ export function sprintTiming(
 }
 
 /**
- * The sprint /sprints opens on: the one whose dates cover today (open ones first), else the
- * active sprint unless it has already ended, else the next upcoming one, else the most recent.
+ * The sprint /sprints opens on: an open sprint whose dates cover today, else the active sprint
+ * unless it has already ended, else a closed sprint covering today, else the next upcoming one,
+ * else the most recent.
  */
 export function defaultSprint(sprints: SprintRow[], today = todayIso()): SprintRow | null {
   const byStart = [...sprints].sort(
@@ -174,8 +175,9 @@ export function defaultSprint(sprints: SprintRow[], today = todayIso()): SprintR
   return (
     current.find(s => s.status === "active") ??
     current.find(s => s.status !== "closed") ??
-    current[current.length - 1] ??
+    // A sprint closed early (or one just created) can be active before its dates start.
     byStart.find(s => s.status === "active" && sprintTiming(s, today) !== "past") ??
+    current[current.length - 1] ??
     byStart.find(s => sprintTiming(s, today) === "upcoming") ??
     byStart[byStart.length - 1] ??
     null
