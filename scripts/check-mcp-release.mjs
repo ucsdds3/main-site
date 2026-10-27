@@ -65,9 +65,16 @@ if (current && baseVersion && !greater(current, parse(baseVersion))) {
   errors.push(`${MANIFEST}: bump version above ${baseVersion} (now ${version}).`);
 }
 
-const serverVersion = /SERVER_INFO\s*=\s*\{[^}]*version:\s*"([^"]+)"/.exec(read(TOOLS))?.[1];
+const serverVersionOf = source =>
+  /SERVER_INFO\s*=\s*\{[^}]*version:\s*"([^"]+)"/.exec(source ?? "")?.[1] ?? null;
+const serverVersion = serverVersionOf(read(TOOLS));
 if (serverVersion !== version) {
   errors.push(`${TOOLS}: SERVER_INFO.version is "${serverVersion}", must equal ${version}.`);
+}
+// The hosted server shipped before the manifest existed, so also never go below its version.
+const baseServerVersion = serverVersionOf(showAtBase(TOOLS));
+if (current && parse(baseServerVersion) && greater(parse(baseServerVersion), current)) {
+  errors.push(`${MANIFEST}: version ${version} is below the shipped ${baseServerVersion}.`);
 }
 
 const heading = new RegExp(`^## ${version.replace(/\./g, "\\.")} — \\d{4}-\\d{2}-\\d{2}$`, "m");

@@ -90,6 +90,8 @@ fs.copyFileSync(path.join(SRC, "mcpb/icon.png"), path.join(STAGE, "icon.png"));
 const { version } = JSON.parse(manifest);
 const mcpb = ["--yes", "@anthropic-ai/mcpb@2.1.2"];
 const bundle = path.join(OUT, `ds3-sprint-board-${version}.mcpb`);
-execFileSync("npx", [...mcpb, "validate", path.join(STAGE, "manifest.json")], { stdio: "inherit" });
-execFileSync("npx", [...mcpb, "pack", STAGE, bundle], { stdio: "inherit" });
+// npx is a .cmd shim on Windows, which execFileSync can only run through a shell.
+const npx = { stdio: "inherit", shell: process.platform === "win32" };
+execFileSync("npx", [...mcpb, "validate", path.join(STAGE, "manifest.json")], npx);
+execFileSync("npx", [...mcpb, "pack", STAGE, bundle], npx);
 console.log(`\nBuilt ${path.relative(REPO_ROOT, bundle)}`);

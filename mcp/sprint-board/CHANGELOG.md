@@ -18,7 +18,7 @@ add an entry at the top of this file, pass `npm run mcp:check`, then after merge
 ### Fixed
 -->
 
-## 1.0.0 — 2026-10-27
+## 1.1.0 — 2026-10-27
 
 First release.
 

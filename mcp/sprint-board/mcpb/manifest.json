@@ -3,7 +3,7 @@
   "manifest_version": "0.3",
   "name": "ds3-sprint-board",
   "display_name": "DS3 Sprint Board",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Review and update the DS3 sprint board (members.ds3atucsd.com/sprints) from Claude.",
   "long_description": "Read the club-wide sprint board and create, assign, move and review tasks as yourself. Sign in with your DS3 members-portal email and password; Claude then acts with your own account, so you can do exactly what you can on the website. Board and Executive members only.",
   "author": {
