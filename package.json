@@ -19,6 +19,7 @@
     "db:stop": "node scripts/local-db.mjs --stop",
     "db:reset": "node scripts/local-db.mjs --reset",
     "mcp:sprints": "tsx mcp/sprint-board/server.ts",
+    "mcp:bundle": "node scripts/build-mcpb.mjs",
     "mcp:deploy": "npx --yes wrangler@4.149.0 deploy --config mcp/sprint-board/wrangler.jsonc"
   },
   "dependencies": {

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/mcpb/main/schemas/mcpb-manifest-v0.3.schema.json",
+  "manifest_version": "0.3",
+  "name": "ds3-sprint-board",
+  "display_name": "DS3 Sprint Board",
+  "version": "1.1.0",
+  "description": "Review and update the DS3 sprint board (members.ds3atucsd.com/sprints) from Claude.",
+  "long_description": "Read the club-wide sprint board and create, assign, move and review tasks as yourself. Sign in with your DS3 members-portal email and password; Claude then acts with your own account, so you can do exactly what you can on the website. Board and Executive members only.",
+  "author": {
+    "name": "Data Science Student Society at UC San Diego",
+    "url": "https://ds3atucsd.com"
+  },
+  "homepage": "https://members.ds3atucsd.com/sprints",
+  "repository": { "type": "git", "url": "https://github.com/ucsdds3/main-site" },
+  "icon": "icon.png",
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "SPRINTS_MCP_EMAIL": "${user_config.email}",
+        "SPRINTS_MCP_PASSWORD": "${user_config.password}",
+        "SPRINTS_MCP_SUPABASE_URL": "__SUPABASE_URL__",
+        "SPRINTS_MCP_SUPABASE_ANON_KEY": "__SUPABASE_ANON_KEY__"
+      }
+    }
+  },
+  "user_config": {
+    "email": {
+      "type": "string",
+      "title": "DS3 members-portal email",
+      "description": "The email you sign in to members.ds3atucsd.com with.",
+      "required": true
+    },
+    "password": {
+      "type": "string",
+      "title": "Members-portal password",
+      "description": "Stored by Claude as a sensitive setting and only sent to DS3's Supabase sign-in.",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "tools": [
+    { "name": "whoami", "description": "Who you are signed in as and your access level" },
+    {
+      "name": "board_summary",
+      "description": "Summary of a sprint: counts, hours, people, review inbox"
+    },
+    { "name": "list_sprints", "description": "All sprints with status and dates" },
+    { "name": "list_teams", "description": "Board teams tasks can belong to" },
+    { "name": "list_members", "description": "Board and Executive members you can assign" },
+    {
+      "name": "list_tasks",
+      "description": "Tasks on a sprint, filtered by team, person or status"
+    },
+    { "name": "get_task", "description": "One task with its full details" },
+    { "name": "create_task", "description": "Add a task and assign people" },
+    { "name": "update_task", "description": "Edit a task's fields or assignees" },
+    { "name": "move_task", "description": "Move a task between columns" },
+    { "name": "review_task", "description": "Approve or send back a task pending review" },
+    { "name": "delete_task", "description": "Delete a task" }
+  ],
+  "keywords": ["ds3", "ucsd", "sprints", "tasks", "kanban"],
+  "compatibility": {
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": { "node": ">=18.0.0" }
+  }
+}
