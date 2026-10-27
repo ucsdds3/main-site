@@ -4,6 +4,7 @@ export const DEFAULT_EVENT_TAGS = [
   "Professional",
   "Social",
   "Fundraiser",
+  "Hackathon",
   "Other",
 ] as const;
 

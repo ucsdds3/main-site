@@ -119,6 +119,7 @@ export const tagColor = {
   Workshop: "badge-warning",
   Social: "badge-success",
   Fundraiser: "badge-accent",
+  Hackathon: "badge-primary",
   Other: "",
 };
 
