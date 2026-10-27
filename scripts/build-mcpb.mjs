@@ -1,5 +1,5 @@
 /**
- * Build the DS3 sprint board as a Claude Desktop extension: dist-mcpb/ds3-sprint-board.mcpb.
+ * Build the DS3 sprint board as a Claude Desktop extension: dist-mcpb/ds3-sprint-board-<version>.mcpb.
  *
  * Bundles mcp/sprint-board/server.ts (and its deps) into one server/index.js, fills the
  * public Supabase URL + anon key into the manifest, and packs it with the mcpb CLI. Members
@@ -85,8 +85,11 @@ const manifest = fs
 fs.writeFileSync(path.join(STAGE, "manifest.json"), manifest);
 fs.copyFileSync(path.join(SRC, "mcpb/icon.png"), path.join(STAGE, "icon.png"));
 
+// The file name carries the version so shared builds are easy to tell apart. Bump it in the
+// manifest and add a CHANGELOG.md entry for every build you send out.
+const { version } = JSON.parse(manifest);
 const mcpb = ["--yes", "@anthropic-ai/mcpb@2.1.2"];
-const bundle = path.join(OUT, "ds3-sprint-board.mcpb");
+const bundle = path.join(OUT, `ds3-sprint-board-${version}.mcpb`);
 execFileSync("npx", [...mcpb, "validate", path.join(STAGE, "manifest.json")], { stdio: "inherit" });
 execFileSync("npx", [...mcpb, "pack", STAGE, bundle], { stdio: "inherit" });
 console.log(`\nBuilt ${path.relative(REPO_ROOT, bundle)}`);

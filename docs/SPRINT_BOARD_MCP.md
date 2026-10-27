@@ -90,7 +90,7 @@ Then point an MCP client at `http://127.0.0.1:8787/mcp` and sign in as `exec@ucs
 
 ### Install (everyone)
 
-1. Get `ds3-sprint-board.mcpb` from a Board member.
+1. Get the latest `ds3-sprint-board-<version>.mcpb` from a Board member.
 2. Double-click it (or drag it into Claude Desktop → Settings → Extensions) and click **Install**.
 3. Enter your members-portal email and password. Claude stores the password as a sensitive
    setting; it is only sent to DS3's Supabase sign-in.
@@ -102,13 +102,17 @@ Settings → Extensions → DS3 Sprint Board → Configure.
 ### Build
 
 ```sh
-npm run mcp:bundle   # → dist-mcpb/ds3-sprint-board.mcpb (gitignored)
+npm run mcp:bundle   # → dist-mcpb/ds3-sprint-board-<version>.mcpb (gitignored)
 ```
 
 Bundles `server.ts` into one file, fills the Supabase URL + anon key into
 `mcp/sprint-board/mcpb/manifest.json`, then validates and packs it with the `mcpb` CLI. The key
 comes from `VITE_SUPABASE_ANON_KEY` (`.env` or the environment); the script refuses any key that
-isn't the Membership **anon** key. Bump `version` in the manifest when you share a new build.
+isn't the Membership **anon** key.
+
+Releases: bump `version` in `mcp/sprint-board/mcpb/manifest.json` and add an entry to
+`mcp/sprint-board/CHANGELOG.md` before sharing a new build. Installing a higher version over
+an older one updates it in place and keeps the saved email + password.
 
 ## Local
 
