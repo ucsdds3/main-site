@@ -4,9 +4,11 @@ Versions of the Claude Desktop extension (`ds3-sprint-board-<version>.mcpb`). Th
 connector (`https://ds3-sprint-board-mcp.ds3ucsd.workers.dev/mcp`) runs the same tools and is
 updated with `npm run mcp:deploy`.
 
-To release: bump `version` in `mcpb/manifest.json`, add an entry at the top, run
-`npm run mcp:bundle`, and share the new file. Use [semver](https://semver.org): patch for fixes,
-minor for new tools or options, major when something people rely on changes or goes away.
+**Every change under `mcp/sprint-board/` is a release.** Follow AGENTS.md → *Sprint board MCP
+releases*: bump `version` in `mcpb/manifest.json` and `SERVER_INFO.version` in `tools.ts` to the
+same [semver](https://semver.org) value (patch = fix, minor = new tool/option, major = breaking),
+add an entry at the top of this file, pass `npm run mcp:check`, then after merge run
+`npm run mcp:deploy` and `npm run mcp:bundle` and share the new `.mcpb`.
 
 <!--
 ## x.y.z — YYYY-MM-DD

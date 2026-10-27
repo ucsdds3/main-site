@@ -13,7 +13,7 @@ import {
 
 // Tool definitions shared by the local stdio server (server.ts) and the hosted Worker (worker.ts).
 
-export const SERVER_INFO = { name: "ds3-sprint-board", version: "1.1.0" };
+export const SERVER_INFO = { name: "ds3-sprint-board", version: "1.0.0" };
 
 export const INSTRUCTIONS = [
   "DS3 club-wide sprint board (members.ds3atucsd.com/sprints). Board and Executive only.",

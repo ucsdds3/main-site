@@ -401,6 +401,23 @@ Same `RESEND_*` secrets as `confirm-event-status`. Optional `MEMBERS_PORTAL_URL`
 
 `mcp/sprint-board/` exposes `/sprints` to Claude: review the board, create / assign / move / review tasks. `board.ts` (queries + validation) and `tools.ts` (MCP tools) are shared by two entry points: `worker.ts`, the hosted Cloudflare Worker (OAuth sign-in page that takes the member's portal email + password, MCP over HTTP at `/mcp`, config `wrangler.jsonc`, deploy `npm run mcp:deploy`; merging does not redeploy it), and `server.ts`, local stdio for Claude Code / Desktop (`SPRINTS_MCP_EMAIL` / `SPRINTS_MCP_PASSWORD` in `.env`, project config `.mcp.json`). Both run every query with the member's own Supabase session, so sprints RLS applies exactly as in the UI. Never give either a service-role key. Validation in `board.ts` mirrors `constants.ts` / `useSprintBoard.ts`: change both together. A third packaging, `npm run mcp:bundle`, builds `server.ts` into a Claude Desktop extension (`dist-mcpb/ds3-sprint-board-<version>.mcpb`; manifest in `mcp/sprint-board/mcpb/`, release notes in `mcp/sprint-board/CHANGELOG.md`) that asks for the email + password at install. Typechecked by `tsconfig.mcp.json` + `tsconfig.worker.json` (part of `npm run build`). Setup + tools: `docs/SPRINT_BOARD_MCP.md`.
 
+### Sprint board MCP releases (required for every MCP change)
+
+The hosted connector and the `.mcpb` extension are one product with **one version**. Any change to a file under `mcp/sprint-board/` (other than `CHANGELOG.md`) is a release and must, in the same PR:
+
+1. **Bump the version** with [semver](https://semver.org), in both places, to the same value:
+   - `version` in `mcp/sprint-board/mcpb/manifest.json`
+   - `SERVER_INFO.version` in `mcp/sprint-board/tools.ts`
+
+   Patch (`1.0.1`) for fixes and wording; minor (`1.1.0`) for new tools, options or fields; major (`2.0.0`) when a tool is removed or renamed, inputs change incompatibly, or sign-in changes.
+2. **Add a changelog entry** at the top of `mcp/sprint-board/CHANGELOG.md`: `## <version> — YYYY-MM-DD`, then `### Added` / `### Changed` / `### Fixed` bullets written for members, not for developers.
+3. **Pass the check:** `npm run mcp:check` (CI runs it on PRs touching `mcp/sprint-board/`), plus `npx tsc -b` and `npm run build`.
+4. **After merge, ship both:**
+   - `npm run mcp:deploy` (hosted connector; merging does not redeploy it)
+   - `npm run mcp:bundle` → share `dist-mcpb/ds3-sprint-board-<version>.mcpb` (needs `VITE_SUPABASE_ANON_KEY`, the public anon key, in `.env`; never the service-role key)
+
+Never reuse or lower a version that has been shared, and don't edit an old changelog entry to describe new work.
+
 ### RLS / grants (not in this repo)
 
 Most tables do **not** have policies checked in here. The UI is a presentation layer for Admin/events: hide columns, hide nav, split Confirm vs Save.
