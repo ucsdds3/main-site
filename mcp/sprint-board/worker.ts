@@ -123,7 +123,7 @@ function page(title: string, body: string, headers = new Headers(), status = 200
   label { display: block; margin: 14px 0 4px; font-size: 13px; color: #94a3b8; }
   input { width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px;
     border: 1px solid #1e2a3d; background: #050a14; color: inherit; font: inherit; }
-  .row { display: flex; gap: 10px; margin-top: 20px; }
+  .row { display: flex; flex-direction: row-reverse; gap: 10px; margin-top: 20px; }
   button { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid #1e2a3d;
     background: transparent; color: inherit; font: inherit; cursor: pointer; }
   button[value="approve"] { background: #19b5ca; border-color: #19b5ca; color: #04121a;
@@ -160,9 +160,11 @@ ${error ? `<p class="error">${escape(error)}</p>` : ""}
   <input id="email" name="email" type="email" autocomplete="username" required>
   <label for="password">Password</label>
   <input id="password" name="password" type="password" autocomplete="current-password" required>
+  <!-- Approve comes first so pressing Enter (implicit submission) signs in instead of denying;
+       row-reverse keeps Deny on the left. -->
   <div class="row">
-    <button name="decision" value="deny" formnovalidate>Deny</button>
     <button name="decision" value="approve">Sign in and allow</button>
+    <button name="decision" value="deny" formnovalidate>Deny</button>
   </div>
 </form>`;
 }
@@ -211,6 +213,7 @@ const defaultHandler = {
       const form = await request.formData();
       const handle = String(form.get("handle") ?? "");
       if (form.get("decision") !== "approve") {
+        console.log("authorize: denied by user");
         const denied = await oauth.denyConsent(request, handle);
         return new Response(null, { status: 302, headers: denied.headers });
       }
@@ -242,8 +245,12 @@ const defaultHandler = {
         props,
       });
       approved.headers.set("Location", redirectTo);
+      console.log("authorize: approved", { memberId: props.memberId });
       return new Response(null, { status: 302, headers: approved.headers });
     } catch (error) {
+      if (error instanceof AuthorizationError) {
+        console.warn("authorize: rejected", { code: error.code, description: error.description });
+      }
       if (error instanceof AuthorizationError && error.redirectTo) {
         return Response.redirect(error.redirectTo, 302);
       }
