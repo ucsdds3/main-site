@@ -5,7 +5,7 @@ import {
 } from "src/Sites/Main/Pages/Board/boardTeamConfig";
 import type { BoardTeamCatalogEntry } from "src/Sites/Main/Pages/Board/boardTeamTypes";
 
-import type { SprintStatus, SprintTaskStatus } from "./types";
+import type { SprintRow, SprintStatus, SprintTaskStatus } from "./types";
 
 /** Static catalog fallback until sprints wires live BoardTeams fetch. */
 export const SPRINT_TEAM_CATALOG = fallbackBoardTeamCatalog();
@@ -134,17 +134,52 @@ export function formatTaskDate(isoDay: string): string {
   });
 }
 
+/** Today's local date as `YYYY-MM-DD`, comparable with sprint / due-date strings. */
+export function todayIso(): string {
+  const today = new Date();
+  const y = today.getFullYear();
+  const m = String(today.getMonth() + 1).padStart(2, "0");
+  const d = String(today.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 export function isTaskDueOverdue(task: {
   expected_completion_on: string | null;
   status: SprintTaskStatus;
 }): boolean {
   if (!task.expected_completion_on) return false;
   if (task.status === "done" || task.status === "cancelled") return false;
-  const today = new Date();
-  const y = today.getFullYear();
-  const m = String(today.getMonth() + 1).padStart(2, "0");
-  const d = String(today.getDate()).padStart(2, "0");
-  return task.expected_completion_on < `${y}-${m}-${d}`;
+  return task.expected_completion_on < todayIso();
+}
+
+/** Where a sprint sits relative to today, by its dates (not its status). */
+export function sprintTiming(
+  sprint: Pick<SprintRow, "starts_on" | "ends_on">,
+  today = todayIso()
+): "current" | "upcoming" | "past" {
+  if (sprint.starts_on > today) return "upcoming";
+  if (sprint.ends_on < today) return "past";
+  return "current";
+}
+
+/**
+ * The sprint /sprints opens on: the one whose dates cover today (open ones first), else the
+ * active sprint unless it has already ended, else the next upcoming one, else the most recent.
+ */
+export function defaultSprint(sprints: SprintRow[], today = todayIso()): SprintRow | null {
+  const byStart = [...sprints].sort(
+    (a, b) => a.starts_on.localeCompare(b.starts_on) || a.id - b.id
+  );
+  const current = byStart.filter(s => sprintTiming(s, today) === "current");
+  return (
+    current.find(s => s.status === "active") ??
+    current.find(s => s.status !== "closed") ??
+    current[current.length - 1] ??
+    byStart.find(s => s.status === "active" && sprintTiming(s, today) !== "past") ??
+    byStart.find(s => sprintTiming(s, today) === "upcoming") ??
+    byStart[byStart.length - 1] ??
+    null
+  );
 }
 
 export function defaultTeamKey(teams: Record<string, string> | null | undefined): string {

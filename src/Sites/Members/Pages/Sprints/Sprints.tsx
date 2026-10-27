@@ -6,6 +6,7 @@ import Page from "src/Shared/Page/Page";
 import { useSiteHandler } from "src/Hooks/useSiteHandler";
 
 import CreateSprintDialog from "./components/CreateSprintDialog";
+import { defaultSprint } from "./constants";
 import SprintSwitcher from "./components/SprintSwitcher";
 import { useCurrentMember } from "./hooks/useCurrentMember";
 import { useSprints } from "./hooks/useSprints";
@@ -16,23 +17,25 @@ export default function Sprints() {
   const { sprintId } = useParams();
   const { navigate } = useSiteHandler();
   const { member, loading: memberLoading } = useCurrentMember();
-  const { activeSprint, planningSprint, sprints, loading, reload, createSprint, updateSprint } =
-    useSprints();
+  const { planningSprint, sprints, loading, reload, createSprint, updateSprint } = useSprints();
   const [createOpen, setCreateOpen] = useState(false);
   const [allTime, setAllTime] = useState(false);
+
+  // Plain /sprints opens the sprint whose dates cover today.
+  const current = useMemo(() => defaultSprint(sprints), [sprints]);
 
   const selected = useMemo(() => {
     if (sprintId) {
       const id = Number(sprintId);
       return sprints.find(s => s.id === id) ?? null;
     }
-    return activeSprint;
-  }, [sprintId, sprints, activeSprint]);
+    return current;
+  }, [sprintId, sprints, current]);
 
   const isExec = member?.admin_level === "Executive";
 
   const openSprint = (sprint: SprintRow) => {
-    if (activeSprint && sprint.id === activeSprint.id) {
+    if (current && sprint.id === current.id) {
       navigate({ pathname: "/sprints" });
       return;
     }

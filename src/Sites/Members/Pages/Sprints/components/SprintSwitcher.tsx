@@ -1,6 +1,6 @@
 import { twMerge } from "src/Utils/cn";
 
-import { formatSprintDates, SPRINT_STATUS_LABELS } from "../constants";
+import { formatSprintDates, SPRINT_STATUS_LABELS, sprintTiming, todayIso } from "../constants";
 import type { SprintRow } from "../types";
 
 type SprintSwitcherProps = {
@@ -12,8 +12,12 @@ type SprintSwitcherProps = {
   onAllTimeChange?: (allTime: boolean) => void;
 };
 
-function optionLabel(sprint: SprintRow) {
-  return `${sprint.name} · ${formatSprintDates(sprint.starts_on, sprint.ends_on)}`;
+function optionLabel(sprint: SprintRow, timing: ReturnType<typeof sprintTiming>) {
+  const label = `${sprint.name} · ${formatSprintDates(sprint.starts_on, sprint.ends_on)}`;
+  // Flag a status that disagrees with the dates, e.g. an old sprint nobody closed.
+  const expected = timing === "past" ? "closed" : timing === "upcoming" ? "planning" : null;
+  const mismatch = expected ? sprint.status !== expected : sprint.status === "closed";
+  return mismatch ? `${label} (${SPRINT_STATUS_LABELS[sprint.status]})` : label;
 }
 
 export default function SprintSwitcher({
@@ -24,20 +28,20 @@ export default function SprintSwitcher({
   allTime,
   onAllTimeChange,
 }: SprintSwitcherProps) {
-  const active = sprints.filter(s => s.status === "active");
-  const upcoming = sprints
-    .filter(s => s.status === "planning")
-    .sort((a, b) => a.starts_on.localeCompare(b.starts_on) || a.id - b.id);
-  const past = sprints
-    .filter(s => s.status === "closed")
-    .sort((a, b) => b.starts_on.localeCompare(a.starts_on) || b.id - a.id);
+  // Group by dates relative to today: current, then upcoming soonest first, then past newest first.
+  const today = todayIso();
+  const byStart = [...sprints].sort(
+    (a, b) => a.starts_on.localeCompare(b.starts_on) || a.id - b.id
+  );
+  const timed = (timing: ReturnType<typeof sprintTiming>) =>
+    byStart.filter(s => sprintTiming(s, today) === timing);
 
   if (sprints.length === 0 && !onCreate) return null;
 
-  const groups: { label: string; items: SprintRow[] }[] = [
-    { label: SPRINT_STATUS_LABELS.active, items: active },
-    { label: "Upcoming", items: upcoming },
-    { label: "Past", items: past },
+  const groups = [
+    { label: "Current", timing: "current" as const, items: timed("current") },
+    { label: "Upcoming", timing: "upcoming" as const, items: timed("upcoming") },
+    { label: "Past", timing: "past" as const, items: timed("past").reverse() },
   ].filter(group => group.items.length > 0);
 
   return (
@@ -84,7 +88,7 @@ export default function SprintSwitcher({
                 <optgroup key={group.label} label={group.label}>
                   {group.items.map(sprint => (
                     <option key={sprint.id} value={sprint.id}>
-                      {optionLabel(sprint)}
+                      {optionLabel(sprint, group.timing)}
                     </option>
                   ))}
                 </optgroup>
