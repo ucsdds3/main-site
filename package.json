@@ -19,6 +19,8 @@
     "db:stop": "node scripts/local-db.mjs --stop",
     "db:reset": "node scripts/local-db.mjs --reset",
     "mcp:sprints": "tsx mcp/sprint-board/server.ts",
+    "mcp:bundle": "node scripts/build-mcpb.mjs",
+    "mcp:check": "node scripts/check-mcp-release.mjs",
     "mcp:deploy": "npx --yes wrangler@4.149.0 deploy --config mcp/sprint-board/wrangler.jsonc"
   },
   "dependencies": {
@@ -67,6 +69,7 @@
     "@vitejs/plugin-react-swc": "^3.8.0",
     "daisyui": "^5.1.8",
     "dependency-cruiser": "^16.10.4",
+    "esbuild": "0.27.3",
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",

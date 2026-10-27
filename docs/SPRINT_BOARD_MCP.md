@@ -4,13 +4,13 @@
 sprint board (`/sprints`). Connect it to Claude and you can review the board, add tasks, assign
 people and approve reviews by asking in plain English instead of clicking through the UI.
 
-It runs two ways, with the same tools and rules:
+It runs three ways, with the same tools and rules:
 
-| | Hosted (Cloudflare Worker) | Local (stdio) |
-|---|---|---|
-| Works in | Claude web, desktop and mobile (custom connector), Claude Code, other MCP clients | Claude Code, Claude Desktop |
-| Setup per person | Add one URL and sign in with your DS3 account | Clone this repo, `npm install`, password in `.env` |
-| Code | `mcp/sprint-board/worker.ts` | `mcp/sprint-board/server.ts` |
+| | Hosted (Cloudflare Worker) | Desktop extension (`.mcpb`) | Local (stdio) |
+|---|---|---|---|
+| Works in | Claude web, desktop and mobile (custom connector), Claude Code, other MCP clients | Claude Desktop | Claude Code, Claude Desktop |
+| Setup per person | Add one URL and sign in with your DS3 account | Double-click the file, enter email + password | Clone this repo, `npm install`, password in `.env` |
+| Code | `mcp/sprint-board/worker.ts` | `server.ts`, bundled by `scripts/build-mcpb.mjs` | `mcp/sprint-board/server.ts` |
 
 Both act **as the signed-in member**: every query runs with that member's own Supabase session
 and the public anon key, so the sprints RLS policies apply exactly as on members.ds3atucsd.com.
@@ -23,6 +23,7 @@ mcp/sprint-board/
   worker.ts      hosted: OAuth sign-in + MCP over HTTP at /mcp
   server.ts      local: stdio, signs in from .env
   wrangler.jsonc Cloudflare config
+  mcpb/          Claude Desktop extension manifest + icon
 ```
 
 ## Hosted
@@ -84,6 +85,34 @@ npx wrangler@4.149.0 dev --config mcp/sprint-board/wrangler.jsonc \
 
 Then point an MCP client at `http://127.0.0.1:8787/mcp` and sign in as `exec@ucsd.edu` /
 `LocalDev1`, or run `npx @modelcontextprotocol/inspector`.
+
+## Claude Desktop extension (.mcpb)
+
+### Install (everyone)
+
+1. Get the latest `ds3-sprint-board-<version>.mcpb` from a Board member.
+2. Double-click it (or drag it into Claude Desktop → Settings → Extensions) and click **Install**.
+3. Enter your members-portal email and password. Claude stores the password as a sensitive
+   setting; it is only sent to DS3's Supabase sign-in.
+4. In a new chat: *"Using the DS3 sprint board, who am I?"*
+
+Wrong password or not Board/Executive: the tools answer with the reason. Fix it under
+Settings → Extensions → DS3 Sprint Board → Configure.
+
+### Build
+
+```sh
+npm run mcp:bundle   # → dist-mcpb/ds3-sprint-board-<version>.mcpb (gitignored)
+```
+
+Bundles `server.ts` into one file, fills the Supabase URL + anon key into
+`mcp/sprint-board/mcpb/manifest.json`, then validates and packs it with the `mcpb` CLI. The key
+comes from `VITE_SUPABASE_ANON_KEY` (`.env` or the environment); the script refuses any key that
+isn't the Membership **anon** key.
+
+Releases: bump `version` in `mcp/sprint-board/mcpb/manifest.json` and add an entry to
+`mcp/sprint-board/CHANGELOG.md` before sharing a new build. Installing a higher version over
+an older one updates it in place and keeps the saved email + password.
 
 ## Local
 

@@ -34,6 +34,9 @@ dist-ssr
 .venv/
 __pycache__/
 
+# Sprint board Claude Desktop extension build (npm run mcp:bundle)
+dist-mcpb/
+
 # Cloudflare Worker (mcp/sprint-board) local state and dev secrets
 .wrangler/
 .dev.vars*

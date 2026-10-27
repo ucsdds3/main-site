@@ -1,0 +1,25 @@
+name: Sprint board MCP release check
+
+# Any PR that changes mcp/sprint-board/ must bump the version and add a changelog entry.
+# Rules: AGENTS.md → Sprint board MCP releases. Script: scripts/check-mcp-release.mjs.
+on:
+  pull_request:
+    paths:
+      - "mcp/sprint-board/**"
+      - "scripts/check-mcp-release.mjs"
+      - ".github/workflows/mcp-release-check.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check version bump and changelog
+        run: node scripts/check-mcp-release.mjs "origin/${{ github.base_ref }}"
