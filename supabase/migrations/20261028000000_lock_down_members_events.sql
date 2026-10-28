@@ -6,8 +6,8 @@
 --
 -- After:
 --   Members  signed-in members read/update their own row; Board + Executive read all;
---            Executive inserts/updates/deletes any. Signup may insert its own row (also as
---            anon, for projects that require email confirmation) but not with privileges.
+--            Executive inserts/updates/deletes any. Signup (signed in) may insert its own
+--            row, but not with privileges.
 --            Only Executives (or SECURITY DEFINER functions such as check-in) may change
 --            admin_level, points, experience, teams or deleted.
 --   Events   Board + Executive read all; Executive writes. Everyone else reads published
@@ -92,12 +92,13 @@ begin
     for select to authenticated
     using (public.is_board_or_exec());
 
-  -- Signup inserts the new member's own row, possibly before a session exists.
+  -- Signup inserts the new member's own row (signed in; the live project has no anon insert).
   create policy members_insert_signup on public."Members"
-    for insert to anon, authenticated
+    for insert to authenticated
     with check (
-      (auth.jwt() ->> 'email' is null or lower(email) = lower(auth.jwt() ->> 'email'))
-      and admin_level is null
+      lower(email) = lower(coalesce(auth.jwt() ->> 'email', ''))
+      -- Membership defaults admin_level to 'Member' (NOT NULL); allow that, nothing higher.
+      and coalesce(admin_level::text, 'Member') = 'Member'
       and coalesce(points, 0) = 0
       and coalesce(experience, 0) = 0
       and teams is null
