@@ -51,3 +51,12 @@ export const supabase =
   supabaseUrl && supabaseKey
     ? createClient(supabaseUrl, supabaseKey)
     : createMissingSupabaseClient();
+
+/**
+ * True when PostgREST can't find a view or function. Until the Members / Events lock-down
+ * migration (PublicEvents, BoardMembers, MemberLeaderboard, lookup_event_by_code) is applied,
+ * callers fall back to the base tables.
+ */
+export function isMissingRelation(error: { code?: string } | null): boolean {
+  return !!error && ["PGRST205", "PGRST202", "42P01", "42883"].includes(error.code ?? "");
+}
