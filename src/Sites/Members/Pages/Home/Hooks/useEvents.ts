@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { supabase } from "src/Utils/supabase";
+import { isMissingRelation, supabase } from "src/Utils/supabase";
 import { EventType } from "src/Utils/types";
 import toast from "react-hot-toast";
 
@@ -12,15 +12,21 @@ const quarters = {
   Spring: [new Date("2026-03-25"), new Date("2026-06-12")],
 };
 
-async function lookupEventByCode(
-  eventCode: string
-): Promise<{ id: number; name: string } | null> {
-  const { data, error } = await supabase
-    .from("Events")
-    .select("id,name")
-    .eq("password", eventCode.trim())
-    .eq("deleted", false)
-    .maybeSingle();
+async function lookupEventByCode(eventCode: string): Promise<{ id: number; name: string } | null> {
+  // Members can't read check-in codes once Events is locked down; this RPC returns only id + name.
+  const rpc = await supabase.rpc("lookup_event_by_code", { event_code: eventCode.trim() });
+  let data: { id: unknown; name: unknown } | null = Array.isArray(rpc.data)
+    ? (rpc.data[0] ?? null)
+    : null;
+  let error = rpc.error;
+  if (isMissingRelation(error)) {
+    ({ data, error } = await supabase
+      .from("Events")
+      .select("id,name")
+      .eq("password", eventCode.trim())
+      .eq("deleted", false)
+      .maybeSingle());
+  }
 
   if (error || !data) return null;
   return { id: Number(data.id), name: String(data.name ?? "Event") };

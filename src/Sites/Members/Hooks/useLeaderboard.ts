@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "src/Utils/supabase";
+import { isMissingRelation, supabase } from "src/Utils/supabase";
 
 export type LeaderboardEntry = {
   full_name: string;
@@ -16,12 +16,16 @@ export function useLeaderboard() {
     let isMounted = true;
 
     const fetchLeaderboard = async () => {
-      const { data, error } = await supabase
-        .from("Members")
-        .select("full_name, points, profile_picture")
-        .eq("deleted", false)
-        .order("points", { ascending: false })
-        .limit(10);
+      // Members only see their own row once Members is locked down; the view lists everyone.
+      const query = (table: "MemberLeaderboard" | "Members") =>
+        supabase
+          .from(table)
+          .select("full_name, points, profile_picture")
+          .eq("deleted", false)
+          .order("points", { ascending: false })
+          .limit(10);
+      let { data, error } = await query("MemberLeaderboard");
+      if (isMissingRelation(error)) ({ data, error } = await query("Members"));
 
       if (!isMounted) return;
 

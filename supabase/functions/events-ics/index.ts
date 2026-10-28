@@ -131,12 +131,18 @@ Deno.serve(async req => {
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  const { data, error } = await supabase
-    .from("Events")
-    .select("id,name,description,location,start,end,tags,updated_at")
-    .eq("deleted", false)
-    .in("workflow_status", ["waiting_marketing", "complete"])
-    .order("start", { ascending: true });
+  // PublicEvents (no check-in codes) once Events is locked down; Events until it exists.
+  const query = (table: "PublicEvents" | "Events") =>
+    supabase
+      .from(table)
+      .select("id,name,description,location,start,end,tags,updated_at")
+      .eq("deleted", false)
+      .in("workflow_status", ["waiting_marketing", "complete"])
+      .order("start", { ascending: true });
+  let { data, error } = await query("PublicEvents");
+  if (error && ["PGRST205", "42P01"].includes(error.code ?? "")) {
+    ({ data, error } = await query("Events"));
+  }
 
   if (error) {
     console.error("[events-ics]", error.message);

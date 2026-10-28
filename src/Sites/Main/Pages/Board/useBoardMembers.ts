@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
-import { supabase } from "src/Utils/supabase";
+import { isMissingRelation, supabase } from "src/Utils/supabase";
 import { normalizeExternalHref } from "src/Utils/functions";
 import { normalizeTeamsField } from "src/Sites/Members/Utils/functions";
 import type { BoardMember } from "src/Utils/types.ts";
@@ -86,13 +86,17 @@ export function useBoardMembers(sortTeamKey: string, catalog: BoardTeamCatalogEn
     let cancelled = false;
 
     const run = async () => {
-      const { data, error } = await supabase
-        .from("Members")
-        .select(
-          "full_name,email,github_link,resume_link,linkedin_link,other_link,profile_picture,teams,deleted"
-        )
-        .not("teams", "is", null)
-        .or("deleted.is.null,deleted.eq.false");
+      // BoardMembers exposes only these columns for board members; Members until it exists.
+      const query = (table: "BoardMembers" | "Members") =>
+        supabase
+          .from(table)
+          .select(
+            "full_name,email,github_link,resume_link,linkedin_link,other_link,profile_picture,teams,deleted"
+          )
+          .not("teams", "is", null)
+          .or("deleted.is.null,deleted.eq.false");
+      let { data, error } = await query("BoardMembers");
+      if (isMissingRelation(error)) ({ data, error } = await query("Members"));
 
       if (cancelled) return;
 
@@ -102,11 +106,11 @@ export function useBoardMembers(sortTeamKey: string, catalog: BoardTeamCatalogEn
         setLoading(false);
         return;
       }
-      
+
       const list = (data as MemberRow[] | null)
-      ?.map(rowToBoardMember)
-      .filter((m): m is BoardMember => m !== null);
-      
+        ?.map(rowToBoardMember)
+        .filter((m): m is BoardMember => m !== null);
+
       setRawMembers(list ?? []);
       setLoading(false);
     };

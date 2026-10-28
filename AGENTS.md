@@ -424,6 +424,8 @@ Most tables do **not** have policies checked in here. The UI is a presentation l
 
 **Sprints are the exception:** the sprints migration enables RLS. Board/Exec can read; Board/Exec can write tasks on planning/active sprints; only Exec can insert/update `Sprints`. Regular members have no access.
 
+**Members / Events** are locked down by `20261028000000_lock_down_members_events.sql` (once applied on Membership): members read/update only their own `Members` row (only Executives, or SECURITY DEFINER functions like check-in, may change `admin_level` / `points` / `experience` / `teams` / `deleted`); Board/Exec read all; Exec writes. Anyone else reads through views: `PublicEvents` (published events, no `password` / `internal_notes`), `BoardMembers` (public /board), `MemberLeaderboard` (signed-in only), plus `rpc lookup_event_by_code`. New public or member-facing reads of these tables must go through a view or a SECURITY DEFINER RPC, never the base table.
+
 Known gap (documented in `docs/EVENT_WORKFLOW_ARCHITECTURE.md`): `internal_notes` is only hidden in the UI. Anyone who can `select *` on `Events` under current RLS could read notes. Status **writes** are enforced in the Edge Function. Do not treat UI `execOnly` as server security.
 
 Row types: `src/Sites/Members/Pages/Admin/Utils/types.ts`, `src/Utils/types.ts`.
