@@ -28,6 +28,7 @@
   },
   "members": {
     "Store": "/store",
+    "Hackathon matching": "/hackathon-matching",
     "Events": {
       "All Events": "/events",
       "Leaderboard": "/events/leaderboard"

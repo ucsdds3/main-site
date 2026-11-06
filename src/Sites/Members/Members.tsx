@@ -14,6 +14,7 @@ import Admin from "./Pages/Admin/Admin";
 import Fundraising from "./Pages/Admin/Fundraising";
 import Insights from "./Pages/Admin/Insights";
 import Sprints from "./Pages/Sprints/Sprints";
+import HackathonMatching from "./Pages/HackathonMatching/HackathonMatching";
 import type { AdminLevel } from "./Pages/Admin/Utils/types";
 
 const isBoardOrExec = (level: AdminLevel | null) => level === "Board" || level === "Executive";
@@ -51,6 +52,7 @@ const Members = () => {
       <Route path="/sprints" element={<Sprints />} />
       <Route path="/sprints/:sprintId" element={<Sprints />} />
       <Route path="/store" element={<Store />} />
+      <Route path="/hackathon-matching" element={<HackathonMatching />} />
     </Routes>
   );
 };
