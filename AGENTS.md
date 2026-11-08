@@ -261,6 +261,16 @@ Code: `src/Sites/Main/Pages/TalentLens/`. Access rules are in **Access** above.
 
 Do not implement ingest, ranking, or resume parsing here. Ingest is a **DB trigger** on `Members` → `TalentLensIngestJobs` (SQL in the sibling TalentLens V2 repo, not this UI).
 
+## DataHacks teammate matching (planned)
+
+Read [docs/HACKATHON_MATCHING.md](docs/HACKATHON_MATCHING.md) and the sibling [canonical project hub](../Talentlens_V2/docs/hackathon-matching/README.md) before matching work. The brief distinguishes confirmed scope from proposed routes, schema, scoring weights and questionnaire choices; do not treat planning docs as deployed code.
+
+**Default branch:** `hackathon-matching` (same name in `Talentlens_V2`). Do not PR incomplete matching work into production `main`.
+
+This is an event opt-in participant directory using requested skills against resumes in both directions, plus working preferences. It is separate from recruiter `/talentlens`, `TalentLensUsers` access and `in_talent_pool` consent. Do not enable recruiter consent to make hackathon ingestion work. Keep all opted-in participants discoverable and represent uncomputed scores explicitly.
+
+Matching UI lives under the members portal (`/hackathon-matching`). The unrouted DataHacks marketing page is not this application. New shared database migrations/reverts and Edge dispatch functions belong in this repo; Python ingestion/scoring/worker/API code belongs in TalentLens. Coordinate matching frontend types/fixtures and backend schemas with its own API draft; existing recruiter boundary changes still follow the workspace contract-sync workflow.
+
 ## How Supabase is set up
 
 This repo is the **anon-key frontend** plus Edge Functions and **versioned Postgres migrations**. Schema changes go through `supabase/migrations/`, not the SQL Editor.
@@ -458,4 +468,5 @@ Row types: `src/Sites/Members/Pages/Admin/Utils/types.ts`, `src/Utils/types.ts`.
 | Cross-site nav / titles | `src/Hooks/useSiteHandler.ts`, `navbar.json` |
 | Supabase client | `src/Utils/supabase.ts` |
 | TalentLens UI + allowlist | `src/Sites/Main/Pages/TalentLens/` |
+| DataHacks teammate matching scope, timeline, issues | `docs/HACKATHON_MATCHING.md` → sibling `Talentlens_V2/docs/hackathon-matching/` |
 | Event ops / email | `docs/EVENT_WORKFLOW_ARCHITECTURE.md`, `supabase/functions/confirm-event-status/` |

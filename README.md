@@ -1,5 +1,7 @@
 # 🚀 DS3 Main Site Documentation for the github workshop
 
+**DataHacks teammate matching:** read the [frontend/integration handoff](docs/HACKATHON_MATCHING.md) and the sibling [canonical project hub](../Talentlens_V2/docs/hackathon-matching/README.md) for agreed scope, architecture, timeline and issues. For current repository architecture and agent instructions, see [AGENTS.md](AGENTS.md).
+
 ## 🎯 Getting Started with this repo
 
 1. Clone the repo with `git clone https://github.com/ucsdds3/main-site.git`

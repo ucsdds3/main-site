@@ -11,6 +11,8 @@ import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 import Select from "../../Components/Select";
 import { FileInput } from "../../Components/FileInput";
 import { TextArea } from "../../Components/Input";
+import { matchSkillsAgainstResumes, type SkillMatchResponse } from "./api";
+import SkillMatchResults from "./SkillMatchResults";
 
 type OvernightChoice = "" | "Yes" | "No" | "Maybe";
 type VibeChoice = "" | "Yes" | "No" | "Maybe";
@@ -37,9 +39,10 @@ const HackathonMatching = () => {
   const [vibeCoding, setVibeCoding] = useState<VibeChoice>("");
   const [resumeMode, setResumeMode] = useState<ResumeMode>("upload");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
-  const [submittedSummary, setSubmittedSummary] = useState<string | null>(null);
+  const [checking, setChecking] = useState(false);
+  const [matchResult, setMatchResult] = useState<SkillMatchResponse | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const skills = parseSkillLines(skillsRaw);
     if (skills.length === 0) {
@@ -63,22 +66,22 @@ const HackathonMatching = () => {
       return;
     }
 
-    const fileNote =
-      resumeMode === "upload" && resumeFile
-        ? `${resumeFile.name} (${Math.round(resumeFile.size / 1024)} KB)`
-        : "Profile resume link (not uploaded in this preview)";
+    const exclude = [user?.email, user?.user_metadata?.full_name].filter(
+      (value): value is string => typeof value === "string" && value.trim().length > 0
+    );
 
-    const summary = [
-      "Saved locally (API not wired yet):",
-      "",
-      `Skills wanted (${skills.length}): ${skills.join(", ")}`,
-      `Stay up all night: ${overnight}`,
-      `Open to vibecoding everything: ${vibeCoding}`,
-      `Resume: ${fileNote}`,
-    ].join("\n");
-
-    setSubmittedSummary(summary);
-    toast.success("Form looks good — summary below. Backend hookup comes next.");
+    setChecking(true);
+    setMatchResult(null);
+    try {
+      const result = await matchSkillsAgainstResumes(skills, exclude);
+      setMatchResult(result);
+      toast.success(`Checked ${result.resumes_checked} resumes.`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Skill check failed.";
+      toast.error(message);
+    } finally {
+      setChecking(false);
+    }
   };
 
   return (
@@ -104,9 +107,9 @@ const HackathonMatching = () => {
         </motion.h1>
 
         <p className="text-base text-(--obs-text-muted) max-w-2xl">
-          Tell us what you&apos;re looking for and how you like to work. This page is a{" "}
-          <span className="text-(--obs-text-primary)">preview UI</span> — nothing is sent to a
-          server yet.
+          Submit checks your skill list against the resumes already in TalentLens. The first check
+          can take about 20 seconds. Your resume file and working-style answers are collected here
+          and are not scored yet.
         </p>
 
         <form className="flex flex-col gap-8 w-full" onSubmit={handleSubmit}>
@@ -220,18 +223,13 @@ const HackathonMatching = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <Button type="submit">Save (local preview)</Button>
+            <Button type="submit" disabled={checking}>
+              {checking ? "Checking resumes…" : "Check skills"}
+            </Button>
           </div>
         </form>
 
-        {submittedSummary && (
-          <div className="obs-panel w-full px-6 py-6" role="status" aria-live="polite">
-            <h2 className="text-lg font-semibold text-(--obs-text-primary) mb-3">Last submission</h2>
-            <pre className="whitespace-pre-wrap text-sm text-(--obs-text-muted) font-mono">
-              {submittedSummary}
-            </pre>
-          </div>
-        )}
+        {matchResult && <SkillMatchResults result={matchResult} />}
       </Section>
     </Page>
   );
