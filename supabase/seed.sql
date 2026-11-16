@@ -238,6 +238,59 @@ on conflict (name) do update
       active = excluded.active, per_member_limit = excluded.per_member_limit,
       sort_order = excluded.sort_order, deleted = false;
 
+-- Hoodie sizing chart, then the hoodie points at it.
+insert into public."SizeCharts" (name, unit, measurements, notes)
+values ('Unisex hoodie', 'in', '{Chest,Length,Sleeve}', 'Flat measurements. Dummy sample chart.')
+on conflict (name) do update
+  set unit = excluded.unit, measurements = excluded.measurements, notes = excluded.notes;
+
+insert into public."Sizes" (chart_id, label, sort_order, measurement_values)
+select c.id, v.label, v.sort_order, v.vals::jsonb
+from public."SizeCharts" c
+cross join (values
+  ('S', 1, '{"Chest": 20, "Length": 26, "Sleeve": 23}'),
+  ('M', 2, '{"Chest": 22, "Length": 27, "Sleeve": 24}'),
+  ('L', 3, '{"Chest": 24, "Length": 28, "Sleeve": 25}'),
+  ('XL', 4, '{"Chest": 26, "Length": 29, "Sleeve": 26}')
+) as v(label, sort_order, vals)
+where c.name = 'Unisex hoodie'
+on conflict (chart_id, label) do update
+  set sort_order = excluded.sort_order, measurement_values = excluded.measurement_values;
+
+update public."Items"
+set size_chart_id = (select id from public."SizeCharts" where name = 'Unisex hoodie')
+where slug = 'ds3-hoodie';
+
+-- Default (no size, no colour) variants: sticker stock 25, raffle unlimited (null), draft 0.
+insert into public."ItemVariants" (item_id, stock, active)
+select i.id, v.stock, true
+from public."Items" i
+join (values
+  ('ds3-sticker-pack', 25),
+  ('datahacks-raffle-entry', null),
+  ('spring-tee-draft', 0)
+) as v(slug, stock) on v.slug = i.slug
+on conflict on constraint item_variants_unique_combo do update
+  set stock = excluded.stock, active = true;
+
+-- Hoodie: Navy and Grey x S/M/L/XL. Grey XL and Navy S are sold out.
+insert into public."ItemVariants" (item_id, size_id, color_name, color_hex, stock, active, sort_order)
+select i.id, s.id, col.color_name, col.color_hex,
+       case when (col.color_name = 'Grey' and s.label = 'XL')
+              or (col.color_name = 'Navy' and s.label = 'S') then 0
+            else 12 - s.sort_order * 2 end,
+       true, col.ord * 10 + s.sort_order
+from public."Items" i
+join public."Sizes" s on s.chart_id = i.size_chart_id
+cross join (values
+  ('Navy', '#1F2A44', 1),
+  ('Grey', '#9CA3AF', 2)
+) as col(color_name, color_hex, ord)
+where i.slug = 'ds3-hoodie'
+on conflict on constraint item_variants_unique_combo do update
+  set stock = excluded.stock, color_hex = excluded.color_hex, active = true,
+      sort_order = excluded.sort_order;
+
 insert into public."Attendance" (member_id, event_id, check_in, points)
 select m.id, e.id, e.start + interval '10 minutes', e.points
 from public."Members" m
@@ -698,3 +751,6 @@ grant execute on function public.get_my_attendance() to authenticated, anon;
 grant execute on function public.validate_event_code(text) to authenticated, anon;
 
 notify pgrst, 'reload schema';
+
+-- Open the shop for local development (the migration leaves it paused).
+update public."ShopSettings" set paused = false;

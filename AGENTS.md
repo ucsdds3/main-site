@@ -288,7 +288,7 @@ Browser (Vite)
   ├─ Auth          email + password (signup, signin, reset, updateUser)
   ├─ PostgREST     from("Members"|"Events"|"Attendance"|"Items"|"ShopItems"|"TalentLensUsers"|"TalentLensFeedback"|"Sprints"|"SprintTasks"|"SprintTaskAssignees"|"SprintTaskSprints")
   ├─ RPC           check_member_email_exists, validate_event_code, get_my_attendance, insight RPCs
-  ├─ Storage       "Profile Pictures", "Event Images"
+  ├─ Storage       "Profile Pictures", "Event Images", "Shop Images"
   └─ functions.invoke("confirm-event-status"|"notify-sprint-task") + user JWT
          └─ Edge Function uses service role + Resend (secrets, not Vite env)
 ```
@@ -338,9 +338,21 @@ Public list selects a subset and filters `complete`. QR column in admin is deriv
 
 **`Attendance`** — `member_id`, `event_id`, `check_in`/`created_at`, `points`. Members insert via `validate_event_code`. Admin is view-only (hard delete if Exec UI allowed it — `canEdit` is empty). Insights join `Members` + `Events`.
 
-**`Items`** — merch (`name`, `description`, `price` in dollars = what the club paid, `image`, `deleted`) plus points-shop columns from `20261115000100_items_shop_columns.sql`: `slug` (unique; filled from `name` by a trigger when blank), `image_path` (in the future `Shop Images` bucket), `points_cost`, `fulfillment_type` (`pickup` / `instant`), `active` (default off), `per_member_limit`, `sort_order`. Admin CRUD for Executives in `/admin`. Storefront is not wired yet. Only Board/Exec read the table itself; Executives insert/update; no API deletes (soft delete via `deleted`). That migration also creates `Items` if it is missing (fresh local DBs).
+**`Items`** — merch (`name`, `description`, `price` in dollars = what the club paid, `image`, `deleted`) plus points-shop columns from `20261115000100_items_shop_columns.sql`: `slug` (unique; filled from `name` by a trigger when blank), `image_path` (in the `Shop Images` bucket), `points_cost`, `fulfillment_type` (`pickup` / `instant`), `active` (default off), `per_member_limit`, `sort_order`. Admin CRUD for Executives in `/admin`. Storefront is not wired yet. Only Board/Exec read the table itself; Executives insert/update; no API deletes (soft delete via `deleted`). That migration also creates `Items` if it is missing (fresh local DBs).
 
 **`ShopItems`** (view) — the store's read-only window onto `Items`: live items only (`active` and not `deleted`), without `price` or `deleted`. Readable signed in **and signed out**. Members and visitors must read items through it, never the base table.
+
+**Points shop tables** (`20261116000000_shop_tables.sql`). Members spend `Members.points`; `experience` is never reduced.
+
+| Table | Notes |
+|---|---|
+| `SizeCharts` / `Sizes` | One chart per garment cut (`unit`, ordered `measurements`); `Sizes.measurement_values` jsonb per size. `Items.size_chart_id` links an item to its chart |
+| `ItemVariants` | One row per size/colour of an item (`stock` null = unlimited). Items that existed before got one default variant (stock 0). A size must come from the item's chart (trigger) |
+| `ShopOrders` | One row per purchase; name/label/cost copied in. `status` `pending` → `fulfilled` / `cancelled` (pickup) or `completed` (instant). `stock_reserved` = the purchase took stock. `*_emailed_at` for the future `notify-shop-order` Edge Function |
+| `ShopSettings` | Single row; `paused` (starts **true** on prod; local seed unpauses). Signed-out visitors may read only `id`, `paused`, `updated_at` (select those columns, not `*`) |
+| `PointsAdjustments` | Audit log of `points` / `experience` changed directly through the API (Exec edits in `/admin`); changes made inside SECURITY DEFINER functions (check-in, purchases) are not logged |
+
+No API writes on any of these tables (select grants only). Reads: the catalog (active `ItemVariants` of live items, `SizeCharts`, `Sizes`, `ShopSettings`) is readable signed in and signed out; members read their own `ShopOrders`; Board/Exec read everything; only Executives read `PointsAdjustments`. `MemberLeaderboard` also exposes `experience` (appended; `points` stays until the leaderboard switches to XP). Tests: `supabase/tests/shop_tables.sql`. **Never run the shop reverts after launch** (they drop order history); pause the shop instead.
 
 **`TalentLensUsers`** — `email`, `role`, `active`. Read-only from this app (allowlist).
 
@@ -376,6 +388,7 @@ Helpers: `is_board_or_exec()`, `is_executive()` (JWT email → `Members.admin_le
 |---|---|---|
 | `Profile Pictures` | Signed-in member | Upload + public or long-lived signed URL; also stored on Auth metadata + `Members.profile_picture` |
 | `Event Images` | Admin event edit | Same public/signed-URL pattern |
+| `Shop Images` | Executives upload; anyone reads via public URL | Created by the shop tables migration (public, 5 MB, webp/png/jpeg). Store the path in `Items.image_path` / `ItemVariants.image_path` |
 
 Bucket names are exact strings in `useUploadPFP.ts` and `useEditCard.ts`.
 

@@ -166,10 +166,12 @@ jobs:
       - name: Database tests
         run: |
           psql -v ON_ERROR_STOP=1 -f supabase/tests/items.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/tests/shop_tables.sql
 
       - name: Smoke-test revert script
         run: |
           # Revert newest first so helpers (e.g. is_executive) still exist for dependent RLS.
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261116000000_shop_tables.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261115000100_items_shop_columns.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261115000000_lock_down_items.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261028000000_lock_down_members_events.sql
@@ -190,6 +192,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261028000000_lock_down_members_events.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261115000000_lock_down_items.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261115000100_items_shop_columns.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261116000000_shop_tables.sql
 
   dry_run:
     name: Dry-run against linked project
