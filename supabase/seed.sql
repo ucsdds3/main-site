@@ -102,10 +102,33 @@ create unique index if not exists items_name_uidx on public."Items" (name);
 
 grant select on public."Events" to anon, authenticated;
 grant select, insert, update on public."Attendance" to authenticated;
-grant select on public."Items" to anon, authenticated;
 grant select, insert, update, delete on public."Events" to authenticated;
-grant select, insert, update, delete on public."Items" to authenticated;
 grant usage, select on all sequences in schema public to anon, authenticated;
+
+-- Items: same rules as migrations/20261115000000_lock_down_items.sql. That migration skips
+-- locally because this file creates Items after migrations run. Keep the two in sync.
+alter table public."Items" enable row level security;
+
+drop policy if exists items_select_member on public."Items";
+drop policy if exists items_insert_exec on public."Items";
+drop policy if exists items_update_exec on public."Items";
+
+create policy items_select_member on public."Items"
+  for select to authenticated
+  using (true);
+
+create policy items_insert_exec on public."Items"
+  for insert to authenticated
+  with check (public.is_executive());
+
+create policy items_update_exec on public."Items"
+  for update to authenticated
+  using (public.is_executive())
+  with check (public.is_executive());
+
+revoke all on public."Items" from anon;
+revoke delete, truncate, references, trigger on public."Items" from authenticated;
+grant select, insert, update on public."Items" to authenticated;
 
 insert into public."Events" (
   name, description, points, image, password, start, "end", location, tags, workflow_status, deleted

@@ -101,6 +101,25 @@ jobs:
             member_id bigint references public."Members"(id),
             event_id bigint references public."Events"(id)
           );
+
+          -- Items (merch) also predates versioned ups. Policies mirror Membership before
+          -- the Items lock-down so that migration runs for real here.
+          create table public."Items" (
+            id bigint generated always as identity primary key,
+            name text not null,
+            description text,
+            price numeric(8, 2) not null default 0,
+            image text,
+            deleted boolean not null default false
+          );
+          alter table public."Items" enable row level security;
+          create policy "Enable select for authenticated users only" on public."Items"
+            for select to authenticated using (true);
+          create policy "Enable insert for authenticated users only" on public."Items"
+            for insert to authenticated with check (true);
+          create policy "Enable update for authenticated users only" on public."Items"
+            for update to authenticated using (true) with check (true);
+          grant all on public."Items" to anon, authenticated;
           SQL
 
       - name: Apply checked-in up migrations
@@ -119,6 +138,7 @@ jobs:
       - name: Smoke-test revert script
         run: |
           # Revert newest first so helpers (e.g. is_executive) still exist for dependent RLS.
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261115000000_lock_down_items.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260926210000_applications_team_key.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260926200000_applications.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260926013000_fundraising_meter.sql
@@ -133,6 +153,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260926013000_fundraising_meter.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260926200000_applications.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260926210000_applications_team_key.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261115000000_lock_down_items.sql
 
   dry_run:
     name: Dry-run against linked project
