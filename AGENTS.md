@@ -110,6 +110,7 @@ main-site/
 │   └── Scripts/                  # One-off Python scrapers (not the web app)
 ├── public/                       # Static assets (board photos, event images, …)
 ├── supabase/migrations/          # Versioned schema ups (source of truth)
+├── supabase/tests/               # SQL tests CI runs after the ups (one rolled-back transaction each)
 ├── supabase/functions/           # Edge Functions (confirm-event-status, notify-sprint-task)
 ├── sql/                          # Historical one-offs only (do not add new schema here)
 ├── .github/workflows/            # Vercel deploy + Supabase migration CI
@@ -285,7 +286,7 @@ Linked CLI project: **Membership** (`aogowlvmcvvrnryxuzlr`). There is no generat
 Browser (Vite)
   ├─ createClient(VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)   src/Utils/supabase.ts
   ├─ Auth          email + password (signup, signin, reset, updateUser)
-  ├─ PostgREST     from("Members"|"Events"|"Attendance"|"Items"|"TalentLensUsers"|"TalentLensFeedback"|"Sprints"|"SprintTasks"|"SprintTaskAssignees"|"SprintTaskSprints")
+  ├─ PostgREST     from("Members"|"Events"|"Attendance"|"Items"|"ShopItems"|"TalentLensUsers"|"TalentLensFeedback"|"Sprints"|"SprintTasks"|"SprintTaskAssignees"|"SprintTaskSprints")
   ├─ RPC           check_member_email_exists, validate_event_code, get_my_attendance, insight RPCs
   ├─ Storage       "Profile Pictures", "Event Images"
   └─ functions.invoke("confirm-event-status"|"notify-sprint-task") + user JWT
@@ -337,7 +338,9 @@ Public list selects a subset and filters `complete`. QR column in admin is deriv
 
 **`Attendance`** — `member_id`, `event_id`, `check_in`/`created_at`, `points`. Members insert via `validate_event_code`. Admin is view-only (hard delete if Exec UI allowed it — `canEdit` is empty). Insights join `Members` + `Events`.
 
-**`Items`** — merch (`name`, `description`, `price`, `image`, `deleted`). Admin CRUD for Executives. Storefront is not wired.
+**`Items`** — merch (`name`, `description`, `price` in dollars = what the club paid, `image`, `deleted`) plus points-shop columns from `20261115000100_items_shop_columns.sql`: `slug` (unique; filled from `name` by a trigger when blank), `image_path` (in the future `Shop Images` bucket), `points_cost`, `fulfillment_type` (`pickup` / `instant`), `active` (default off), `per_member_limit`, `sort_order`. Admin CRUD for Executives in `/admin`. Storefront is not wired yet. Only Board/Exec read the table itself; Executives insert/update; no API deletes (soft delete via `deleted`). That migration also creates `Items` if it is missing (fresh local DBs).
+
+**`ShopItems`** (view) — the store's read-only window onto `Items`: live items only (`active` and not `deleted`), without `price` or `deleted`. Readable signed in **and signed out**. Members and visitors must read items through it, never the base table.
 
 **`TalentLensUsers`** — `email`, `role`, `active`. Read-only from this app (allowlist).
 
@@ -425,6 +428,8 @@ Most tables do **not** have policies checked in here. The UI is a presentation l
 **Sprints are the exception:** the sprints migration enables RLS. Board/Exec can read; Board/Exec can write tasks on planning/active sprints; only Exec can insert/update `Sprints`. Regular members have no access.
 
 **Members / Events** are locked down by `20261028000000_lock_down_members_events.sql` (once applied on Membership): members read/update only their own `Members` row (only Executives, or SECURITY DEFINER functions like check-in, may change `admin_level` / `points` / `experience` / `teams` / `deleted`); Board/Exec read all; Exec writes. Anyone else reads through views: `PublicEvents` (published events, no `password` / `internal_notes`), `BoardMembers` (public /board), `MemberLeaderboard` (signed-in only), plus `rpc lookup_event_by_code`. New public or member-facing reads of these tables must go through a view or a SECURITY DEFINER RPC, never the base table.
+
+**Items** is locked down by `20261115000000_lock_down_items.sql` and `20261115000100_items_shop_columns.sql`: only Board/Exec read the table; only Executives insert/update (`is_executive()`); no delete policy (admin soft-deletes via `deleted`); signed-out visitors have no grants on it. Everyone else reads live items through the `ShopItems` view (no dollar `price`). Tests: `supabase/tests/items.sql`.
 
 Known gap (documented in `docs/EVENT_WORKFLOW_ARCHITECTURE.md`): `internal_notes` is only hidden in the UI. Anyone who can `select *` on `Events` under current RLS could read notes. Status **writes** are enforced in the Edge Function. Do not treat UI `execOnly` as server security.
 

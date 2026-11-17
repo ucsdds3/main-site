@@ -87,24 +87,13 @@ create table if not exists public."Attendance" (
 create unique index if not exists attendance_member_event_uidx
   on public."Attendance" (member_id, event_id);
 
-create table if not exists public."Items" (
-  id bigint generated always as identity primary key,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  name text not null,
-  description text,
-  price numeric(8, 2) not null default 0,
-  image text,
-  deleted boolean not null default false
-);
-
+-- Items is created by migrations/20261115000100_items_shop_columns.sql (which also owns its
+-- access rules). The name index below lets the sample inserts further down be re-run.
 create unique index if not exists items_name_uidx on public."Items" (name);
 
 grant select on public."Events" to anon, authenticated;
 grant select, insert, update on public."Attendance" to authenticated;
-grant select on public."Items" to anon, authenticated;
 grant select, insert, update, delete on public."Events" to authenticated;
-grant select, insert, update, delete on public."Items" to authenticated;
 grant usage, select on all sequences in schema public to anon, authenticated;
 
 insert into public."Events" (
@@ -228,12 +217,26 @@ on conflict (name) do update
     workflow_status = excluded.workflow_status,
     deleted = false;
 
-insert into public."Items" (name, description, price, deleted)
+-- ------------------------------------------------------------------ points shop sample items
+-- Inserted as the table owner (bypasses access rules), keyed on name so re-running is safe.
+-- The draft tee is switched off, so it must not appear in the "ShopItems" view.
+insert into public."Items"
+  (name, slug, description, price, points_cost, fulfillment_type, active, per_member_limit,
+   sort_order, deleted)
 values
-  ('DS3 Sticker pack', 'Laptop pack. Dummy merch for the local store table.', 3.00, false),
-  ('DS3 Hoodie', 'Dummy merch. Not a real checkout.', 35.00, false)
+  ('DS3 Sticker pack', 'ds3-sticker-pack', 'Laptop sticker pack. Dummy merch.', 3.00,
+   20, 'pickup', true, null, 1, false),
+  ('DS3 Hoodie', 'ds3-hoodie', 'Dummy merch. Pick up at the next GBM.', 35.00,
+   100, 'pickup', true, 2, 2, false),
+  ('DataHacks raffle entry', 'datahacks-raffle-entry', 'One entry into the DataHacks raffle.', 0,
+   10, 'instant', true, 5, 3, false),
+  ('Spring tee (draft)', 'spring-tee-draft', 'Not on sale yet.', 0,
+   60, 'pickup', false, null, 4, false)
 on conflict (name) do update
-  set description = excluded.description, price = excluded.price, deleted = false;
+  set slug = excluded.slug, description = excluded.description, price = excluded.price,
+      points_cost = excluded.points_cost, fulfillment_type = excluded.fulfillment_type,
+      active = excluded.active, per_member_limit = excluded.per_member_limit,
+      sort_order = excluded.sort_order, deleted = false;
 
 insert into public."Attendance" (member_id, event_id, check_in, points)
 select m.id, e.id, e.start + interval '10 minutes', e.points
