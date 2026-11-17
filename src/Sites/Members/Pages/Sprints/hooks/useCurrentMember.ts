@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { supabase } from "src/Utils/supabase";
-import { normalizeTeamsField } from "src/Sites/Members/Utils/functions";
 import { useAuthStore } from "src/Sites/Members/Hooks/useAuthStore";
 
 import type { CurrentMember } from "../types";
@@ -23,7 +22,7 @@ export function useCurrentMember() {
 
       const { data, error } = await supabase
         .from("Members")
-        .select("id, email, full_name, teams, admin_level")
+        .select("id, email, full_name, admin_level, MemberTeam(team_key, role)")
         .eq("email", user.email)
         .limit(1)
         .maybeSingle();
@@ -40,7 +39,9 @@ export function useCurrentMember() {
         id: data.id,
         email: data.email,
         full_name: data.full_name,
-        teams: normalizeTeamsField(data.teams),
+        teams: Object.fromEntries(
+          (data.MemberTeam ?? []).map(mt => [mt.team_key, mt.role])
+        ),
         admin_level: data.admin_level,
       });
       setLoading(false);

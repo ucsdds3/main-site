@@ -90,6 +90,38 @@ interface UseEditCardProps<T> {
   reloadRef?: RefObject<{ reload: () => void; clearSelection: () => void } | null>;
 }
 
+async function syncMemberTeams(memberId: unknown, teamsMap: Record<string, string>) {
+  const entries = Object.entries(teamsMap)
+    .map(([team_key, role]) => ({
+      member_id: memberId,
+      team_key: team_key.trim(),
+      role: role.trim(),
+    }))
+    .filter(r => r.team_key && r.role);
+
+  const keptKeys = entries.map(r => r.team_key);
+
+  if (keptKeys.length > 0) {
+    const { error: delError } = await supabase
+      .from("MemberTeam")
+      .delete()
+      .eq("member_id", memberId)
+      .not("team_key", "in", `(${keptKeys.map(k => `"${k}"`).join(",")})`);
+    if (delError) throw delError;
+
+    const { error: upsertError } = await supabase
+      .from("MemberTeam")
+      .upsert(entries, { onConflict: "member_id,team_key" });
+    if (upsertError) throw upsertError;
+  } else {
+    const { error: delError } = await supabase
+      .from("MemberTeam")
+      .delete()
+      .eq("member_id", memberId);
+    if (delError) throw delError;
+  }
+}
+
 export default function useEditCard<T extends Record<string, unknown>>({
   tableName,
   columns,
@@ -111,6 +143,17 @@ export default function useEditCard<T extends Record<string, unknown>>({
         const statusRaw = (rowData as Record<string, unknown>).workflow_status;
         const status: EventWorkflowStatus = isEventWorkflowStatus(statusRaw) ? statusRaw : "none";
         (rowData as Record<string, unknown>).workflow_status = status;
+        if (tableName === "Members" && selectedRow.id != null) {
+          const { data: mtRows } = await supabase
+            .from("MemberTeam")
+            .select("team_key, role")
+            .eq("member_id", selectedRow.id);
+          if (mtRows) {
+            (rowData as Record<string, unknown>).teams = Object.fromEntries(
+              mtRows.map(r => [r.team_key, r.role])
+            );
+          }
+        }
         setFormData(rowData);
         setSavedWorkflowStatus(status);
         setIsNew(false);
@@ -316,10 +359,10 @@ export default function useEditCard<T extends Record<string, unknown>>({
       });
       fieldsToExclude.forEach(field => delete dataToSave[field as keyof T]);
 
-      if (Object.prototype.hasOwnProperty.call(dataToSave, "teams")) {
-        const normalized = normalizeTeamsField((dataToSave as Record<string, unknown>).teams);
-        (dataToSave as Record<string, unknown>).teams =
-          Object.keys(normalized).length > 0 ? normalized : null;
+      let pendingMemberTeams: Record<string, string> | null = null;
+      if (tableName === "Members" && Object.prototype.hasOwnProperty.call(dataToSave, "teams")) {
+        pendingMemberTeams = normalizeTeamsField((dataToSave as Record<string, unknown>).teams);
+        delete (dataToSave as Record<string, unknown>).teams;
       }
 
       if (tableName === "BoardTeams") {
@@ -363,6 +406,9 @@ export default function useEditCard<T extends Record<string, unknown>>({
           .select("id")
           .single();
         if (error) throw error;
+        if (tableName === "Members" && pendingMemberTeams && inserted?.id != null) {
+          await syncMemberTeams(inserted.id, pendingMemberTeams);
+        }
 
         if (tableName === "Events" && pendingWorkflowStatus !== "none" && inserted?.id) {
           const { emailed } = await invokeConfirmEventStatus(inserted.id, pendingWorkflowStatus);
@@ -375,6 +421,9 @@ export default function useEditCard<T extends Record<string, unknown>>({
       } else {
         const { error } = await supabase.from(tableName).update(dataToSave).eq("id", formData.id);
         if (error) throw error;
+        if (tableName === "Members" && pendingMemberTeams && formData.id != null) {
+          await syncMemberTeams(formData.id, pendingMemberTeams);
+        }
         toast.success("Row updated successfully");
       }
 

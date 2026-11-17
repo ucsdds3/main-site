@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import { supabase } from "src/Utils/supabase";
-import { normalizeTeamsField } from "src/Sites/Members/Utils/functions";
 
 import type { BoardAssigneeOption } from "../types";
 
@@ -16,7 +15,7 @@ export function useBoardAssignees() {
     const run = async () => {
       const { data, error } = await supabase
         .from("Members")
-        .select("id, full_name, email, teams")
+        .select("id, full_name, email, MemberTeam(team_key, role)")
         .in("admin_level", ["Board", "Executive"])
         .or("deleted.is.null,deleted.eq.false")
         .order("full_name", { ascending: true });
@@ -35,7 +34,9 @@ export function useBoardAssignees() {
           id: row.id,
           full_name: row.full_name ?? "Unknown",
           email: row.email ?? "",
-          teams: normalizeTeamsField(row.teams),
+          teams: Object.fromEntries(
+            (row.MemberTeam ?? []).map(mt => [mt.team_key, mt.role])
+          ),
         }))
       );
       setLoading(false);

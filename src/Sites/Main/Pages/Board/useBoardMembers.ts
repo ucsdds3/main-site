@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 
 import { isMissingRelation, supabase } from "src/Utils/supabase";
 import { normalizeExternalHref } from "src/Utils/functions";
-import { normalizeTeamsField } from "src/Sites/Members/Utils/functions";
 import type { BoardMember } from "src/Utils/types.ts";
 import type { BoardTeamCatalogEntry } from "./boardTeamTypes";
 import { roleForMemberOnTab } from "./boardTeamConfig";
@@ -16,9 +15,10 @@ type MemberRow = {
   linkedin_link: string | null;
   other_link: string | null;
   profile_picture: string | null;
-  teams: Record<string, string> | null;
+  MemberTeam: { team_key: string; role: string }[] | null;
   deleted: boolean | null;
 };
+
 
 /** Lower rank = earlier. `Vice President` before `President` so substrings don’t collide. */
 function boardRoleTitleImportanceRank(role: string | undefined | null): number {
@@ -56,7 +56,10 @@ function compareBoardMembersForTeam(
 }
 
 function rowToBoardMember(row: MemberRow): BoardMember | null {
-  const teamRoles = normalizeTeamsField(row.teams);
+  const teamRoles: Record<string, string> = {};
+  for (const mt of row.MemberTeam ?? []) {
+    if (mt.team_key && mt.role) teamRoles[mt.team_key] = mt.role;
+  }
   if (Object.keys(teamRoles).length === 0) return null;
 
   return {
@@ -91,9 +94,8 @@ export function useBoardMembers(sortTeamKey: string, catalog: BoardTeamCatalogEn
         supabase
           .from(table)
           .select(
-            "full_name,email,github_link,resume_link,linkedin_link,other_link,profile_picture,teams,deleted"
+            "full_name,email,github_link,resume_link,linkedin_link,other_link,profile_picture,deleted,MemberTeam!inner(team_key,role)"
           )
-          .not("teams", "is", null)
           .or("deleted.is.null,deleted.eq.false");
       let { data, error } = await query("BoardMembers");
       if (isMissingRelation(error)) ({ data, error } = await query("Members"));
