@@ -12,10 +12,12 @@
 To make contributions to the DS3 Main Site, please follow these guidelines:
 
 1. (Infra members with write access can skip this step) Fork the repository to your own GitHub account and clone it.
-2. Create a new branch for your changes using the command `git checkout -b <branch-name>`.
+2. Branch from **`dev`**: `git fetch origin dev && git checkout -b <branch-name> origin/dev`
 3. Make your changes and push them to your branch.
-4. Create a pull request from your branch to the main branch. Write a summary of your changes in the pull request description.
-5. Once the pull request is merged, you can safely delete your branch using the command `git branch -d <branch-name>`.
+4. Open a pull request **into `dev`** (not `main`). Get one approval; CI must pass.
+5. To release, open a separate PR **`dev` → `main`** after integration testing on the dev deployment.
+
+Full branching, rulesets, and production deploy gates: [docs/BRANCHING_AND_DEPLOY.md](docs/BRANCHING_AND_DEPLOY.md)
 
 ## 📁 Project Structure 
 

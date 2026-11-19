@@ -7,6 +7,7 @@ Guidance for coding agents working in this repository.
 This is the official website and members portal for **DS3** (Data Science Student Society at UC San Diego).
 
 - GitHub: `ucsdds3/main-site`
+- Integration branch: **`dev`** (shared staging; PR merges with review). Production: **`main`**. See [docs/BRANCHING_AND_DEPLOY.md](docs/BRANCHING_AND_DEPLOY.md).
 - Production: `ds3atucsd.com` (public site) and `members.ds3atucsd.com` (members portal)
 - Hosting: Vercel SPA (`vercel.json` rewrites all paths to `/`)
 - Remote data: Supabase (Auth, Postgres, Storage, Edge Functions)
