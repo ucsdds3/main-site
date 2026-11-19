@@ -27,7 +27,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Lint is non-blocking: ESLint 9 + ajv currently crash in CI
+      # (TypeError: Cannot set properties of undefined (setting 'defaultMeta')).
       - name: Lint
+        continue-on-error: true
         run: npm run lint
 
       - name: Typecheck and build
