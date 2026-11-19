@@ -26,31 +26,59 @@ insert into public."Members" (
   deleted
 )
 values
-  ('exec@ucsd.edu', 'Local Executive', 'Data Science', 2027, 'Prefer not to say', 120, 12, 'Executive', '{"Executive": "President", "Software": "Member"}'::jsonb, false),
-  ('board@ucsd.edu', 'Sam Rivera', 'Computer Science', 2027, 'Prefer not to say', 80, 8, 'Board', '{"Professional Events": "Director"}'::jsonb, false),
-  ('alex.kim@ucsd.edu', 'Alex Kim', 'Data Science', 2026, 'Prefer not to say', 60, 6, 'Board', '{"Software": "Director"}'::jsonb, false),
-  ('priya.shah@ucsd.edu', 'Priya Shah', 'Math-CS', 2027, 'Prefer not to say', 40, 4, 'Board', '{"Software": "Member"}'::jsonb, false),
-  ('jordan.patel@ucsd.edu', 'Jordan Patel', 'Communication', 2026, 'Prefer not to say', 55, 5, 'Board', '{"Marketing": "Director"}'::jsonb, false),
-  ('nico.brandt@ucsd.edu', 'Nico Brandt', 'Data Science', 2028, 'Prefer not to say', 25, 3, 'Board', '{"Marketing": "Member"}'::jsonb, false),
-  ('casey.nguyen@ucsd.edu', 'Casey Nguyen', 'Computer Science', 2026, 'Prefer not to say', 70, 7, 'Board', '{"Workshops": "Director"}'::jsonb, false),
-  ('morgan.lee@ucsd.edu', 'Morgan Lee', 'Cognitive Science', 2027, 'Prefer not to say', 45, 4, 'Board', '{"Social Events": "Director"}'::jsonb, false),
-  ('riley.chen@ucsd.edu', 'Riley Chen', 'Data Science', 2026, 'Prefer not to say', 50, 5, 'Board', '{"Projects": "Director"}'::jsonb, false),
-  ('avery.singh@ucsd.edu', 'Avery Singh', 'Economics', 2026, 'Prefer not to say', 35, 3, 'Board', '{"Finance": "Director"}'::jsonb, false),
-  ('quinn.park@ucsd.edu', 'Quinn Park', 'International Studies', 2027, 'Prefer not to say', 30, 3, 'Board', '{"External": "Director"}'::jsonb, false),
-  ('taylor.brooks@ucsd.edu', 'Taylor Brooks', 'Political Science', 2026, 'Prefer not to say', 28, 3, 'Board', '{"Internal": "Director"}'::jsonb, false),
-  ('jamie.ortiz@ucsd.edu', 'Jamie Ortiz', 'Data Science', 2027, 'Prefer not to say', 42, 4, 'Board', '{"Consulting": "Director"}'::jsonb, false),
-  ('drew.wallace@ucsd.edu', 'Drew Wallace', 'ICAM', 2028, 'Prefer not to say', 22, 2, 'Board', '{"Online Content": "Director"}'::jsonb, false),
-  ('skylar.adams@ucsd.edu', 'Skylar Adams', 'Computer Science', 2026, 'Prefer not to say', 38, 4, 'Board', '{"DataHacks": "Director"}'::jsonb, false),
+  ('exec@ucsd.edu', 'Local Executive', 'Data Science', 2027, 'Prefer not to say', 120, 12, 'Executive', null, false),
+  ('board@ucsd.edu', 'Sam Rivera', 'Computer Science', 2027, 'Prefer not to say', 80, 8, 'Board', null, false),
+  ('alex.kim@ucsd.edu', 'Alex Kim', 'Data Science', 2026, 'Prefer not to say', 60, 6, 'Board', null, false),
+  ('priya.shah@ucsd.edu', 'Priya Shah', 'Math-CS', 2027, 'Prefer not to say', 40, 4, 'Board', null, false),
+  ('jordan.patel@ucsd.edu', 'Jordan Patel', 'Communication', 2026, 'Prefer not to say', 55, 5, 'Board', null, false),
+  ('nico.brandt@ucsd.edu', 'Nico Brandt', 'Data Science', 2028, 'Prefer not to say', 25, 3, 'Board', null, false),
+  ('casey.nguyen@ucsd.edu', 'Casey Nguyen', 'Computer Science', 2026, 'Prefer not to say', 70, 7, 'Board', null, false),
+  ('morgan.lee@ucsd.edu', 'Morgan Lee', 'Cognitive Science', 2027, 'Prefer not to say', 45, 4, 'Board', null, false),
+  ('riley.chen@ucsd.edu', 'Riley Chen', 'Data Science', 2026, 'Prefer not to say', 50, 5, 'Board', null, false),
+  ('avery.singh@ucsd.edu', 'Avery Singh', 'Economics', 2026, 'Prefer not to say', 35, 3, 'Board', null, false),
+  ('quinn.park@ucsd.edu', 'Quinn Park', 'International Studies', 2027, 'Prefer not to say', 30, 3, 'Board', null, false),
+  ('taylor.brooks@ucsd.edu', 'Taylor Brooks', 'Political Science', 2026, 'Prefer not to say', 28, 3, 'Board', null, false),
+  ('jamie.ortiz@ucsd.edu', 'Jamie Ortiz', 'Data Science', 2027, 'Prefer not to say', 42, 4, 'Board', null, false),
+  ('drew.wallace@ucsd.edu', 'Drew Wallace', 'ICAM', 2028, 'Prefer not to say', 22, 2, 'Board', null, false),
+  ('skylar.adams@ucsd.edu', 'Skylar Adams', 'Computer Science', 2026, 'Prefer not to say', 38, 4, 'Board', null, false),
   ('mina.cole@ucsd.edu', 'Mina Cole', 'Data Science', 2028, 'Prefer not to say', 15, 2, 'Member', null, false),
   ('luis.mendez@ucsd.edu', 'Luis Mendez', 'Math-CS', 2029, 'Prefer not to say', 10, 1, 'Member', null, false)
 on conflict ((lower(email))) do update
   set
     full_name = excluded.full_name,
     admin_level = excluded.admin_level,
-    teams = excluded.teams,
+    teams = null,
     points = excluded.points,
     experience = excluded.experience,
     deleted = false;
+
+-- Board assignments via TeamMember (BoardTeams catalog is seeded by migration).
+grant select, insert, update, delete on public."TeamMember" to authenticated;
+insert into public."TeamMember" (member_id, team_id, title)
+select m.id, bt.id, assignment.title
+from (
+  values
+    ('exec@ucsd.edu', 'EXECUTIVE', 'President'),
+    ('exec@ucsd.edu', 'SOFTWARE', 'Member'),
+    ('board@ucsd.edu', 'PROFESSIONAL_EVENTS', 'Director'),
+    ('alex.kim@ucsd.edu', 'SOFTWARE', 'Director'),
+    ('priya.shah@ucsd.edu', 'SOFTWARE', 'Member'),
+    ('jordan.patel@ucsd.edu', 'MARKETING', 'Director'),
+    ('nico.brandt@ucsd.edu', 'MARKETING', 'Member'),
+    ('casey.nguyen@ucsd.edu', 'WORKSHOPS', 'Director'),
+    ('morgan.lee@ucsd.edu', 'SOCIAL_EVENTS', 'Director'),
+    ('riley.chen@ucsd.edu', 'PROJECTS', 'Director'),
+    ('avery.singh@ucsd.edu', 'FINANCE', 'Director'),
+    ('quinn.park@ucsd.edu', 'EXTERNAL', 'Director'),
+    ('taylor.brooks@ucsd.edu', 'INTERNAL', 'Director'),
+    ('jamie.ortiz@ucsd.edu', 'CONSULTING', 'Director'),
+    ('drew.wallace@ucsd.edu', 'ONLINE_CONTENT', 'Director'),
+    ('skylar.adams@ucsd.edu', 'DATAHACKS', 'Director')
+) as assignment(email, team_key, title)
+join public."Members" m on lower(m.email) = lower(assignment.email)
+join public."BoardTeams" bt on bt.team_key = assignment.team_key
+on conflict (member_id, team_id) do update
+  set title = excluded.title;
 
 -- Public calendar + check-in (local stub of prod tables; IF NOT EXISTS so this never
 -- fights Membership if someone mistakenly runs seed there).

@@ -91,33 +91,49 @@ interface UseEditCardProps<T> {
 }
 
 async function syncMemberTeams(memberId: unknown, teamsMap: Record<string, string>) {
-  const entries = Object.entries(teamsMap)
-    .map(([team_key, role]) => ({
-      member_id: memberId,
-      team_key: team_key.trim(),
-      role: role.trim(),
+  const desired = Object.entries(teamsMap)
+    .map(([team_key, title]) => ({
+      team_key: labelToTeamKey(team_key),
+      title: title.trim(),
     }))
-    .filter(r => r.team_key && r.role);
+    .filter(r => r.team_key && r.title);
 
-  const keptKeys = entries.map(r => r.team_key);
+  const { data: catalog, error: catalogError } = await supabase
+    .from("BoardTeams")
+    .select("id, team_key")
+    .or("deleted.is.null,deleted.eq.false");
+  if (catalogError) throw catalogError;
 
-  if (keptKeys.length > 0) {
+  const keyToId = new Map<string, number>();
+  for (const row of catalog ?? []) {
+    if (row.team_key != null && row.id != null) keyToId.set(row.team_key, row.id);
+  }
+
+  const rows: { member_id: unknown; team_id: number; title: string }[] = [];
+  for (const entry of desired) {
+    const teamId = keyToId.get(entry.team_key);
+    if (teamId == null) {
+      throw new Error(`Unknown board team "${entry.team_key}". Add it under BoardTeams first.`);
+    }
+    rows.push({ member_id: memberId, team_id: teamId, title: entry.title });
+  }
+
+  const keptIds = rows.map(r => r.team_id);
+
+  if (keptIds.length > 0) {
     const { error: delError } = await supabase
-      .from("MemberTeam")
+      .from("TeamMember")
       .delete()
       .eq("member_id", memberId)
-      .not("team_key", "in", `(${keptKeys.map(k => `"${k}"`).join(",")})`);
+      .not("team_id", "in", `(${keptIds.join(",")})`);
     if (delError) throw delError;
 
     const { error: upsertError } = await supabase
-      .from("MemberTeam")
-      .upsert(entries, { onConflict: "member_id,team_key" });
+      .from("TeamMember")
+      .upsert(rows, { onConflict: "member_id,team_id" });
     if (upsertError) throw upsertError;
   } else {
-    const { error: delError } = await supabase
-      .from("MemberTeam")
-      .delete()
-      .eq("member_id", memberId);
+    const { error: delError } = await supabase.from("TeamMember").delete().eq("member_id", memberId);
     if (delError) throw delError;
   }
 }
@@ -145,13 +161,21 @@ export default function useEditCard<T extends Record<string, unknown>>({
         (rowData as Record<string, unknown>).workflow_status = status;
         if (tableName === "Members" && selectedRow.id != null) {
           const { data: mtRows } = await supabase
-            .from("MemberTeam")
-            .select("team_key, role")
+            .from("TeamMember")
+            .select("title, BoardTeams!inner(team_key)")
             .eq("member_id", selectedRow.id);
           if (mtRows) {
-            (rowData as Record<string, unknown>).teams = Object.fromEntries(
-              mtRows.map(r => [r.team_key, r.role])
-            );
+            const teams: Record<string, string> = {};
+            for (const row of mtRows) {
+              const bt = row.BoardTeams as
+                | { team_key: string }
+                | { team_key: string }[]
+                | null;
+              const key = Array.isArray(bt) ? bt[0]?.team_key : bt?.team_key;
+              const title = typeof row.title === "string" ? row.title.trim() : "";
+              if (key && title) teams[key] = title;
+            }
+            (rowData as Record<string, unknown>).teams = teams;
           }
         }
         setFormData(rowData);
@@ -352,18 +376,20 @@ export default function useEditCard<T extends Record<string, unknown>>({
       }
 
       const dataToSave = { ...finalFormData };
+
+      // Virtual TeamMember field — capture before join columns are stripped from Members patch.
+      let pendingMemberTeams: Record<string, string> | null = null;
+      if (tableName === "Members") {
+        pendingMemberTeams = normalizeTeamsField((finalFormData as Record<string, unknown>).teams);
+        delete (dataToSave as Record<string, unknown>).teams;
+      }
+
       // Status changes go through Confirm (emails); never patch via Save/Update.
       const fieldsToExclude = ["id", "created_at", "updated_at", "qr_code", "workflow_status"];
       columns.forEach(col => {
         if (col.join) fieldsToExclude.push(col.key as string);
       });
       fieldsToExclude.forEach(field => delete dataToSave[field as keyof T]);
-
-      let pendingMemberTeams: Record<string, string> | null = null;
-      if (tableName === "Members" && Object.prototype.hasOwnProperty.call(dataToSave, "teams")) {
-        pendingMemberTeams = normalizeTeamsField((dataToSave as Record<string, unknown>).teams);
-        delete (dataToSave as Record<string, unknown>).teams;
-      }
 
       if (tableName === "BoardTeams") {
         const label = String((dataToSave as Record<string, unknown>).label ?? "").trim();
@@ -406,7 +432,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
           .select("id")
           .single();
         if (error) throw error;
-        if (tableName === "Members" && pendingMemberTeams && inserted?.id != null) {
+        if (tableName === "Members" && pendingMemberTeams != null && inserted?.id != null) {
           await syncMemberTeams(inserted.id, pendingMemberTeams);
         }
 
@@ -421,7 +447,7 @@ export default function useEditCard<T extends Record<string, unknown>>({
       } else {
         const { error } = await supabase.from(tableName).update(dataToSave).eq("id", formData.id);
         if (error) throw error;
-        if (tableName === "Members" && pendingMemberTeams && formData.id != null) {
+        if (tableName === "Members" && pendingMemberTeams != null && formData.id != null) {
           await syncMemberTeams(formData.id, pendingMemberTeams);
         }
         toast.success("Row updated successfully");

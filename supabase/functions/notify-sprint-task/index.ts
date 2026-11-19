@@ -128,20 +128,6 @@ function isOverdueTask(task: {
   return String(task.expected_completion_on).slice(0, 10) < todayYmdPacific();
 }
 
-function memberHasTeam(teams: unknown): boolean {
-  if (teams == null) return false;
-  let value: unknown = teams;
-  if (typeof teams === "string") {
-    try {
-      value = JSON.parse(teams);
-    } catch {
-      return false;
-    }
-  }
-  if (typeof value !== "object" || value == null || Array.isArray(value)) return false;
-  return Object.keys(value as Record<string, unknown>).length > 0;
-}
-
 async function idleBoardMembers(
   admin: ReturnType<typeof createClient>,
   sprintId: number
@@ -175,13 +161,14 @@ async function idleBoardMembers(
 
   const { data: board } = await admin
     .from("Members")
-    .select("id, full_name, email, teams")
+    .select("id, full_name, email, TeamMember(id)")
     .in("admin_level", ["Board", "Executive"])
     .or("deleted.is.null,deleted.eq.false");
 
   return (board ?? []).filter(row => {
     if (busy.has(row.id as number)) return false;
-    if (!memberHasTeam(row.teams)) return false;
+    const memberships = (row as { TeamMember?: unknown[] | null }).TeamMember;
+    if (!Array.isArray(memberships) || memberships.length === 0) return false;
     return true;
   }) as MemberRow[];
 }

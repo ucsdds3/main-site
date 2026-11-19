@@ -111,22 +111,25 @@ function mapTask(row: TaskQueryRow, sprintIds: number[]): Task {
   };
 }
 
-/** Label → BoardTeams / Members.teams key: spaces → underscores, uppercased. */
+/** Label → BoardTeams.team_key: spaces → underscores, uppercased. */
 export function labelToTeamKey(label: string): string {
   return label.trim().replace(/\s+/g, "_").toUpperCase();
 }
 
-function normalizeTeams(raw: unknown): string[] {
-  let value = raw;
-  if (typeof value === "string") {
-    try {
-      value = JSON.parse(value);
-    } catch {
-      return [];
-    }
+type TeamMemberEmbed = {
+  title?: string | null;
+  BoardTeams?: { team_key?: string | null } | { team_key?: string | null }[] | null;
+};
+
+function teamKeysFromEmbed(rows: TeamMemberEmbed[] | null | undefined): string[] {
+  const keys: string[] = [];
+  for (const row of rows ?? []) {
+    const bt = row.BoardTeams;
+    const team = Array.isArray(bt) ? bt[0] : bt;
+    const key = team?.team_key?.trim();
+    if (key) keys.push(labelToTeamKey(key));
   }
-  if (!value || typeof value !== "object" || Array.isArray(value)) return [];
-  return Object.keys(value).map(labelToTeamKey);
+  return [...new Set(keys)];
 }
 
 function wordCount(text: string): number {
@@ -262,7 +265,7 @@ export class SprintBoard {
     }
     const { data, error } = await this.sb
       .from("Members")
-      .select("id, full_name, email, teams, admin_level, deleted")
+      .select("id, full_name, email, admin_level, deleted, TeamMember(title, BoardTeams(team_key))")
       .eq("email", auth.user.email.toLowerCase())
       .limit(1)
       .maybeSingle();
@@ -278,7 +281,7 @@ export class SprintBoard {
       full_name: data.full_name ?? "Unknown",
       email: data.email ?? auth.user.email,
       admin_level: data.admin_level,
-      team_keys: normalizeTeams(data.teams),
+      team_keys: teamKeysFromEmbed(data.TeamMember as TeamMemberEmbed[] | null),
     };
     return this.me;
   }
@@ -286,7 +289,7 @@ export class SprintBoard {
   async listMembers(): Promise<BoardMember[]> {
     const { data, error } = await this.sb
       .from("Members")
-      .select("id, full_name, email, teams, admin_level")
+      .select("id, full_name, email, admin_level, TeamMember(title, BoardTeams(team_key))")
       .in("admin_level", ["Board", "Executive"])
       .or("deleted.is.null,deleted.eq.false")
       .order("full_name", { ascending: true });
@@ -296,7 +299,7 @@ export class SprintBoard {
       full_name: row.full_name ?? "Unknown",
       email: row.email ?? "",
       admin_level: row.admin_level,
-      team_keys: normalizeTeams(row.teams),
+      team_keys: teamKeysFromEmbed(row.TeamMember as TeamMemberEmbed[] | null),
     }));
   }
 

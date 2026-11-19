@@ -1,7 +1,7 @@
 import teamsJson from "./Data/teams.json";
 import type { BoardTeamCatalogEntry } from "./boardTeamTypes";
 
-/** Label → Supabase `teams` / BoardTeams key: spaces → underscores, uppercased. */
+/** Label → BoardTeams.team_key: spaces → underscores, uppercased. */
 export function labelToTeamKey(label: string): string {
   return label.trim().replace(/\s+/g, "_").toUpperCase();
 }
@@ -77,7 +77,7 @@ export function roleForMemberOnTab(
 /**
  * Ordered tab keys for /board: catalog order, only teams that still exist in the
  * catalog and have at least one published member. Archived (deleted) catalog
- * rows never appear — even if Members.teams still has the old key.
+ * rows never appear — even if a TeamMember row still points at an old key.
  */
 export function boardTeamTabKeys(
   memberTeamKeys: Iterable<string>,

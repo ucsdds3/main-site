@@ -184,20 +184,20 @@ export function defaultSprint(sprints: SprintRow[], today = todayIso()): SprintR
   );
 }
 
-export function defaultTeamKey(teams: Record<string, string> | null | undefined): string {
-  const first = Object.keys(teams ?? {})[0];
+export function defaultTeamKey(teamRoles: Record<string, string> | null | undefined): string {
+  const first = Object.keys(teamRoles ?? {})[0];
   return first ? labelToTeamKey(first) : (BOARD_TEAM_KEYS[0] ?? "EXECUTIVE");
 }
 
-export function memberTeamKeys(teams: Record<string, string> | null | undefined): string[] {
-  return Object.keys(teams ?? {}).map(labelToTeamKey);
+export function memberTeamKeys(teamRoles: Record<string, string> | null | undefined): string[] {
+  return Object.keys(teamRoles ?? {}).map(labelToTeamKey);
 }
 
 export function memberOnTeam(
-  member: { teams: Record<string, string> | null | undefined },
+  member: { teamRoles: Record<string, string> | null | undefined },
   teamKey: string
 ): boolean {
-  return memberTeamKeys(member.teams).includes(teamKey);
+  return memberTeamKeys(member.teamRoles).includes(teamKey);
 }
 
 export function taskNeedsReviewer(task: {

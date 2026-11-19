@@ -539,7 +539,7 @@ export default function SprintBoard({
           mode={taskModal === "create" ? "create" : "edit"}
           task={editingTask}
           defaultTeamKey={
-            teamTab !== "ALL" && teamTab !== MINE_TAB ? teamTab : defaultTeamKey(member.teams)
+            teamTab !== "ALL" && teamTab !== MINE_TAB ? teamTab : defaultTeamKey(member.teamRoles)
           }
           teamOptions={teamOptions}
           defaultAssigneeId={member.id}

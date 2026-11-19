@@ -40,7 +40,7 @@ export type MemberType = {
   other_link?: string;
 };
 
-/** Board page: Supabase `teams` JSON as committee key → role title. */
+/** Board page: committee key → role title from TeamMember ⨝ BoardTeams. */
 export type BoardMember = MemberType & {
   teamRoles: Record<string, string>;
 };

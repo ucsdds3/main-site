@@ -16,7 +16,7 @@ type SprintIdleMembersProps = {
 };
 
 function memberTeamKeys(member: BoardAssigneeOption): string[] {
-  return Object.keys(member.teams ?? {}).map(labelToTeamKey);
+  return Object.keys(member.teamRoles ?? {}).map(labelToTeamKey);
 }
 
 function NudgeButton({

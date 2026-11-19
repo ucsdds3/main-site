@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 
 import { isMissingRelation, supabase } from "src/Utils/supabase";
 import { normalizeExternalHref } from "src/Utils/functions";
+import { teamRolesFromBoardRow, type TeamMemberEmbedRow } from "src/Utils/teamMembership";
 import type { BoardMember } from "src/Utils/types.ts";
 import type { BoardTeamCatalogEntry } from "./boardTeamTypes";
 import { roleForMemberOnTab } from "./boardTeamConfig";
@@ -15,20 +16,13 @@ type MemberRow = {
   linkedin_link: string | null;
   other_link: string | null;
   profile_picture: string | null;
-  MemberTeam: { team_key: string; role: string }[] | null;
+  team_roles?: unknown;
+  TeamMember?: TeamMemberEmbedRow[] | null;
   deleted: boolean | null;
 };
 
-
 /** Lower rank = earlier. `Vice President` before `President` so substrings don’t collide. */
 function boardRoleTitleImportanceRank(role: string | undefined | null): number {
-  // 2026-08-05 archived:
-  // if (!role?.trim()) return 3;
-  // const lower = role.trim().toLowerCase();
-  // if (lower.includes("vice president")) return 1;
-  // if (lower.includes("president")) return 0;
-  // if (lower.includes("director")) return 2;
-  // return 3;
   if (!role?.trim()) return 4;
   const lower = role.trim().toLowerCase();
   if (lower.includes("vice president")) return 1;
@@ -44,11 +38,6 @@ function compareBoardMembersForTeam(
   teamKey: string,
   catalog: BoardTeamCatalogEntry[]
 ): number {
-  // 2026-08-05 archived:
-  // const ra = boardRoleTitleImportanceRank(a.teamRoles[teamKey]);
-  // const rb = boardRoleTitleImportanceRank(b.teamRoles[teamKey]);
-  // if (ra !== rb) return ra - rb;
-  // return b.teamRoles[teamKey]?.localeCompare(a.teamRoles[teamKey]) ?? 0;
   const ra = boardRoleTitleImportanceRank(roleForMemberOnTab(a, teamKey, catalog));
   const rb = boardRoleTitleImportanceRank(roleForMemberOnTab(b, teamKey, catalog));
   if (ra !== rb) return ra - rb;
@@ -56,10 +45,7 @@ function compareBoardMembersForTeam(
 }
 
 function rowToBoardMember(row: MemberRow): BoardMember | null {
-  const teamRoles: Record<string, string> = {};
-  for (const mt of row.MemberTeam ?? []) {
-    if (mt.team_key && mt.role) teamRoles[mt.team_key] = mt.role;
-  }
+  const teamRoles = teamRolesFromBoardRow(row);
   if (Object.keys(teamRoles).length === 0) return null;
 
   return {
@@ -75,6 +61,9 @@ function rowToBoardMember(row: MemberRow): BoardMember | null {
   };
 }
 
+const BOARD_MEMBER_COLUMNS =
+  "full_name,email,github_link,resume_link,linkedin_link,other_link,profile_picture,deleted";
+
 /** `sortTeamKey` is the active committee tab; members are ordered by role importance for that key, then name. */
 export function useBoardMembers(sortTeamKey: string, catalog: BoardTeamCatalogEntry[] = []) {
   const [rawMembers, setRawMembers] = useState<BoardMember[]>([]);
@@ -89,16 +78,23 @@ export function useBoardMembers(sortTeamKey: string, catalog: BoardTeamCatalogEn
     let cancelled = false;
 
     const run = async () => {
-      // BoardMembers exposes only these columns for board members; Members until it exists.
-      const query = (table: "BoardMembers" | "Members") =>
-        supabase
-          .from(table)
+      // Prefer BoardMembers.team_roles (aggregated view). Fall back to Members + TeamMember embed.
+      let data: MemberRow[] | null = null;
+      let error: { message: string; code?: string } | null = null;
+
+      ({ data, error } = await supabase
+        .from("BoardMembers")
+        .select(`${BOARD_MEMBER_COLUMNS},team_roles`)
+        .or("deleted.is.null,deleted.eq.false"));
+
+      if (isMissingRelation(error) || (error && /team_roles/i.test(error.message))) {
+        ({ data, error } = await supabase
+          .from("Members")
           .select(
-            "full_name,email,github_link,resume_link,linkedin_link,other_link,profile_picture,deleted,MemberTeam!inner(team_key,role)"
+            `${BOARD_MEMBER_COLUMNS},TeamMember!inner(title, BoardTeams!inner(team_key))`
           )
-          .or("deleted.is.null,deleted.eq.false");
-      let { data, error } = await query("BoardMembers");
-      if (isMissingRelation(error)) ({ data, error } = await query("Members"));
+          .or("deleted.is.null,deleted.eq.false"));
+      }
 
       if (cancelled) return;
 

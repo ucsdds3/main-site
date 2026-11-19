@@ -51,14 +51,16 @@ export type BoardAssigneeOption = {
   id: number;
   full_name: string;
   email: string;
-  teams: Record<string, string> | null;
+  /** team_key → role title from TeamMember ⨝ BoardTeams. */
+  teamRoles: Record<string, string> | null;
 };
 
 export type CurrentMember = {
   id: number;
   email: string;
   full_name: string;
-  teams: Record<string, string> | null;
+  /** team_key → role title from TeamMember ⨝ BoardTeams. */
+  teamRoles: Record<string, string> | null;
   admin_level: "Board" | "Executive";
 };
 

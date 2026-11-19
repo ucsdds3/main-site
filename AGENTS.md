@@ -166,7 +166,7 @@ Anyone can load these routes (`src/Sites/Main/Main.tsx`). Navbar CTA is **Sign I
 | `/` | Home | JSON + static |
 | `/events` | Public calendar / cards | Supabase `Events` where `deleted = false` **and** `workflow_status` in `waiting_marketing` \| `complete` (DataHacks-named rows hidden) |
 | `/events/{gbm,workshops,social,professional,leetcode}` | Series “about” pages | `Pages/Events/Data/events.json` |
-| `/board` | Current board | `Members` with non-null `teams`, not deleted |
+| `/board` | Current board | `BoardMembers` view (`TeamMember` ⨝ `BoardTeams`), not deleted |
 | `/board/alumni` | Alumni | JSON |
 | `/projects` | Quarterly projects | JSON + `public/` screenshots |
 | `/opensource` | Open-source | JSON |
@@ -285,7 +285,7 @@ Linked CLI project: **Membership** (`aogowlvmcvvrnryxuzlr`). There is no generat
 Browser (Vite)
   ├─ createClient(VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)   src/Utils/supabase.ts
   ├─ Auth          email + password (signup, signin, reset, updateUser)
-  ├─ PostgREST     from("Members"|"Events"|"Attendance"|"Items"|"TalentLensUsers"|"TalentLensFeedback"|"Sprints"|"SprintTasks"|"SprintTaskAssignees"|"SprintTaskSprints")
+  ├─ PostgREST     from("Members"|"Events"|"Attendance"|"Items"|"BoardTeams"|"TeamMember"|"TalentLensUsers"|"TalentLensFeedback"|"Sprints"|"SprintTasks"|"SprintTaskAssignees"|"SprintTaskSprints")
   ├─ RPC           check_member_email_exists, validate_event_code, get_my_attendance, insight RPCs
   ├─ Storage       "Profile Pictures", "Event Images"
   └─ functions.invoke("confirm-event-status"|"notify-sprint-task") + user JWT
@@ -319,7 +319,8 @@ Column lists are what the **frontend** uses. The live DB may have more.
 | `points`, `experience` | Check-in / backend (UI displays; Exec can edit in admin) |
 | `admin_level` | Exec admin only (`Member` / `Board` / `Executive`) |
 | `in_talent_pool`, `resume_link`, `github_link`, `linkedin_link`, `other_link` | Signup / profile / Exec admin |
-| `teams` (jsonb: committee key → role title) | Exec admin; public `/board` reads non-null `teams` |
+| _(legacy)_ `teams` jsonb | Unused by the app; do not read/write. Prefer `TeamMember` |
+| `TeamMember` (`member_id`, `team_id` → `BoardTeams`, `title`) | Exec admin sync; public `/board` via `BoardMembers.team_roles` |
 | `profile_picture` | Profile upload + Auth metadata |
 | `deleted` | Soft-delete in admin |
 
@@ -424,7 +425,7 @@ Most tables do **not** have policies checked in here. The UI is a presentation l
 
 **Sprints are the exception:** the sprints migration enables RLS. Board/Exec can read; Board/Exec can write tasks on planning/active sprints; only Exec can insert/update `Sprints`. Regular members have no access.
 
-**Members / Events** are locked down by `20261028000000_lock_down_members_events.sql` (once applied on Membership): members read/update only their own `Members` row (only Executives, or SECURITY DEFINER functions like check-in, may change `admin_level` / `points` / `experience` / `teams` / `deleted`); Board/Exec read all; Exec writes. Anyone else reads through views: `PublicEvents` (published events, no `password` / `internal_notes`), `BoardMembers` (public /board), `MemberLeaderboard` (signed-in only), plus `rpc lookup_event_by_code`. New public or member-facing reads of these tables must go through a view or a SECURITY DEFINER RPC, never the base table.
+**Members / Events** are locked down by `20261028000000_lock_down_members_events.sql` (once applied on Membership): members read/update only their own `Members` row (only Executives, or SECURITY DEFINER functions like check-in, may change `admin_level` / `points` / `experience` / `teams` / `deleted`); Board/Exec read all; Exec writes. Anyone else reads through views: `PublicEvents` (published events, no `password` / `internal_notes`), `BoardMembers` (public `/board`; after `team_member_board_members`, aggregated `team_roles` from `TeamMember` ⨝ `BoardTeams`), `MemberLeaderboard` (signed-in only), plus `rpc lookup_event_by_code`. New public or member-facing reads of these tables must go through a view or a SECURITY DEFINER RPC, never the base table. Board committee assignments are stored in `TeamMember`, not `Members.teams`.
 
 Known gap (documented in `docs/EVENT_WORKFLOW_ARCHITECTURE.md`): `internal_notes` is only hidden in the UI. Anyone who can `select *` on `Events` under current RLS could read notes. Status **writes** are enforced in the Edge Function. Do not treat UI `execOnly` as server security.
 

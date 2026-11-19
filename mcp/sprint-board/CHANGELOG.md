@@ -18,6 +18,12 @@ add an entry at the top of this file, pass `npm run mcp:check`, then after merge
 ### Fixed
 -->
 
+## 1.1.1 — 2026-11-18
+
+### Changed
+- Member team lists (`whoami`, `list_members`) now come from `TeamMember` joined to
+  `BoardTeams`, not the unused `Members.teams` JSON field.
+
 ## 1.1.0 — 2026-10-27
 
 First release.
