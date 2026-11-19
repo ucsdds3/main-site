@@ -67,4 +67,22 @@ Example path for hackathon matching: `/hackathon-matching` under that URL.
 
 ## Releasing database migrations
 
-Schema changes still flow through `supabase/migrations/` and the **Supabase migrations** workflow. Apply to **staging Supabase** before relying on dev for enrollment writes; apply to **production** only via the existing manual `apply=true` dispatch on `main` after review.
+Schema changes still flow through `supabase/migrations/` and the **Supabase migrations** workflow.
+
+### New Supabase projects (dev/staging)
+
+Production Membership was created before versioned migrations. Greenfield databases use:
+
+1. **`20260907215800_brownfield_core_schema.sql`** — baseline `Members`, `Events`, `Attendance`, `Items`, and core RPCs (`IF NOT EXISTS` on prod).
+2. All other files in `supabase/migrations/` in timestamp order.
+
+On a **fresh** dev project after a dashboard reset:
+
+```bash
+npx supabase link --project-ref <dev-ref>
+npx supabase db push --linked
+```
+
+If a previous failed push left a half-applied history, reset the dev database first, then push again.
+
+Apply to **production** only via the existing manual `apply=true` dispatch on `main` after review (baseline is safe on prod — no-op where tables exist).

@@ -1,0 +1,3 @@
+-- Revert 20260907215800_brownfield_core_schema.sql
+-- Manual only on empty/disposable databases. Never drop these on Membership prod — they are
+-- the live club schema. Undo by restoring a backup or recreating the dev project.

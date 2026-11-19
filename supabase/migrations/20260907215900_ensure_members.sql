@@ -1,7 +1,6 @@
--- Brownfield bootstrap so local `supabase start` (and CI) have public."Members"
--- before the sprints migration adds FKs.
+-- Members table bootstrap (overlaps 20260907215800_brownfield_core_schema.sql).
 --
--- No-op on Membership: that table already exists.
+-- No-op on Membership / greenfield: brownfield baseline already created Members.
 -- Local grants, indexes, and demo rows live in supabase/seed.sql (not pushed).
 
 create table if not exists public."Members" (

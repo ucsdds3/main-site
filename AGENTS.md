@@ -277,6 +277,8 @@ Linked CLI project: **Membership** (`aogowlvmcvvrnryxuzlr`). There is no generat
 | `sql/events_workflow_status.sql` | Historical one-off (already on prod; do not re-add as a new migration) |
 | `sql/sprints.sql` | Pointer only — real file is the sprints migration |
 
+**Greenfield dev/staging:** `20260907215800_brownfield_core_schema.sql` bootstraps core tables missing from older prod history; then `npx supabase db push --linked` on a reset empty project.
+
 **New schema change:** `npm run db:new -- <name>` → edit the file in `supabase/migrations/` → add a matching `revert/<timestamp>_<name>.sql` → PR. CI applies ups on ephemeral Postgres. Apply to prod only via GitHub Action **Supabase migrations** with `apply=true` (dumps schema+data artifacts first) or `npm run db:push` after `supabase link`.
 
 **Revert:** restore from the Action backup artifact, or run the revert SQL then `supabase migration repair --status reverted <version>`.
