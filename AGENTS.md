@@ -265,9 +265,11 @@ Do not implement ingest, ranking, or resume parsing here. Ingest is a **DB trigg
 
 ## How Supabase is set up
 
-This repo is the **anon-key frontend** plus Edge Functions and **versioned Postgres migrations**. Schema changes go through `supabase/migrations/`, not the SQL Editor.
+This repo is the **anon-key frontend** plus Edge Functions and **versioned Postgres migrations**. Schema changes go through `supabase/migrations/`, not the SQL Editor on prod.
 
-Linked CLI project: **Membership** (`aogowlvmcvvrnryxuzlr`). There is no generated types file.
+**Human playbook:** [docs/DATABASE_MIGRATIONS.md](docs/DATABASE_MIGRATIONS.md) (prod vs dev projects, `db push`, no prod SQL Editor).
+
+**Projects:** DS3-prod `aogowlvmcvvrnryxuzlr` (Membership), DS3-dev `ngsciswixeaslnaspgsg` (staging). Default `supabase link` for day-to-day schema work should be **dev**; prod apply only via reviewed workflow. There is no generated types file.
 
 | Path | Role |
 |---|---|
@@ -276,6 +278,7 @@ Linked CLI project: **Membership** (`aogowlvmcvvrnryxuzlr`). There is no generat
 | `supabase/functions/` | Edge Functions (`confirm-event-status`, `notify-sprint-task`) |
 | `sql/events_workflow_status.sql` | Historical one-off (already on prod; do not re-add as a new migration) |
 | `sql/sprints.sql` | Pointer only — real file is the sprints migration |
+| `docs/DATABASE_MIGRATIONS.md` | How to change schema (migrations only; prod vs dev) |
 
 **Greenfield dev/staging:** `20260907215800_brownfield_core_schema.sql` bootstraps core tables missing from older prod history; then `npx supabase db push --linked` on a reset empty project.
 

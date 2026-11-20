@@ -67,14 +67,18 @@ Example path for hackathon matching: `/hackathon-matching` under that URL.
 
 ## Releasing database migrations
 
-Schema changes still flow through `supabase/migrations/` and the **Supabase migrations** workflow.
+**Full instructions:** [DATABASE_MIGRATIONS.md](DATABASE_MIGRATIONS.md) (no prod SQL Editor; dev first, then prod apply).
+
+Schema changes flow through `supabase/migrations/` and the **Supabase migrations** workflow.
 
 ### New Supabase projects (dev/staging)
 
 Production Membership was created before versioned migrations. Greenfield databases use:
 
 1. **`20260907215800_brownfield_core_schema.sql`** — baseline `Members`, `Events`, `Attendance`, `Items`, and core RPCs (`IF NOT EXISTS` on prod).
-2. All other files in `supabase/migrations/` in timestamp order.
+2. Delta migrations (sprints, RLS, shop, matching, …).
+3. **`20261120120000_talentlens_schema.sql`** — TalentLens tables, RLS, ingest trigger (from former `Talentlens_V2/sql/` one-offs).
+4. **`20261120120100_legacy_prod_tables.sql`** — other Membership tables that never had versioned DDL (`FormQuestion`, `Purchases`, coffee vend, …).
 
 On a **fresh** dev project after a dashboard reset:
 

@@ -32,7 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:17
+        # pgvector required by 20261120120000_talentlens_schema.sql
+        image: pgvector/pgvector:pg17
         env:
           POSTGRES_PASSWORD: postgres
         ports:
@@ -56,6 +57,13 @@ jobs:
           -- Core tables: 20260907215800_brownfield_core_schema.sql in the migration loop below.
           -- Vanilla Postgres has neither Supabase Auth nor its roles.
           create schema if not exists auth;
+
+          -- Hackathon matching FKs reference auth.users; Supabase has this, vanilla CI does not.
+          create table if not exists auth.users (
+            id uuid primary key default gen_random_uuid(),
+            email text
+          );
+
           create or replace function auth.jwt()
           returns jsonb
           language sql
@@ -114,8 +122,11 @@ jobs:
       - name: Smoke-test revert script
         run: |
           # Revert newest first so helpers (e.g. is_executive) still exist for dependent RLS.
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261120120100_legacy_prod_tables.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261120120000_talentlens_schema.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261115000100_items_shop_columns.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261115000000_lock_down_items.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261111200000_hackathon_matching_enrollment.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261028000000_lock_down_members_events.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260926210000_applications_team_key.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260926200000_applications.sql
@@ -132,8 +143,11 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260926200000_applications.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260926210000_applications_team_key.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261028000000_lock_down_members_events.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261111200000_hackathon_matching_enrollment.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261115000000_lock_down_items.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261115000100_items_shop_columns.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261120120000_talentlens_schema.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261120120100_legacy_prod_tables.sql
 
   dry_run:
     name: Dry-run against linked project
