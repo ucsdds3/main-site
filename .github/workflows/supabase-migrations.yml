@@ -57,6 +57,13 @@ jobs:
           -- Core tables: 20260907215800_brownfield_core_schema.sql in the migration loop below.
           -- Vanilla Postgres has neither Supabase Auth nor its roles.
           create schema if not exists auth;
+
+          -- Hackathon matching FKs reference auth.users; Supabase has this, vanilla CI does not.
+          create table if not exists auth.users (
+            id uuid primary key default gen_random_uuid(),
+            email text
+          );
+
           create or replace function auth.jwt()
           returns jsonb
           language sql
