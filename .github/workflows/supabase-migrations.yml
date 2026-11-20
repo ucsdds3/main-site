@@ -32,7 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:17
+        # pgvector required by 20261120120000_talentlens_schema.sql
+        image: pgvector/pgvector:pg17
         env:
           POSTGRES_PASSWORD: postgres
         ports:
@@ -50,11 +51,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Stub brownfield Membership tables
+      - name: Stub Supabase Auth roles (vanilla Postgres only)
         run: |
           psql -v ON_ERROR_STOP=1 <<'SQL'
+          -- Core tables: 20260907215800_brownfield_core_schema.sql in the migration loop below.
           -- Vanilla Postgres has neither Supabase Auth nor its roles.
           create schema if not exists auth;
+
+          -- Hackathon matching FKs reference auth.users; Supabase has this, vanilla CI does not.
+          create table if not exists auth.users (
+            id uuid primary key default gen_random_uuid(),
+            email text
+          );
+
           create or replace function auth.jwt()
           returns jsonb
           language sql
@@ -91,63 +100,6 @@ jobs:
           alter default privileges in schema public grant all on tables to anon, authenticated;
           alter default privileges in schema public grant all on sequences to anon, authenticated;
           alter default privileges in schema public grant execute on functions to anon, authenticated;
-
-          -- Columns match ensure_members.sql so the Members lock-down runs for real here.
-          create table public."Members" (
-            id bigint generated always as identity primary key,
-            email text,
-            admin_level text,
-            full_name text,
-            points integer not null default 0,
-            experience integer not null default 0,
-            teams jsonb,
-            profile_picture text,
-            github_link text,
-            linkedin_link text,
-            other_link text,
-            resume_link text,
-            deleted boolean default false
-          );
-
-          -- Events + Attendance exist on Membership but are not in versioned ups.
-          create table public."Events" (
-            id bigint generated always as identity primary key,
-            name text
-          );
-
-          create table public."Attendance" (
-            id bigint generated always as identity primary key,
-            created_at timestamptz not null default now(),
-            updated_at timestamptz not null default now(),
-            member_id bigint references public."Members"(id),
-            event_id bigint references public."Events"(id)
-          );
-
-          -- Items (merch) also predates versioned ups. Policies mirror Membership before
-          -- the Items lock-down so that migration runs for real here.
-          create table public."Items" (
-            id bigint generated always as identity primary key,
-            name text not null,
-            description text,
-            price numeric(8, 2) not null default 0,
-            image text,
-            deleted boolean not null default false
-          );
-          alter table public."Items" enable row level security;
-          create policy "Enable select for authenticated users only" on public."Items"
-            for select to authenticated using (true);
-          create policy "Enable insert for authenticated users only" on public."Items"
-            for insert to authenticated with check (true);
-          create policy "Enable update for authenticated users only" on public."Items"
-            for update to authenticated using (true) with check (true);
-          grant all on public."Items" to anon, authenticated;
-
-          -- Prod-like rows: exercise the shop migrations' backfills (slugs, default variants).
-          -- Both names derive the slug "ds3-hoodie" (collision path).
-          insert into public."Items" (name, description, price, image) values
-            ('DS3 Hoodie', 'Old merch row', 35.00,
-             'https://example.supabase.co/storage/v1/object/public/Event%20Images/hoodie.png'),
-            ('DS3 hoodie!', null, 0, null);
           SQL
 
       - name: Apply checked-in up migrations
@@ -170,8 +122,11 @@ jobs:
       - name: Smoke-test revert script
         run: |
           # Revert newest first so helpers (e.g. is_executive) still exist for dependent RLS.
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261120120100_legacy_prod_tables.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261120120000_talentlens_schema.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261115000100_items_shop_columns.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261115000000_lock_down_items.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261111200000_hackathon_matching_enrollment.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20261028000000_lock_down_members_events.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260926210000_applications_team_key.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/revert/20260926200000_applications.sql
@@ -188,8 +143,11 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260926200000_applications.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20260926210000_applications_team_key.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261028000000_lock_down_members_events.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261111200000_hackathon_matching_enrollment.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261115000000_lock_down_items.sql
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261115000100_items_shop_columns.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261120120000_talentlens_schema.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261120120100_legacy_prod_tables.sql
 
   dry_run:
     name: Dry-run against linked project

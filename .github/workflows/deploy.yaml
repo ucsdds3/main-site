@@ -4,11 +4,23 @@ on:
   push:
     branches:
       - main
+      - dev
   workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: Vercel deploy target (production requires GitHub environment approval)
+        type: choice
+        required: true
+        default: preview
+        options:
+          - preview
+          - production
 
 jobs:
-  deploy:
+  resolve:
     runs-on: ubuntu-latest
+    outputs:
+      mode: ${{ steps.target.outputs.mode }}
     steps:
       - uses: actions/checkout@v4
 
@@ -17,6 +29,35 @@ jobs:
         run: |
           msg=$(git log -1 --pretty=%B | tr -d '\n')
           echo "message=$msg" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve deploy target
+        id: target
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          COMMIT_MESSAGE: ${{ steps.commit.outputs.message }}
+          DISPATCH_TARGET: ${{ github.event.inputs.deploy_target }}
+        run: |
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "mode=$DISPATCH_TARGET" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$REF_NAME" == "dev" ]]; then
+            echo "mode=preview" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$COMMIT_MESSAGE" == *"#prod"* || "$COMMIT_MESSAGE" == *"hotfix"* ]]; then
+            echo "mode=production" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=preview" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy-preview:
+    needs: resolve
+    if: needs.resolve.outputs.mode != 'production'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Install Vercel CLI
         run: npm install -g vercel
@@ -27,12 +68,66 @@ jobs:
         run: |
           vercel pull --yes --token=$VERCEL_TOKEN
 
-      - name: Build
+      - name: Resolve Vite env for preview build
+        id: vite_preview
         env:
-          # Passed as env, not inlined into the script: a quote in a commit message broke the
-          # bash syntax (and let a commit message run commands).
-          EVENT_NAME: ${{ github.event_name }}
-          COMMIT_MESSAGE: ${{ steps.commit.outputs.message }}
+          REF_NAME: ${{ github.ref_name }}
+          STAGING_URL: ${{ secrets.STAGING_VITE_SUPABASE_URL }}
+          STAGING_KEY: ${{ secrets.STAGING_VITE_SUPABASE_ANON_KEY }}
+          STAGING_TL: ${{ secrets.STAGING_VITE_TALENTLENS_V2_API_URL }}
+          PROD_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          PROD_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          PROD_TL: ${{ secrets.VITE_TALENTLENS_V2_API_URL }}
+        run: |
+          if [[ "$REF_NAME" == "dev" && -n "$STAGING_URL" ]]; then
+            echo "supabase_url=$STAGING_URL" >> "$GITHUB_OUTPUT"
+            echo "supabase_key=$STAGING_KEY" >> "$GITHUB_OUTPUT"
+            echo "talentlens_url=$STAGING_TL" >> "$GITHUB_OUTPUT"
+          else
+            echo "supabase_url=$PROD_URL" >> "$GITHUB_OUTPUT"
+            echo "supabase_key=$PROD_KEY" >> "$GITHUB_OUTPUT"
+            echo "talentlens_url=$PROD_TL" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build (preview)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          REF_NAME: ${{ github.ref_name }}
+          VITE_GOOGLE_CALENDAR_ID: ${{ secrets.VITE_GOOGLE_CALENDAR_ID }}
+          VITE_GOOGLE_CALENDAR_API_KEY: ${{ secrets.VITE_GOOGLE_CALENDAR_API_KEY }}
+          VITE_SUPABASE_URL: ${{ steps.vite_preview.outputs.supabase_url }}
+          VITE_SUPABASE_ANON_KEY: ${{ steps.vite_preview.outputs.supabase_key }}
+          VITE_TALENTLENS_V2_API_URL: ${{ steps.vite_preview.outputs.talentlens_url }}
+        run: |
+          echo "🏗️ Building for Preview (branch: $REF_NAME)"
+          vercel build --token=$VERCEL_TOKEN
+
+      - name: Deploy (preview)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "👀 Preview Deploy"
+          vercel deploy --prebuilt --token=$VERCEL_TOKEN
+
+  deploy-production:
+    needs: resolve
+    if: needs.resolve.outputs.mode == 'production'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull Vercel project config
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          vercel pull --yes --token=$VERCEL_TOKEN
+
+      - name: Build (production)
+        env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VITE_GOOGLE_CALENDAR_ID: ${{ secrets.VITE_GOOGLE_CALENDAR_ID }}
           VITE_GOOGLE_CALENDAR_API_KEY: ${{ secrets.VITE_GOOGLE_CALENDAR_API_KEY }}
@@ -40,24 +135,12 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_TALENTLENS_V2_API_URL: ${{ secrets.VITE_TALENTLENS_V2_API_URL }}
         run: |
-          if [[ "$EVENT_NAME" == "workflow_dispatch" || "$COMMIT_MESSAGE" == *"#prod"* || "$COMMIT_MESSAGE" == *"hotfix"* ]]; then
-            echo "🏗️ Building for Production"
-            vercel build --prod --token=$VERCEL_TOKEN
-          else
-            echo "🏗️ Building for Preview"
-            vercel build --token=$VERCEL_TOKEN
-          fi
+          echo "🏗️ Building for Production"
+          vercel build --prod --token=$VERCEL_TOKEN
 
-      - name: Deploy
+      - name: Deploy (production)
         env:
-          EVENT_NAME: ${{ github.event_name }}
-          COMMIT_MESSAGE: ${{ steps.commit.outputs.message }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          if [[ "$EVENT_NAME" == "workflow_dispatch" || "$COMMIT_MESSAGE" == *"#prod"* || "$COMMIT_MESSAGE" == *"hotfix"* ]]; then
-            echo "🚀 Auto Production Deploy (from commit)"
-            vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
-          else
-            echo "👀 Preview Deploy"
-            vercel deploy --prebuilt --token=$VERCEL_TOKEN
-          fi
+          echo "🚀 Production Deploy"
+          vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN

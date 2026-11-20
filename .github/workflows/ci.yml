@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+  push:
+    branches:
+      - dev
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Lint is non-blocking: ESLint 9 + ajv currently crash in CI
+      # (TypeError: Cannot set properties of undefined (setting 'defaultMeta')).
+      - name: Lint
+        continue-on-error: true
+        run: npm run lint
+
+      - name: Typecheck and build
+        run: npm run build
+        env:
+          VITE_GOOGLE_CALENDAR_ID: placeholder
+          VITE_GOOGLE_CALENDAR_API_KEY: placeholder
+          VITE_SUPABASE_URL: https://placeholder.supabase.co
+          VITE_SUPABASE_ANON_KEY: placeholder
+          VITE_TALENTLENS_V2_API_URL: https://placeholder.example
