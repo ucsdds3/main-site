@@ -67,7 +67,9 @@ Example path for hackathon matching: `/hackathon-matching` under that URL.
 
 ## Releasing database migrations
 
-Schema changes still flow through `supabase/migrations/` and the **Supabase migrations** workflow.
+**Full instructions:** [DATABASE_MIGRATIONS.md](DATABASE_MIGRATIONS.md) (no prod SQL Editor; dev first, then prod apply).
+
+Schema changes flow through `supabase/migrations/` and the **Supabase migrations** workflow.
 
 ### New Supabase projects (dev/staging)
 

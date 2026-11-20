@@ -19,6 +19,24 @@ To make contributions to the DS3 Main Site, please follow these guidelines:
 
 Full branching, rulesets, and production deploy gates: [docs/BRANCHING_AND_DEPLOY.md](docs/BRANCHING_AND_DEPLOY.md)
 
+## Database (Supabase)
+
+**Read first:** [docs/DATABASE_MIGRATIONS.md](docs/DATABASE_MIGRATIONS.md)
+
+- **Prod:** DS3-prod / Membership — live data. **Do not** edit schema in the SQL Editor for normal feature work.
+- **Dev:** DS3-dev — empty or test data. Apply schema here first with `npx supabase db push --linked` after linking the **dev** project ref.
+- **All schema changes** go in `supabase/migrations/` (plus a revert in `supabase/migrations/revert/`), merged via PR to **`dev`**, then reviewed apply to prod.
+
+Quick start for a new table or column:
+
+```bash
+git checkout -b feat/schema-change origin/dev
+npm run db:new -- describe_your_change
+# edit supabase/migrations/<timestamp>_describe_your_change.sql
+npx supabase link --project-ref <dev-project-ref>
+npx supabase db push --linked
+```
+
 ## 📁 Project Structure 
 
 Stick to the project structure shown below to keep things organized:
@@ -70,7 +88,7 @@ Once deployed, replace the local URL with the V2 Cloud Run service endpoint.
 
 Code: `src/Sites/Main/Pages/TalentLens/`
 
-**Beta feedback:** After a search, use **Report an issue** (orange button in the results toolbar). Submissions go to Supabase `TalentLensFeedback` with the query and top-10 debug snapshot attached. One-time Supabase setup: run `Talentlens_V2/sql/talentlens_feedback.sql`. Triage guide: `Talentlens_V2/docs/FEEDBACK_TRIAGE.md`. Agent skill: `.cursor/s/talentlens-feedback-triage/`.
+**Beta feedback:** After a search, use **Report an issue** (orange button in the results toolbar). Submissions go to Supabase `TalentLensFeedback`. Table DDL: `supabase/migrations/20261120120000_talentlens_schema.sql` ([DATABASE_MIGRATIONS.md](docs/DATABASE_MIGRATIONS.md)). Triage: `Talentlens_V2/docs/FEEDBACK_TRIAGE.md`.
 
 **UI (2026-09):** Results are card-only (no detail popup). Single feedback entry point — no per-candidate report icon.
 
