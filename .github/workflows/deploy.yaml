@@ -16,6 +16,13 @@ on:
           - preview
           - production
 
+# Serialize `dev` deploys and cancel superseded runs so an older build cannot
+# alias `dev.ds3atucsd.com` after a newer one. Other branches keep overlapping
+# runs (production approval path unchanged).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref_name == 'dev' }}
+
 jobs:
   resolve:
     runs-on: ubuntu-latest
@@ -79,7 +86,11 @@ jobs:
           PROD_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           PROD_TL: ${{ secrets.VITE_TALENTLENS_V2_API_URL }}
         run: |
-          if [[ "$REF_NAME" == "dev" && -n "$STAGING_URL" ]]; then
+          if [[ "$REF_NAME" == "dev" ]]; then
+            if [[ -z "$STAGING_URL" || -z "$STAGING_KEY" ]]; then
+              echo "::error::dev deployments require STAGING_VITE_SUPABASE_URL and STAGING_VITE_SUPABASE_ANON_KEY (no production fallback)."
+              exit 1
+            fi
             echo "supabase_url=$STAGING_URL" >> "$GITHUB_OUTPUT"
             echo "supabase_key=$STAGING_KEY" >> "$GITHUB_OUTPUT"
             echo "talentlens_url=$STAGING_TL" >> "$GITHUB_OUTPUT"
@@ -103,11 +114,38 @@ jobs:
           vercel build --token=$VERCEL_TOKEN
 
       - name: Deploy (preview)
+        id: deploy_preview
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           echo "👀 Preview Deploy"
-          vercel deploy --prebuilt --token=$VERCEL_TOKEN
+          # stdout is the deployment URL (Vercel CLI contract for non-JSON mode).
+          vercel deploy --prebuilt --token="$VERCEL_TOKEN" > deployment-url.txt
+          DEPLOYMENT_URL=$(tr -d '[:space:]' < deployment-url.txt)
+          if [[ -z "$DEPLOYMENT_URL" ]]; then
+            echo "::error::vercel deploy succeeded but returned an empty deployment URL."
+            exit 1
+          fi
+          echo "deployment_url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
+          echo "Preview URL: $DEPLOYMENT_URL"
+
+      - name: Alias preview to dev.ds3atucsd.com
+        if: github.ref_name == 'dev'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          DEPLOYMENT_URL: ${{ steps.deploy_preview.outputs.deployment_url }}
+        run: |
+          set -euo pipefail
+          SCOPE=$(node -p "require('./.vercel/project.json').orgId")
+          if [[ -z "$SCOPE" || "$SCOPE" == "undefined" || "$SCOPE" == "null" ]]; then
+            echo "::error::Could not read Vercel team/org scope from .vercel/project.json"
+            exit 1
+          fi
+          echo "Aliasing $DEPLOYMENT_URL → dev.ds3atucsd.com (scope=$SCOPE)"
+          if ! vercel alias set "$DEPLOYMENT_URL" "dev.ds3atucsd.com" --token="$VERCEL_TOKEN" --scope="$SCOPE"; then
+            echo "::error::Failed to alias to dev.ds3atucsd.com. Fix domain authorization/ownership in Vercel; do not bypass verification."
+            exit 1
+          fi
 
   deploy-production:
     needs: resolve

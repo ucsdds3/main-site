@@ -6,7 +6,7 @@ This document defines how we integrate features on **`dev`**, ship to production
 
 | Branch | Purpose | Deploy target |
 |--------|---------|---------------|
-| **`dev`** | Shared integration branch for all in-progress work (hackathon matching, events, admin, etc.) | Non-production Vercel deployment (staging lane — configure domain `dev.ds3atucsd.com` when ready) |
+| **`dev`** | Shared integration branch for all in-progress work (hackathon matching, events, admin, etc.) | Preview deploy aliased to **`dev.ds3atucsd.com`** (staging lane) |
 | **`main`** | Production default branch | Production **only** when commit message includes `#prod` or `hotfix`, or via manual production workflow |
 | **`feature/*`, `hackathon-matching`, …** | Short-lived work | Merge into **`dev`** via pull request (not directly into `main` while the feature is still experimental) |
 
@@ -43,25 +43,25 @@ Production is **not** deployed on every merge to `main`. A push to `main` builds
 - The commit message contains **`#prod`** or **`hotfix`**, or
 - Someone runs **Deploy to Vercel** manually (`workflow_dispatch`) and chooses **production** (uses the GitHub **production** environment — add required reviewers in repo Settings → Environments).
 
-Pushes to **`dev`** always build and deploy **preview/staging** only (never `vercel deploy --prod`).
+Pushes to **`dev`** always build and deploy **preview/staging** only (never `vercel deploy --prod`). After a successful preview deploy, the workflow runs `vercel alias set <deployment-url> dev.ds3atucsd.com` with the linked team scope. Concurrent `dev` runs cancel older in-progress deploys so an older build cannot overwrite the alias.
 
-### Staging secrets (recommended)
+### Staging secrets (required for `dev`)
 
-Point the `dev` deployment at non-production backends by adding GitHub Actions secrets (repository or environment `staging`):
+Point the `dev` deployment at non-production backends with GitHub Actions secrets:
 
-| Secret | Purpose |
-|--------|---------|
-| `STAGING_VITE_SUPABASE_URL` | Staging Supabase project |
-| `STAGING_VITE_SUPABASE_ANON_KEY` | Staging anon key |
-| `STAGING_VITE_TALENTLENS_V2_API_URL` | Staging TalentLens API |
+| Secret | Purpose | Required on `dev`? |
+|--------|---------|--------------------|
+| `STAGING_VITE_SUPABASE_URL` | Staging Supabase project (DS3-dev) | **Yes** — build fails if missing |
+| `STAGING_VITE_SUPABASE_ANON_KEY` | Staging anon key | **Yes** — build fails if missing |
+| `STAGING_VITE_TALENTLENS_V2_API_URL` | Staging TalentLens API | Recommended |
 
-If unset, the deploy workflow falls back to the existing `VITE_*` secrets (same as today — **not** isolated from prod until staging secrets exist).
+`dev` builds **never** fall back to production `VITE_*` Supabase credentials.
 
 ## Members portal on dev hosts
 
-On Vercel preview/staging hosts, open the members portal with:
+Stable staging URL:
 
-`https://<dev-host>/?subdomain=members`
+`https://dev.ds3atucsd.com/?subdomain=members`
 
 Example path for hackathon matching: `/hackathon-matching` under that URL.
 
