@@ -73,7 +73,7 @@ If Supabase env is missing, `src/Utils/supabase.ts` returns a stub client that f
 
 `src/Hooks/useSiteHandler.ts` is the only place that should decide “which site” and cross-site navigation.
 
-- Production (`*.ds3atucsd.com`, not `www`): first hostname label is the subdomain (`members`, else `main`).
+- Production site hosts only: `members.ds3atucsd.com` and `www.ds3atucsd.com` (→ `main`). Other `*.ds3atucsd.com` hosts (e.g. **`dev.ds3atucsd.com`**) use `?subdomain=` like previews — the first label is **not** a site name.
 - Localhost / IP / `*.vercel.app`: `?subdomain=` query param, default `main`.
 - `navigate({ pathname, subdomain, hash, nextURL })` sets the query param locally, or does a full `https://{subdomain}.ds3atucsd.com/...` hop in production.
 
