@@ -2,20 +2,45 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { NavigateProps } from "../Utils/types";
 
+/** Host labels that map to real per-subdomain production sites (not staging aliases). */
+const PROD_SITE_HOST_LABELS = new Set(["members", "www"]);
+
+function isLocalHostname(hostname: string): boolean {
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1" ||
+    /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname)
+  );
+}
+
+/** True when hostname should use members.ds3atucsd.com-style routing (not ?subdomain=). */
+function hostnameUsesProdSubdomain(hostname: string): boolean {
+  if (isLocalHostname(hostname) || hostname.includes("vercel.app")) return false;
+  const parts = hostname.split(".");
+  if (parts.length <= 2) return false;
+  return PROD_SITE_HOST_LABELS.has(parts[0]);
+}
+
+/** `main` | `members` when the host label is a known prod site; otherwise null (use query param). */
+function subdomainFromProdHostname(hostname: string): string | null {
+  const parts = hostname.split(".");
+  if (parts.length <= 2) return null;
+  const label = parts[0];
+  if (label === "www") return "main";
+  if (label === "members") return "members";
+  return null;
+}
+
 export function useSiteHandler() {
   const { search } = useLocation();
   const navigate = useNavigate();
   const hostname = window.location.hostname;
-  const parts = hostname.split(".");
-  const isLocalHostname =
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    hostname === "::1" ||
-    /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname);
 
   let subdomain = new URLSearchParams(search).get("subdomain") || "main";
-  if (!isLocalHostname && !hostname.includes("vercel.app") && parts.length > 2) {
-    subdomain = parts[0] === "www" ? "main" : parts[0];
+  const fromHost = subdomainFromProdHostname(hostname);
+  if (fromHost !== null) {
+    subdomain = fromHost;
   }
 
   useEffect(() => {
@@ -33,15 +58,8 @@ export function useSiteHandler() {
     const [pathOnly, pathSearch] = rawPath.includes("?") ? rawPath.split("?", 2) : [rawPath, ""];
     const path = pathOnly;
     const search = pathSearch ? `?${pathSearch}` : window.location.search || "";
-    const parts = hostname.split(".");
-    const isLocalHostname =
-      hostname === "localhost" ||
-      hostname === "127.0.0.1" ||
-      hostname === "::1" ||
-      /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname);
-    const isProdSubdomain =
-      !isLocalHostname && !hostname.includes("vercel.app") && parts.length > 2;
-    const currentSubdomain = isProdSubdomain ? (parts[0] === "www" ? "main" : parts[0]) : null;
+    const isProdSubdomain = hostnameUsesProdSubdomain(hostname);
+    const currentSubdomain = isProdSubdomain ? subdomainFromProdHostname(hostname) : null;
 
     const searchParams = new URLSearchParams(search);
     if (nextURL) searchParams.set("next", nextURL);
@@ -52,7 +70,7 @@ export function useSiteHandler() {
     const pathWithSearch = query ? `${path}?${query}` : path;
 
     if (subdomain && (!isProdSubdomain || currentSubdomain !== subdomain)) {
-      if (isLocalHostname || hostname.includes("vercel.app")) {
+      if (isLocalHostname(hostname) || hostname.includes("vercel.app") || !isProdSubdomain) {
         navigate(pathWithSearch);
       } else {
         window.location.href = `https://${subdomain}.ds3atucsd.com${path}${query ? `?${query}` : ""}`;

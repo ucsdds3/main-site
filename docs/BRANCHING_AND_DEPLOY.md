@@ -59,7 +59,7 @@ Point the `dev` deployment at non-production backends with GitHub Actions secret
 
 ## Members portal on dev hosts
 
-Stable staging URL:
+Stable staging URL (main site is default; members portal needs the query param because `dev` is a staging hostname, not a site subdomain):
 
 `https://dev.ds3atucsd.com/?subdomain=members`
 
