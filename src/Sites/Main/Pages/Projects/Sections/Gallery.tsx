@@ -140,16 +140,13 @@ const Gallery = () => {
   const [order, setOrder] = useState<"Projects" | "Presentation">("Projects");
   const [showAll, setShowAll] = useState(false);
 
-  const isWinter = year === "Winter 2026";
-  const isSpring = year === "Spring 2026";
-
   const sortedProjects = useMemo(() =>
     [...(projects[year] as Project[])].sort((a, b) =>
-      !isWinter && order === "Presentation"
+      order === "Presentation"
         ? b.presentation_points - a.presentation_points
         : b.projects_points - a.projects_points
     ),
-    [year, order, isWinter]
+    [year, order]
   );
 
   const visibleProjects = showAll ? sortedProjects : sortedProjects.slice(0, INITIAL_SHOW);
@@ -173,22 +170,22 @@ const Gallery = () => {
           <h2 className="text-fluid-subsection-title">Project Gallery</h2>
         </div>
 
-        {/* Order by dropdown — only for years with presentation / DinoCage points */}
-        {!isWinter && (
-          <div className="flex flex-col gap-[0.3rem]">
-            <span className="font-mono text-[0.58rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-[0.45]">
-              Order by
-            </span>
-            <select
-              value={order}
-              className="obs-select min-w-44 text-(--obs-text-primary)"
-              onChange={e => { setShowAll(false); setOrder(e.target.value as "Projects" | "Presentation"); }}
-            >
-              <option value="Projects">{isSpring ? "Mentor Scores" : "Project Points"}</option>
-              <option value="Presentation">{isSpring ? "DinoCage Scores" : "Presentation Points"}</option>
-            </select>
-          </div>
-        )}
+        {/* Order by dropdown — same two options for every quarter.
+            "Mentor Scores" = projects_points (Spring called it Mentor Scores, Fall Project Points);
+            "Presentation Scores" = presentation_points (Spring called it DinoCage Scores). */}
+        <div className="flex flex-col gap-[0.3rem]">
+          <span className="font-mono text-[0.58rem] uppercase tracking-[0.18em] text-(--obs-text-primary) opacity-[0.45]">
+            Order by
+          </span>
+          <select
+            value={order}
+            className="obs-select min-w-44 text-(--obs-text-primary)"
+            onChange={e => { setShowAll(false); setOrder(e.target.value as "Projects" | "Presentation"); }}
+          >
+            <option value="Projects">Mentor Scores</option>
+            <option value="Presentation">Presentation Scores</option>
+          </select>
+        </div>
       </motion.div>
 
       {/* Year pill tabs */}
@@ -197,7 +194,7 @@ const Gallery = () => {
           <button
             key={y}
             type="button"
-            onClick={() => { setShowAll(false); setYear(y); if (y === "Winter 2026") setOrder("Projects"); }}
+            onClick={() => { setShowAll(false); setYear(y); }}
             className={twMerge(
               "cursor-pointer rounded-4xl border px-[0.85rem] py-[0.3rem] font-mono text-[0.62rem] uppercase tracking-[0.18em] transition-all duration-200",
               y === year
