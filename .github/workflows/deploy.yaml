@@ -75,9 +75,9 @@ jobs:
         run: |
           vercel pull --yes --token=$VERCEL_TOKEN
 
-      - name: Resolve Vite env for preview build
-        id: vite_preview
+      - name: Build (preview)
         env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           REF_NAME: ${{ github.ref_name }}
           STAGING_URL: ${{ secrets.STAGING_VITE_SUPABASE_URL }}
           STAGING_KEY: ${{ secrets.STAGING_VITE_SUPABASE_ANON_KEY }}
@@ -85,33 +85,29 @@ jobs:
           PROD_URL: ${{ secrets.VITE_SUPABASE_URL }}
           PROD_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           PROD_TL: ${{ secrets.VITE_TALENTLENS_V2_API_URL }}
+          VITE_GOOGLE_CALENDAR_ID: ${{ secrets.VITE_GOOGLE_CALENDAR_ID }}
+          VITE_GOOGLE_CALENDAR_API_KEY: ${{ secrets.VITE_GOOGLE_CALENDAR_API_KEY }}
         run: |
+          set -euo pipefail
           if [[ "$REF_NAME" == "dev" ]]; then
             if [[ -z "$STAGING_URL" || -z "$STAGING_KEY" ]]; then
               echo "::error::dev deployments require STAGING_VITE_SUPABASE_URL and STAGING_VITE_SUPABASE_ANON_KEY (no production fallback)."
               exit 1
             fi
-            echo "supabase_url=$STAGING_URL" >> "$GITHUB_OUTPUT"
-            echo "supabase_key=$STAGING_KEY" >> "$GITHUB_OUTPUT"
-            echo "talentlens_url=$STAGING_TL" >> "$GITHUB_OUTPUT"
+            export VITE_SUPABASE_URL="$STAGING_URL"
+            export VITE_SUPABASE_ANON_KEY="$STAGING_KEY"
+            export VITE_TALENTLENS_V2_API_URL="${STAGING_TL:-}"
           else
-            echo "supabase_url=$PROD_URL" >> "$GITHUB_OUTPUT"
-            echo "supabase_key=$PROD_KEY" >> "$GITHUB_OUTPUT"
-            echo "talentlens_url=$PROD_TL" >> "$GITHUB_OUTPUT"
+            export VITE_SUPABASE_URL="$PROD_URL"
+            export VITE_SUPABASE_ANON_KEY="$PROD_KEY"
+            export VITE_TALENTLENS_V2_API_URL="${PROD_TL:-}"
           fi
-
-      - name: Build (preview)
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          REF_NAME: ${{ github.ref_name }}
-          VITE_GOOGLE_CALENDAR_ID: ${{ secrets.VITE_GOOGLE_CALENDAR_ID }}
-          VITE_GOOGLE_CALENDAR_API_KEY: ${{ secrets.VITE_GOOGLE_CALENDAR_API_KEY }}
-          VITE_SUPABASE_URL: ${{ steps.vite_preview.outputs.supabase_url }}
-          VITE_SUPABASE_ANON_KEY: ${{ steps.vite_preview.outputs.supabase_key }}
-          VITE_TALENTLENS_V2_API_URL: ${{ steps.vite_preview.outputs.talentlens_url }}
-        run: |
+          export VITE_GOOGLE_CALENDAR_ID="${VITE_GOOGLE_CALENDAR_ID:-}"
+          export VITE_GOOGLE_CALENDAR_API_KEY="${VITE_GOOGLE_CALENDAR_API_KEY:-}"
+          bash scripts/write-vite-env-for-ci.sh
           echo "🏗️ Building for Preview (branch: $REF_NAME)"
-          vercel build --token=$VERCEL_TOKEN
+          vercel build --token="$VERCEL_TOKEN"
+          bash scripts/verify-vite-env-in-dist.sh
 
       - name: Deploy (preview)
         id: deploy_preview
@@ -173,8 +169,14 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_TALENTLENS_V2_API_URL: ${{ secrets.VITE_TALENTLENS_V2_API_URL }}
         run: |
+          set -euo pipefail
+          export VITE_SUPABASE_URL="${VITE_SUPABASE_URL:-}"
+          export VITE_SUPABASE_ANON_KEY="${VITE_SUPABASE_ANON_KEY:-}"
+          export VITE_TALENTLENS_V2_API_URL="${VITE_TALENTLENS_V2_API_URL:-}"
+          bash scripts/write-vite-env-for-ci.sh
           echo "🏗️ Building for Production"
-          vercel build --prod --token=$VERCEL_TOKEN
+          vercel build --prod --token="$VERCEL_TOKEN"
+          bash scripts/verify-vite-env-in-dist.sh
 
       - name: Deploy (production)
         env:
