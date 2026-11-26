@@ -57,6 +57,8 @@ Point the `dev` deployment at non-production backends with GitHub Actions secret
 
 `dev` builds **never** fall back to production `VITE_*` Supabase credentials.
 
+Deploy builds write **`.env.production`** in CI before `vercel build` so Vite bakes `VITE_*` into the bundle (shell env alone is not reliable with the Vercel CLI). A post-build check fails if `supabase.co` is missing from the compiled JS.
+
 ## Members portal on dev hosts
 
 Stable staging URL (main site is default; members portal needs the query param because `dev` is a staging hostname, not a site subdomain):
